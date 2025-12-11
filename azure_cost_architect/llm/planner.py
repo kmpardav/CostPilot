@@ -4,6 +4,7 @@ from openai import OpenAI
 from ..config import MODEL_PLANNER, MODEL_PLANNER_RESPONSES
 from ..prompts import PROMPT_PLANNER_SYSTEM, PROMPT_PLANNER_USER_TEMPLATE
 from ..planner.validation import validate_plan_schema
+from ..planner.rules import apply_planner_rules
 from .json_repair import extract_json_object, repair_json_with_llm
 
 
@@ -28,7 +29,7 @@ def plan_architecture_chat(client: OpenAI, arch_text: str, mode: str = "auto") -
     except json.JSONDecodeError:
         parsed = repair_json_with_llm(client, PROMPT_PLANNER_SYSTEM, raw_json)
 
-    return validate_plan_schema(parsed)
+    return apply_planner_rules(validate_plan_schema(parsed))
 
 
 def plan_architecture_responses(client: OpenAI, arch_text: str, mode: str = "auto") -> dict:
@@ -52,4 +53,4 @@ def plan_architecture_responses(client: OpenAI, arch_text: str, mode: str = "aut
     except json.JSONDecodeError:
         parsed = repair_json_with_llm(client, PROMPT_PLANNER_SYSTEM, raw_json)
 
-    return validate_plan_schema(parsed)
+    return apply_planner_rules(validate_plan_schema(parsed))

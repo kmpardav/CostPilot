@@ -1,0 +1,120 @@
+{
+  "metadata": {},
+  "scenarios": [
+    {
+      "id": "baseline",
+      "label": "baseline",
+      "description": "",
+      "resources": [
+        {
+          "id": "vm-main",
+          "category": "compute.vm",
+          "service_name": null,
+          "arm_sku_name": null,
+          "region": null,
+          "quantity": 1,
+          "hours_per_month": 730,
+          "billing_model": "payg",
+          "workload_type": "web_app",
+          "criticality": "prod",
+          "os_type": "linux",
+          "metrics": {},
+          "notes": "",
+          "source": "llm-inferred"
+        },
+        {
+          "id": "sql-mi",
+          "category": "db.sqlmi",
+          "service_name": null,
+          "arm_sku_name": null,
+          "region": null,
+          "quantity": 1,
+          "hours_per_month": 730,
+          "billing_model": "payg",
+          "workload_type": "db",
+          "criticality": "prod",
+          "os_type": "na",
+          "metrics": {
+            "vcores": 4
+          },
+          "notes": "",
+          "source": "llm-inferred"
+        },
+        {
+          "id": "blob",
+          "category": "storage.blob",
+          "service_name": null,
+          "arm_sku_name": null,
+          "region": null,
+          "quantity": 1,
+          "hours_per_month": 730,
+          "billing_model": "payg",
+          "workload_type": "other",
+          "criticality": "prod",
+          "os_type": "na",
+          "metrics": {
+            "storage_gb": 100.0
+          },
+          "notes": "",
+          "source": "llm-inferred"
+        },
+        {
+          "id": "nat",
+          "category": "network.nat",
+          "service_name": null,
+          "arm_sku_name": null,
+          "region": null,
+          "quantity": 1,
+          "hours_per_month": 730,
+          "billing_model": "payg",
+          "workload_type": "network_egress",
+          "criticality": "prod",
+          "os_type": "na",
+          "metrics": {
+            "egress_gb": 100.0
+          },
+          "notes": "",
+          "source": "llm-inferred"
+        }
+      ],
+      "warnings": [
+        "ha_dr_missing: add backup.vault and/or dr.asr for resilience",
+        "sku_missing: sql-mi, vm-main"
+      ]
+    },
+    {
+      "id": "cost_optimized",
+      "label": "cost_optimized",
+      "description": "",
+      "resources": [
+        {
+          "id": "db-lite",
+          "category": "db.sql",
+          "service_name": null,
+          "arm_sku_name": "GP_Gen5_2",
+          "region": null,
+          "quantity": 1,
+          "hours_per_month": 730,
+          "billing_model": "payg",
+          "workload_type": "db",
+          "criticality": "prod",
+          "os_type": "na",
+          "metrics": {
+            "vcores": 2
+          },
+          "notes": "",
+          "source": "llm-inferred"
+        }
+      ],
+      "warnings": [
+        "ha_dr_missing: add backup.vault and/or dr.asr for resilience",
+        "bandwidth_missing: estimate outbound via network.nat or network.egress"
+      ]
+    }
+  ],
+  "warnings": [
+    "bandwidth_missing: estimate outbound via network.nat or network.egress",
+    "ha_dr_missing: add backup.vault and/or dr.asr for resilience",
+    "sku_missing: sql-mi, vm-main"
+  ]
+}
