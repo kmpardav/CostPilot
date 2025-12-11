@@ -1,0 +1,333 @@
+{
+  "metadata": {
+    "currency": "EUR",
+    "default_region": "westeurope",
+    "source_workload": "examples/workloads/eu_webshop.txt",
+    "notes": "Sample plan produced from the 'recommend' mode for validation runs."
+  },
+  "scenarios": [
+    {
+      "id": "baseline",
+      "label": "baseline",
+      "description": "Highly available web frontends with managed SQL and Redis for sessions.",
+      "resources": [
+        {
+          "id": "web-vm",
+          "category": "compute.vm",
+          "service_name": "Virtual Machines",
+          "product_name": "Dv2 Series",
+          "meter_name": "D2 v2",
+          "sku_name": "D2_v2",
+          "arm_sku_name": "Standard_D2_v2",
+          "region": "westeurope",
+          "billing_model": "payg",
+          "units": 730,
+          "unit_of_measure": "1 Hour",
+          "unit_price": 0.1,
+          "currency": "EUR",
+          "monthly_cost": 73.0,
+          "yearly_cost": 876.0,
+          "pricing_status": "priced",
+          "notes": "Active-active pair sized for steady storefront traffic."
+        },
+        {
+          "id": "sql-mi",
+          "category": "db.sqlmi",
+          "service_name": "Azure SQL Managed Instance",
+          "product_name": "Business Critical Compute",
+          "meter_name": "Gen5 Compute",
+          "sku_name": "BC_Gen5",
+          "arm_sku_name": "BC_Gen5",
+          "region": "westeurope",
+          "billing_model": "payg",
+          "units": 730,
+          "unit_of_measure": "1 Hour",
+          "unit_price": 0.65,
+          "currency": "EUR",
+          "monthly_cost": 474.5,
+          "yearly_cost": 5694.0,
+          "pricing_status": "priced",
+          "notes": "Two node deployment with HA for checkout and order state."
+        },
+        {
+          "id": "redis-cache",
+          "category": "cache.redis",
+          "service_name": "Azure Cache for Redis",
+          "product_name": "Premium Cache",
+          "meter_name": "P1 Cache",
+          "sku_name": "P1",
+          "arm_sku_name": "P1",
+          "region": "westeurope",
+          "billing_model": "payg",
+          "units": 730,
+          "unit_of_measure": "1 Hour",
+          "unit_price": 0.25,
+          "currency": "EUR",
+          "monthly_cost": 182.5,
+          "yearly_cost": 2190.0,
+          "pricing_status": "priced",
+          "notes": "Session cache sized for bursty login/checkout flows."
+        },
+        {
+          "id": "product-images",
+          "category": "storage.blob",
+          "service_name": "Storage",
+          "product_name": "Hot Block Blob",
+          "meter_name": "Hot LRS Data Stored",
+          "sku_name": "Hot_LRS",
+          "arm_sku_name": "Hot_LRS",
+          "region": "westeurope",
+          "billing_model": "payg",
+          "units": 200.0,
+          "unit_of_measure": "1 GB/Month",
+          "unit_price": 0.018,
+          "currency": "EUR",
+          "monthly_cost": 3.6,
+          "yearly_cost": 43.2,
+          "pricing_status": "priced",
+          "notes": "200 GB product and media assets stored in hot tier."
+        },
+        {
+          "id": "egress",
+          "category": "network.nat",
+          "service_name": "Virtual Network",
+          "product_name": "Standard NAT Gateway",
+          "meter_name": "Data Processed",
+          "sku_name": "Standard",
+          "arm_sku_name": "Standard",
+          "region": "westeurope",
+          "billing_model": "payg",
+          "units": 150.0,
+          "unit_of_measure": "1 GB",
+          "unit_price": 0.05,
+          "currency": "EUR",
+          "monthly_cost": 7.5,
+          "yearly_cost": 90.0,
+          "pricing_status": "priced",
+          "notes": "150 GB monthly outbound data for images and APIs."
+        }
+      ],
+      "totals": {
+        "monthly_priced": 741.1,
+        "monthly_with_estimates": 741.1,
+        "yearly_priced": 8893.2,
+        "yearly_with_estimates": 8893.2,
+        "currency": "EUR",
+        "by_category": {
+          "compute.vm": {
+            "monthly_priced": 73.0,
+            "monthly_with_estimates": 73.0,
+            "yearly_priced": 876.0,
+            "yearly_with_estimates": 876.0
+          },
+          "db.sqlmi": {
+            "monthly_priced": 474.5,
+            "monthly_with_estimates": 474.5,
+            "yearly_priced": 5694.0,
+            "yearly_with_estimates": 5694.0
+          },
+          "cache.redis": {
+            "monthly_priced": 182.5,
+            "monthly_with_estimates": 182.5,
+            "yearly_priced": 2190.0,
+            "yearly_with_estimates": 2190.0
+          },
+          "storage.blob": {
+            "monthly_priced": 3.6,
+            "monthly_with_estimates": 3.6,
+            "yearly_priced": 43.2,
+            "yearly_with_estimates": 43.2
+          },
+          "network.nat": {
+            "monthly_priced": 7.5,
+            "monthly_with_estimates": 7.5,
+            "yearly_priced": 90.0,
+            "yearly_with_estimates": 90.0
+          }
+        }
+      }
+    },
+    {
+      "id": "cost_optimized",
+      "label": "cost_optimized",
+      "description": "Smaller VM and SQL footprint with reduced egress assumptions.",
+      "resources": [
+        {
+          "id": "web-vm-lite",
+          "category": "compute.vm",
+          "service_name": "Virtual Machines",
+          "product_name": "B-Series",
+          "meter_name": "B2s",
+          "sku_name": "B2s",
+          "arm_sku_name": "Standard_B2s",
+          "region": "westeurope",
+          "billing_model": "payg",
+          "units": 730,
+          "unit_of_measure": "1 Hour",
+          "unit_price": 0.05,
+          "currency": "EUR",
+          "monthly_cost": 36.5,
+          "yearly_cost": 438.0,
+          "pricing_status": "priced",
+          "notes": "Burstable VM pair for lighter traffic windows."
+        },
+        {
+          "id": "sql-db",
+          "category": "db.sql",
+          "service_name": "Azure SQL Database",
+          "product_name": "GP Compute",
+          "meter_name": "GP Gen5",
+          "sku_name": "GP_Gen5",
+          "arm_sku_name": "GP_Gen5",
+          "region": "westeurope",
+          "billing_model": "payg",
+          "units": 730,
+          "unit_of_measure": "1 Hour",
+          "unit_price": 0.22,
+          "currency": "EUR",
+          "monthly_cost": 160.6,
+          "yearly_cost": 1927.2,
+          "pricing_status": "priced",
+          "notes": "Single database with geo-restore instead of full MI."
+        },
+        {
+          "id": "redis-basic",
+          "category": "cache.redis",
+          "service_name": "Azure Cache for Redis",
+          "product_name": "Basic Cache",
+          "meter_name": "Basic C1",
+          "sku_name": "C1",
+          "arm_sku_name": "C1",
+          "region": "westeurope",
+          "billing_model": "payg",
+          "units": 730,
+          "unit_of_measure": "1 Hour",
+          "unit_price": 0.08,
+          "currency": "EUR",
+          "monthly_cost": 58.4,
+          "yearly_cost": 700.8,
+          "pricing_status": "priced",
+          "notes": "Lower throughput cache sized for catalogue browsing."
+        },
+        {
+          "id": "product-images",
+          "category": "storage.blob",
+          "service_name": "Storage",
+          "product_name": "Hot Block Blob",
+          "meter_name": "Hot LRS Data Stored",
+          "sku_name": "Hot_LRS",
+          "arm_sku_name": "Hot_LRS",
+          "region": "westeurope",
+          "billing_model": "payg",
+          "units": 200.0,
+          "unit_of_measure": "1 GB/Month",
+          "unit_price": 0.018,
+          "currency": "EUR",
+          "monthly_cost": 3.6,
+          "yearly_cost": 43.2,
+          "pricing_status": "priced",
+          "notes": "Same blob footprint reused across scenarios."
+        },
+        {
+          "id": "egress",
+          "category": "network.nat",
+          "service_name": "Virtual Network",
+          "product_name": "Standard NAT Gateway",
+          "meter_name": "Data Processed",
+          "sku_name": "Standard",
+          "arm_sku_name": "Standard",
+          "region": "westeurope",
+          "billing_model": "payg",
+          "units": 100.0,
+          "unit_of_measure": "1 GB",
+          "unit_price": 0.05,
+          "currency": "EUR",
+          "monthly_cost": 5.0,
+          "yearly_cost": 60.0,
+          "pricing_status": "priced",
+          "notes": "Reduced outbound data due to CDN and caching."
+        }
+      ],
+      "totals": {
+        "monthly_priced": 264.1,
+        "monthly_with_estimates": 264.1,
+        "yearly_priced": 3169.2,
+        "yearly_with_estimates": 3169.2,
+        "currency": "EUR",
+        "by_category": {
+          "compute.vm": {
+            "monthly_priced": 36.5,
+            "monthly_with_estimates": 36.5,
+            "yearly_priced": 438.0,
+            "yearly_with_estimates": 438.0
+          },
+          "db.sql": {
+            "monthly_priced": 160.6,
+            "monthly_with_estimates": 160.6,
+            "yearly_priced": 1927.2,
+            "yearly_with_estimates": 1927.2
+          },
+          "cache.redis": {
+            "monthly_priced": 58.4,
+            "monthly_with_estimates": 58.4,
+            "yearly_priced": 700.8,
+            "yearly_with_estimates": 700.8
+          },
+          "storage.blob": {
+            "monthly_priced": 3.6,
+            "monthly_with_estimates": 3.6,
+            "yearly_priced": 43.2,
+            "yearly_with_estimates": 43.2
+          },
+          "network.nat": {
+            "monthly_priced": 5.0,
+            "monthly_with_estimates": 5.0,
+            "yearly_priced": 60.0,
+            "yearly_with_estimates": 60.0
+          }
+        },
+        "delta_vs_baseline": {
+          "monthly_priced": {"absolute": -477.0, "percent": -64.37},
+          "monthly_with_estimates": {"absolute": -477.0, "percent": -64.37},
+          "yearly_priced": {"absolute": -5724.0, "percent": -64.37},
+          "yearly_with_estimates": {"absolute": -5724.0, "percent": -64.37},
+          "by_category": {
+            "compute.vm": {
+              "monthly_priced": {"absolute": -36.5, "percent": -50.0},
+              "monthly_with_estimates": {"absolute": -36.5, "percent": -50.0},
+              "yearly_priced": {"absolute": -438.0, "percent": -50.0},
+              "yearly_with_estimates": {"absolute": -438.0, "percent": -50.0}
+            },
+            "db.sql": {
+              "monthly_priced": {"absolute": 160.6, "percent": null},
+              "monthly_with_estimates": {"absolute": 160.6, "percent": null},
+              "yearly_priced": {"absolute": 1927.2, "percent": null},
+              "yearly_with_estimates": {"absolute": 1927.2, "percent": null}
+            },
+            "cache.redis": {
+              "monthly_priced": {"absolute": -124.1, "percent": -67.99},
+              "monthly_with_estimates": {"absolute": -124.1, "percent": -67.99},
+              "yearly_priced": {"absolute": -1489.2, "percent": -67.99},
+              "yearly_with_estimates": {"absolute": -1489.2, "percent": -67.99}
+            },
+            "storage.blob": {
+              "monthly_priced": {"absolute": 0.0, "percent": 0.0},
+              "monthly_with_estimates": {"absolute": 0.0, "percent": 0.0},
+              "yearly_priced": {"absolute": 0.0, "percent": 0.0},
+              "yearly_with_estimates": {"absolute": 0.0, "percent": 0.0}
+            },
+            "network.nat": {
+              "monthly_priced": {"absolute": -2.5, "percent": -33.33},
+              "monthly_with_estimates": {"absolute": -2.5, "percent": -33.33},
+              "yearly_priced": {"absolute": -30.0, "percent": -33.33},
+              "yearly_with_estimates": {"absolute": -30.0, "percent": -33.33}
+            }
+          }
+        }
+      }
+    }
+  ],
+  "warnings": [
+    "Sample output only: live runs will rebuild catalogs and may choose different SKUs depending on the LLM response."
+  ]
+}
