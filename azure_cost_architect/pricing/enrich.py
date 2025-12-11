@@ -7,7 +7,7 @@ import logging
 
 from ..config import DEFAULT_CURRENCY, DEFAULT_REGION, HOURS_PROD, CATALOG_DIR
 from .cache import build_cache_key, get_cached_price, set_cached_price
-from .normalize import normalize_service_name
+from .normalize import normalize_service_name, sku_keyword_match
 from .catalog import load_catalog
 from .scoring import score_price_item
 from .units import compute_units
@@ -191,6 +191,11 @@ def filter_items_by_sku_intent(
         return items, False
 
     filtered = items
+
+    # High-signal keyword matching (reservation term, blob tiers, payg/reservation)
+    keyword_filtered = [it for it in filtered if sku_keyword_match(rs, it)]
+    if keyword_filtered:
+        filtered = keyword_filtered
 
     # App Service Plans – δεν επιτρέπουμε downgrade P → B ή S → B
     if cat.startswith("appservice"):
@@ -492,19 +497,21 @@ async def fetch_price_for_resource(
         if category.startswith("storage.blob") or category.startswith("network.appgw"):
             pricing_status = "estimated"
 
-    resource.update(
-        {
-            "unit_price": unit_price,
-            "unit_of_measure": unit_of_measure,
-            "currency_code": currency_code,
-            "sku_name": price_info.get("sku_name"),
-            "meter_name": price_info.get("meter_name"),
-            "product_name": price_info.get("product_name"),
-            "sku_candidates": price_info.get("sku_candidates", []),
-            "pricing_status": pricing_status,
-            "error": "",
-        }
-    )
+        resource.update(
+            {
+                "unit_price": unit_price,
+                "unit_of_measure": unit_of_measure,
+                "currency_code": currency_code,
+                "sku_name": price_info.get("sku_name"),
+                "meter_name": price_info.get("meter_name"),
+                "product_name": price_info.get("product_name"),
+                "type": price_info.get("type"),
+                "reservationTerm": price_info.get("reservationTerm"),
+                "sku_candidates": price_info.get("sku_candidates", []),
+                "pricing_status": pricing_status,
+                "error": "",
+            }
+        )
 
     if unit_price is None:
         resource.update(
