@@ -143,7 +143,9 @@ Your goals:
 - Explain the architecture in human terms for each scenario.
 - Provide clear price breakdown tables.
 - Compare the scenarios and highlight trade-offs.
+- Call out deltas versus the baseline scenario (absolute and %).
 - Highlight approximations and risks (spot, missing HA, elastic pool vs MI, etc.).
+- Comment on where estimates vs priced values dominate the totals and how reservation vs payg choices affect costs.
 - Make explicit mention of:
   - Key Vault / secrets management
   - Log Analytics / monitoring
@@ -174,13 +176,16 @@ Your tasks:
    - A pricing table with columns:
      Scenario | Resource ID | Category | Service | SKU (requested / resolved) |
      Region | Billing | Unit Price | Unit | Units | Monthly Cost | Yearly Cost | Notes.
-   - An aggregated table by category (compute, db, storage, network, analytics, security, monitoring, backup/dr, other).
+   - An aggregated table by category (compute, db, storage, network, analytics, security, monitoring, backup/dr, other) with estimate ratios.
 4. Explicitly list resources where pricing failed and what to check manually.
 5. Provide FinOps recommendations:
    - Quick wins,
-   - Spot vs payg vs reserved,
+   - Spot vs payg vs reserved (call out reservation coverage vs payg exposure),
    - Right-sizing ideas,
    - Region and egress considerations.
+6. Include separate delta tables vs the "baseline" scenario:
+   - One table for overall monthly/yearly totals (priced vs with estimates, absolute and % deltas).
+   - One table for category-level monthly totals (absolute and % deltas) for each non-baseline scenario.
 
 Return ONLY Markdown.
 """
