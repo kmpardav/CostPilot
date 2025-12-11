@@ -1,0 +1,1 @@
+EU ecommerce storefront with active-active web frontends, a managed SQL backend, Redis cache for sessions, and blob storage for product images. Expect ~1M page views per month, primarily in West Europe, with ~150 GB of monthly egress and 200 GB image storage. Favor high availability for checkout paths but keep costs reasonable for supporting services.
