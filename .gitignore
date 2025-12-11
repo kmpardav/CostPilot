@@ -1,0 +1,41 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.so
+
+# Virtual environments
+.venv/
+venv/
+env/
+ENV/
+
+# IDE / Editor
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS junk
+.DS_Store
+Thumbs.db
+
+# Local catalogs & cache (generated)
+catalog/
+azure_price_cache.json
+
+# Debug outputs
+debug_plan_raw.json
+debug_enriched.json
+debug_report_raw.md
+debug_*.json
+debug_*.md
+
+# Logs
+*.log
+
+# Pricing dumps or temp files
+prices.json
+azure_cost_report.md
+azure_cost_*report.md
