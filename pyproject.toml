@@ -1,0 +1,19 @@
+[project]
+name = "azure-cost-architect"
+version = "0.1.0"
+description = "Azure Personal Cost Architect CLI - architecture planning + pricing via Azure Retail Prices API"
+readme = "README.md"
+requires-python = ">=3.9"
+dependencies = [
+  "pydantic",  
+  "openai>=1.40.0",
+  "httpx>=0.27.0",
+  "rich>=13.0.0",
+]
+
+[project.scripts]
+azure-cost = "azure_cost_architect.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["azure_cost_architect*"]

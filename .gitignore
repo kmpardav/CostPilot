@@ -39,3 +39,7 @@ debug_*.md
 prices.json
 azure_cost_report.md
 azure_cost_*report.md
+
+# Build artifacts
+*.egg-info/
+
