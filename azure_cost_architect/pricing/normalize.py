@@ -18,6 +18,7 @@ def normalize_service_name(category: str, service_name: Optional[str]) -> str:
     known = {
         "Virtual Machines",
         "SQL Database",
+        "SQL Managed Instance",
         "Storage",
         "Azure Cosmos DB",
         "Azure Cache for Redis",
@@ -51,6 +52,7 @@ def normalize_service_name(category: str, service_name: Optional[str]) -> str:
         "Public IP Addresses",
         "Azure Machine Learning",
         "Private Link",
+        "Public IP",
     }
     if svc in known:
         return svc

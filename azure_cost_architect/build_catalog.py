@@ -41,6 +41,7 @@ DEFAULT_SUPPORTED_CATEGORIES: List[str] = [
     "network.appgw",
     "network.vnet",
     "network.public_ip",
+    "network.private_endpoint",
     "network.nat",
     "network.vpngw",
     "network.er",

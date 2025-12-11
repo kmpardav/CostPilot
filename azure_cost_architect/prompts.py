@@ -51,10 +51,14 @@ You MUST output a JSON object (valid JSON), with this shape:
           "os_type": "linux | windows | na",
           "metrics": {{
             "storage_gb": 0,
+            "hot_gb": 0,
+            "cool_gb": 0,
+            "archive_gb": 0,
             "egress_gb": 0,
             "operations_per_month": 0,
             "messages_per_month": 0,
             "throughput_ru": 0,
+            "throughput_mbps": 0,
             "iops": 0,
             "dtus": 0,
             "vcores": 0
