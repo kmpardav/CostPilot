@@ -43,3 +43,12 @@ azure_cost_*report.md
 # Build artifacts
 *.egg-info/
 
+# CostPilot output files
+azure_cost_arch_plan.json
+debug_scoring.jsonl
+azure_cost_arch_report.md
+debug_plan_raw.json
+debug_report_raw.md
+
+# Windows artifacts
+desktop.ini
