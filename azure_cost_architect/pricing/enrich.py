@@ -1,9 +1,10 @@
 # azure_cost_architect/pricing/enrich.py
-from typing import Any, Dict, List, Tuple
+from typing import Any, Dict, List, Tuple, Optional
 import asyncio
 import os
 import json
 import logging
+import re
 
 from ..config import DEFAULT_CURRENCY, DEFAULT_REGION, HOURS_PROD, CATALOG_DIR
 from .cache import build_cache_key, get_cached_price, set_cached_price
@@ -348,6 +349,164 @@ def filter_items_by_sku_intent(
         return items, True
 
 
+def _filter_by_billing_model(
+    resource: Dict[str, Any], items: List[Dict[str, Any]]
+) -> List[Dict[str, Any]]:
+    billing = (resource.get("billing_model") or "payg").lower()
+    reservation_term = (resource.get("reservation_term") or resource.get("reservationTerm") or "").lower()
+
+    def _matches_reservation(it: Dict[str, Any]) -> bool:
+        term = (it.get("reservationTerm") or "").lower()
+        if not reservation_term:
+            return True
+        if "3" in reservation_term:
+            return "3" in term
+        if "1" in reservation_term:
+            return "1" in term
+        return True
+
+    if billing == "reserved":
+        candidates = [
+            it
+            for it in items
+            if (it.get("type") or "").lower() == "reservation" and _matches_reservation(it)
+        ]
+        if candidates:
+            return candidates
+
+    if billing == "spot":
+        spot = [
+            it
+            for it in items
+            if "spot" in (it.get("productName") or "").lower()
+            or "spot" in (it.get("meterName") or "").lower()
+        ]
+        if spot:
+            return spot
+
+    # Default PAYG
+    payg = [
+        it
+        for it in items
+        if (it.get("type") or "").lower() != "reservation"
+        and not (it.get("reservationTerm") or "")
+    ]
+    return payg or items
+
+
+def _select_cheapest_item(
+    resource: Dict[str, Any], items: List[Dict[str, Any]]
+) -> Optional[Dict[str, Any]]:
+    arm_sku = resource.get("arm_sku_name") or resource.get("armSkuName") or ""
+    candidates = [it for it in items if sku_keyword_match(arm_sku, it)]
+    if not candidates:
+        candidates = items
+    if not candidates:
+        return None
+    return sorted(candidates, key=lambda it: float(it.get("unitPrice") or 0.0))[0]
+
+
+def _price_blob_storage(
+    resource: Dict[str, Any], category: str, region: str, currency: str
+) -> bool:
+    items = load_catalog(base_dir=CATALOG_DIR, category=category, region=region, currency=currency)
+    if not items:
+        resource.update(
+            {
+                "unit_price": None,
+                "unit_of_measure": None,
+                "currency_code": None,
+                "sku_name": None,
+                "meter_name": None,
+                "product_name": None,
+                "units": None,
+                "monthly_cost": None,
+                "yearly_cost": None,
+                "error": "Blob storage pricing missing from catalog",
+                "pricing_status": "missing",
+            }
+        )
+        return True
+
+    metrics = resource.get("metrics") or {}
+    tiers = [
+        ("hot", float(metrics.get("hot_gb") or metrics.get("storage_hot_gb") or 0.0)),
+        ("cool", float(metrics.get("cool_gb") or metrics.get("storage_cool_gb") or 0.0)),
+        ("archive", float(metrics.get("archive_gb") or metrics.get("storage_archive_gb") or 0.0)),
+    ]
+
+    if all(val <= 0 for _, val in tiers):
+        fallback = float(metrics.get("storage_gb") or 0.0)
+        if fallback <= 0:
+            fallback = 100.0
+        tiers[0] = ("hot", fallback)
+
+    total_monthly = 0.0
+    chosen: List[Dict[str, Any]] = []
+
+    for tier, qty in tiers:
+        if qty <= 0:
+            continue
+
+        def _tier_match(it: Dict[str, Any]) -> bool:
+            text = " ".join(
+                [
+                    (it.get("productName") or ""),
+                    (it.get("meterName") or ""),
+                    (it.get("skuName") or ""),
+                ]
+            ).lower()
+            return tier in text
+
+        tier_items = [it for it in items if _tier_match(it)] or items
+        selected = _select_cheapest_item(resource, tier_items)
+        if not selected:
+            continue
+
+        uom = selected.get("unitOfMeasure") or ""
+        pack = 1.0
+        if "gb" in uom.lower():
+            m = re.search(r"([\d,.]+)\s*gb", uom.lower())
+            if m:
+                try:
+                    pack = float(m.group(1).replace(",", "")) or 1.0
+                except ValueError:
+                    pack = 1.0
+        units = qty / pack
+        cost = units * float(selected.get("unitPrice") or 0.0)
+        total_monthly += cost
+        chosen.append(
+            {
+                "tier": tier,
+                "meter_name": selected.get("meterName"),
+                "product_name": selected.get("productName") or selected.get("ProductName"),
+                "unit_price": selected.get("unitPrice"),
+                "unit_of_measure": selected.get("unitOfMeasure"),
+                "currency_code": selected.get("currencyCode"),
+                "units": units,
+                "monthly_cost": cost,
+            }
+        )
+
+    resource.update(
+        {
+            "unit_price": None,
+            "unit_of_measure": None,
+            "currency_code": currency,
+            "sku_name": resource.get("arm_sku_name"),
+            "meter_name": ", ".join(c.get("meter_name") or "" for c in chosen if c.get("meter_name")),
+            "product_name": ", ".join(c.get("product_name") or "" for c in chosen if c.get("product_name")),
+            "units": None,
+            "monthly_cost": round(total_monthly, 2),
+            "yearly_cost": round(total_monthly * 12, 2),
+            "pricing_status": "estimated" if chosen else "missing",
+            "error": "" if chosen else "Blob tier meters not found",
+            "sku_candidates": chosen,
+        }
+    )
+    return True
+
+
 # ------------------------------------------------------------
 # Pricing ενός resource από local catalog + cache
 # ------------------------------------------------------------
@@ -429,6 +588,11 @@ async def fetch_price_for_resource(
             _LOGGER.debug("Resource %s is WebApp logical – cost is in App Service plan.", resource.get("id"))
         return
 
+    # Ειδικές διαδρομές pricing
+    if category.startswith("storage.blob"):
+        if _price_blob_storage(resource, category, region, currency):
+            return
+
     # Cache key για price cache (json)
     cache_key = build_cache_key(resource, region, currency)
     price_info = get_cached_price(cache_key)
@@ -508,7 +672,9 @@ async def fetch_price_for_resource(
             )
             return
 
-        items = filtered_items or all_items
+        # 2b) Billing model (payg/reserved/spot) filtering
+        billing_filtered = _filter_by_billing_model(resource, filtered_items or all_items)
+        items = billing_filtered or filtered_items or all_items
 
         # ------------------------------------------------------------
         # 3) Scoring όλων των candidate items από τον κατάλογο

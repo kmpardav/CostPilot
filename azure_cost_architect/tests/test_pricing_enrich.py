@@ -242,3 +242,50 @@ async def test_enrich_with_small_catalog(monkeypatch, tmp_path):
         + private_link["monthly_cost"],
         rel=1e-4,
     )
+
+
+@pytest.mark.anyio
+async def test_blob_storage_defaults_to_hot_when_metrics_missing(monkeypatch, tmp_path):
+    region = "westeurope"
+    currency = "EUR"
+    catalog_dir = tmp_path / "catalog"
+
+    _write_catalog(
+        catalog_dir,
+        normalize_service_name("storage.blob", None),
+        region,
+        currency,
+        [
+            {
+                "productName": "Hot Block Blob Data Stored",
+                "meterName": "Hot LRS Data Stored",
+                "skuName": "Hot_LRS",
+                "unitPrice": 0.02,
+                "unitOfMeasure": "1 GB/Month",
+                "currencyCode": currency,
+                "type": "Consumption",
+            }
+        ],
+    )
+
+    from azure_cost_architect.pricing import enrich as enrich_mod
+
+    monkeypatch.setattr(enrich_mod, "CATALOG_DIR", str(catalog_dir))
+
+    plan = {
+        "metadata": {"currency": currency, "default_region": region},
+        "scenarios": [
+            {
+                "id": "baseline",
+                "resources": [
+                    {"id": "blob-default", "category": "storage.blob", "metrics": {}},
+                ],
+            }
+        ],
+    }
+
+    enriched = await enrich_plan_with_prices(plan, debug=False)
+    blob = enriched["scenarios"][0]["resources"][0]
+
+    assert blob["pricing_status"] == "estimated"
+    assert blob["monthly_cost"] == pytest.approx(100 * 0.02, rel=1e-3)
