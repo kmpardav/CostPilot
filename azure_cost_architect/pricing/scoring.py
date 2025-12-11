@@ -146,6 +146,20 @@ def _detect_redis_tier(text: str) -> str:
     return ""
 
 
+def _detect_blob_tier(text: str) -> str:
+    """
+    Hot / Cool / Archive detection for blob meters & requested SKUs/notes.
+    """
+    text = (text or "").lower()
+    if "archive" in text:
+        return "archive"
+    if "cool" in text:
+        return "cool"
+    if "hot" in text:
+        return "hot"
+    return ""
+
+
 def _is_backup_vault_meter(product_name: str, meter_name: str) -> bool:
     """
     Εντοπισμός τυπικών Backup Vault meters (Protected Instances, Backup Storage κ.λπ.)
@@ -206,12 +220,20 @@ def score_price_item(resource: Dict[str, Any], item: Dict[str, Any], hours_prod:
     score = 0
 
     meters = resource.get("metrics", {})
+    redis_tp = float(
+        meters.get("throughput_mbps")
+        or meters.get("throughput_mb_s")
+        or meters.get("throughput_mb_per_sec")
+        or 0.0
+    )
     usage = meters.get("baseline", {}).get("usage", {})  # reserved για μελλοντικά fine-tuning
     arm_sku_name = _low(resource.get("arm_sku_name"))
     category = _low(resource.get("category") or "other")
     service_name = _low(resource.get("service_name") or resource.get("serviceName") or "")
     criticality = _low(resource.get("criticality") or "prod")
+    billing_model = _low(resource.get("billing_model") or resource.get("billingModel") or "")
     notes = _low(resource.get("notes") or "")
+    requested_res_term = _low(resource.get("reservation_term") or resource.get("reservationTerm") or "")
 
     product_name = _low(_g(item, "product_name", "ProductName", "productName"))
     meter_name = _low(_g(item, "meter_name", "meterName"))
@@ -219,8 +241,13 @@ def score_price_item(resource: Dict[str, Any], item: Dict[str, Any], hours_prod:
     unit_price = float(_g(item, "unit_price", "unitPrice") or 0.0)
     unit_of_measure = _low(_g(item, "unit_of_measure", "unitOfMeasure"))
     price_type = _low(_g(item, "type", "Type"))  # "Consumption" / "Reservation" ή κενό
+    reservation_term = _low(_g(item, "reservationTerm", "ReservationTerm"))
 
     text_all = product_name + " " + meter_name + " " + sku_name
+
+    # Mild bonus if the requested SKU is referenced in product/meter names
+    if arm_sku_name and arm_sku_name in text_all:
+        score += 5
 
     # -------------------------------------------------------------------------
     # 0) Early “hard” guards
@@ -254,11 +281,15 @@ def score_price_item(resource: Dict[str, Any], item: Dict[str, Any], hours_prod:
     # 1) Price type preference (Consumption vs Reservation)
     # -------------------------------------------------------------------------
     # Εδώ δεν "κλειδώνουμε" αλλά δίνουμε προτίμηση/ποινή.
-    if "reservation" in notes or "reserved" in notes:
+    if billing_model == "reserved" or "reservation" in notes or "reserved" in notes:
         if price_type == "reservation":
-            score += 20
+            score += 30
+            if "3" in requested_res_term and "3" in reservation_term:
+                score += 10
+            if "1" in requested_res_term and "1" in reservation_term:
+                score += 8
         elif price_type == "consumption":
-            score -= 5
+            score -= 15
     else:
         if price_type == "consumption":
             score += 10
@@ -453,6 +484,16 @@ def score_price_item(resource: Dict[str, Any], item: Dict[str, Any], hours_prod:
 
         low_text = (product_name + " " + meter_name + " " + unit_of_measure).lower()
 
+        req_tier = _detect_blob_tier(arm_sku_name + " " + notes)
+        cand_tier = _detect_blob_tier(product_name + " " + meter_name + " " + sku_name)
+        if req_tier and cand_tier:
+            if req_tier == cand_tier:
+                score += 25
+            else:
+                score -= 40
+        elif req_tier and not cand_tier:
+            score -= 10
+
         # 7.2 Capacity meters – "Data Stored", "capacity", GB/TB stored
         is_capacity = _looks_like_blob_data_meter(product_name, meter_name) or any(
             k in low_text for k in ("data stored", "capacity", "gb stored", "tb stored")
@@ -539,6 +580,12 @@ def score_price_item(resource: Dict[str, Any], item: Dict[str, Any], hours_prod:
         # Basic detection for "Cache" vs "Ops"
         if "cache" in product_name and "throughput" not in meter_name:
             score += 20
+
+        if redis_tp > 0:
+            if "throughput" in meter_name:
+                score += 25
+            else:
+                score -= 10
 
     # -------------------------------------------------------------------------
     # 9) Log Analytics

@@ -17,8 +17,37 @@ def compute_units(resource: dict, unit_of_measure: str) -> float:
     ops = float(metrics.get("operations_per_month", 0.0) or 0.0)
     msgs = float(metrics.get("messages_per_month", 0.0) or 0.0)
     ru = float(metrics.get("throughput_ru", 0.0) or 0.0)
+    throughput_mbps = float(
+        metrics.get("throughput_mbps")
+        or metrics.get("throughput_mb_s")
+        or metrics.get("throughput_mb_per_sec")
+        or 0.0
+    )
 
+    category = (resource.get("category") or "").lower()
     uom = (unit_of_measure or "").lower().strip()
+    meter_text = " ".join(
+        [
+            (resource.get("product_name") or ""),
+            (resource.get("meter_name") or ""),
+            (resource.get("sku_name") or ""),
+            uom,
+        ]
+    ).lower()
+
+    def _blob_tier_metric(tier: str) -> float:
+        for key in (
+            f"{tier}_gb",
+            f"{tier}_storage_gb",
+            f"storage_{tier}_gb",
+            f"blob_{tier}_gb",
+        ):
+            if key in metrics:
+                try:
+                    return float(metrics.get(key) or 0.0)
+                except (TypeError, ValueError):
+                    continue
+        return 0.0
 
     # ---- Hour-based meters (compute, reserved, κλπ) ----
     if "hour" in uom:
@@ -26,7 +55,20 @@ def compute_units(resource: dict, unit_of_measure: str) -> float:
 
     # ---- GB-based meters (storage / egress) ----
     if "gb" in uom:
-        base = egress_gb if (resource.get("category") or "").lower().startswith("network") else storage_gb
+        base = egress_gb if category.startswith("network") else storage_gb
+
+        if category.startswith("storage.blob"):
+            tier = ""
+            if "archive" in meter_text:
+                tier = "archive"
+            elif "cool" in meter_text:
+                tier = "cool"
+            elif "hot" in meter_text or "standard" in meter_text:
+                tier = "hot"
+
+            tier_value = _blob_tier_metric(tier) if tier else 0.0
+            base = tier_value or base
+
         base = base or storage_gb or egress_gb
         m = re.search(r"([\d,.]+)\s*gb", uom)
         if m:
@@ -44,6 +86,20 @@ def compute_units(resource: dict, unit_of_measure: str) -> float:
         effective_ru = ru if ru > 0 else factor
         return (effective_ru / factor) * hours
 
+    # ---- Redis throughput (MB/s or throughput units) ----
+    if category.startswith("cache.redis") and (
+        "throughput" in uom or "mb/s" in uom or "mbps" in uom
+    ):
+        base_tp = throughput_mbps if throughput_mbps > 0 else 1.0
+        m = re.search(r"([\d,.]+)\s*mb", uom)
+        pack = 1.0
+        if m:
+            try:
+                pack = float(m.group(1).replace(",", "")) or 1.0
+            except ValueError:
+                pack = 1.0
+        return (base_tp / pack) * hours
+
     # ---- per million / 10k operations ----
     if "1m" in uom or "1 million" in uom or "1,000,000" in uom:
         return max(msgs, ops, 0.0) / 1_000_000.0
@@ -51,6 +107,10 @@ def compute_units(resource: dict, unit_of_measure: str) -> float:
         return max(msgs, ops, 0.0) / 10_000.0
     if "operation" in uom or "request" in uom or "message" in uom:
         return max(msgs, ops, 0.0)
+
+    # Public IP / Private Link – default to hourly if nothing else matched
+    if category.startswith("network.public_ip") or category.startswith("network.private_endpoint"):
+        return qty * hours
 
     # Fallback: απλά quantity
     return qty
