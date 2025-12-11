@@ -19,6 +19,66 @@ _LOGGER = logging.getLogger(__name__)
 # ------------------------------------------------------------
 DEBUG_ENV_VAR = "AZCOST_DEBUG_FILE"
 
+
+def _compute_delta_entry(current: float, baseline: float) -> Dict[str, Any]:
+    absolute = round(current - baseline, 2)
+    percent = None
+    if baseline:
+        percent = round((absolute / baseline) * 100.0, 2)
+    return {"absolute": absolute, "percent": percent}
+
+
+def compute_delta_vs_baseline(
+    baseline_totals: Dict[str, Any], scenario_totals: Dict[str, Any]
+) -> Dict[str, Any]:
+    """Compute deltas for totals and per-category rollups versus a baseline."""
+
+    if not baseline_totals:
+        return {}
+
+    base_categories = baseline_totals.get("by_category", {})
+    scenario_categories = scenario_totals.get("by_category", {})
+
+    delta_by_category: Dict[str, Dict[str, Any]] = {}
+    for category, values in scenario_categories.items():
+        base_vals = base_categories.get(category, {})
+        delta_by_category[category] = {
+            "monthly_priced": _compute_delta_entry(
+                values.get("monthly_priced", 0.0), base_vals.get("monthly_priced", 0.0)
+            ),
+            "monthly_with_estimates": _compute_delta_entry(
+                values.get("monthly_with_estimates", 0.0),
+                base_vals.get("monthly_with_estimates", 0.0),
+            ),
+            "yearly_priced": _compute_delta_entry(
+                values.get("yearly_priced", 0.0), base_vals.get("yearly_priced", 0.0)
+            ),
+            "yearly_with_estimates": _compute_delta_entry(
+                values.get("yearly_with_estimates", 0.0),
+                base_vals.get("yearly_with_estimates", 0.0),
+            ),
+        }
+
+    return {
+        "monthly_priced": _compute_delta_entry(
+            scenario_totals.get("monthly_priced", 0.0),
+            baseline_totals.get("monthly_priced", 0.0),
+        ),
+        "monthly_with_estimates": _compute_delta_entry(
+            scenario_totals.get("monthly_with_estimates", 0.0),
+            baseline_totals.get("monthly_with_estimates", 0.0),
+        ),
+        "yearly_priced": _compute_delta_entry(
+            scenario_totals.get("yearly_priced", 0.0),
+            baseline_totals.get("yearly_priced", 0.0),
+        ),
+        "yearly_with_estimates": _compute_delta_entry(
+            scenario_totals.get("yearly_with_estimates", 0.0),
+            baseline_totals.get("yearly_with_estimates", 0.0),
+        ),
+        "by_category": delta_by_category,
+    }
+
 def _get_debug_file() -> str:
     """
     Διαβάζει πάντα τη μεταβλητή περιβάλλοντος AZCOST_DEBUG_FILE τη στιγμή
@@ -145,6 +205,9 @@ def aggregate_scenario_costs(scenario: Dict[str, Any], currency: str) -> Dict[st
             entry["monthly_with_estimates"] += monthly
             entry["yearly_with_estimates"] += yearly
 
+    monthly_estimated = monthly_with_est - monthly_priced
+    yearly_estimated = yearly_with_est - yearly_priced
+
     return {
         "currency": currency,
         # Backwards compatible totals
@@ -153,6 +216,8 @@ def aggregate_scenario_costs(scenario: Dict[str, Any], currency: str) -> Dict[st
         # Νέα, πιο ρητά totals
         "monthly_priced": round(monthly_priced, 2),
         "yearly_priced": round(yearly_priced, 2),
+        "monthly_estimated": round(monthly_estimated, 2),
+        "yearly_estimated": round(yearly_estimated, 2),
         "monthly_with_estimates": round(monthly_with_est, 2),
         "yearly_with_estimates": round(yearly_with_est, 2),
         "by_category": {
@@ -161,12 +226,41 @@ def aggregate_scenario_costs(scenario: Dict[str, Any], currency: str) -> Dict[st
                 "yearly": round(v["yearly_with_estimates"], 2),
                 "monthly_priced": round(v["monthly_priced"], 2),
                 "yearly_priced": round(v["yearly_priced"], 2),
+                "monthly_estimated": round(
+                    v["monthly_with_estimates"] - v["monthly_priced"], 2
+                ),
+                "yearly_estimated": round(
+                    v["yearly_with_estimates"] - v["yearly_priced"], 2
+                ),
                 "monthly_with_estimates": round(v["monthly_with_estimates"], 2),
                 "yearly_with_estimates": round(v["yearly_with_estimates"], 2),
             }
             for k, v in by_category.items()
         },
     }
+
+
+def attach_baseline_deltas(enriched_scenarios: List[Dict[str, Any]]) -> None:
+    """Attach delta_vs_baseline field to every scenario totals."""
+
+    if not enriched_scenarios:
+        return
+
+    baseline = next(
+        (
+            sc
+            for sc in enriched_scenarios
+            if (sc.get("id") or "").lower() == "baseline"
+        ),
+        enriched_scenarios[0],
+    )
+    baseline_totals = baseline.get("totals") or {}
+
+    for sc in enriched_scenarios:
+        sc.setdefault("totals", {})
+        sc["totals"]["delta_vs_baseline"] = compute_delta_vs_baseline(
+            baseline_totals, sc["totals"]
+        )
 
 
 # ------------------------------------------------------------
@@ -709,6 +803,7 @@ async def enrich_plan_with_prices(plan: Dict[str, Any], debug: bool = False) -> 
 
     # Sanity checks στα scenarios (baseline vs cost_optimized vs high_performance)
     _log_scenario_consistency(enriched_scenarios)
+    attach_baseline_deltas(enriched_scenarios)
 
     enriched_plan = {
         "metadata": {
