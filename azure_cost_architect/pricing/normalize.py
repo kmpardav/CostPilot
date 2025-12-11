@@ -53,6 +53,7 @@ def normalize_service_name(category: str, service_name: Optional[str]) -> str:
         "Azure Machine Learning",
         "Private Link",
         "Public IP",
+        "Traffic Manager",
     }
     if svc in known:
         return svc
@@ -70,7 +71,9 @@ def normalize_service_name(category: str, service_name: Optional[str]) -> str:
         return "Storage"
 
     # Databases
-    if cat.startswith("db.sql") or cat.startswith("db.sqlmi"):
+    if cat.startswith("db.sqlmi"):
+        return "SQL Managed Instance"
+    if cat.startswith("db.sql"):
         return "SQL Database"
     if cat.startswith("db.cosmos"):
         return "Azure Cosmos DB"
@@ -132,8 +135,10 @@ def normalize_service_name(category: str, service_name: Optional[str]) -> str:
         return "Bandwidth"
     if cat.startswith("network.firewall"):
         return "Azure Firewall"
-    if cat.startswith("network.gateway"):
+    if cat.startswith("network.gateway") or cat.startswith("network.frontdoor"):
         return "Azure Front Door"
+    if cat.startswith("network.traffic_manager"):
+        return "Traffic Manager"
     if cat.startswith("network.bastion"):
         return "Azure Bastion"
     if cat.startswith("network.public_ip"):
@@ -176,6 +181,11 @@ def sku_keyword_match(requested_sku: str, item: Dict[str, str]) -> bool:
             "hot",
             "cool",
             "archive",
+            "lrs",
+            "grs",
+            "zrs",
+            "gzrs",
+            "ragrs",
         )
     ]
 

@@ -60,7 +60,7 @@ async def test_enrich_with_small_catalog(monkeypatch, tmp_path):
         ],
     )
 
-    # Blob storage catalog (hot/cool + noisy ops meter)
+    # Blob storage catalog (hot/cool + redundancy variants + noisy ops meter)
     write(
         "storage.blob",
         [
@@ -69,6 +69,15 @@ async def test_enrich_with_small_catalog(monkeypatch, tmp_path):
                 "meterName": "Hot LRS Data Stored",
                 "skuName": "Hot_LRS",
                 "unitPrice": 0.02,
+                "unitOfMeasure": "1 GB/Month",
+                "currencyCode": currency,
+                "type": "Consumption",
+            },
+            {
+                "productName": "Hot Block Blob Data Stored",
+                "meterName": "Hot GRS Data Stored",
+                "skuName": "Hot_GRS",
+                "unitPrice": 0.03,
                 "unitOfMeasure": "1 GB/Month",
                 "currencyCode": currency,
                 "type": "Consumption",
@@ -88,6 +97,47 @@ async def test_enrich_with_small_catalog(monkeypatch, tmp_path):
                 "skuName": "Archive_LRS",
                 "unitPrice": 0.5,
                 "unitOfMeasure": "10k operations",
+                "currencyCode": currency,
+                "type": "Consumption",
+            },
+        ],
+    )
+
+    # Bandwidth / egress catalog
+    write(
+        "network.egress",
+        [
+            {
+                "productName": "Data Transfer Out",
+                "meterName": "Data Transfer Out",
+                "skuName": "Bandwidth",
+                "unitPrice": 0.08,
+                "unitOfMeasure": "1 GB",
+                "currencyCode": currency,
+                "type": "Consumption",
+            }
+        ],
+    )
+
+    # Application Gateway catalog (standard vs WAF_v2)
+    write(
+        "network.appgw",
+        [
+            {
+                "productName": "Application Gateway Standard",
+                "meterName": "Application Gateway Unit",
+                "skuName": "Standard_v2",
+                "unitPrice": 0.10,
+                "unitOfMeasure": "1 Hour",
+                "currencyCode": currency,
+                "type": "Consumption",
+            },
+            {
+                "productName": "Application Gateway WAF_v2",
+                "meterName": "Application Gateway WAF_v2 Unit",
+                "skuName": "WAF_v2",
+                "unitPrice": 0.15,
+                "unitOfMeasure": "1 Hour",
                 "currencyCode": currency,
                 "type": "Consumption",
             },
@@ -178,6 +228,12 @@ async def test_enrich_with_small_catalog(monkeypatch, tmp_path):
                         "metrics": {"hot_gb": 500},
                     },
                     {
+                        "id": "blob-hot-grs",
+                        "category": "storage.blob",
+                        "arm_sku_name": "Hot_GRS",
+                        "metrics": {"hot_gb": 100},
+                    },
+                    {
                         "id": "blob-cool",
                         "category": "storage.blob",
                         "arm_sku_name": "Cool_LRS",
@@ -190,6 +246,16 @@ async def test_enrich_with_small_catalog(monkeypatch, tmp_path):
                     },
                     {"id": "public-ip", "category": "network.public_ip"},
                     {"id": "private-link", "category": "network.private_endpoint"},
+                    {
+                        "id": "egress",
+                        "category": "network.egress",
+                        "metrics": {"egress_gb": 200},
+                    },
+                    {
+                        "id": "appgw",
+                        "category": "network.appgw",
+                        "arm_sku_name": "WAF_v2",
+                    },
                 ],
             }
         ],
@@ -215,6 +281,10 @@ async def test_enrich_with_small_catalog(monkeypatch, tmp_path):
     assert "hot" in hot_blob["product_name"].lower()
     assert hot_blob["monthly_cost"] == pytest.approx(500 * 0.02, rel=1e-3)
 
+    hot_blob_grs = resources["blob-hot-grs"]
+    assert "grs" in hot_blob_grs["meter_name"].lower()
+    assert hot_blob_grs["monthly_cost"] == pytest.approx(100 * 0.03, rel=1e-3)
+
     cool_blob = resources["blob-cool"]
     assert "cool" in cool_blob["product_name"].lower()
     assert cool_blob["monthly_cost"] == pytest.approx(200 * 0.01, rel=1e-3)
@@ -223,6 +293,16 @@ async def test_enrich_with_small_catalog(monkeypatch, tmp_path):
     redis_res = resources["redis-cache"]
     assert "throughput" in redis_res["meter_name"].lower()
     assert redis_res["monthly_cost"] == pytest.approx((75 / 50) * 730 * 0.1, rel=1e-3)
+
+    # Bandwidth/egress should charge per GB
+    egress_res = resources["egress"]
+    assert egress_res["units"] == pytest.approx(200)
+    assert egress_res["monthly_cost"] == pytest.approx(200 * 0.08, rel=1e-3)
+
+    # Application Gateway should pick WAF_v2 meter when requested
+    appgw_res = resources["appgw"]
+    assert "waf" in appgw_res["meter_name"].lower()
+    assert appgw_res["monthly_cost"] == pytest.approx(730 * 0.15, rel=1e-3)
 
     # Public IP & Private Link default to hourly usage
     public_ip = resources["public-ip"]
@@ -236,10 +316,13 @@ async def test_enrich_with_small_catalog(monkeypatch, tmp_path):
         sql_res["monthly_cost"]
         + sql_payg["monthly_cost"]
         + hot_blob["monthly_cost"]
+        + hot_blob_grs["monthly_cost"]
         + cool_blob["monthly_cost"]
         + redis_res["monthly_cost"]
         + public_ip["monthly_cost"]
-        + private_link["monthly_cost"],
+        + private_link["monthly_cost"]
+        + egress_res["monthly_cost"]
+        + appgw_res["monthly_cost"],
         rel=1e-4,
     )
 
