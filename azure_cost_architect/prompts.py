@@ -80,6 +80,10 @@ RULES & BEST PRACTICES (VERY IMPORTANT):
     - 1x Backup vault (backup.vault) with realistic storage_gb (150–300 GB),
     - Site Recovery (dr.asr) if DR is in scope (at least 1 protected instance),
     - Some outbound bandwidth via network.nat or network.egress (egress_gb > 0).
+- Explicit network/runtime dependencies:
+  - Redis caches (cache.redis) for session/stateful caching with billing_model hints (payg vs reserved).
+  - Public IPs (network.public_ip) for ingress/egress endpoints with hourly billing where applicable.
+  - Private Endpoints (network.private_endpoint) for PaaS services when privacy is needed; note hourly metering.
 - For dev/test:
   - You may reduce hours_per_month (160 is typical) and scale down storage_gb / egress_gb.
   - You can omit Site Recovery if DR is clearly out of scope.

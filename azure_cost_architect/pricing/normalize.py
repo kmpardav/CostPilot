@@ -1,5 +1,6 @@
 # azure_cost_architect/pricing/normalize.py
-from typing import Optional
+import re
+from typing import Dict, Optional
 
 
 def normalize_service_name(category: str, service_name: Optional[str]) -> str:
@@ -139,3 +140,60 @@ def normalize_service_name(category: str, service_name: Optional[str]) -> str:
         return "Private Link"
 
     return svc or "Other"
+
+
+def sku_keyword_match(requested_sku: str, item: Dict[str, str]) -> bool:
+    """
+    Lightweight keyword-based matching between a requested SKU hint and a Retail item.
+
+    The goal is not strict equality but to ensure that high-signal hints such as
+    reservation term (1y/3y), payg vs reservation, or blob tier (hot/cool/archive)
+    are visible in the candidate's metadata (reservationTerm / productName / skuName).
+    """
+
+    hint = (requested_sku or "").lower()
+    if not hint:
+        return True
+
+    # Only keep "safe" tokens we know how to interpret
+    tokens = [
+        t
+        for t in re.split(r"[^a-z0-9]+", hint)
+        if t
+        in (
+            "payg",
+            "consumption",
+            "reserved",
+            "reservation",
+            "1y",
+            "1yr",
+            "1year",
+            "3y",
+            "3yr",
+            "3year",
+            "hot",
+            "cool",
+            "archive",
+        )
+    ]
+
+    if not tokens:
+        return True
+
+    text = " ".join(
+        (
+            (item.get("reservationTerm") or ""),
+            (item.get("productName") or item.get("ProductName") or ""),
+            (item.get("skuName") or ""),
+            (item.get("armSkuName") or ""),
+        )
+    ).lower()
+
+    # Normalise reservation tokens
+    text = text.replace("one year", "1y").replace("three year", "3y")
+    if "1 year" in text:
+        text += " 1y"
+    if "3 year" in text:
+        text += " 3y"
+
+    return all(tok in text for tok in tokens)
