@@ -67,3 +67,4 @@ jq '.' demo_finops_plan.json
 ## Additional resources
 - Browse the test suite for usage patterns and expectations: [`azure_cost_architect/tests`](azure_cost_architect/tests).
 - Core CLI entrypoint and configuration live in [`azure_cost_architect/cli.py`](azure_cost_architect/cli.py) and [`azure_cost_architect/config.py`](azure_cost_architect/config.py).
+- Upcoming capabilities and focus areas are tracked in the [`docs/roadmap.md`](docs/roadmap.md).
