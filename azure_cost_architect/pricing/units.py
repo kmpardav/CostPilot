@@ -21,8 +21,12 @@ def compute_units(resource: dict, unit_of_measure: str) -> float:
         metrics.get("throughput_mbps")
         or metrics.get("throughput_mb_s")
         or metrics.get("throughput_mb_per_sec")
+        or metrics.get("bandwidth_mbps")
         or 0.0
     )
+    bandwidth_gbps = float(metrics.get("bandwidth_gbps") or 0.0)
+    if bandwidth_gbps and throughput_mbps <= 0:
+        throughput_mbps = bandwidth_gbps * 1000.0
 
     category = (resource.get("category") or "").lower()
     uom = (unit_of_measure or "").lower().strip()
@@ -85,6 +89,23 @@ def compute_units(resource: dict, unit_of_measure: str) -> float:
         factor = 100.0 if "100" in uom else 1.0
         effective_ru = ru if ru > 0 else factor
         return (effective_ru / factor) * hours
+
+    # ---- Mbps / Gbps or capacity units for networking ----
+    if "mbps" in uom or "gbps" in uom or "capacity unit" in uom:
+        base_tp = throughput_mbps if throughput_mbps > 0 else qty
+        pack = 1.0
+        m = re.search(r"([\d,.]+)\s*(g|m)bps", uom)
+        if m:
+            try:
+                value = float(m.group(1).replace(",", ""))
+                unit = m.group(2)
+                if unit == "g":
+                    value *= 1000.0
+                if value > 0:
+                    pack = value
+            except ValueError:
+                pack = 1.0
+        return max(base_tp, 0.0) / pack
 
     # ---- Redis throughput (MB/s or throughput units) ----
     if category.startswith("cache.redis") and (

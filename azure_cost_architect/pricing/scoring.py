@@ -192,6 +192,21 @@ def _is_public_ip_address_meter(product_name: str, meter_name: str) -> bool:
     return False
 
 
+def _detect_redundancy(text: str) -> str:
+    low = (text or "").lower()
+    if "ragrs" in low or "ra-grs" in low:
+        return "ragrs"
+    if "gzrs" in low:
+        return "gzrs"
+    if "grs" in low:
+        return "grs"
+    if "zrs" in low:
+        return "zrs"
+    if "lrs" in low:
+        return "lrs"
+    return ""
+
+
 # -------- safe getters (camelCase + snake_case) --------------------------------
 
 
@@ -494,6 +509,14 @@ def score_price_item(resource: Dict[str, Any], item: Dict[str, Any], hours_prod:
         elif req_tier and not cand_tier:
             score -= 10
 
+        req_redundancy = _detect_redundancy(arm_sku_name + " " + notes)
+        cand_redundancy = _detect_redundancy(product_name + " " + meter_name + " " + sku_name)
+        if req_redundancy and cand_redundancy:
+            if req_redundancy == cand_redundancy:
+                score += 20
+            else:
+                score -= 35
+
         # 7.2 Capacity meters – "Data Stored", "capacity", GB/TB stored
         is_capacity = _looks_like_blob_data_meter(product_name, meter_name) or any(
             k in low_text for k in ("data stored", "capacity", "gb stored", "tb stored")
@@ -586,6 +609,24 @@ def score_price_item(resource: Dict[str, Any], item: Dict[str, Any], hours_prod:
                 score += 25
             else:
                 score -= 10
+
+    # -------------------------------------------------------------------------
+    # 8b) Application Gateway / Front Door / Traffic Manager
+    # -------------------------------------------------------------------------
+    if category.startswith("network.appgw") or category.startswith("network.gateway"):
+        wants_waf = "waf" in arm_sku_name or "waf" in notes
+        if wants_waf and "waf" in meter_name:
+            score += 25
+        if wants_waf and "basic" in meter_name:
+            score -= 50
+        if "v2" in arm_sku_name and "v2" in meter_name:
+            score += 10
+    if category.startswith("network.traffic_manager"):
+        if "dns" in product_name or "traffic manager" in product_name:
+            score += 10
+    if category.startswith("network.egress") or category.startswith("network.nat"):
+        if "data transfer out" in meter_name or "egress" in meter_name:
+            score += 10
 
     # -------------------------------------------------------------------------
     # 9) Log Analytics

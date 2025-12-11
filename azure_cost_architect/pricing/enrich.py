@@ -328,6 +328,26 @@ def filter_items_by_sku_intent(
             )
         ]
 
+    # Blob redundancy (LRS/GRS/ZRS) hints
+    if cat.startswith("storage.blob"):
+        requested_redundancy = _detect_redundancy_hint(rs)
+        if requested_redundancy:
+            filtered_with_redundancy = [
+                it
+                for it in filtered
+                if _detect_redundancy_hint(
+                    " ".join(
+                        [
+                            it.get("productName") or "",
+                            it.get("meterName") or "",
+                            it.get("skuName") or "",
+                        ]
+                    )
+                )
+                == requested_redundancy
+            ]
+            filtered = filtered_with_redundancy or filtered
+
     # SQL Single DB GP_Gen5_n – προτιμάμε Compute Gen5, όχι management/backup
     if cat.startswith("db.sql") and "gp_gen5" in rs:
         filtered = [
@@ -406,9 +426,49 @@ def _select_cheapest_item(
     return sorted(candidates, key=lambda it: float(it.get("unitPrice") or 0.0))[0]
 
 
+def _detect_redundancy_hint(text: str) -> str:
+    low = (text or "").lower()
+    if "ragrs" in low or "ra-grs" in low:
+        return "ragrs"
+    if "gzrs" in low:
+        return "gzrs"
+    if "grs" in low:
+        return "grs"
+    if "zrs" in low:
+        return "zrs"
+    if "lrs" in low:
+        return "lrs"
+    return ""
+
+
 def _price_blob_storage(
     resource: Dict[str, Any], category: str, region: str, currency: str
 ) -> bool:
+    def _requested_redundancy(res: Dict[str, Any]) -> str:
+        return _detect_redundancy_hint(
+            " ".join(
+                [
+                    res.get("arm_sku_name") or "",
+                    res.get("notes") or "",
+                    res.get("sku_name") or "",
+                    json.dumps(res.get("metrics") or {}),
+                ]
+            )
+        )
+
+    def _matches_redundancy(candidate: Dict[str, Any], requested: str) -> bool:
+        if not requested:
+            return True
+        text = " ".join(
+            [
+                candidate.get("productName") or "",
+                candidate.get("meterName") or "",
+                candidate.get("skuName") or "",
+            ]
+        )
+        cand = _detect_redundancy_hint(text)
+        return not cand or cand == requested
+
     items = load_catalog(base_dir=CATALOG_DIR, category=category, region=region, currency=currency)
     if not items:
         resource.update(
@@ -435,6 +495,8 @@ def _price_blob_storage(
         ("archive", float(metrics.get("archive_gb") or metrics.get("storage_archive_gb") or 0.0)),
     ]
 
+    requested_redundancy = _requested_redundancy(resource)
+
     if all(val <= 0 for _, val in tiers):
         fallback = float(metrics.get("storage_gb") or 0.0)
         if fallback <= 0:
@@ -459,6 +521,7 @@ def _price_blob_storage(
             return tier in text
 
         tier_items = [it for it in items if _tier_match(it)] or items
+        tier_items = [it for it in tier_items if _matches_redundancy(it, requested_redundancy)] or tier_items
         selected = _select_cheapest_item(resource, tier_items)
         if not selected:
             continue
