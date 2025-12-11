@@ -13,6 +13,7 @@ dependencies = [
 
 [project.scripts]
 azure-cost = "azure_cost_architect.cli:main"
+azure_cost = "azure_cost_architect.cli:main"
 
 [tool.setuptools.packages.find]
 where = ["."]
