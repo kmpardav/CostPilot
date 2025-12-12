@@ -46,20 +46,24 @@ def compute_delta_vs_baseline(
     delta_by_category: Dict[str, Dict[str, Any]] = {}
     for category, values in scenario_categories.items():
         base_vals = base_categories.get(category, {})
+        modeled_current = values.get("monthly_priced", 0.0) + values.get(
+            "monthly_estimated", 0.0
+        )
+        modeled_base = base_vals.get("monthly_priced", 0.0) + base_vals.get(
+            "monthly_estimated", 0.0
+        )
         delta_by_category[category] = {
             "monthly_priced": _compute_delta_entry(
                 values.get("monthly_priced", 0.0), base_vals.get("monthly_priced", 0.0)
             ),
-            "monthly_with_estimates": _compute_delta_entry(
-                values.get("monthly_with_estimates", 0.0),
-                base_vals.get("monthly_with_estimates", 0.0),
-            ),
+            "monthly_modeled": _compute_delta_entry(modeled_current, modeled_base),
             "yearly_priced": _compute_delta_entry(
                 values.get("yearly_priced", 0.0), base_vals.get("yearly_priced", 0.0)
             ),
-            "yearly_with_estimates": _compute_delta_entry(
-                values.get("yearly_with_estimates", 0.0),
-                base_vals.get("yearly_with_estimates", 0.0),
+            "yearly_modeled": _compute_delta_entry(
+                values.get("yearly_priced", 0.0) + values.get("yearly_estimated", 0.0),
+                base_vals.get("yearly_priced", 0.0)
+                + base_vals.get("yearly_estimated", 0.0),
             ),
         }
 
@@ -68,17 +72,17 @@ def compute_delta_vs_baseline(
             scenario_totals.get("monthly_priced", 0.0),
             baseline_totals.get("monthly_priced", 0.0),
         ),
-        "monthly_with_estimates": _compute_delta_entry(
-            scenario_totals.get("monthly_with_estimates", 0.0),
-            baseline_totals.get("monthly_with_estimates", 0.0),
+        "monthly_modeled": _compute_delta_entry(
+            scenario_totals.get("modeled_total", 0.0),
+            baseline_totals.get("modeled_total", 0.0),
         ),
         "yearly_priced": _compute_delta_entry(
             scenario_totals.get("yearly_priced", 0.0),
             baseline_totals.get("yearly_priced", 0.0),
         ),
-        "yearly_with_estimates": _compute_delta_entry(
-            scenario_totals.get("yearly_with_estimates", 0.0),
-            baseline_totals.get("yearly_with_estimates", 0.0),
+        "yearly_modeled": _compute_delta_entry(
+            scenario_totals.get("yearly_priced", 0.0) + scenario_totals.get("yearly_estimated", 0.0),
+            baseline_totals.get("yearly_priced", 0.0) + baseline_totals.get("yearly_estimated", 0.0),
         ),
         "by_category": delta_by_category,
     }
@@ -178,6 +182,9 @@ def aggregate_scenario_costs(scenario: Dict[str, Any], currency: str) -> Dict[st
     missing_count = 0
     mismatch_count = 0
     reservation_ambiguous_count = 0
+    priced_count = 0
+    estimated_count = 0
+    total_resources = len(scenario.get("resources", []))
     compare_skip_reason: Optional[str] = None
 
     for res in scenario.get("resources", []):
@@ -247,6 +254,7 @@ def aggregate_scenario_costs(scenario: Dict[str, Any], currency: str) -> Dict[st
             yearly_priced += yearly
             monthly_with_est += monthly
             yearly_with_est += yearly
+            priced_count += 1
             entry["monthly_priced"] += monthly
             entry["yearly_priced"] += yearly
             entry["monthly_with_estimates"] += monthly
@@ -256,6 +264,7 @@ def aggregate_scenario_costs(scenario: Dict[str, Any], currency: str) -> Dict[st
             yearly_estimated += yearly
             monthly_with_est += monthly
             yearly_with_est += yearly
+            estimated_count += 1
             entry["monthly_estimated"] += monthly
             entry["yearly_estimated"] += yearly
             entry["monthly_with_estimates"] += monthly
@@ -282,12 +291,21 @@ def aggregate_scenario_costs(scenario: Dict[str, Any], currency: str) -> Dict[st
             entry["yearly_with_estimates"] += yearly_missing_contrib
 
         # By-category breakdown
+    modeled_total = monthly_priced + monthly_estimated
     is_complete = (
         missing_count == 0
         and mismatch_count == 0
         and reservation_ambiguous_count == 0
     )
     comparable = is_complete and not compare_skip_reason
+
+    completeness_ratio = 0.0
+    if total_resources:
+        completeness_ratio = (priced_count + estimated_count) / float(total_resources)
+        if completeness_ratio > 1:
+            completeness_ratio = 1.0
+    if is_complete:
+        completeness_ratio = 1.0
 
     if not comparable and compare_skip_reason is None:
         if mismatch_count:
@@ -302,7 +320,7 @@ def aggregate_scenario_costs(scenario: Dict[str, Any], currency: str) -> Dict[st
     return {
         "currency": currency,
         "is_complete": is_complete,
-        "completeness": is_complete,
+        "completeness": completeness_ratio,
         "comparable": comparable,
         "compare_skip_reason": compare_skip_reason,
         "missing_count": missing_count,
@@ -321,6 +339,7 @@ def aggregate_scenario_costs(scenario: Dict[str, Any], currency: str) -> Dict[st
         "priced_total": round(monthly_priced, 2),
         "estimated_total": round(monthly_estimated, 2),
         "missing_total": round(monthly_missing, 2),
+        "modeled_total": round(modeled_total, 2),
         "monthly_with_estimates": round(monthly_with_est, 2),
         "yearly_with_estimates": round(yearly_with_est, 2),
         "by_category": {
@@ -537,7 +556,7 @@ def _filter_by_billing_model(
         if (it.get("type") or "").lower() != "reservation"
         and not (it.get("reservationTerm") or "")
     ]
-    return payg or items
+    return payg
 
 
 def _select_cheapest_item(
@@ -648,6 +667,13 @@ def _price_blob_storage(
 
         tier_items = [it for it in items if _tier_match(it)] or items
         tier_items = [it for it in tier_items if _matches_redundancy(it, requested_redundancy)] or tier_items
+        capacity_first = [
+            it
+            for it in tier_items
+            if "gb" in (it.get("unitOfMeasure") or "").lower()
+            and "operation" not in (it.get("meterName") or "").lower()
+        ]
+        tier_items = capacity_first or tier_items
         selected = _select_cheapest_item(resource, tier_items)
         if not selected:
             continue
@@ -864,7 +890,30 @@ async def fetch_price_for_resource(
 
         # 2b) Billing model (payg/reserved/spot) filtering
         billing_filtered = _filter_by_billing_model(resource, filtered_items or all_items)
-        items = billing_filtered or filtered_items or all_items
+        items = (
+            billing_filtered
+            if billing_filtered is not None
+            else (filtered_items or all_items)
+        )
+
+        if not items:
+            resource.update(
+                {
+                    "unit_price": None,
+                    "unit_of_measure": None,
+                    "currency_code": None,
+                    "sku_name": None,
+                    "meter_name": None,
+                    "product_name": None,
+                    "units": None,
+                    "monthly_cost": None,
+                    "yearly_cost": None,
+                    "error": "No pricing items match billing model",
+                    "sku_candidates": [],
+                    "pricing_status": "missing",
+                }
+            )
+            return
 
         # ------------------------------------------------------------
         # 3) Scoring όλων των candidate items από τον κατάλογο
@@ -939,6 +988,8 @@ async def fetch_price_for_resource(
     unit_of_measure = price_info.get("unit_of_measure") or ""
     currency_code = price_info.get("currency_code")
     price_type = (price_info.get("type") or "").lower()
+    reservation_term_raw = price_info.get("reservationTerm") or ""
+    reservation_term = reservation_term_raw.lower()
 
     # pricing_status: priced / estimated / missing
     pricing_status = "priced" if unit_price is not None else "missing"
@@ -980,11 +1031,28 @@ async def fetch_price_for_resource(
         )
         return
 
+    ambiguous_reservation = False
+    if price_type == "reservation" and reservation_term:
+        uom_low = unit_of_measure.lower()
+        if "hour" in uom_low or "month" in uom_low:
+            ambiguous_reservation = True
+
+    if ambiguous_reservation:
+        resource.update(
+            {
+                "units": 1.0,
+                "monthly_cost": DEFAULT_MISSING_MONTHLY_PENALTY,
+                "yearly_cost": DEFAULT_MISSING_MONTHLY_PENALTY * 12,
+                "pricing_status": "reservation_uom_ambiguous",
+                "error": "Reservation unit of measure looks hourly/monthly; treated as ambiguous",
+            }
+        )
+        return
+
     units = compute_units(resource, unit_of_measure)
     monthly_cost = units * float(unit_price)
     yearly_cost = monthly_cost * 12.0
 
-    reservation_term = (price_info.get("reservationTerm") or "").lower()
     if price_type == "reservation" and reservation_term:
         # Εδώ θεωρούμε ότι unit_price είναι συνολικό κόστος για όλο το term
         if "3 year" in reservation_term:
@@ -996,6 +1064,18 @@ async def fetch_price_for_resource(
 
         # Σε reservation σενάρια συνήθως units=1 (αγοράζεις 1 reservation)
         units = 1.0
+
+    requested_sku = (resource.get("arm_sku_name") or resource.get("armSkuName") or "").lower()
+    resolved_text = " ".join(
+        [
+            str(resource.get("sku_name") or ""),
+            str(resource.get("meter_name") or ""),
+            str(resource.get("product_name") or ""),
+        ]
+    ).lower()
+    if requested_sku and requested_sku not in resolved_text:
+        resource["pricing_status"] = "sku_mismatch"
+        resource["sku_mismatch"] = True
 
     resource["units"] = round(units, 4)
     resource["monthly_cost"] = round(monthly_cost, 2)
@@ -1032,11 +1112,11 @@ def _log_scenario_consistency(enriched_scenarios: List[Dict[str, Any]]) -> None:
     cost_opt = _find(["cost_optimized", "cost-optimized", "cost optimised", "cost optimized"])
     high_perf = _find(["high_performance", "high-performance", "high performance"])
 
-    def _monthly_priced(s: Dict[str, Any] | None) -> float:
+    def _monthly_modeled(s: Dict[str, Any] | None) -> float:
         if not s:
             return 0.0
         t = s.get("totals") or {}
-        return float(t.get("monthly_priced") or 0.0)
+        return float(t.get("modeled_total") or t.get("monthly_priced") or 0.0)
 
     def _is_comparable(s: Dict[str, Any] | None) -> bool:
         if not s:
@@ -1050,8 +1130,8 @@ def _log_scenario_consistency(enriched_scenarios: List[Dict[str, Any]]) -> None:
                 "Skipping cost ordering check for baseline vs cost_optimized because one is incomplete.",
             )
         else:
-            mb = _monthly_priced(baseline)
-            mc = _monthly_priced(cost_opt)
+            mb = _monthly_modeled(baseline)
+            mc = _monthly_modeled(cost_opt)
             if mc > mb:
                 _LOGGER.warning(
                     "Cost-optimized scenario '%s' (%.2f) is more expensive than baseline '%s' (%.2f). "
@@ -1068,8 +1148,8 @@ def _log_scenario_consistency(enriched_scenarios: List[Dict[str, Any]]) -> None:
                 "Skipping cost ordering check for high_performance vs cost_optimized because one is incomplete.",
             )
         else:
-            mh = _monthly_priced(high_perf)
-            mc = _monthly_priced(cost_opt)
+            mh = _monthly_modeled(high_perf)
+            mc = _monthly_modeled(cost_opt)
             if mc > mh:
                 _LOGGER.warning(
                     "Cost-optimized scenario '%s' (%.2f) is more expensive than high-performance '%s' (%.2f). "

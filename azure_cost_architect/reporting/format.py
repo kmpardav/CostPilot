@@ -26,43 +26,48 @@ def _estimate_ratio(total: float, estimated: float) -> str:
 def render_totals_table(plan: Dict) -> str:
     currency = plan.get("metadata", {}).get("currency", "USD")
     rows = [
-        "| Scenario | Complete? | Missing/Mismatch/Res | Monthly (priced) | Monthly (est.) | Monthly (missing) | Monthly (total) | Yearly (total) | Est. Ratio |",
-        "|---|---|---|---|---|---|---|---|---|",
+        "| Scenario | Complete? | Missing/Mismatch/Res | Monthly (priced) | Monthly (est.) | Monthly (missing) | Monthly (modeled) | Monthly (display)* | Yearly (display)* | Est. Ratio |",
+        "|---|---|---|---|---|---|---|---|---|---|",
     ]
     for scenario in plan.get("scenarios", []):
         totals = scenario.get("totals", {})
         priced = totals.get("monthly_priced", 0.0)
-        total = totals.get("monthly_with_estimates", 0.0)
+        modeled = totals.get("modeled_total", priced + totals.get("monthly_estimated", 0.0))
+        total = totals.get("monthly_with_estimates", modeled)
         estimated = totals.get("monthly_estimated", total - priced)
         missing = totals.get("monthly_missing", 0.0)
         missing_count = totals.get("missing_count", 0)
         mismatch_count = totals.get("mismatch_count", 0)
         reservation_count = totals.get("reservation_ambiguous_count", 0)
-        complete = totals.get("completeness", totals.get("is_complete"))
-        completeness = "✅" if complete else "⚠️"
+        complete_flag = totals.get("is_complete")
+        if complete_flag is None:
+            complete_flag = bool(totals.get("completeness"))
+        completeness = "✅" if complete_flag else "⚠️"
         gap_label = (
             f"{missing_count} missing / {mismatch_count} mismatch / {reservation_count} res?"
         )
         rows.append(
-            "| {name} | {complete} | {gaps} | {mp} | {me} | {mm} | {mt} | {yt} | {ratio} |".format(
+            "| {name} | {complete} | {gaps} | {mp} | {me} | {mm} | {mmod} | {mt} | {yt} | {ratio} |".format(
                 name=scenario.get("label") or scenario.get("id") or "-",
                 complete=completeness,
                 gaps=gap_label,
                 mp=_format_currency(priced, currency),
                 me=_format_currency(estimated, currency),
                 mm=_format_currency(missing, currency),
+                mmod=_format_currency(modeled, currency),
                 mt=_format_currency(total, currency),
-                yt=_format_currency(totals.get("yearly_with_estimates", 0.0), currency),
+                yt=_format_currency(totals.get("yearly_with_estimates", totals.get("yearly_priced", 0.0)), currency),
                 ratio=_estimate_ratio(total, estimated),
             )
         )
+    rows.append("\n*Display totals include missing placeholders; comparisons use modeled (priced+estimated) only.")
     return "\n".join(rows)
 
 
 def render_deltas_table(plan: Dict) -> str:
     currency = plan.get("metadata", {}).get("currency", "USD")
     rows = [
-        "| Scenario | Δ Monthly (priced) | Δ Monthly (total) | Δ Yearly (total) |",
+        "| Scenario | Δ Monthly (priced) | Δ Monthly (modeled) | Δ Yearly (modeled) |",
         "|---|---|---|---|",
     ]
     for scenario in plan.get("scenarios", []):
@@ -81,8 +86,8 @@ def render_deltas_table(plan: Dict) -> str:
             "| {name} | {mp} | {mt} | {yt} |".format(
                 name=scenario.get("label") or scenario.get("id") or "-",
                 mp=_format_delta(delta.get("monthly_priced", {}), currency),
-                mt=_format_delta(delta.get("monthly_with_estimates", {}), currency),
-                yt=_format_delta(delta.get("yearly_with_estimates", {}), currency),
+                mt=_format_delta(delta.get("monthly_modeled", {}), currency),
+                yt=_format_delta(delta.get("yearly_modeled", {}), currency),
             )
         )
     return "\n".join(rows)
@@ -90,7 +95,7 @@ def render_deltas_table(plan: Dict) -> str:
 
 def render_category_table(scenario: Dict, currency: str) -> str:
     rows: List[str] = [
-        "| Category | Monthly (priced) | Monthly (est.) | Monthly (total) |",
+        "| Category | Monthly (priced) | Monthly (est.) | Monthly (modeled) |",
         "|---|---|---|---|",
     ]
     for category, totals in sorted((scenario.get("totals", {}).get("by_category") or {}).items()):
@@ -99,7 +104,10 @@ def render_category_table(scenario: Dict, currency: str) -> str:
                 cat=category,
                 mp=_format_currency(totals.get("monthly_priced", 0.0), currency),
                 me=_format_currency(totals.get("monthly_estimated", 0.0), currency),
-                mt=_format_currency(totals.get("monthly_with_estimates", 0.0), currency),
+                mt=_format_currency(
+                    totals.get("monthly_priced", 0.0) + totals.get("monthly_estimated", 0.0),
+                    currency,
+                ),
             )
         )
     return "\n".join(rows)
@@ -107,7 +115,7 @@ def render_category_table(scenario: Dict, currency: str) -> str:
 
 def render_category_deltas(scenario: Dict, baseline: Dict, currency: str) -> str:
     rows: List[str] = [
-        "| Category | Δ Monthly (priced) | Δ Monthly (total) |",
+        "| Category | Δ Monthly (priced) | Δ Monthly (modeled) |",
         "|---|---|---|",
     ]
     category_deltas = scenario.get("totals", {}).get("delta_vs_baseline", {}).get("by_category", {})
@@ -118,7 +126,7 @@ def render_category_deltas(scenario: Dict, baseline: Dict, currency: str) -> str
             "| {cat} | {mp} | {mt} |".format(
                 cat=category,
                 mp=_format_delta(delta_entry.get("monthly_priced", {}), currency),
-                mt=_format_delta(delta_entry.get("monthly_with_estimates", {}), currency),
+                mt=_format_delta(delta_entry.get("monthly_modeled", {}), currency),
             )
         )
     return "\n".join(rows)

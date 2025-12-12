@@ -112,27 +112,29 @@ def test_render_report_with_deltas_snapshot():
     assert report == dedent(
         """
         ## Scenario totals
-        | Scenario | Complete? | Missing/Mismatch/Res | Monthly (priced) | Monthly (est.) | Monthly (missing) | Monthly (total) | Yearly (total) | Est. Ratio |
-        |---|---|---|---|---|---|---|---|---|
-        | baseline | ✅ | 0 missing / 0 mismatch / 0 res? | 110.00 USD | 25.00 USD | 0.00 USD | 135.00 USD | 1,620.00 USD | 18.52% |
-        | cost_optimized | ✅ | 0 missing / 0 mismatch / 0 res? | 78.00 USD | 15.00 USD | 0.00 USD | 93.00 USD | 1,116.00 USD | 16.13% |
+        | Scenario | Complete? | Missing/Mismatch/Res | Monthly (priced) | Monthly (est.) | Monthly (missing) | Monthly (modeled) | Monthly (display)* | Yearly (display)* | Est. Ratio |
+        |---|---|---|---|---|---|---|---|---|---|
+        | baseline | ✅ | 0 missing / 0 mismatch / 0 res? | 110.00 USD | 25.00 USD | 0.00 USD | 135.00 USD | 135.00 USD | 1,620.00 USD | 18.52% |
+        | cost_optimized | ✅ | 0 missing / 0 mismatch / 0 res? | 78.00 USD | 15.00 USD | 0.00 USD | 93.00 USD | 93.00 USD | 1,116.00 USD | 16.13% |
+
+        *Display totals include missing placeholders; comparisons use modeled (priced+estimated) only.
 
         ## Deltas vs baseline
-        | Scenario | Δ Monthly (priced) | Δ Monthly (total) | Δ Yearly (total) |
+        | Scenario | Δ Monthly (priced) | Δ Monthly (modeled) | Δ Yearly (modeled) |
         |---|---|---|---|
         | baseline | +0.00 USD (+0.00%) | +0.00 USD (+0.00%) | +0.00 USD (+0.00%) |
         | cost_optimized | -32.00 USD (-29.09%) | -42.00 USD (-31.11%) | -504.00 USD (-31.11%) |
 
         ## Category rollups
         ### baseline
-        | Category | Monthly (priced) | Monthly (est.) | Monthly (total) |
+        | Category | Monthly (priced) | Monthly (est.) | Monthly (modeled) |
         |---|---|---|---|
         | compute | 100.00 USD | 0.00 USD | 100.00 USD |
         | network | 10.00 USD | 0.00 USD | 10.00 USD |
         | storage | 0.00 USD | 25.00 USD | 25.00 USD |
 
         ### cost_optimized
-        | Category | Monthly (priced) | Monthly (est.) | Monthly (total) |
+        | Category | Monthly (priced) | Monthly (est.) | Monthly (modeled) |
         |---|---|---|---|
         | compute | 70.00 USD | 0.00 USD | 70.00 USD |
         | network | 8.00 USD | 0.00 USD | 8.00 USD |
@@ -140,7 +142,7 @@ def test_render_report_with_deltas_snapshot():
 
         ## Category deltas vs baseline
         ### cost_optimized
-        | Category | Δ Monthly (priced) | Δ Monthly (total) |
+        | Category | Δ Monthly (priced) | Δ Monthly (modeled) |
         |---|---|---|
         | compute | -30.00 USD (-30.00%) | -30.00 USD (-30.00%) |
         | network | -2.00 USD (-20.00%) | -2.00 USD (-20.00%) |
