@@ -36,6 +36,7 @@ from .config import (
     CACHE_FILE,
     DEFAULT_COMPARE_POLICY,
     DEFAULT_REQUIRED_CATEGORIES,
+    DEFAULT_ADJUDICATE_TOPN,
 )
 from .utils.categories import normalize_required_categories
 from .pricing.cache import load_price_cache, save_price_cache
@@ -125,6 +126,19 @@ def parse_args() -> argparse.Namespace:
             "  - chat: κλασικό Chat Completions API.\n"
             "  - responses: Responses API με web_search εργαλείο."
         ),
+    )
+
+    parser.add_argument(
+        "--adjudicate",
+        action="store_true",
+        help="Enable catalog-grounded adjudication step before final pricing (LLM chooses among top-N local meters).",
+    )
+
+    parser.add_argument(
+        "--adjudicate-topn",
+        type=int,
+        default=DEFAULT_ADJUDICATE_TOPN,
+        help="How many top-scored catalog candidates to send to the adjudicator (when --adjudicate is enabled).",
     )
 
     parser.add_argument(
@@ -291,6 +305,26 @@ def _collect_compare_blockers(plan: Dict[str, Any]) -> List[Tuple[str, str]]:
     return blockers
 
 
+def _collect_blocker_details(plan: Dict[str, Any]) -> List[Dict[str, Any]]:
+    details: List[Dict[str, Any]] = []
+    for sc in plan.get("scenarios", []):
+        totals = sc.get("totals") or {}
+        required = totals.get("required") or {}
+        if required.get("comparable") is False:
+            for blk in required.get("blockers") or []:
+                details.append(
+                    {
+                        "scenario_id": sc.get("id") or sc.get("label"),
+                        "reason": blk.get("reason") or required.get("compare_skip_reason"),
+                        "resource_id": blk.get("resource_id"),
+                        "category": blk.get("category"),
+                        "requested_sku": blk.get("requested_sku"),
+                        "meter": blk.get("meter"),
+                    }
+                )
+    return details
+
+
 def _apply_compare_policy(plan: Dict[str, Any], compare_policy: str) -> List[Tuple[str, str]]:
     blockers = _collect_compare_blockers(plan)
     if compare_policy == "hard_stop" and blockers:
@@ -399,6 +433,8 @@ def main() -> None:
     metadata["default_region"] = default_region
     metadata["compare_policy"] = args.compare_policy
     metadata["required_categories"] = required_categories
+    metadata["adjudication_enabled"] = args.adjudicate
+    metadata["adjudication_topn"] = args.adjudicate_topn
 
     logger.debug("Plan after metadata normalization: %s", plan)
 
@@ -419,8 +455,20 @@ def main() -> None:
     console.print("[cyan]Enriching scenarios with local Azure Retail catalogs…[/cyan]")
     logger.debug("Plan before enrichment: %s", plan)
 
-    enriched_plan = asyncio.run(enrich_plan_with_prices(plan, debug=DEBUG))
+    enriched_plan = asyncio.run(
+        enrich_plan_with_prices(
+            plan,
+            debug=DEBUG,
+            adjudicate=args.adjudicate,
+            adjudicate_topn=args.adjudicate_topn,
+            adjudicator_client=client,
+        )
+    )
     save_price_cache()
+
+    blocker_details = _collect_blocker_details(enriched_plan)
+    if blocker_details:
+        enriched_plan["compare_blockers"] = blocker_details
 
     json_filename = run_dir / "plan.json"
     with open(json_filename, "w", encoding="utf-8") as f:
@@ -434,6 +482,13 @@ def main() -> None:
         )
         for sc_id, reason in blockers:
             console.print(f"  - {sc_id}: {reason}")
+        if blocker_details:
+            for blk in blocker_details:
+                console.print(
+                    f"    • {blk.get('scenario_id')}: {blk.get('resource_id')} "
+                    f"[{blk.get('category')}] → {blk.get('reason')} "
+                    f"(requested={blk.get('requested_sku')}, meter={blk.get('meter')})"
+                )
         if args.compare_policy == "hard_stop":
             console.print(
                 "[red]--compare-policy=hard_stop is set; exiting before report generation.[/red]"
@@ -484,6 +539,8 @@ def main() -> None:
             "llm_backend": backend,
             "compare_policy": args.compare_policy,
             "required_categories": required_categories,
+            "adjudication_enabled": args.adjudicate,
+            "adjudication_topn": args.adjudicate_topn,
         },
         "output_files": {
             "input": str(input_path),
