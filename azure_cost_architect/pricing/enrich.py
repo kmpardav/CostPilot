@@ -15,6 +15,9 @@ from .units import compute_units
 
 _LOGGER = logging.getLogger(__name__)
 
+# Conservative placeholder to prevent undercounting when pricing is missing/ambiguous.
+DEFAULT_MISSING_MONTHLY_PENALTY = 100.0
+
 # ------------------------------------------------------------
 # Debug JSONL για scoring επιλογές
 # ------------------------------------------------------------
@@ -160,20 +163,82 @@ def aggregate_scenario_costs(scenario: Dict[str, Any], currency: str) -> Dict[st
     """
     Υπολογίζει συνολικά κόστη ανά scenario, ξεχωρίζοντας:
     - Priced only (μόνο resources με πλήρη τιμή)
-    - With estimates (priced + estimated).
+    - With estimates (priced + estimated)
+    - Missing (explicitly counted so incompleteness is visible).
     """
     by_category: Dict[str, Dict[str, float]] = {}
     monthly_priced = 0.0
     yearly_priced = 0.0
+    monthly_estimated = 0.0
+    yearly_estimated = 0.0
     monthly_with_est = 0.0
     yearly_with_est = 0.0
+    monthly_missing = 0.0
+    yearly_missing = 0.0
+    missing_count = 0
+    mismatch_count = 0
+    reservation_ambiguous_count = 0
+    compare_skip_reason: Optional[str] = None
 
     for res in scenario.get("resources", []):
         cat = res.get("category") or "other"
         status = (res.get("pricing_status") or "priced").lower()
         monthly = res.get("monthly_cost")
         yearly = res.get("yearly_cost")
-        if monthly is None or yearly is None:
+
+        if res.get("sku_mismatch") or status == "sku_mismatch":
+            mismatch_count += 1
+        if status == "reservation_uom_ambiguous":
+            reservation_ambiguous_count += 1
+
+        entry = by_category.setdefault(
+            cat,
+            {
+                "monthly_priced": 0.0,
+                "yearly_priced": 0.0,
+                "monthly_estimated": 0.0,
+                "yearly_estimated": 0.0,
+                "monthly_missing": 0.0,
+                "yearly_missing": 0.0,
+                "monthly_with_estimates": 0.0,
+                "yearly_with_estimates": 0.0,
+            },
+        )
+
+        missing_like_status = status in {
+            "missing",
+            "sku_mismatch",
+            "reservation_uom_ambiguous",
+        }
+        missing_reason = missing_like_status or monthly is None or yearly is None
+
+        if missing_reason:
+            missing_count += 1
+            compare_skip_reason = compare_skip_reason or (
+                "reservation_ambiguous" if status == "reservation_uom_ambiguous" else None
+            )
+            compare_skip_reason = compare_skip_reason or (
+                "sku_mismatch" if status == "sku_mismatch" else None
+            )
+            compare_skip_reason = compare_skip_reason or (
+                "missing_pricing" if status == "missing" or monthly is None else None
+            )
+            monthly_missing_contrib = max(
+                float(monthly) if monthly is not None else 0.0,
+                DEFAULT_MISSING_MONTHLY_PENALTY,
+            )
+            yearly_missing_contrib = max(
+                float(yearly) if yearly is not None else 0.0,
+                DEFAULT_MISSING_MONTHLY_PENALTY * 12,
+            )
+            monthly_missing += monthly_missing_contrib
+            yearly_missing += yearly_missing_contrib
+            monthly_with_est += monthly_missing_contrib
+            yearly_with_est += yearly_missing_contrib
+            entry["monthly_missing"] += monthly_missing_contrib
+            entry["yearly_missing"] += yearly_missing_contrib
+            entry["monthly_with_estimates"] += monthly_missing_contrib
+            entry["yearly_with_estimates"] += yearly_missing_contrib
             continue
 
         # Συνολικά totals
@@ -182,35 +247,67 @@ def aggregate_scenario_costs(scenario: Dict[str, Any], currency: str) -> Dict[st
             yearly_priced += yearly
             monthly_with_est += monthly
             yearly_with_est += yearly
-        elif status == "estimated":
-            monthly_with_est += monthly
-            yearly_with_est += yearly
-
-        # By-category breakdown
-        entry = by_category.setdefault(
-            cat,
-            {
-                "monthly_priced": 0.0,
-                "yearly_priced": 0.0,
-                "monthly_with_estimates": 0.0,
-                "yearly_with_estimates": 0.0,
-            },
-        )
-
-        if status == "priced":
             entry["monthly_priced"] += monthly
             entry["yearly_priced"] += yearly
             entry["monthly_with_estimates"] += monthly
             entry["yearly_with_estimates"] += yearly
         elif status == "estimated":
+            monthly_estimated += monthly
+            yearly_estimated += yearly
+            monthly_with_est += monthly
+            yearly_with_est += yearly
+            entry["monthly_estimated"] += monthly
+            entry["yearly_estimated"] += yearly
             entry["monthly_with_estimates"] += monthly
             entry["yearly_with_estimates"] += yearly
+        else:
+            # Unknown status is treated as missing to avoid undercounting.
+            missing_count += 1
+            compare_skip_reason = compare_skip_reason or "missing_pricing"
+            monthly_missing_contrib = max(
+                float(monthly) if monthly is not None else 0.0,
+                DEFAULT_MISSING_MONTHLY_PENALTY,
+            )
+            yearly_missing_contrib = max(
+                float(yearly) if yearly is not None else 0.0,
+                DEFAULT_MISSING_MONTHLY_PENALTY * 12,
+            )
+            monthly_missing += monthly_missing_contrib
+            yearly_missing += yearly_missing_contrib
+            monthly_with_est += monthly_missing_contrib
+            yearly_with_est += yearly_missing_contrib
+            entry["monthly_missing"] += monthly_missing_contrib
+            entry["yearly_missing"] += yearly_missing_contrib
+            entry["monthly_with_estimates"] += monthly_missing_contrib
+            entry["yearly_with_estimates"] += yearly_missing_contrib
 
-    monthly_estimated = monthly_with_est - monthly_priced
-    yearly_estimated = yearly_with_est - yearly_priced
+        # By-category breakdown
+    is_complete = (
+        missing_count == 0
+        and mismatch_count == 0
+        and reservation_ambiguous_count == 0
+    )
+    comparable = is_complete and not compare_skip_reason
+
+    if not comparable and compare_skip_reason is None:
+        if mismatch_count:
+            compare_skip_reason = "sku_mismatch"
+        elif reservation_ambiguous_count:
+            compare_skip_reason = "reservation_ambiguous"
+        elif missing_count:
+            compare_skip_reason = "missing_pricing"
+        else:
+            compare_skip_reason = "incomplete"
 
     return {
         "currency": currency,
+        "is_complete": is_complete,
+        "completeness": is_complete,
+        "comparable": comparable,
+        "compare_skip_reason": compare_skip_reason,
+        "missing_count": missing_count,
+        "mismatch_count": mismatch_count,
+        "reservation_ambiguous_count": reservation_ambiguous_count,
         # Backwards compatible totals
         "total_monthly": round(monthly_with_est, 2),
         "total_yearly": round(yearly_with_est, 2),
@@ -219,6 +316,11 @@ def aggregate_scenario_costs(scenario: Dict[str, Any], currency: str) -> Dict[st
         "yearly_priced": round(yearly_priced, 2),
         "monthly_estimated": round(monthly_estimated, 2),
         "yearly_estimated": round(yearly_estimated, 2),
+        "monthly_missing": round(monthly_missing, 2),
+        "yearly_missing": round(yearly_missing, 2),
+        "priced_total": round(monthly_priced, 2),
+        "estimated_total": round(monthly_estimated, 2),
+        "missing_total": round(monthly_missing, 2),
         "monthly_with_estimates": round(monthly_with_est, 2),
         "yearly_with_estimates": round(yearly_with_est, 2),
         "by_category": {
@@ -227,12 +329,10 @@ def aggregate_scenario_costs(scenario: Dict[str, Any], currency: str) -> Dict[st
                 "yearly": round(v["yearly_with_estimates"], 2),
                 "monthly_priced": round(v["monthly_priced"], 2),
                 "yearly_priced": round(v["yearly_priced"], 2),
-                "monthly_estimated": round(
-                    v["monthly_with_estimates"] - v["monthly_priced"], 2
-                ),
-                "yearly_estimated": round(
-                    v["yearly_with_estimates"] - v["yearly_priced"], 2
-                ),
+                "monthly_estimated": round(v["monthly_estimated"], 2),
+                "yearly_estimated": round(v["yearly_estimated"], 2),
+                "monthly_missing": round(v["monthly_missing"], 2),
+                "yearly_missing": round(v["yearly_missing"], 2),
                 "monthly_with_estimates": round(v["monthly_with_estimates"], 2),
                 "yearly_with_estimates": round(v["yearly_with_estimates"], 2),
             }
@@ -257,11 +357,37 @@ def attach_baseline_deltas(enriched_scenarios: List[Dict[str, Any]]) -> None:
     )
     baseline_totals = baseline.get("totals") or {}
 
+    def _comparison_blocker(totals: Dict[str, Any]) -> Optional[str]:
+        if totals.get("mismatch_count"):
+            return "sku_mismatch"
+        if totals.get("reservation_ambiguous_count"):
+            return "reservation_ambiguous"
+        if totals.get("missing_count"):
+            return "missing_pricing"
+        if totals.get("is_complete") is False:
+            return totals.get("compare_skip_reason") or "incomplete"
+        return None
+
+    baseline_blocker = _comparison_blocker(baseline_totals)
+
     for sc in enriched_scenarios:
         sc.setdefault("totals", {})
-        sc["totals"]["delta_vs_baseline"] = compute_delta_vs_baseline(
-            baseline_totals, sc["totals"]
+        scenario_blocker = _comparison_blocker(sc["totals"])
+        blocker = baseline_blocker or scenario_blocker
+        sc["totals"]["comparable"] = blocker is None
+        sc["totals"]["compare_skip_reason"] = blocker or sc["totals"].get(
+            "compare_skip_reason"
         )
+        if blocker:
+            sc["totals"]["delta_vs_baseline"] = {
+                "status": "not_comparable",
+                "reason": blocker,
+                "source": "baseline" if baseline_blocker else "scenario",
+            }
+        else:
+            sc["totals"]["delta_vs_baseline"] = compute_delta_vs_baseline(
+                baseline_totals, sc["totals"]
+            )
 
 
 # ------------------------------------------------------------
@@ -710,6 +836,7 @@ async def fetch_price_for_resource(
         filtered_items, had_mismatch = filter_items_by_sku_intent(
             category, arm_sku_name or "", all_items
         )
+        resource["sku_mismatch"] = had_mismatch
         if had_mismatch and not filtered_items:
             resource.update(
                 {
@@ -905,37 +1032,53 @@ def _log_scenario_consistency(enriched_scenarios: List[Dict[str, Any]]) -> None:
     cost_opt = _find(["cost_optimized", "cost-optimized", "cost optimised", "cost optimized"])
     high_perf = _find(["high_performance", "high-performance", "high performance"])
 
-    def _monthly(s: Dict[str, Any] | None) -> float:
+    def _monthly_priced(s: Dict[str, Any] | None) -> float:
         if not s:
             return 0.0
         t = s.get("totals") or {}
-        return float(t.get("monthly_with_estimates") or t.get("total_monthly") or 0.0)
+        return float(t.get("monthly_priced") or 0.0)
+
+    def _is_comparable(s: Dict[str, Any] | None) -> bool:
+        if not s:
+            return False
+        t = s.get("totals") or {}
+        return bool(t.get("comparable") or t.get("is_complete"))
 
     if baseline and cost_opt:
-        mb = _monthly(baseline)
-        mc = _monthly(cost_opt)
-        if mc > mb:
-            _LOGGER.warning(
-                "Cost-optimized scenario '%s' (%.2f) is more expensive than baseline '%s' (%.2f). "
-                "This may be acceptable, but please review large-cost resources (e.g. storage, SQL, Redis).",
-                baseline.get("label") or baseline.get("id"),
-                mc,
-                cost_opt.get("label") or cost_opt.get("id"),
-                mb,
+        if not (_is_comparable(baseline) and _is_comparable(cost_opt)):
+            _LOGGER.info(
+                "Skipping cost ordering check for baseline vs cost_optimized because one is incomplete.",
             )
+        else:
+            mb = _monthly_priced(baseline)
+            mc = _monthly_priced(cost_opt)
+            if mc > mb:
+                _LOGGER.warning(
+                    "Cost-optimized scenario '%s' (%.2f) is more expensive than baseline '%s' (%.2f). "
+                    "This may be acceptable, but please review large-cost resources (e.g. storage, SQL, Redis).",
+                    baseline.get("label") or baseline.get("id"),
+                    mc,
+                    cost_opt.get("label") or cost_opt.get("id"),
+                    mb,
+                )
 
     if high_perf and cost_opt:
-        mh = _monthly(high_perf)
-        mc = _monthly(cost_opt)
-        if mc > mh:
-            _LOGGER.warning(
-                "Cost-optimized scenario '%s' (%.2f) is more expensive than high-performance '%s' (%.2f). "
-                "Check scoring heuristics and SKUs for heavy resources.",
-                cost_opt.get("label") or cost_opt.get("id"),
-                mc,
-                high_perf.get("label") or high_perf.get("id"),
-                mh,
+        if not (_is_comparable(high_perf) and _is_comparable(cost_opt)):
+            _LOGGER.info(
+                "Skipping cost ordering check for high_performance vs cost_optimized because one is incomplete.",
             )
+        else:
+            mh = _monthly_priced(high_perf)
+            mc = _monthly_priced(cost_opt)
+            if mc > mh:
+                _LOGGER.warning(
+                    "Cost-optimized scenario '%s' (%.2f) is more expensive than high-performance '%s' (%.2f). "
+                    "Check scoring heuristics and SKUs for heavy resources.",
+                    cost_opt.get("label") or cost_opt.get("id"),
+                    mc,
+                    high_perf.get("label") or high_perf.get("id"),
+                    mh,
+                )
 
 
 # ------------------------------------------------------------

@@ -16,10 +16,9 @@ def _format_delta(delta: Dict[str, float], currency: str) -> str:
     return f"{abs_str} ({percent:+.2f}%)"
 
 
-def _estimate_ratio(total: float, priced: float) -> str:
+def _estimate_ratio(total: float, estimated: float) -> str:
     if not total:
         return "0.00%"
-    estimated = max(total - priced, 0.0)
     ratio = (estimated / total) * 100.0
     return f"{ratio:.2f}%"
 
@@ -27,22 +26,34 @@ def _estimate_ratio(total: float, priced: float) -> str:
 def render_totals_table(plan: Dict) -> str:
     currency = plan.get("metadata", {}).get("currency", "USD")
     rows = [
-        "| Scenario | Monthly (priced) | Monthly (est.) | Monthly (total) | Yearly (total) | Est. Ratio |",
-        "|---|---|---|---|---|---|",
+        "| Scenario | Complete? | Missing/Mismatch/Res | Monthly (priced) | Monthly (est.) | Monthly (missing) | Monthly (total) | Yearly (total) | Est. Ratio |",
+        "|---|---|---|---|---|---|---|---|---|",
     ]
     for scenario in plan.get("scenarios", []):
         totals = scenario.get("totals", {})
         priced = totals.get("monthly_priced", 0.0)
         total = totals.get("monthly_with_estimates", 0.0)
         estimated = totals.get("monthly_estimated", total - priced)
+        missing = totals.get("monthly_missing", 0.0)
+        missing_count = totals.get("missing_count", 0)
+        mismatch_count = totals.get("mismatch_count", 0)
+        reservation_count = totals.get("reservation_ambiguous_count", 0)
+        complete = totals.get("completeness", totals.get("is_complete"))
+        completeness = "✅" if complete else "⚠️"
+        gap_label = (
+            f"{missing_count} missing / {mismatch_count} mismatch / {reservation_count} res?"
+        )
         rows.append(
-            "| {name} | {mp} | {me} | {mt} | {yt} | {ratio} |".format(
+            "| {name} | {complete} | {gaps} | {mp} | {me} | {mm} | {mt} | {yt} | {ratio} |".format(
                 name=scenario.get("label") or scenario.get("id") or "-",
+                complete=completeness,
+                gaps=gap_label,
                 mp=_format_currency(priced, currency),
                 me=_format_currency(estimated, currency),
+                mm=_format_currency(missing, currency),
                 mt=_format_currency(total, currency),
                 yt=_format_currency(totals.get("yearly_with_estimates", 0.0), currency),
-                ratio=_estimate_ratio(total, priced),
+                ratio=_estimate_ratio(total, estimated),
             )
         )
     return "\n".join(rows)
@@ -57,6 +68,15 @@ def render_deltas_table(plan: Dict) -> str:
     for scenario in plan.get("scenarios", []):
         totals = scenario.get("totals", {})
         delta = totals.get("delta_vs_baseline", {})
+        if delta.get("status"):
+            reason = delta.get("reason") or delta.get("status")
+            rows.append(
+                "| {name} | {msg} | {msg} | {msg} |".format(
+                    name=scenario.get("label") or scenario.get("id") or "-",
+                    msg=f"n/a (not comparable: {reason})",
+                )
+            )
+            continue
         rows.append(
             "| {name} | {mp} | {mt} | {yt} |".format(
                 name=scenario.get("label") or scenario.get("id") or "-",
