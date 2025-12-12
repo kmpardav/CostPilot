@@ -1,0 +1,4427 @@
+# Catalog Audit Report
+
+## Catalog inventory by category
+### Category: analytics.databricks
+- Path: `catalog/azure_databricks__westeurope__EUR.jsonl`
+  - Items: 41 | Region: westeurope | Currency: EUR
+  - Distinct serviceName: Azure Databricks
+  - Sample productName: Azure Databricks, Azure Databricks Regional
+  - Top skuName tokens: compute, premium, serverless, standard, jobs, sql, photon, poc, non, billable
+  - Top meterName tokens: dbu, compute, premium, serverless, standard, jobs, sql, photon, poc, non
+- Path: `catalog/azure_databricks__westeurope__USD.jsonl`
+  - Items: 41 | Region: westeurope | Currency: USD
+  - Distinct serviceName: Azure Databricks
+  - Sample productName: Azure Databricks, Azure Databricks Regional
+  - Top skuName tokens: compute, premium, serverless, standard, jobs, sql, photon, poc, non, billable
+  - Top meterName tokens: dbu, compute, premium, serverless, standard, jobs, sql, photon, poc, non
+
+### Category: analytics.datafactory
+- Path: `catalog/azure_data_factory__westeurope__EUR.jsonl`
+  - Items: 8 | Region: westeurope | Currency: EUR
+  - Distinct serviceName: Azure Data Factory
+  - Sample productName: Azure Data Factory
+  - Top skuName tokens: cloud, on, premises
+  - Top meterName tokens: frequency, activity, cloud, on, premises, low, high, data, movement, inactive
+- Path: `catalog/azure_data_factory__westeurope__USD.jsonl`
+  - Items: 8 | Region: westeurope | Currency: USD
+  - Distinct serviceName: Azure Data Factory
+  - Sample productName: Azure Data Factory
+  - Top skuName tokens: cloud, on, premises
+  - Top meterName tokens: frequency, activity, cloud, on, premises, low, high, data, movement, inactive
+
+### Category: analytics.fabric
+- Path: `catalog/microsoft_fabric__westeurope__EUR.jsonl`
+  - Items: 73 | Region: westeurope | Currency: EUR
+  - Distinct serviceName: Microsoft Fabric
+  - Sample productName: Fabric Capacity, Fabric Capacity Reservation, OneLake
+  - Top skuName tokens: capacity, usage, onelake, operations, bcdr, data, via, proxy, storage, iterative
+  - Top meterName tokens: capacity, cu, usage, onelake, operations, data, bcdr, stored, via, proxy
+- Path: `catalog/microsoft_fabric__westeurope__USD.jsonl`
+  - Items: 73 | Region: westeurope | Currency: USD
+  - Distinct serviceName: Microsoft Fabric
+  - Sample productName: Fabric Capacity, Fabric Capacity Reservation, OneLake
+  - Top skuName tokens: capacity, usage, onelake, operations, bcdr, data, via, proxy, storage, iterative
+  - Top meterName tokens: capacity, cu, usage, onelake, operations, data, bcdr, stored, via, proxy
+
+### Category: appservice
+- Path: `catalog/azure_app_service__westeurope__EUR.jsonl`
+  - Items: 210 | Region: westeurope | Currency: EUR
+  - Distinct serviceName: Azure App Service
+  - Sample productName: Azure App Service Basic Plan, Azure App Service Basic Plan - Linux, Azure App Service Domain
+  - Top skuName tokens: v2, v3, p3, p2, p1, i3, i1, p0v3, p1mv3, i2
+  - Top meterName tokens: app, v2, v3, p3, p2, p1, i3, i1, p0v3, p1mv3
+- Path: `catalog/azure_app_service__westeurope__USD.jsonl`
+  - Items: 210 | Region: westeurope | Currency: USD
+  - Distinct serviceName: Azure App Service
+  - Sample productName: Azure App Service Basic Plan, Azure App Service Basic Plan - Linux, Azure App Service Domain
+  - Top skuName tokens: v2, v3, p3, p2, p1, i3, i1, p0v3, p1mv3, i2
+  - Top meterName tokens: app, v2, v3, p3, p2, p1, i3, i1, p0v3, p1mv3
+
+### Category: backup.vault
+- Path: `catalog/backup__westeurope__EUR.jsonl`
+  - Items: 41 | Region: westeurope | Currency: EUR
+  - Distinct serviceName: Backup
+  - Sample productName: Backup, Backup Reserved Capacity
+  - Top skuName tokens: azure, standard, vaulted, files, blob, adls, gen2, vm, 100, tb
+  - Top meterName tokens: data, stored, grs, azure, protected, instances, write, operations, lrs, ra
+- Path: `catalog/backup__westeurope__GBP.jsonl`
+  - Items: 41 | Region: westeurope | Currency: GBP
+  - Distinct serviceName: Backup
+  - Sample productName: Backup, Backup Reserved Capacity
+  - Top skuName tokens: azure, standard, vaulted, files, blob, adls, gen2, vm, 100, tb
+  - Top meterName tokens: data, stored, grs, azure, protected, instances, write, operations, lrs, ra
+- Path: `catalog/backup__westeurope__USD.jsonl`
+  - Items: 41 | Region: westeurope | Currency: USD
+  - Distinct serviceName: Backup
+  - Sample productName: Backup, Backup Reserved Capacity
+  - Top skuName tokens: azure, standard, vaulted, files, blob, adls, gen2, vm, 100, tb
+  - Top meterName tokens: data, stored, grs, azure, protected, instances, write, operations, lrs, ra
+
+### Category: cache.redis
+- Path: `catalog/azure_cache_for_redis__westeurope__EUR.jsonl`
+  - Items: 0 | Region: westeurope | Currency: EUR
+  - Distinct serviceName: n/a
+  - Sample productName: n/a
+  - Top skuName tokens: 
+  - Top meterName tokens: 
+- Path: `catalog/azure_cache_for_redis__westeurope__USD.jsonl`
+  - Items: 0 | Region: westeurope | Currency: USD
+  - Distinct serviceName: n/a
+  - Sample productName: n/a
+  - Top skuName tokens: 
+  - Top meterName tokens: 
+
+### Category: compute.aks
+- Path: `catalog/virtual_machines__westeurope__USD.jsonl`
+  - Items: 11279 | Region: westeurope | Currency: USD
+  - Distinct serviceName: Virtual Machines
+  - Sample productName: Basv2 Series Cloud Services, Bpsv2 Series Cloud Services, Bsv2 Series Cloud Services
+  - Top skuName tokens: spot, low, priority, v6, v4, v7, v5, v2, v3, e16
+  - Top meterName tokens: spot, v5, low, priority, v4, v6, v7, v2, v3, e16
+
+### Category: compute.vm
+- Path: `catalog/virtual_machines__eastus__USD.jsonl`
+  - Items: 0 | Region: eastus | Currency: USD
+  - Distinct serviceName: n/a
+  - Sample productName: n/a
+  - Top skuName tokens: 
+  - Top meterName tokens: 
+- Path: `catalog/virtual_machines__westeurope__EUR.jsonl`
+  - Items: 11279 | Region: westeurope | Currency: EUR
+  - Distinct serviceName: Virtual Machines
+  - Sample productName: Basv2 Series Cloud Services, Bpsv2 Series Cloud Services, Bsv2 Series Cloud Services
+  - Top skuName tokens: spot, low, priority, v6, v4, v7, v5, v2, v3, e16
+  - Top meterName tokens: spot, v5, low, priority, v4, v6, v7, v2, v3, e16
+
+### Category: db.cosmos
+- Path: `catalog/azure_cosmos_db__westeurope__EUR.jsonl`
+  - Items: 99 | Region: westeurope | Currency: EUR
+  - Distinct serviceName: Azure Cosmos DB
+  - Sample productName: Azure Cosmos DB, Azure Cosmos DB - PITR, Azure Cosmos DB Analytics Storage
+  - Top skuName tokens: vcore, node, free, worker, backup, coordinator, storage, mvbuilder, 1, redundant
+  - Top meterName tokens: vcore, data, stored, backup, 100, mvbuilder, ru, s, rus, free
+
+### Category: db.mysql
+- Path: `catalog/azure_database_for_mysql__westeurope__EUR.jsonl`
+  - Items: 82 | Region: westeurope | Currency: EUR
+  - Distinct serviceName: Azure Database for MySQL
+  - Sample productName: Azure Database for MySQL Flexible Server Backup Storage, Azure Database for MySQL Flexible Server Burstable BS Series Compute, Azure Database for MySQL Flexible Server Business Critical Ev3 Series Compute
+  - Top skuName tokens: vcore, 1, storage, lrs, backup, zrs, basic, paid, io, standard
+  - Top meterName tokens: vcore, 1, data, stored, storage, io, lrs, backup, zrs, basic
+
+### Category: db.postgres
+- Path: `catalog/azure_database_for_postgresql__westeurope__EUR.jsonl`
+  - Items: 146 | Region: westeurope | Currency: EUR
+  - Distinct serviceName: Azure Database for PostgreSQL
+  - Sample productName: Az DB for PGSQL Flexible Server Memory Optimized Esv3 Series Compute, Az DB for PostgreSQL Flexible Server Storage, Azure Cosmos DB for PostgreSQL Backup Storage
+  - Top skuName tokens: vcore, 1, 2, backup, 64, 4, 32, 16, 8, storage
+  - Top meterName tokens: vcore, data, stored, 1, backup, iops, storage, throughput, disk, v2
+
+### Category: db.sql
+- Path: `catalog/sql_database__westeurope__EUR.jsonl`
+  - Items: 256 | Region: westeurope | Currency: EUR
+  - Distinct serviceName: SQL Database
+  - Sample productName: SQL Database - Elastic Jobs Agent, SQL Database - LTR Backup Storage, SQL Database - shared resource management
+  - Top skuName tokens: vcore, dtu, pack, secondary, 1, zone, redundancy, backup, active, ra
+  - Top meterName tokens: vcore, edtus, dtu, secondary, data, stored, zone, redundancy, dtus, active
+- Path: `catalog/sql_database__westeurope__USD.jsonl`
+  - Items: 256 | Region: westeurope | Currency: USD
+  - Distinct serviceName: SQL Database
+  - Sample productName: SQL Database - Elastic Jobs Agent, SQL Database - LTR Backup Storage, SQL Database - shared resource management
+  - Top skuName tokens: vcore, dtu, pack, secondary, 1, zone, redundancy, backup, active, ra
+  - Top meterName tokens: vcore, edtus, dtu, secondary, data, stored, zone, redundancy, dtus, active
+
+### Category: db.sqlmi
+- Path: `catalog/sql_managed_instance__westeurope__EUR.jsonl`
+  - Items: 133 | Region: westeurope | Currency: EUR
+  - Distinct serviceName: SQL Managed Instance
+  - Sample productName: SQL Managed Instance - LTR Backup Storage, SQL Managed Instance Business Critical - Compute Gen5, SQL Managed Instance Business Critical - Premium Series Compute
+  - Top skuName tokens: vcore, zone, redundancy, zr, 1, 8, 16, 80, 40, 64
+  - Top meterName tokens: vcore, zone, redundancy, data, stored, ra, ltr, backup, memory, general
+
+### Category: dr.asr
+- Path: `catalog/azure_site_recovery__westeurope__EUR.jsonl`
+  - Items: 2 | Region: westeurope | Currency: EUR
+  - Distinct serviceName: Azure Site Recovery
+  - Sample productName: Azure Site Recovery
+  - Top skuName tokens: system, center, azure
+  - Top meterName tokens: vm, replicated, to, system, center, azure
+- Path: `catalog/azure_site_recovery__westeurope__USD.jsonl`
+  - Items: 2 | Region: westeurope | Currency: USD
+  - Distinct serviceName: Azure Site Recovery
+  - Sample productName: Azure Site Recovery
+  - Top skuName tokens: system, center, azure
+  - Top meterName tokens: vm, replicated, to, system, center, azure
+
+### Category: monitoring.loganalytics
+- Path: `catalog/log_analytics__westeurope__EUR.jsonl`
+  - Items: 6 | Region: westeurope | Currency: EUR
+  - Distinct serviceName: Log Analytics
+  - Sample productName: Log Analytics
+  - Top skuName tokens: analytics, logs, premium, free, standard
+  - Top meterName tokens: data, analyzed, analytics, logs, retention, premium, free, standard, ingestion
+- Path: `catalog/log_analytics__westeurope__GBP.jsonl`
+  - Items: 6 | Region: westeurope | Currency: GBP
+  - Distinct serviceName: Log Analytics
+  - Sample productName: Log Analytics
+  - Top skuName tokens: analytics, logs, premium, free, standard
+  - Top meterName tokens: data, analyzed, analytics, logs, retention, premium, free, standard, ingestion
+- Path: `catalog/log_analytics__westeurope__USD.jsonl`
+  - Items: 6 | Region: westeurope | Currency: USD
+  - Distinct serviceName: Log Analytics
+  - Sample productName: Log Analytics
+  - Top skuName tokens: analytics, logs, premium, free, standard
+  - Top meterName tokens: data, analyzed, analytics, logs, retention, premium, free, standard, ingestion
+
+### Category: network.appgw
+- Path: `catalog/application_gateway__westeurope__EUR.jsonl`
+  - Items: 27 | Region: westeurope | Currency: EUR
+  - Distinct serviceName: Application Gateway
+  - Sample productName: Application Gateway Basic v2, Application Gateway Standard v2, Application Gateway WAF v2
+  - Top skuName tokens: standard, large, medium, basic, small
+  - Top meterName tokens: standard, capacity, units, gateway, fixed, cost, large, agc, medium, data
+- Path: `catalog/application_gateway__westeurope__USD.jsonl`
+  - Items: 27 | Region: westeurope | Currency: USD
+  - Distinct serviceName: Application Gateway
+  - Sample productName: Application Gateway Basic v2, Application Gateway Standard v2, Application Gateway WAF v2
+  - Top skuName tokens: standard, large, medium, basic, small
+  - Top meterName tokens: standard, capacity, units, gateway, fixed, cost, large, agc, medium, data
+
+### Category: network.bastion
+- Path: `catalog/azure_bastion__westeurope__EUR.jsonl`
+  - Items: 8 | Region: westeurope | Currency: EUR
+  - Distinct serviceName: Azure Bastion
+  - Sample productName: Azure Bastion
+  - Top skuName tokens: standard, premium, basic
+  - Top meterName tokens: gateway, standard, premium, data, transfer, out, basic, additional
+- Path: `catalog/azure_bastion__westeurope__USD.jsonl`
+  - Items: 8 | Region: westeurope | Currency: USD
+  - Distinct serviceName: Azure Bastion
+  - Sample productName: Azure Bastion
+  - Top skuName tokens: standard, premium, basic
+  - Top meterName tokens: gateway, standard, premium, data, transfer, out, basic, additional
+
+### Category: network.egress
+- Path: `catalog/bandwidth__eastus__USD.jsonl`
+  - Items: 14 | Region: eastus | Currency: USD
+  - Distinct serviceName: Bandwidth
+  - Sample productName: Bandwidth - Routing Preference: Internet, Rtn Preference: MGN
+  - Top skuName tokens: standard, china
+  - Top meterName tokens: data, transfer, standard, china, mbps, out, to, inter, in, 1
+- Path: `catalog/bandwidth__westeurope__GBP.jsonl`
+  - Items: 14 | Region: westeurope | Currency: GBP
+  - Distinct serviceName: Bandwidth
+  - Sample productName: Bandwidth - Routing Preference: Internet, Rtn Preference: MGN
+  - Top skuName tokens: standard, china
+  - Top meterName tokens: data, transfer, standard, china, mbps, out, to, inter, in, 1
+
+### Category: network.er
+- Path: `catalog/expressroute__westeurope__EUR.jsonl`
+  - Items: 7 | Region: westeurope | Currency: EUR
+  - Distinct serviceName: ExpressRoute
+  - Sample productName: ExpressRoute Gateway, ExpressRoute High Performance Gateway, ExpressRoute Standard Gateway
+  - Top skuName tokens: high, performance, ergw2az, standard, ergwscale, ergw3az, ultra, ergw1az
+  - Top meterName tokens: gateway, high, performance, ergw2az, standard, ergwscale, unit, ergw3az, ultra, ergw1az
+
+### Category: network.firewall
+- Path: `catalog/azure_firewall__westeurope__EUR.jsonl`
+  - Items: 16 | Region: westeurope | Currency: EUR
+  - Distinct serviceName: Azure Firewall
+  - Sample productName: Azure Firewall
+  - Top skuName tokens: virtual, hub, standard, premium, secured, basic, secure
+  - Top meterName tokens: virtual, hub, standard, deployment, data, processed, premium, secured, basic, capacity
+
+### Category: network.gateway
+- Path: `catalog/azure_front_door__global__USD.jsonl`
+  - Items: 0 | Region: global | Currency: USD
+  - Distinct serviceName: n/a
+  - Sample productName: n/a
+  - Top skuName tokens: 
+  - Top meterName tokens: 
+- Path: `catalog/azure_front_door__northeurope__EUR.jsonl`
+  - Items: 0 | Region: northeurope | Currency: EUR
+  - Distinct serviceName: n/a
+  - Sample productName: n/a
+  - Top skuName tokens: 
+  - Top meterName tokens: 
+- Path: `catalog/azure_front_door__westeurope__EUR.jsonl`
+  - Items: 0 | Region: westeurope | Currency: EUR
+  - Distinct serviceName: n/a
+  - Sample productName: n/a
+  - Top skuName tokens: 
+  - Top meterName tokens: 
+- Path: `catalog/azure_front_door__westeurope__USD.jsonl`
+  - Items: 0 | Region: westeurope | Currency: USD
+  - Distinct serviceName: n/a
+  - Sample productName: n/a
+  - Top skuName tokens: 
+  - Top meterName tokens: 
+
+### Category: network.lb
+- Path: `catalog/load_balancer__westeurope__EUR.jsonl`
+  - Items: 0 | Region: westeurope | Currency: EUR
+  - Distinct serviceName: n/a
+  - Sample productName: n/a
+  - Top skuName tokens: 
+  - Top meterName tokens: 
+
+### Category: network.nat
+- Path: `catalog/bandwidth__westeurope__EUR.jsonl`
+  - Items: 14 | Region: westeurope | Currency: EUR
+  - Distinct serviceName: Bandwidth
+  - Sample productName: Bandwidth - Routing Preference: Internet, Rtn Preference: MGN
+  - Top skuName tokens: standard, china
+  - Top meterName tokens: data, transfer, standard, china, mbps, out, to, inter, in, 1
+- Path: `catalog/bandwidth__westeurope__USD.jsonl`
+  - Items: 14 | Region: westeurope | Currency: USD
+  - Distinct serviceName: Bandwidth
+  - Sample productName: Bandwidth - Routing Preference: Internet, Rtn Preference: MGN
+  - Top skuName tokens: standard, china
+  - Top meterName tokens: data, transfer, standard, china, mbps, out, to, inter, in, 1
+
+### Category: network.private_endpoint
+- Path: `catalog/private_link__westeurope__EUR.jsonl`
+  - Items: 0 | Region: westeurope | Currency: EUR
+  - Distinct serviceName: n/a
+  - Sample productName: n/a
+  - Top skuName tokens: 
+  - Top meterName tokens: 
+
+### Category: network.public_ip
+- Path: `catalog/public_ip_addresses__westeurope__EUR.jsonl`
+  - Items: 0 | Region: westeurope | Currency: EUR
+  - Distinct serviceName: n/a
+  - Sample productName: n/a
+  - Top skuName tokens: 
+  - Top meterName tokens: 
+- Path: `catalog/public_ip_addresses__westeurope__USD.jsonl`
+  - Items: 0 | Region: westeurope | Currency: USD
+  - Distinct serviceName: n/a
+  - Sample productName: n/a
+  - Top skuName tokens: 
+  - Top meterName tokens: 
+
+### Category: network.vnet
+- Path: `catalog/virtual_network__westeurope__EUR.jsonl`
+  - Items: 12 | Region: westeurope | Currency: EUR
+  - Distinct serviceName: Virtual Network
+  - Sample productName: Global Virtual Network Peering, IP Addresses, Public IP Prefix
+  - Top skuName tokens: basic, standard, global, inter, region
+  - Top meterName tokens: ip, public, ipv4, static, basic, standard, global, inter, region, dynamic
+- Path: `catalog/virtual_network__westeurope__GBP.jsonl`
+  - Items: 12 | Region: westeurope | Currency: GBP
+  - Distinct serviceName: Virtual Network
+  - Sample productName: Global Virtual Network Peering, IP Addresses, Public IP Prefix
+  - Top skuName tokens: basic, standard, global, inter, region
+  - Top meterName tokens: ip, public, ipv4, static, basic, standard, global, inter, region, dynamic
+- Path: `catalog/virtual_network__westeurope__USD.jsonl`
+  - Items: 12 | Region: westeurope | Currency: USD
+  - Distinct serviceName: Virtual Network
+  - Sample productName: Global Virtual Network Peering, IP Addresses, Public IP Prefix
+  - Top skuName tokens: basic, standard, global, inter, region
+  - Top meterName tokens: ip, public, ipv4, static, basic, standard, global, inter, region, dynamic
+
+### Category: network.vpngw
+- Path: `catalog/vpn_gateway__westeurope__EUR.jsonl`
+  - Items: 24 | Region: westeurope | Currency: EUR
+  - Distinct serviceName: VPN Gateway
+  - Sample productName: VPN Gateway
+  - Top skuName tokens: vpngw1az, vpngw3az, basic, vpngw2az, vpngw4, vpngw5, vpngw2, vpngw3, vpngw1, vpngw5az
+  - Top meterName tokens: connection, p2s, s2s, vpngw1az, basic, gateway, vpngw5az, vpngw2az, vpngw3az, vpngw4az
+
+### Category: other
+- Path: `catalog/other__westeurope__USD.jsonl`
+  - Items: 0 | Region: westeurope | Currency: USD
+  - Distinct serviceName: n/a
+  - Sample productName: n/a
+  - Top skuName tokens: 
+  - Top meterName tokens: 
+
+### Category: security.keyvault
+- Path: `catalog/key_vault__westeurope__EUR.jsonl`
+  - Items: 14 | Region: westeurope | Currency: EUR
+  - Distinct serviceName: Key Vault
+  - Sample productName: Azure Dedicated HSM, Key Vault, Key Vault HSM Pool
+  - Top skuName tokens: premium, standard, b1
+  - Top meterName tokens: key, operations, renewal, advanced, automated, rotation, premium, hsm, protected, certificate
+- Path: `catalog/key_vault__westeurope__GBP.jsonl`
+  - Items: 14 | Region: westeurope | Currency: GBP
+  - Distinct serviceName: Key Vault
+  - Sample productName: Azure Dedicated HSM, Key Vault, Key Vault HSM Pool
+  - Top skuName tokens: premium, standard, b1
+  - Top meterName tokens: key, operations, renewal, advanced, automated, rotation, premium, hsm, protected, certificate
+- Path: `catalog/key_vault__westeurope__USD.jsonl`
+  - Items: 14 | Region: westeurope | Currency: USD
+  - Distinct serviceName: Key Vault
+  - Sample productName: Azure Dedicated HSM, Key Vault, Key Vault HSM Pool
+  - Top skuName tokens: premium, standard, b1
+  - Top meterName tokens: key, operations, renewal, advanced, automated, rotation, premium, hsm, protected, certificate
+
+### Category: storage.blob
+- Path: `catalog/storage__westeurope__EUR.jsonl`
+  - Items: 1478 | Region: westeurope | Currency: EUR
+  - Distinct serviceName: Storage
+  - Sample productName: Azure Data Lake Storage Gen2 Flat Namespace, Azure Data Lake Storage Gen2 Hierarchical Namespace, Azure Elastic SAN
+  - Top skuName tokens: grs, lrs, ra, zrs, gzrs, hot, standard, cool, cold, archive
+  - Top meterName tokens: operations, data, lrs, grs, zrs, disk, write, stored, cool, hot
+- Path: `catalog/storage__westeurope__GBP.jsonl`
+  - Items: 1478 | Region: westeurope | Currency: GBP
+  - Distinct serviceName: Storage
+  - Sample productName: Azure Data Lake Storage Gen2 Flat Namespace, Azure Data Lake Storage Gen2 Hierarchical Namespace, Azure Elastic SAN
+  - Top skuName tokens: grs, lrs, ra, zrs, gzrs, hot, standard, cool, cold, archive
+  - Top meterName tokens: operations, data, lrs, grs, zrs, disk, write, stored, cool, hot
+- Path: `catalog/storage__westeurope__USD.jsonl`
+  - Items: 1478 | Region: westeurope | Currency: USD
+  - Distinct serviceName: Storage
+  - Sample productName: Azure Data Lake Storage Gen2 Flat Namespace, Azure Data Lake Storage Gen2 Hierarchical Namespace, Azure Elastic SAN
+  - Top skuName tokens: grs, lrs, ra, zrs, gzrs, hot, standard, cool, cold, archive
+  - Top meterName tokens: operations, data, lrs, grs, zrs, disk, write, stored, cool, hot
+
+### Category: storage.disk
+- Path: `catalog/storage__eastus__USD.jsonl`
+  - Items: 1476 | Region: eastus | Currency: USD
+  - Distinct serviceName: Storage
+  - Sample productName: Azure Data Lake Storage Gen2 Flat Namespace, Azure Data Lake Storage Gen2 Hierarchical Namespace, Azure Elastic SAN
+  - Top skuName tokens: grs, lrs, ra, zrs, gzrs, hot, standard, cool, cold, archive
+  - Top meterName tokens: operations, data, lrs, grs, zrs, disk, write, stored, cool, hot
+
+## Run-by-run resource verification
+### Run: 2024-06-01_westeurope_EUR_recommend_adjudicate_appsvc
+- Scenario: unknown
+  - Resource: id=appsvc-plan-prod | category=appservice.plan | region=westeurope | requested_sku=P1v3 | billing_model=payg
+    - Catalog used: `catalog/azure_app_service__westeurope__EUR.jsonl` (reason: category='appservice.plan' -> serviceName='Azure App Service' via normalize_service_name; region='westeurope', currency='EUR')
+    - Catalog search results: 210 candidates
+    - score=0 | productName=Azure App Service Isolated v2 Plan | skuName=I5mv2 | meterName=I5mv2 App | armSkuName=App_Service_I5_mv2_windows | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=9.6112
+    - score=0 | productName=Azure App Service Isolated v2 Plan | skuName=I5mv2 | meterName=I5mv2 App | armSkuName=App_Service_I5_mv2_windows | unitOfMeasure=1 Hour | type=Reservation | priceType=Reservation | unitPrice=58672.4324
+    - score=0 | productName=Azure App Service Isolated v2 Plan | skuName=I3 v2 | meterName=I3 v2 App | armSkuName=App_Service_I3_v2_windows | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=1.9719
+    - score=0 | productName=Azure App Service Isolated v2 Plan | skuName=I3 v2 | meterName=I3 v2 App | armSkuName=App_Service_I3_v2_windows | unitOfMeasure=1 Hour | type=Reservation | priceType=Reservation | unitPrice=12211.8919
+    - score=0 | productName=Azure App Service Standard Plan | skuName=S1 | meterName=S1 App | armSkuName= | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.0865
+    - score=0 | productName=Azure App Service Standard Plan | skuName=S1 | meterName=S1 App | armSkuName= | unitOfMeasure=1 Hour | type=DevTestConsumption | priceType=DevTestConsumption | unitPrice=0.0519
+    - score=0 | productName=Azure App Service Isolated v2 Plan | skuName=I3mv2 | meterName=I3mv2 App | armSkuName=App_Service_I3_mv2_windows | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=2.4026
+    - score=0 | productName=Azure App Service Isolated v2 Plan | skuName=I3mv2 | meterName=I3mv2 App | armSkuName=App_Service_I3_mv2_windows | unitOfMeasure=1 Hour | type=Reservation | priceType=Reservation | unitPrice=14668.1081
+    - score=0 | productName=Azure App Service Isolated v2 Plan | skuName=I5 v2 | meterName=I5 v2 App | armSkuName=App_Service_I5_v2_windows | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=7.8876
+    - score=0 | productName=Azure App Service Isolated v2 Plan | skuName=I5 v2 | meterName=I5 v2 App | armSkuName=App_Service_I5_v2_windows | unitOfMeasure=1 Hour | type=Reservation | priceType=Reservation | unitPrice=49138.1622
+    - Conclusion: Ambiguous: multiple meters, need capacity-first / stricter filters.
+
+### Run: run10_incomplete
+- Scenario: unknown
+  - Resource: id=backup-vault-mars | category=backup.vault | region=westeurope | requested_sku=ADLS Gen2 Vaulted | billing_model=payg
+    - Catalog used: `catalog/backup__westeurope__USD.jsonl` (reason: category='backup.vault' -> serviceName='Backup' via normalize_service_name; region='westeurope', currency='USD')
+    - Catalog search results: 41 candidates
+    - score=3 | productName=Backup | skuName=ADLS Gen2 Vaulted | meterName=ADLS Gen2 Vaulted RA-GRS Write Operations | armSkuName=ADLS Gen2 Vaulted | unitOfMeasure=10K | type=Consumption | priceType=Consumption | unitPrice=0.108
+    - score=3 | productName=Backup | skuName=ADLS Gen2 Vaulted | meterName=ADLS Gen2 Vaulted GRS Write Operations | armSkuName=ADLS Gen2 Vaulted | unitOfMeasure=10K | type=Consumption | priceType=Consumption | unitPrice=0.108
+    - score=3 | productName=Backup | skuName=ADLS Gen2 Vaulted | meterName=ADLS Gen2 Vaulted ZRS Write Operations | armSkuName=ADLS Gen2 Vaulted | unitOfMeasure=10K | type=Consumption | priceType=Consumption | unitPrice=0.0675
+    - score=3 | productName=Backup | skuName=ADLS Gen2 Vaulted | meterName=ADLS Gen2 Vaulted Protected Instances | armSkuName=ADLS Gen2 Vaulted | unitOfMeasure=1/Month | type=Consumption | priceType=Consumption | unitPrice=13.0
+    - score=3 | productName=Backup | skuName=ADLS Gen2 Vaulted | meterName=ADLS Gen2 Vaulted LRS Write Operations | armSkuName=ADLS Gen2 Vaulted | unitOfMeasure=10K | type=Consumption | priceType=Consumption | unitPrice=0.054
+    - score=1 | productName=Backup | skuName=Azure Files Vaulted | meterName=ZRS Data Stored | armSkuName=Azure Files Vaulted | unitOfMeasure=1 GB/Month | type=Consumption | priceType=Consumption | unitPrice=0.0624
+    - score=1 | productName=Backup | skuName=Azure Files Vaulted | meterName=LRS Data Stored | armSkuName=Azure Files Vaulted | unitOfMeasure=1 GB/Month | type=Consumption | priceType=Consumption | unitPrice=0.0533
+    - score=1 | productName=Backup | skuName=Azure Files Vaulted | meterName=Azure Files Vaulted Protected Instances | armSkuName=Azure Files Vaulted | unitOfMeasure=1/Month | type=Consumption | priceType=Consumption | unitPrice=13.0
+    - score=1 | productName=Backup | skuName=Azure Files Vaulted | meterName=RA-GRS Data Stored | armSkuName=Azure Files Vaulted | unitOfMeasure=1 GB/Month | type=Consumption | priceType=Consumption | unitPrice=0.1261
+    - score=1 | productName=Backup | skuName=Azure Files Vaulted | meterName=GRS Data Stored | armSkuName=Azure Files Vaulted | unitOfMeasure=1 GB/Month | type=Consumption | priceType=Consumption | unitPrice=0.0988
+    - Conclusion: Ambiguous: multiple meters, need capacity-first / stricter filters.
+  - Resource: id=mars-protected-servers | category=other | region=westeurope | requested_sku= | billing_model=payg
+    - Catalog used: `catalog/other__westeurope__EUR.jsonl` (reason: category='other' -> serviceName='Other' via normalize_service_name; region='westeurope', currency='EUR')
+    - Catalog search results: 0 candidates
+    - Conclusion: Correct meter is not in catalog (catalog incomplete or mapping wrong).
+  - Resource: id=gpu-vm-nd96asr | category=compute.vm | region=eastus | requested_sku=Standard_ND96asr_v4 | billing_model=payg
+    - Catalog used: `catalog/virtual_machines__eastus__EUR.jsonl` (reason: category='compute.vm' -> serviceName='Virtual Machines' via normalize_service_name; region='eastus', currency='EUR')
+    - Catalog search results: 0 candidates
+    - Conclusion: Correct meter is not in catalog (catalog incomplete or mapping wrong).
+  - Resource: id=gpu-vm-osdisk | category=storage.disk | region=eastus | requested_sku=Premium_LRS | billing_model=payg
+    - Catalog used: `catalog/storage__eastus__USD.jsonl` (reason: category='storage.disk' -> serviceName='Storage' via normalize_service_name; region='eastus', currency='USD')
+    - Catalog search results: 1476 candidates
+    - score=1 | productName=Premium Files Reserved Capacity | skuName=Premium LRS - 100 TB | meterName=Provisioned | armSkuName=Premium_LRS_Provisioned_100 TB | unitOfMeasure=1 GB/Month | type=Reservation | priceType=Reservation | unitPrice=153354.0
+    - score=1 | productName=Premium Files Reserved Capacity | skuName=Premium LRS - 10 TB | meterName=Provisioned | armSkuName=Premium_LRS_Provisioned_10 TB | unitOfMeasure=1 GB/Month | type=Reservation | priceType=Reservation | unitPrice=16122.0
+    - score=0 | productName=Blob Storage | skuName=Cool RA-GRS | meterName=Cool Data Retrieval | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.01
+    - score=0 | productName=Blob Storage | skuName=Cool LRS | meterName=Cool Read Operations | armSkuName= | unitOfMeasure=10K | type=Consumption | priceType=Consumption | unitPrice=0.01
+    - score=0 | productName=Azure Data Lake Storage Gen2 Flat Namespace | skuName=Cool LRS | meterName=Cool LRS Early Delete | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.0152
+    - score=0 | productName=Queues v2 | skuName=Standard RA-GRS | meterName=GRS Class 1 Operations | armSkuName= | unitOfMeasure=10K | type=Consumption | priceType=Consumption | unitPrice=0.008
+    - score=0 | productName=Tables | skuName=Standard GZRS | meterName=List Operations | armSkuName= | unitOfMeasure=10K | type=Consumption | priceType=Consumption | unitPrice=0.00036
+    - score=0 | productName=General Block Blob v2 | skuName=Cool ZRS | meterName=Cool ZRS Early Delete | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.019
+    - score=0 | productName=Premium Block Blob | skuName=Premium LRS | meterName=Premium LRS All Other Operations | armSkuName= | unitOfMeasure=10K | type=Consumption | priceType=Consumption | unitPrice=0.0014
+    - score=0 | productName=General Block Blob v2 Hierarchical Namespace | skuName=Cool ZRS | meterName=Cool ZRS Early Delete | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.019
+    - Conclusion: Ambiguous: multiple meters, need capacity-first / stricter filters.
+  - Resource: id=gpu-vm-datadisk | category=storage.disk | region=eastus | requested_sku=Premium_LRS | billing_model=payg
+    - Catalog used: `catalog/storage__eastus__USD.jsonl` (reason: category='storage.disk' -> serviceName='Storage' via normalize_service_name; region='eastus', currency='USD')
+    - Catalog search results: 1476 candidates
+    - score=1 | productName=Premium Files Reserved Capacity | skuName=Premium LRS - 100 TB | meterName=Provisioned | armSkuName=Premium_LRS_Provisioned_100 TB | unitOfMeasure=1 GB/Month | type=Reservation | priceType=Reservation | unitPrice=153354.0
+    - score=1 | productName=Premium Files Reserved Capacity | skuName=Premium LRS - 10 TB | meterName=Provisioned | armSkuName=Premium_LRS_Provisioned_10 TB | unitOfMeasure=1 GB/Month | type=Reservation | priceType=Reservation | unitPrice=16122.0
+    - score=0 | productName=Blob Storage | skuName=Cool RA-GRS | meterName=Cool Data Retrieval | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.01
+    - score=0 | productName=Blob Storage | skuName=Cool LRS | meterName=Cool Read Operations | armSkuName= | unitOfMeasure=10K | type=Consumption | priceType=Consumption | unitPrice=0.01
+    - score=0 | productName=Azure Data Lake Storage Gen2 Flat Namespace | skuName=Cool LRS | meterName=Cool LRS Early Delete | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.0152
+    - score=0 | productName=Queues v2 | skuName=Standard RA-GRS | meterName=GRS Class 1 Operations | armSkuName= | unitOfMeasure=10K | type=Consumption | priceType=Consumption | unitPrice=0.008
+    - score=0 | productName=Tables | skuName=Standard GZRS | meterName=List Operations | armSkuName= | unitOfMeasure=10K | type=Consumption | priceType=Consumption | unitPrice=0.00036
+    - score=0 | productName=General Block Blob v2 | skuName=Cool ZRS | meterName=Cool ZRS Early Delete | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.019
+    - score=0 | productName=Premium Block Blob | skuName=Premium LRS | meterName=Premium LRS All Other Operations | armSkuName= | unitOfMeasure=10K | type=Consumption | priceType=Consumption | unitPrice=0.0014
+    - score=0 | productName=General Block Blob v2 Hierarchical Namespace | skuName=Cool ZRS | meterName=Cool ZRS Early Delete | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.019
+    - Conclusion: Ambiguous: multiple meters, need capacity-first / stricter filters.
+  - Resource: id=gpu-vm-egress | category=network.egress | region=eastus | requested_sku=Standard | billing_model=payg
+    - Catalog used: `catalog/bandwidth__eastus__USD.jsonl` (reason: category='network.egress' -> serviceName='Bandwidth' via normalize_service_name; region='eastus', currency='USD')
+    - Catalog search results: 14 candidates
+    - score=1 | productName=Rtn Preference: MGN | skuName=Standard | meterName=Standard Data Transfer Out - to China | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.0
+    - score=1 | productName=Rtn Preference: MGN | skuName=Standard | meterName=Standard Inter-Region Data Transfer | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.02
+    - score=1 | productName=Rtn Preference: MGN | skuName=Standard | meterName=Standard Inter-Availability Zone Data Transfer In | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.01
+    - score=1 | productName=Rtn Preference: MGN | skuName=Standard | meterName=Standard Data Transfer Out | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.0
+    - score=1 | productName=Rtn Preference: MGN | skuName=Standard | meterName=Standard Data Transfer In | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.0
+    - score=1 | productName=Bandwidth - Routing Preference: Internet | skuName=Standard | meterName=Standard Data Transfer Out | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.0
+    - score=1 | productName=Rtn Preference: MGN | skuName=Standard | meterName=Standard Inter-Availability Zone Data Transfer Out | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.01
+    - score=1 | productName=Rtn Preference: MGN | skuName=Standard | meterName=Standard Data Transfer In - from China | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.09
+    - score=0 | productName=Rtn Preference: MGN | skuName=China | meterName=China Data Transfer - 4 Mbps | armSkuName= | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.0
+    - score=0 | productName=Rtn Preference: MGN | skuName=China | meterName=China Data Transfer - 1 Mbps | armSkuName= | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.0
+    - Conclusion: Ambiguous: multiple meters, need capacity-first / stricter filters.
+  - Resource: id=log-analytics-backup | category=monitoring.loganalytics | region=westeurope | requested_sku=Analytics Logs | billing_model=payg
+    - Catalog used: `catalog/log_analytics__westeurope__USD.jsonl` (reason: category='monitoring.loganalytics' -> serviceName='Log Analytics' via normalize_service_name; region='westeurope', currency='USD')
+    - Catalog search results: 6 candidates
+    - score=2 | productName=Log Analytics | skuName=Analytics Logs | meterName=Analytics Logs Data Retention | armSkuName= | unitOfMeasure=1 GB/Month | type=Consumption | priceType=Consumption | unitPrice=0.13
+    - score=2 | productName=Log Analytics | skuName=Analytics Logs | meterName=Analytics Logs Data Ingestion | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.0
+    - score=2 | productName=Log Analytics | skuName=Analytics Logs | meterName=Analytics Logs Data Analyzed | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=2.3
+    - score=1 | productName=Log Analytics | skuName=Premium | meterName=Premium Data Analyzed | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=3.5
+    - score=1 | productName=Log Analytics | skuName=Free | meterName=Free Data Analyzed | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.0
+    - score=1 | productName=Log Analytics | skuName=Standard | meterName=Standard Data Analyzed | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=2.3
+    - Conclusion: Ambiguous: multiple meters, need capacity-first / stricter filters.
+  - Resource: id=keyvault-backup-gpu | category=security.keyvault | region=westeurope | requested_sku=standard | billing_model=payg
+    - Catalog used: `catalog/key_vault__westeurope__USD.jsonl` (reason: category='security.keyvault' -> serviceName='Key Vault' via normalize_service_name; region='westeurope', currency='USD')
+    - Catalog search results: 14 candidates
+    - score=1 | productName=Key Vault | skuName=Standard | meterName=Advanced Key Operations | armSkuName= | unitOfMeasure=10K | type=Consumption | priceType=Consumption | unitPrice=0.15
+    - score=1 | productName=Key Vault | skuName=Standard | meterName=Automated Key Rotation | armSkuName= | unitOfMeasure=1 Rotation | type=Consumption | priceType=Consumption | unitPrice=1.0
+    - score=1 | productName=Key Vault | skuName=Standard | meterName=Secret Renewal | armSkuName= | unitOfMeasure=1 | type=Consumption | priceType=Consumption | unitPrice=1.0
+    - score=1 | productName=Azure Dedicated HSM | skuName=Standard | meterName=Standard Instance | armSkuName= | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=4.85
+    - score=1 | productName=Key Vault HSM Pool | skuName=Standard B1 | meterName=Standard B1 Instance | armSkuName= | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=3.2
+    - score=1 | productName=Key Vault | skuName=Standard | meterName=Operations | armSkuName= | unitOfMeasure=10K | type=Consumption | priceType=Consumption | unitPrice=0.03
+    - score=1 | productName=Key Vault | skuName=Standard | meterName=Certificate Renewal Request | armSkuName= | unitOfMeasure=1 | type=Consumption | priceType=Consumption | unitPrice=3.0
+    - score=0 | productName=Key Vault | skuName=Premium | meterName=Automated Key Rotation | armSkuName= | unitOfMeasure=1 Rotation | type=Consumption | priceType=Consumption | unitPrice=1.0
+    - score=0 | productName=Key Vault | skuName=Premium | meterName=Operations | armSkuName= | unitOfMeasure=10K | type=Consumption | priceType=Consumption | unitPrice=0.03
+    - score=0 | productName=Key Vault | skuName=Premium | meterName=Premium HSM-protected RSA 2048-bit key | armSkuName= | unitOfMeasure=1 | type=Consumption | priceType=Consumption | unitPrice=1.0
+    - Conclusion: Ambiguous: multiple meters, need capacity-first / stricter filters.
+
+- Scenario: unknown
+  - Resource: id=backup-vault-mars-co | category=backup.vault | region=westeurope | requested_sku=ADLS Gen2 Vaulted | billing_model=payg
+    - Catalog used: `catalog/backup__westeurope__USD.jsonl` (reason: category='backup.vault' -> serviceName='Backup' via normalize_service_name; region='westeurope', currency='USD')
+    - Catalog search results: 41 candidates
+    - score=3 | productName=Backup | skuName=ADLS Gen2 Vaulted | meterName=ADLS Gen2 Vaulted RA-GRS Write Operations | armSkuName=ADLS Gen2 Vaulted | unitOfMeasure=10K | type=Consumption | priceType=Consumption | unitPrice=0.108
+    - score=3 | productName=Backup | skuName=ADLS Gen2 Vaulted | meterName=ADLS Gen2 Vaulted GRS Write Operations | armSkuName=ADLS Gen2 Vaulted | unitOfMeasure=10K | type=Consumption | priceType=Consumption | unitPrice=0.108
+    - score=3 | productName=Backup | skuName=ADLS Gen2 Vaulted | meterName=ADLS Gen2 Vaulted ZRS Write Operations | armSkuName=ADLS Gen2 Vaulted | unitOfMeasure=10K | type=Consumption | priceType=Consumption | unitPrice=0.0675
+    - score=3 | productName=Backup | skuName=ADLS Gen2 Vaulted | meterName=ADLS Gen2 Vaulted Protected Instances | armSkuName=ADLS Gen2 Vaulted | unitOfMeasure=1/Month | type=Consumption | priceType=Consumption | unitPrice=13.0
+    - score=3 | productName=Backup | skuName=ADLS Gen2 Vaulted | meterName=ADLS Gen2 Vaulted LRS Write Operations | armSkuName=ADLS Gen2 Vaulted | unitOfMeasure=10K | type=Consumption | priceType=Consumption | unitPrice=0.054
+    - score=1 | productName=Backup | skuName=Azure Files Vaulted | meterName=ZRS Data Stored | armSkuName=Azure Files Vaulted | unitOfMeasure=1 GB/Month | type=Consumption | priceType=Consumption | unitPrice=0.0624
+    - score=1 | productName=Backup | skuName=Azure Files Vaulted | meterName=LRS Data Stored | armSkuName=Azure Files Vaulted | unitOfMeasure=1 GB/Month | type=Consumption | priceType=Consumption | unitPrice=0.0533
+    - score=1 | productName=Backup | skuName=Azure Files Vaulted | meterName=Azure Files Vaulted Protected Instances | armSkuName=Azure Files Vaulted | unitOfMeasure=1/Month | type=Consumption | priceType=Consumption | unitPrice=13.0
+    - score=1 | productName=Backup | skuName=Azure Files Vaulted | meterName=RA-GRS Data Stored | armSkuName=Azure Files Vaulted | unitOfMeasure=1 GB/Month | type=Consumption | priceType=Consumption | unitPrice=0.1261
+    - score=1 | productName=Backup | skuName=Azure Files Vaulted | meterName=GRS Data Stored | armSkuName=Azure Files Vaulted | unitOfMeasure=1 GB/Month | type=Consumption | priceType=Consumption | unitPrice=0.0988
+    - Conclusion: Ambiguous: multiple meters, need capacity-first / stricter filters.
+  - Resource: id=mars-protected-servers-co | category=other | region=westeurope | requested_sku= | billing_model=payg
+    - Catalog used: `catalog/other__westeurope__EUR.jsonl` (reason: category='other' -> serviceName='Other' via normalize_service_name; region='westeurope', currency='EUR')
+    - Catalog search results: 0 candidates
+    - Conclusion: Correct meter is not in catalog (catalog incomplete or mapping wrong).
+  - Resource: id=gpu-vm-nd96asr-co | category=compute.vm | region=eastus | requested_sku=Standard_ND96asr_v4 | billing_model=payg
+    - Catalog used: `catalog/virtual_machines__eastus__EUR.jsonl` (reason: category='compute.vm' -> serviceName='Virtual Machines' via normalize_service_name; region='eastus', currency='EUR')
+    - Catalog search results: 0 candidates
+    - Conclusion: Correct meter is not in catalog (catalog incomplete or mapping wrong).
+  - Resource: id=gpu-vm-osdisk-co | category=storage.disk | region=eastus | requested_sku=Premium_LRS | billing_model=payg
+    - Catalog used: `catalog/storage__eastus__USD.jsonl` (reason: category='storage.disk' -> serviceName='Storage' via normalize_service_name; region='eastus', currency='USD')
+    - Catalog search results: 1476 candidates
+    - score=1 | productName=Premium Files Reserved Capacity | skuName=Premium LRS - 100 TB | meterName=Provisioned | armSkuName=Premium_LRS_Provisioned_100 TB | unitOfMeasure=1 GB/Month | type=Reservation | priceType=Reservation | unitPrice=153354.0
+    - score=1 | productName=Premium Files Reserved Capacity | skuName=Premium LRS - 10 TB | meterName=Provisioned | armSkuName=Premium_LRS_Provisioned_10 TB | unitOfMeasure=1 GB/Month | type=Reservation | priceType=Reservation | unitPrice=16122.0
+    - score=0 | productName=Blob Storage | skuName=Cool RA-GRS | meterName=Cool Data Retrieval | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.01
+    - score=0 | productName=Blob Storage | skuName=Cool LRS | meterName=Cool Read Operations | armSkuName= | unitOfMeasure=10K | type=Consumption | priceType=Consumption | unitPrice=0.01
+    - score=0 | productName=Azure Data Lake Storage Gen2 Flat Namespace | skuName=Cool LRS | meterName=Cool LRS Early Delete | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.0152
+    - score=0 | productName=Queues v2 | skuName=Standard RA-GRS | meterName=GRS Class 1 Operations | armSkuName= | unitOfMeasure=10K | type=Consumption | priceType=Consumption | unitPrice=0.008
+    - score=0 | productName=Tables | skuName=Standard GZRS | meterName=List Operations | armSkuName= | unitOfMeasure=10K | type=Consumption | priceType=Consumption | unitPrice=0.00036
+    - score=0 | productName=General Block Blob v2 | skuName=Cool ZRS | meterName=Cool ZRS Early Delete | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.019
+    - score=0 | productName=Premium Block Blob | skuName=Premium LRS | meterName=Premium LRS All Other Operations | armSkuName= | unitOfMeasure=10K | type=Consumption | priceType=Consumption | unitPrice=0.0014
+    - score=0 | productName=General Block Blob v2 Hierarchical Namespace | skuName=Cool ZRS | meterName=Cool ZRS Early Delete | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.019
+    - Conclusion: Ambiguous: multiple meters, need capacity-first / stricter filters.
+  - Resource: id=gpu-vm-datadisk-co | category=storage.disk | region=eastus | requested_sku=StandardSSD_LRS | billing_model=payg
+    - Catalog used: `catalog/storage__eastus__USD.jsonl` (reason: category='storage.disk' -> serviceName='Storage' via normalize_service_name; region='eastus', currency='USD')
+    - Catalog search results: 1476 candidates
+    - score=0 | productName=Blob Storage | skuName=Cool RA-GRS | meterName=Cool Data Retrieval | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.01
+    - score=0 | productName=Blob Storage | skuName=Cool LRS | meterName=Cool Read Operations | armSkuName= | unitOfMeasure=10K | type=Consumption | priceType=Consumption | unitPrice=0.01
+    - score=0 | productName=Azure Data Lake Storage Gen2 Flat Namespace | skuName=Cool LRS | meterName=Cool LRS Early Delete | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.0152
+    - score=0 | productName=Queues v2 | skuName=Standard RA-GRS | meterName=GRS Class 1 Operations | armSkuName= | unitOfMeasure=10K | type=Consumption | priceType=Consumption | unitPrice=0.008
+    - score=0 | productName=Tables | skuName=Standard GZRS | meterName=List Operations | armSkuName= | unitOfMeasure=10K | type=Consumption | priceType=Consumption | unitPrice=0.00036
+    - score=0 | productName=General Block Blob v2 | skuName=Cool ZRS | meterName=Cool ZRS Early Delete | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.019
+    - score=0 | productName=Premium Block Blob | skuName=Premium LRS | meterName=Premium LRS All Other Operations | armSkuName= | unitOfMeasure=10K | type=Consumption | priceType=Consumption | unitPrice=0.0014
+    - score=0 | productName=General Block Blob v2 Hierarchical Namespace | skuName=Cool ZRS | meterName=Cool ZRS Early Delete | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.019
+    - score=0 | productName=General Block Blob v2 | skuName=Cold RA-GZRS | meterName=Cold RA-GZRS Data Write | armSkuName=Cold | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.0
+    - score=0 | productName=Blob Storage | skuName=Cold LRS | meterName=Cold LRS Data Stored | armSkuName=Cold | unitOfMeasure=1 GB/Month | type=Consumption | priceType=Consumption | unitPrice=0.0036
+    - Conclusion: Ambiguous: multiple meters, need capacity-first / stricter filters.
+  - Resource: id=gpu-vm-egress-co | category=network.egress | region=eastus | requested_sku=Standard | billing_model=payg
+    - Catalog used: `catalog/bandwidth__eastus__USD.jsonl` (reason: category='network.egress' -> serviceName='Bandwidth' via normalize_service_name; region='eastus', currency='USD')
+    - Catalog search results: 14 candidates
+    - score=1 | productName=Rtn Preference: MGN | skuName=Standard | meterName=Standard Data Transfer Out - to China | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.0
+    - score=1 | productName=Rtn Preference: MGN | skuName=Standard | meterName=Standard Inter-Region Data Transfer | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.02
+    - score=1 | productName=Rtn Preference: MGN | skuName=Standard | meterName=Standard Inter-Availability Zone Data Transfer In | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.01
+    - score=1 | productName=Rtn Preference: MGN | skuName=Standard | meterName=Standard Data Transfer Out | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.0
+    - score=1 | productName=Rtn Preference: MGN | skuName=Standard | meterName=Standard Data Transfer In | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.0
+    - score=1 | productName=Bandwidth - Routing Preference: Internet | skuName=Standard | meterName=Standard Data Transfer Out | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.0
+    - score=1 | productName=Rtn Preference: MGN | skuName=Standard | meterName=Standard Inter-Availability Zone Data Transfer Out | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.01
+    - score=1 | productName=Rtn Preference: MGN | skuName=Standard | meterName=Standard Data Transfer In - from China | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.09
+    - score=0 | productName=Rtn Preference: MGN | skuName=China | meterName=China Data Transfer - 4 Mbps | armSkuName= | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.0
+    - score=0 | productName=Rtn Preference: MGN | skuName=China | meterName=China Data Transfer - 1 Mbps | armSkuName= | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.0
+    - Conclusion: Ambiguous: multiple meters, need capacity-first / stricter filters.
+  - Resource: id=log-analytics-co | category=monitoring.loganalytics | region=westeurope | requested_sku=Analytics Logs | billing_model=payg
+    - Catalog used: `catalog/log_analytics__westeurope__USD.jsonl` (reason: category='monitoring.loganalytics' -> serviceName='Log Analytics' via normalize_service_name; region='westeurope', currency='USD')
+    - Catalog search results: 6 candidates
+    - score=2 | productName=Log Analytics | skuName=Analytics Logs | meterName=Analytics Logs Data Retention | armSkuName= | unitOfMeasure=1 GB/Month | type=Consumption | priceType=Consumption | unitPrice=0.13
+    - score=2 | productName=Log Analytics | skuName=Analytics Logs | meterName=Analytics Logs Data Ingestion | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.0
+    - score=2 | productName=Log Analytics | skuName=Analytics Logs | meterName=Analytics Logs Data Analyzed | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=2.3
+    - score=1 | productName=Log Analytics | skuName=Premium | meterName=Premium Data Analyzed | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=3.5
+    - score=1 | productName=Log Analytics | skuName=Free | meterName=Free Data Analyzed | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.0
+    - score=1 | productName=Log Analytics | skuName=Standard | meterName=Standard Data Analyzed | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=2.3
+    - Conclusion: Ambiguous: multiple meters, need capacity-first / stricter filters.
+  - Resource: id=keyvault-co | category=security.keyvault | region=westeurope | requested_sku=standard | billing_model=payg
+    - Catalog used: `catalog/key_vault__westeurope__USD.jsonl` (reason: category='security.keyvault' -> serviceName='Key Vault' via normalize_service_name; region='westeurope', currency='USD')
+    - Catalog search results: 14 candidates
+    - score=1 | productName=Key Vault | skuName=Standard | meterName=Advanced Key Operations | armSkuName= | unitOfMeasure=10K | type=Consumption | priceType=Consumption | unitPrice=0.15
+    - score=1 | productName=Key Vault | skuName=Standard | meterName=Automated Key Rotation | armSkuName= | unitOfMeasure=1 Rotation | type=Consumption | priceType=Consumption | unitPrice=1.0
+    - score=1 | productName=Key Vault | skuName=Standard | meterName=Secret Renewal | armSkuName= | unitOfMeasure=1 | type=Consumption | priceType=Consumption | unitPrice=1.0
+    - score=1 | productName=Azure Dedicated HSM | skuName=Standard | meterName=Standard Instance | armSkuName= | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=4.85
+    - score=1 | productName=Key Vault HSM Pool | skuName=Standard B1 | meterName=Standard B1 Instance | armSkuName= | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=3.2
+    - score=1 | productName=Key Vault | skuName=Standard | meterName=Operations | armSkuName= | unitOfMeasure=10K | type=Consumption | priceType=Consumption | unitPrice=0.03
+    - score=1 | productName=Key Vault | skuName=Standard | meterName=Certificate Renewal Request | armSkuName= | unitOfMeasure=1 | type=Consumption | priceType=Consumption | unitPrice=3.0
+    - score=0 | productName=Key Vault | skuName=Premium | meterName=Automated Key Rotation | armSkuName= | unitOfMeasure=1 Rotation | type=Consumption | priceType=Consumption | unitPrice=1.0
+    - score=0 | productName=Key Vault | skuName=Premium | meterName=Operations | armSkuName= | unitOfMeasure=10K | type=Consumption | priceType=Consumption | unitPrice=0.03
+    - score=0 | productName=Key Vault | skuName=Premium | meterName=Premium HSM-protected RSA 2048-bit key | armSkuName= | unitOfMeasure=1 | type=Consumption | priceType=Consumption | unitPrice=1.0
+    - Conclusion: Ambiguous: multiple meters, need capacity-first / stricter filters.
+
+- Scenario: unknown
+  - Resource: id=backup-vault-mars-hp | category=backup.vault | region=westeurope | requested_sku=ADLS Gen2 Vaulted | billing_model=payg
+    - Catalog used: `catalog/backup__westeurope__USD.jsonl` (reason: category='backup.vault' -> serviceName='Backup' via normalize_service_name; region='westeurope', currency='USD')
+    - Catalog search results: 41 candidates
+    - score=3 | productName=Backup | skuName=ADLS Gen2 Vaulted | meterName=ADLS Gen2 Vaulted RA-GRS Write Operations | armSkuName=ADLS Gen2 Vaulted | unitOfMeasure=10K | type=Consumption | priceType=Consumption | unitPrice=0.108
+    - score=3 | productName=Backup | skuName=ADLS Gen2 Vaulted | meterName=ADLS Gen2 Vaulted GRS Write Operations | armSkuName=ADLS Gen2 Vaulted | unitOfMeasure=10K | type=Consumption | priceType=Consumption | unitPrice=0.108
+    - score=3 | productName=Backup | skuName=ADLS Gen2 Vaulted | meterName=ADLS Gen2 Vaulted ZRS Write Operations | armSkuName=ADLS Gen2 Vaulted | unitOfMeasure=10K | type=Consumption | priceType=Consumption | unitPrice=0.0675
+    - score=3 | productName=Backup | skuName=ADLS Gen2 Vaulted | meterName=ADLS Gen2 Vaulted Protected Instances | armSkuName=ADLS Gen2 Vaulted | unitOfMeasure=1/Month | type=Consumption | priceType=Consumption | unitPrice=13.0
+    - score=3 | productName=Backup | skuName=ADLS Gen2 Vaulted | meterName=ADLS Gen2 Vaulted LRS Write Operations | armSkuName=ADLS Gen2 Vaulted | unitOfMeasure=10K | type=Consumption | priceType=Consumption | unitPrice=0.054
+    - score=1 | productName=Backup | skuName=Azure Files Vaulted | meterName=ZRS Data Stored | armSkuName=Azure Files Vaulted | unitOfMeasure=1 GB/Month | type=Consumption | priceType=Consumption | unitPrice=0.0624
+    - score=1 | productName=Backup | skuName=Azure Files Vaulted | meterName=LRS Data Stored | armSkuName=Azure Files Vaulted | unitOfMeasure=1 GB/Month | type=Consumption | priceType=Consumption | unitPrice=0.0533
+    - score=1 | productName=Backup | skuName=Azure Files Vaulted | meterName=Azure Files Vaulted Protected Instances | armSkuName=Azure Files Vaulted | unitOfMeasure=1/Month | type=Consumption | priceType=Consumption | unitPrice=13.0
+    - score=1 | productName=Backup | skuName=Azure Files Vaulted | meterName=RA-GRS Data Stored | armSkuName=Azure Files Vaulted | unitOfMeasure=1 GB/Month | type=Consumption | priceType=Consumption | unitPrice=0.1261
+    - score=1 | productName=Backup | skuName=Azure Files Vaulted | meterName=GRS Data Stored | armSkuName=Azure Files Vaulted | unitOfMeasure=1 GB/Month | type=Consumption | priceType=Consumption | unitPrice=0.0988
+    - Conclusion: Ambiguous: multiple meters, need capacity-first / stricter filters.
+  - Resource: id=mars-protected-servers-hp | category=other | region=westeurope | requested_sku= | billing_model=payg
+    - Catalog used: `catalog/other__westeurope__EUR.jsonl` (reason: category='other' -> serviceName='Other' via normalize_service_name; region='westeurope', currency='EUR')
+    - Catalog search results: 0 candidates
+    - Conclusion: Correct meter is not in catalog (catalog incomplete or mapping wrong).
+  - Resource: id=gpu-vm-nd96asr-hp | category=compute.vm | region=eastus | requested_sku=Standard_ND96asr_v4 | billing_model=payg
+    - Catalog used: `catalog/virtual_machines__eastus__EUR.jsonl` (reason: category='compute.vm' -> serviceName='Virtual Machines' via normalize_service_name; region='eastus', currency='EUR')
+    - Catalog search results: 0 candidates
+    - Conclusion: Correct meter is not in catalog (catalog incomplete or mapping wrong).
+  - Resource: id=gpu-vm-osdisk-hp | category=storage.disk | region=eastus | requested_sku=Premium_LRS | billing_model=payg
+    - Catalog used: `catalog/storage__eastus__USD.jsonl` (reason: category='storage.disk' -> serviceName='Storage' via normalize_service_name; region='eastus', currency='USD')
+    - Catalog search results: 1476 candidates
+    - score=1 | productName=Premium Files Reserved Capacity | skuName=Premium LRS - 100 TB | meterName=Provisioned | armSkuName=Premium_LRS_Provisioned_100 TB | unitOfMeasure=1 GB/Month | type=Reservation | priceType=Reservation | unitPrice=153354.0
+    - score=1 | productName=Premium Files Reserved Capacity | skuName=Premium LRS - 10 TB | meterName=Provisioned | armSkuName=Premium_LRS_Provisioned_10 TB | unitOfMeasure=1 GB/Month | type=Reservation | priceType=Reservation | unitPrice=16122.0
+    - score=0 | productName=Blob Storage | skuName=Cool RA-GRS | meterName=Cool Data Retrieval | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.01
+    - score=0 | productName=Blob Storage | skuName=Cool LRS | meterName=Cool Read Operations | armSkuName= | unitOfMeasure=10K | type=Consumption | priceType=Consumption | unitPrice=0.01
+    - score=0 | productName=Azure Data Lake Storage Gen2 Flat Namespace | skuName=Cool LRS | meterName=Cool LRS Early Delete | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.0152
+    - score=0 | productName=Queues v2 | skuName=Standard RA-GRS | meterName=GRS Class 1 Operations | armSkuName= | unitOfMeasure=10K | type=Consumption | priceType=Consumption | unitPrice=0.008
+    - score=0 | productName=Tables | skuName=Standard GZRS | meterName=List Operations | armSkuName= | unitOfMeasure=10K | type=Consumption | priceType=Consumption | unitPrice=0.00036
+    - score=0 | productName=General Block Blob v2 | skuName=Cool ZRS | meterName=Cool ZRS Early Delete | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.019
+    - score=0 | productName=Premium Block Blob | skuName=Premium LRS | meterName=Premium LRS All Other Operations | armSkuName= | unitOfMeasure=10K | type=Consumption | priceType=Consumption | unitPrice=0.0014
+    - score=0 | productName=General Block Blob v2 Hierarchical Namespace | skuName=Cool ZRS | meterName=Cool ZRS Early Delete | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.019
+    - Conclusion: Ambiguous: multiple meters, need capacity-first / stricter filters.
+  - Resource: id=gpu-vm-datadisk-hp | category=storage.disk | region=eastus | requested_sku=Premium_LRS | billing_model=payg
+    - Catalog used: `catalog/storage__eastus__USD.jsonl` (reason: category='storage.disk' -> serviceName='Storage' via normalize_service_name; region='eastus', currency='USD')
+    - Catalog search results: 1476 candidates
+    - score=1 | productName=Premium Files Reserved Capacity | skuName=Premium LRS - 100 TB | meterName=Provisioned | armSkuName=Premium_LRS_Provisioned_100 TB | unitOfMeasure=1 GB/Month | type=Reservation | priceType=Reservation | unitPrice=153354.0
+    - score=1 | productName=Premium Files Reserved Capacity | skuName=Premium LRS - 10 TB | meterName=Provisioned | armSkuName=Premium_LRS_Provisioned_10 TB | unitOfMeasure=1 GB/Month | type=Reservation | priceType=Reservation | unitPrice=16122.0
+    - score=0 | productName=Blob Storage | skuName=Cool RA-GRS | meterName=Cool Data Retrieval | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.01
+    - score=0 | productName=Blob Storage | skuName=Cool LRS | meterName=Cool Read Operations | armSkuName= | unitOfMeasure=10K | type=Consumption | priceType=Consumption | unitPrice=0.01
+    - score=0 | productName=Azure Data Lake Storage Gen2 Flat Namespace | skuName=Cool LRS | meterName=Cool LRS Early Delete | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.0152
+    - score=0 | productName=Queues v2 | skuName=Standard RA-GRS | meterName=GRS Class 1 Operations | armSkuName= | unitOfMeasure=10K | type=Consumption | priceType=Consumption | unitPrice=0.008
+    - score=0 | productName=Tables | skuName=Standard GZRS | meterName=List Operations | armSkuName= | unitOfMeasure=10K | type=Consumption | priceType=Consumption | unitPrice=0.00036
+    - score=0 | productName=General Block Blob v2 | skuName=Cool ZRS | meterName=Cool ZRS Early Delete | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.019
+    - score=0 | productName=Premium Block Blob | skuName=Premium LRS | meterName=Premium LRS All Other Operations | armSkuName= | unitOfMeasure=10K | type=Consumption | priceType=Consumption | unitPrice=0.0014
+    - score=0 | productName=General Block Blob v2 Hierarchical Namespace | skuName=Cool ZRS | meterName=Cool ZRS Early Delete | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.019
+    - Conclusion: Ambiguous: multiple meters, need capacity-first / stricter filters.
+  - Resource: id=gpu-vm-egress-hp | category=network.egress | region=eastus | requested_sku=Standard | billing_model=payg
+    - Catalog used: `catalog/bandwidth__eastus__USD.jsonl` (reason: category='network.egress' -> serviceName='Bandwidth' via normalize_service_name; region='eastus', currency='USD')
+    - Catalog search results: 14 candidates
+    - score=1 | productName=Rtn Preference: MGN | skuName=Standard | meterName=Standard Data Transfer Out - to China | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.0
+    - score=1 | productName=Rtn Preference: MGN | skuName=Standard | meterName=Standard Inter-Region Data Transfer | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.02
+    - score=1 | productName=Rtn Preference: MGN | skuName=Standard | meterName=Standard Inter-Availability Zone Data Transfer In | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.01
+    - score=1 | productName=Rtn Preference: MGN | skuName=Standard | meterName=Standard Data Transfer Out | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.0
+    - score=1 | productName=Rtn Preference: MGN | skuName=Standard | meterName=Standard Data Transfer In | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.0
+    - score=1 | productName=Bandwidth - Routing Preference: Internet | skuName=Standard | meterName=Standard Data Transfer Out | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.0
+    - score=1 | productName=Rtn Preference: MGN | skuName=Standard | meterName=Standard Inter-Availability Zone Data Transfer Out | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.01
+    - score=1 | productName=Rtn Preference: MGN | skuName=Standard | meterName=Standard Data Transfer In - from China | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.09
+    - score=0 | productName=Rtn Preference: MGN | skuName=China | meterName=China Data Transfer - 4 Mbps | armSkuName= | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.0
+    - score=0 | productName=Rtn Preference: MGN | skuName=China | meterName=China Data Transfer - 1 Mbps | armSkuName= | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.0
+    - Conclusion: Ambiguous: multiple meters, need capacity-first / stricter filters.
+  - Resource: id=log-analytics-hp | category=monitoring.loganalytics | region=westeurope | requested_sku=Analytics Logs | billing_model=payg
+    - Catalog used: `catalog/log_analytics__westeurope__USD.jsonl` (reason: category='monitoring.loganalytics' -> serviceName='Log Analytics' via normalize_service_name; region='westeurope', currency='USD')
+    - Catalog search results: 6 candidates
+    - score=2 | productName=Log Analytics | skuName=Analytics Logs | meterName=Analytics Logs Data Retention | armSkuName= | unitOfMeasure=1 GB/Month | type=Consumption | priceType=Consumption | unitPrice=0.13
+    - score=2 | productName=Log Analytics | skuName=Analytics Logs | meterName=Analytics Logs Data Ingestion | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.0
+    - score=2 | productName=Log Analytics | skuName=Analytics Logs | meterName=Analytics Logs Data Analyzed | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=2.3
+    - score=1 | productName=Log Analytics | skuName=Premium | meterName=Premium Data Analyzed | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=3.5
+    - score=1 | productName=Log Analytics | skuName=Free | meterName=Free Data Analyzed | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.0
+    - score=1 | productName=Log Analytics | skuName=Standard | meterName=Standard Data Analyzed | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=2.3
+    - Conclusion: Ambiguous: multiple meters, need capacity-first / stricter filters.
+  - Resource: id=keyvault-hp | category=security.keyvault | region=westeurope | requested_sku=premium | billing_model=payg
+    - Catalog used: `catalog/key_vault__westeurope__USD.jsonl` (reason: category='security.keyvault' -> serviceName='Key Vault' via normalize_service_name; region='westeurope', currency='USD')
+    - Catalog search results: 14 candidates
+    - score=1 | productName=Key Vault | skuName=Premium | meterName=Automated Key Rotation | armSkuName= | unitOfMeasure=1 Rotation | type=Consumption | priceType=Consumption | unitPrice=1.0
+    - score=1 | productName=Key Vault | skuName=Premium | meterName=Operations | armSkuName= | unitOfMeasure=10K | type=Consumption | priceType=Consumption | unitPrice=0.03
+    - score=1 | productName=Key Vault | skuName=Premium | meterName=Premium HSM-protected RSA 2048-bit key | armSkuName= | unitOfMeasure=1 | type=Consumption | priceType=Consumption | unitPrice=1.0
+    - score=1 | productName=Key Vault | skuName=Premium | meterName=Advanced Key Operations | armSkuName= | unitOfMeasure=10K | type=Consumption | priceType=Consumption | unitPrice=0.15
+    - score=1 | productName=Key Vault | skuName=Premium | meterName=Premium HSM-protected Advanced Key | armSkuName= | unitOfMeasure=1 | type=Consumption | priceType=Consumption | unitPrice=5.0
+    - score=1 | productName=Key Vault | skuName=Premium | meterName=Certificate Renewal Request | armSkuName= | unitOfMeasure=1 | type=Consumption | priceType=Consumption | unitPrice=3.0
+    - score=1 | productName=Key Vault | skuName=Premium | meterName=Secret Renewal | armSkuName= | unitOfMeasure=1 | type=Consumption | priceType=Consumption | unitPrice=1.0
+    - score=0 | productName=Key Vault | skuName=Standard | meterName=Advanced Key Operations | armSkuName= | unitOfMeasure=10K | type=Consumption | priceType=Consumption | unitPrice=0.15
+    - score=0 | productName=Key Vault | skuName=Standard | meterName=Automated Key Rotation | armSkuName= | unitOfMeasure=1 Rotation | type=Consumption | priceType=Consumption | unitPrice=1.0
+    - score=0 | productName=Key Vault | skuName=Standard | meterName=Secret Renewal | armSkuName= | unitOfMeasure=1 | type=Consumption | priceType=Consumption | unitPrice=1.0
+    - Conclusion: Ambiguous: multiple meters, need capacity-first / stricter filters.
+
+### Run: run11_frontdoor_cdn
+- Scenario: unknown
+  - Resource: id=afd-premium-global | category=network.gateway | region=global | requested_sku=Premium_AzureFrontDoor | billing_model=payg
+    - Catalog used: `catalog/azure_front_door__global__EUR.jsonl` (reason: category='network.gateway' -> serviceName='Azure Front Door' via normalize_service_name; region='global', currency='EUR')
+    - Catalog search results: 0 candidates
+    - Conclusion: Correct meter is not in catalog (catalog incomplete or mapping wrong).
+  - Resource: id=appsvc-plan-prod | category=appservice | region=westeurope | requested_sku=P1v3 | billing_model=payg
+    - Catalog used: `catalog/azure_app_service__westeurope__USD.jsonl` (reason: category='appservice' -> serviceName='Azure App Service' via normalize_service_name; region='westeurope', currency='USD')
+    - Catalog search results: 210 candidates
+    - score=0 | productName=Azure App Service Isolated v2 Plan | skuName=I5mv2 | meterName=I5mv2 App | armSkuName=App_Service_I5_mv2_windows | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=11.113
+    - score=0 | productName=Azure App Service Isolated v2 Plan | skuName=I5mv2 | meterName=I5mv2 App | armSkuName=App_Service_I5_mv2_windows | unitOfMeasure=1 Hour | type=Reservation | priceType=Reservation | unitPrice=67840.0
+    - score=0 | productName=Azure App Service Isolated v2 Plan | skuName=I3 v2 | meterName=I3 v2 App | armSkuName=App_Service_I3_v2_windows | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=2.28
+    - score=0 | productName=Azure App Service Isolated v2 Plan | skuName=I3 v2 | meterName=I3 v2 App | armSkuName=App_Service_I3_v2_windows | unitOfMeasure=1 Hour | type=Reservation | priceType=Reservation | unitPrice=14120.0
+    - score=0 | productName=Azure App Service Standard Plan | skuName=S1 | meterName=S1 App | armSkuName= | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.1
+    - score=0 | productName=Azure App Service Standard Plan | skuName=S1 | meterName=S1 App | armSkuName= | unitOfMeasure=1 Hour | type=DevTestConsumption | priceType=DevTestConsumption | unitPrice=0.06
+    - score=0 | productName=Azure App Service Isolated v2 Plan | skuName=I3mv2 | meterName=I3mv2 App | armSkuName=App_Service_I3_mv2_windows | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=2.778
+    - score=0 | productName=Azure App Service Isolated v2 Plan | skuName=I3mv2 | meterName=I3mv2 App | armSkuName=App_Service_I3_mv2_windows | unitOfMeasure=1 Hour | type=Reservation | priceType=Reservation | unitPrice=16960.0
+    - score=0 | productName=Azure App Service Isolated v2 Plan | skuName=I5 v2 | meterName=I5 v2 App | armSkuName=App_Service_I5_v2_windows | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=9.12
+    - score=0 | productName=Azure App Service Isolated v2 Plan | skuName=I5 v2 | meterName=I5 v2 App | armSkuName=App_Service_I5_v2_windows | unitOfMeasure=1 Hour | type=Reservation | priceType=Reservation | unitPrice=56816.0
+    - Conclusion: Ambiguous: multiple meters, need capacity-first / stricter filters.
+  - Resource: id=appsvc-webapp-prod | category=appservice | region=westeurope | requested_sku= | billing_model=payg
+    - Catalog used: `catalog/azure_app_service__westeurope__USD.jsonl` (reason: category='appservice' -> serviceName='Azure App Service' via normalize_service_name; region='westeurope', currency='USD')
+    - Catalog search results: 210 candidates
+    - score=0 | productName=Azure App Service Isolated v2 Plan | skuName=I5mv2 | meterName=I5mv2 App | armSkuName=App_Service_I5_mv2_windows | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=11.113
+    - score=0 | productName=Azure App Service Isolated v2 Plan | skuName=I5mv2 | meterName=I5mv2 App | armSkuName=App_Service_I5_mv2_windows | unitOfMeasure=1 Hour | type=Reservation | priceType=Reservation | unitPrice=67840.0
+    - score=0 | productName=Azure App Service Isolated v2 Plan | skuName=I3 v2 | meterName=I3 v2 App | armSkuName=App_Service_I3_v2_windows | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=2.28
+    - score=0 | productName=Azure App Service Isolated v2 Plan | skuName=I3 v2 | meterName=I3 v2 App | armSkuName=App_Service_I3_v2_windows | unitOfMeasure=1 Hour | type=Reservation | priceType=Reservation | unitPrice=14120.0
+    - score=0 | productName=Azure App Service Standard Plan | skuName=S1 | meterName=S1 App | armSkuName= | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.1
+    - score=0 | productName=Azure App Service Standard Plan | skuName=S1 | meterName=S1 App | armSkuName= | unitOfMeasure=1 Hour | type=DevTestConsumption | priceType=DevTestConsumption | unitPrice=0.06
+    - score=0 | productName=Azure App Service Isolated v2 Plan | skuName=I3mv2 | meterName=I3mv2 App | armSkuName=App_Service_I3_mv2_windows | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=2.778
+    - score=0 | productName=Azure App Service Isolated v2 Plan | skuName=I3mv2 | meterName=I3mv2 App | armSkuName=App_Service_I3_mv2_windows | unitOfMeasure=1 Hour | type=Reservation | priceType=Reservation | unitPrice=16960.0
+    - score=0 | productName=Azure App Service Isolated v2 Plan | skuName=I5 v2 | meterName=I5 v2 App | armSkuName=App_Service_I5_v2_windows | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=9.12
+    - score=0 | productName=Azure App Service Isolated v2 Plan | skuName=I5 v2 | meterName=I5 v2 App | armSkuName=App_Service_I5_v2_windows | unitOfMeasure=1 Hour | type=Reservation | priceType=Reservation | unitPrice=56816.0
+    - Conclusion: Ambiguous: multiple meters, need capacity-first / stricter filters.
+  - Resource: id=storage-media-blob | category=storage.blob | region=westeurope | requested_sku=Standard_GRS | billing_model=payg
+    - Catalog used: `catalog/storage__westeurope__USD.jsonl` (reason: category='storage.blob' -> serviceName='Storage' via normalize_service_name; region='westeurope', currency='USD')
+    - Catalog search results: 1478 candidates
+    - score=0 | productName=General Block Blob v2 Hierarchical Namespace | skuName=Cool GRS | meterName=Cool GRS Write Operations | armSkuName= | unitOfMeasure=10K | type=Consumption | priceType=Consumption | unitPrice=0.26
+    - score=0 | productName=Tables | skuName=Standard ZRS | meterName=Read Operations | armSkuName= | unitOfMeasure=10K | type=Consumption | priceType=Consumption | unitPrice=0.00036
+    - score=0 | productName=Blob Storage | skuName=Hot RA-GRS | meterName=GRS List and Create Container Operations | armSkuName= | unitOfMeasure=10K | type=Consumption | priceType=Consumption | unitPrice=0.108
+    - score=0 | productName=Azure Data Lake Storage Gen2 Flat Namespace | skuName=Cool RA-GRS | meterName=Cool GRS Write Operations | armSkuName= | unitOfMeasure=10K | type=Consumption | priceType=Consumption | unitPrice=0.2
+    - score=0 | productName=Standard SSD Managed Disks | skuName=Disk Transactions LRS | meterName=Disk Transactions LRS Disk Operations | armSkuName=Disk Transactions | unitOfMeasure=10K | type=Consumption | priceType=Consumption | unitPrice=0.0026
+    - score=0 | productName=Azure Data Lake Storage Gen2 Hierarchical Namespace | skuName=Hot ZRS | meterName=Hot ZRS Index | armSkuName= | unitOfMeasure=1 GB/Month | type=Consumption | priceType=Consumption | unitPrice=0.035
+    - score=0 | productName=Standard Page Blob v2 | skuName=Standard RA-GZRS | meterName=Disk Data Stored | armSkuName= | unitOfMeasure=1 GB/Month | type=Consumption | priceType=Consumption | unitPrice=0.379686
+    - score=0 | productName=Tables | skuName=Standard ZRS | meterName=List Operations | armSkuName= | unitOfMeasure=10K | type=Consumption | priceType=Consumption | unitPrice=0.00036
+    - score=0 | productName=Premium Block Blob | skuName=Premium LRS | meterName=LRS Early Premium To Cool Tier Down | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.185
+    - score=0 | productName=Files v2 | skuName=Cool GRS | meterName=Cool Data Retrieval | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.01
+    - Conclusion: Ambiguous: multiple meters, need capacity-first / stricter filters.
+  - Resource: id=storage-logs-blob | category=storage.blob | region=westeurope | requested_sku=Standard_LRS | billing_model=payg
+    - Catalog used: `catalog/storage__westeurope__USD.jsonl` (reason: category='storage.blob' -> serviceName='Storage' via normalize_service_name; region='westeurope', currency='USD')
+    - Catalog search results: 1478 candidates
+    - score=0 | productName=General Block Blob v2 Hierarchical Namespace | skuName=Cool GRS | meterName=Cool GRS Write Operations | armSkuName= | unitOfMeasure=10K | type=Consumption | priceType=Consumption | unitPrice=0.26
+    - score=0 | productName=Tables | skuName=Standard ZRS | meterName=Read Operations | armSkuName= | unitOfMeasure=10K | type=Consumption | priceType=Consumption | unitPrice=0.00036
+    - score=0 | productName=Blob Storage | skuName=Hot RA-GRS | meterName=GRS List and Create Container Operations | armSkuName= | unitOfMeasure=10K | type=Consumption | priceType=Consumption | unitPrice=0.108
+    - score=0 | productName=Azure Data Lake Storage Gen2 Flat Namespace | skuName=Cool RA-GRS | meterName=Cool GRS Write Operations | armSkuName= | unitOfMeasure=10K | type=Consumption | priceType=Consumption | unitPrice=0.2
+    - score=0 | productName=Standard SSD Managed Disks | skuName=Disk Transactions LRS | meterName=Disk Transactions LRS Disk Operations | armSkuName=Disk Transactions | unitOfMeasure=10K | type=Consumption | priceType=Consumption | unitPrice=0.0026
+    - score=0 | productName=Azure Data Lake Storage Gen2 Hierarchical Namespace | skuName=Hot ZRS | meterName=Hot ZRS Index | armSkuName= | unitOfMeasure=1 GB/Month | type=Consumption | priceType=Consumption | unitPrice=0.035
+    - score=0 | productName=Standard Page Blob v2 | skuName=Standard RA-GZRS | meterName=Disk Data Stored | armSkuName= | unitOfMeasure=1 GB/Month | type=Consumption | priceType=Consumption | unitPrice=0.379686
+    - score=0 | productName=Tables | skuName=Standard ZRS | meterName=List Operations | armSkuName= | unitOfMeasure=10K | type=Consumption | priceType=Consumption | unitPrice=0.00036
+    - score=0 | productName=Premium Block Blob | skuName=Premium LRS | meterName=LRS Early Premium To Cool Tier Down | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.185
+    - score=0 | productName=Files v2 | skuName=Cool GRS | meterName=Cool Data Retrieval | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.01
+    - Conclusion: Ambiguous: multiple meters, need capacity-first / stricter filters.
+  - Resource: id=redis-cache-session | category=cache.redis | region=westeurope | requested_sku=Standard_C1 | billing_model=payg
+    - Catalog used: `catalog/azure_cache_for_redis__westeurope__EUR.jsonl` (reason: category='cache.redis' -> serviceName='Azure Cache for Redis' via normalize_service_name; region='westeurope', currency='EUR')
+    - Catalog search results: 0 candidates
+    - Conclusion: Correct meter is not in catalog (catalog incomplete or mapping wrong).
+  - Resource: id=vnet-app-prod | category=network.vnet | region=westeurope | requested_sku=Virtual Network | billing_model=payg
+    - Catalog used: `catalog/virtual_network__westeurope__USD.jsonl` (reason: category='network.vnet' -> serviceName='Virtual Network' via normalize_service_name; region='westeurope', currency='USD')
+    - Catalog search results: 12 candidates
+    - score=2 | productName=Global Virtual Network Peering | skuName=Inter-Region | meterName=Inter-Region Egress | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.035
+    - score=2 | productName=Global Virtual Network Peering | skuName=Inter-Region | meterName=Inter-Region Ingress | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.035
+    - score=0 | productName=IP Addresses | skuName=Standard | meterName=Standard IPv4 Static Public IP | armSkuName= | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.005
+    - score=0 | productName=IP Addresses | skuName=Standard | meterName=Standard IPv4 Static Public IP | armSkuName= | unitOfMeasure=1 Hour | type=DevTestConsumption | priceType=DevTestConsumption | unitPrice=0.005
+    - score=0 | productName=IP Addresses | skuName=Basic | meterName=Basic IPv4 Dynamic Public IP | armSkuName= | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.004
+    - score=0 | productName=IP Addresses | skuName=Basic | meterName=Basic IPv4 Dynamic Public IP | armSkuName= | unitOfMeasure=1 Hour | type=DevTestConsumption | priceType=DevTestConsumption | unitPrice=0.004
+    - score=0 | productName=Public IP Prefix | skuName=Standard | meterName=Standard Static IP Addresses | armSkuName= | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.006
+    - score=0 | productName=Public IP Prefix | skuName=Global | meterName=Global Static Public IP | armSkuName=Global | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.012
+    - score=0 | productName=IP Addresses | skuName=Basic | meterName=Basic IPv4 Static Public IP | armSkuName= | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.0036
+    - score=0 | productName=IP Addresses | skuName=Basic | meterName=Basic IPv4 Static Public IP | armSkuName= | unitOfMeasure=1 Hour | type=DevTestConsumption | priceType=DevTestConsumption | unitPrice=0.0036
+    - Conclusion: Ambiguous: multiple meters, need capacity-first / stricter filters.
+  - Resource: id=natgw-egress | category=network.nat | region=westeurope | requested_sku=Standard | billing_model=payg
+    - Catalog used: `catalog/bandwidth__westeurope__USD.jsonl` (reason: category='network.nat' -> serviceName='Bandwidth' via normalize_service_name; region='westeurope', currency='USD')
+    - Catalog search results: 14 candidates
+    - score=1 | productName=Bandwidth - Routing Preference: Internet | skuName=Standard | meterName=Standard Data Transfer Out | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.0
+    - score=1 | productName=Rtn Preference: MGN | skuName=Standard | meterName=Standard Data Transfer Out | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.0
+    - score=1 | productName=Rtn Preference: MGN | skuName=Standard | meterName=Standard Inter-Availability Zone Data Transfer Out | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.01
+    - score=1 | productName=Rtn Preference: MGN | skuName=Standard | meterName=Standard Data Transfer Out - to China | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.0
+    - score=1 | productName=Rtn Preference: MGN | skuName=Standard | meterName=Standard Data Transfer In | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.0
+    - score=1 | productName=Rtn Preference: MGN | skuName=Standard | meterName=Standard Data Transfer In - from China | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.09
+    - score=1 | productName=Rtn Preference: MGN | skuName=Standard | meterName=Standard Inter-Availability Zone Data Transfer In | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.01
+    - score=1 | productName=Rtn Preference: MGN | skuName=Standard | meterName=Standard Inter-Region Data Transfer | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.02
+    - score=0 | productName=Rtn Preference: MGN | skuName=China | meterName=China Data Transfer - 1 to 5 Mbps | armSkuName= | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.0
+    - score=0 | productName=Rtn Preference: MGN | skuName=China | meterName=China Data Transfer - 1 Mbps | armSkuName= | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.0
+    - Conclusion: Ambiguous: multiple meters, need capacity-first / stricter filters.
+  - Resource: id=publicip-natgw | category=network.public_ip | region=westeurope | requested_sku=Standard | billing_model=payg
+    - Catalog used: `catalog/public_ip_addresses__westeurope__EUR.jsonl` (reason: category='network.public_ip' -> serviceName='Public IP Addresses' via normalize_service_name; region='westeurope', currency='EUR')
+    - Catalog search results: 0 candidates
+    - Conclusion: Correct meter is not in catalog (catalog incomplete or mapping wrong).
+  - Resource: id=pe-blob-media | category=other | region=westeurope | requested_sku=Standard_PrivateEndpoint | billing_model=payg
+    - Catalog used: `catalog/other__westeurope__EUR.jsonl` (reason: category='other' -> serviceName='Other' via normalize_service_name; region='westeurope', currency='EUR')
+    - Catalog search results: 0 candidates
+    - Conclusion: Correct meter is not in catalog (catalog incomplete or mapping wrong).
+  - Resource: id=kv-prod | category=security.keyvault | region=westeurope | requested_sku=standard | billing_model=payg
+    - Catalog used: `catalog/key_vault__westeurope__USD.jsonl` (reason: category='security.keyvault' -> serviceName='Key Vault' via normalize_service_name; region='westeurope', currency='USD')
+    - Catalog search results: 14 candidates
+    - score=1 | productName=Key Vault | skuName=Standard | meterName=Advanced Key Operations | armSkuName= | unitOfMeasure=10K | type=Consumption | priceType=Consumption | unitPrice=0.15
+    - score=1 | productName=Key Vault | skuName=Standard | meterName=Automated Key Rotation | armSkuName= | unitOfMeasure=1 Rotation | type=Consumption | priceType=Consumption | unitPrice=1.0
+    - score=1 | productName=Key Vault | skuName=Standard | meterName=Secret Renewal | armSkuName= | unitOfMeasure=1 | type=Consumption | priceType=Consumption | unitPrice=1.0
+    - score=1 | productName=Azure Dedicated HSM | skuName=Standard | meterName=Standard Instance | armSkuName= | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=4.85
+    - score=1 | productName=Key Vault HSM Pool | skuName=Standard B1 | meterName=Standard B1 Instance | armSkuName= | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=3.2
+    - score=1 | productName=Key Vault | skuName=Standard | meterName=Operations | armSkuName= | unitOfMeasure=10K | type=Consumption | priceType=Consumption | unitPrice=0.03
+    - score=1 | productName=Key Vault | skuName=Standard | meterName=Certificate Renewal Request | armSkuName= | unitOfMeasure=1 | type=Consumption | priceType=Consumption | unitPrice=3.0
+    - score=0 | productName=Key Vault | skuName=Premium | meterName=Automated Key Rotation | armSkuName= | unitOfMeasure=1 Rotation | type=Consumption | priceType=Consumption | unitPrice=1.0
+    - score=0 | productName=Key Vault | skuName=Premium | meterName=Operations | armSkuName= | unitOfMeasure=10K | type=Consumption | priceType=Consumption | unitPrice=0.03
+    - score=0 | productName=Key Vault | skuName=Premium | meterName=Premium HSM-protected RSA 2048-bit key | armSkuName= | unitOfMeasure=1 | type=Consumption | priceType=Consumption | unitPrice=1.0
+    - Conclusion: Ambiguous: multiple meters, need capacity-first / stricter filters.
+  - Resource: id=loganalytics-prod | category=monitoring.loganalytics | region=westeurope | requested_sku=PerGB2018 | billing_model=payg
+    - Catalog used: `catalog/log_analytics__westeurope__USD.jsonl` (reason: category='monitoring.loganalytics' -> serviceName='Log Analytics' via normalize_service_name; region='westeurope', currency='USD')
+    - Catalog search results: 6 candidates
+    - score=0 | productName=Log Analytics | skuName=Analytics Logs | meterName=Analytics Logs Data Retention | armSkuName= | unitOfMeasure=1 GB/Month | type=Consumption | priceType=Consumption | unitPrice=0.13
+    - score=0 | productName=Log Analytics | skuName=Premium | meterName=Premium Data Analyzed | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=3.5
+    - score=0 | productName=Log Analytics | skuName=Free | meterName=Free Data Analyzed | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.0
+    - score=0 | productName=Log Analytics | skuName=Standard | meterName=Standard Data Analyzed | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=2.3
+    - score=0 | productName=Log Analytics | skuName=Analytics Logs | meterName=Analytics Logs Data Ingestion | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.0
+    - score=0 | productName=Log Analytics | skuName=Analytics Logs | meterName=Analytics Logs Data Analyzed | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=2.3
+    - Conclusion: Ambiguous: multiple meters, need capacity-first / stricter filters.
+  - Resource: id=backup-vault-prod | category=backup.vault | region=westeurope | requested_sku=Standard | billing_model=payg
+    - Catalog used: `catalog/backup__westeurope__USD.jsonl` (reason: category='backup.vault' -> serviceName='Backup' via normalize_service_name; region='westeurope', currency='USD')
+    - Catalog search results: 41 candidates
+    - score=1 | productName=Backup Reserved Capacity | skuName=Standard - 100 TB ZRS | meterName=ZRS Data Stored | armSkuName=backup_standard_zrs_data_stored_100tb | unitOfMeasure=1 GB/Month | type=Reservation | priceType=Reservation | unitPrice=30278.0
+    - score=1 | productName=Backup | skuName=Standard | meterName=LRS Data Stored | armSkuName= | unitOfMeasure=1 GB/Month | type=Consumption | priceType=Consumption | unitPrice=0.0224
+    - score=1 | productName=Backup Reserved Capacity | skuName=Standard - 100 TB LRS | meterName=LRS Data Stored | armSkuName=backup_standard_lrs_data_stored_100tb | unitOfMeasure=1 GB/Month | type=Reservation | priceType=Reservation | unitPrice=24222.0
+    - score=1 | productName=Backup Reserved Capacity | skuName=Standard - 100 TB RA-GRS | meterName=RA-GRS Data Stored | armSkuName=backup_standard_ra-grs_data_stored_100tb | unitOfMeasure=1 GB/Month | type=Reservation | priceType=Reservation | unitPrice=61528.0
+    - score=1 | productName=Backup Reserved Capacity | skuName=Standard - 1 PB GRS | meterName=GRS Data Stored | armSkuName=backup_standard_grs_data_stored_1pb | unitOfMeasure=1 GB/Month | type=Reservation | priceType=Reservation | unitPrice=473520.0
+    - score=1 | productName=Backup Reserved Capacity | skuName=Standard - 1 PB ZRS | meterName=ZRS Data Stored | armSkuName=backup_standard_zrs_data_stored_1pb | unitOfMeasure=1 GB/Month | type=Reservation | priceType=Reservation | unitPrice=295950.0
+    - score=1 | productName=Backup Reserved Capacity | skuName=Standard - 1 PB LRS | meterName=LRS Data Stored | armSkuName=backup_standard_lrs_data_stored_1pb | unitOfMeasure=1 GB/Month | type=Reservation | priceType=Reservation | unitPrice=236760.0
+    - score=1 | productName=Backup Reserved Capacity | skuName=Standard - 1 PB RA-GRS | meterName=RA-GRS Data Stored | armSkuName=backup_standard_ra-grs_data_stored_1pb | unitOfMeasure=1 GB/Month | type=Reservation | priceType=Reservation | unitPrice=601413.0
+    - score=1 | productName=Backup | skuName=Standard | meterName=ZRS Data Stored | armSkuName= | unitOfMeasure=1 GB/Month | type=Consumption | priceType=Consumption | unitPrice=0.028
+    - score=1 | productName=Backup Reserved Capacity | skuName=Standard - 100 TB GRS | meterName=GRS Data Stored | armSkuName=backup_standard_grs_data_stored_100tb | unitOfMeasure=1 GB/Month | type=Reservation | priceType=Reservation | unitPrice=48444.0
+    - Conclusion: Ambiguous: multiple meters, need capacity-first / stricter filters.
+  - Resource: id=asr-dr-app | category=dr.asr | region=westeurope | requested_sku=ASR | billing_model=payg
+    - Catalog used: `catalog/azure_site_recovery__westeurope__USD.jsonl` (reason: category='dr.asr' -> serviceName='Azure Site Recovery' via normalize_service_name; region='westeurope', currency='USD')
+    - Catalog search results: 2 candidates
+    - score=0 | productName=Azure Site Recovery | skuName=System Center | meterName=VM Replicated to System Center | armSkuName= | unitOfMeasure=1/Month | type=Consumption | priceType=Consumption | unitPrice=16.0
+    - score=0 | productName=Azure Site Recovery | skuName=Azure | meterName=VM Replicated to Azure | armSkuName= | unitOfMeasure=1/Month | type=Consumption | priceType=Consumption | unitPrice=25.0
+    - Conclusion: Ambiguous: multiple meters, need capacity-first / stricter filters.
+
+- Scenario: unknown
+  - Resource: id=afd-standard-global | category=network.gateway | region=global | requested_sku=Standard_AzureFrontDoor | billing_model=payg
+    - Catalog used: `catalog/azure_front_door__global__EUR.jsonl` (reason: category='network.gateway' -> serviceName='Azure Front Door' via normalize_service_name; region='global', currency='EUR')
+    - Catalog search results: 0 candidates
+    - Conclusion: Correct meter is not in catalog (catalog incomplete or mapping wrong).
+  - Resource: id=appsvc-plan-cost | category=appservice | region=westeurope | requested_sku=P1v3 | billing_model=1 Year
+    - Catalog used: `catalog/azure_app_service__westeurope__USD.jsonl` (reason: category='appservice' -> serviceName='Azure App Service' via normalize_service_name; region='westeurope', currency='USD')
+    - Catalog search results: 210 candidates
+    - score=1 | productName=Azure App Service Standard Plan | skuName=S1 | meterName=S1 App | armSkuName= | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.1
+    - score=1 | productName=Azure App Service Standard Plan | skuName=S1 | meterName=S1 App | armSkuName= | unitOfMeasure=1 Hour | type=DevTestConsumption | priceType=DevTestConsumption | unitPrice=0.06
+    - score=1 | productName=Azure App Service Isolated Plan - Linux | skuName=I12 | meterName=I12 App | armSkuName=I12 | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=1.334
+    - score=1 | productName=Azure App Service Isolated Plan | skuName=I13 | meterName=I13 App | armSkuName=I13 | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=2.801
+    - score=1 | productName=Azure App Service Isolated v2 Plan | skuName=I1 v2 | meterName=I1 v2 App | armSkuName=App_Service_I1_v2_windows | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.57
+    - score=1 | productName=Azure App Service Isolated v2 Plan | skuName=I1 v2 | meterName=I1 v2 App | armSkuName=App_Service_I1_v2_windows | unitOfMeasure=1 Hour | type=Reservation | priceType=Reservation | unitPrice=3530.0
+    - score=1 | productName=Azure App Service Free Plan | skuName=F1 | meterName=F1 App | armSkuName= | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.0
+    - score=1 | productName=Azure App Service Premium v3 Plan | skuName=P1mv3 | meterName=P1mv3 App | armSkuName=Standard_P1_mv3_Windows | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.3736
+    - score=1 | productName=Azure App Service Premium v3 Plan | skuName=P1mv3 | meterName=P1mv3 App | armSkuName=Standard_P1_mv3_Windows | unitOfMeasure=1 Hour | type=DevTestConsumption | priceType=DevTestConsumption | unitPrice=0.134
+    - score=1 | productName=Azure App Service Premium v3 Plan | skuName=P1mv3 | meterName=P1mv3 App | armSkuName=Standard_P1_mv3_Windows | unitOfMeasure=1 Hour | type=Reservation | priceType=Reservation | unitPrice=2409.0
+    - Conclusion: Ambiguous: multiple meters, need capacity-first / stricter filters.
+  - Resource: id=appsvc-webapp-cost | category=appservice | region=westeurope | requested_sku= | billing_model=reserved
+    - Catalog used: `catalog/azure_app_service__westeurope__USD.jsonl` (reason: category='appservice' -> serviceName='Azure App Service' via normalize_service_name; region='westeurope', currency='USD')
+    - Catalog search results: 210 candidates
+    - score=0 | productName=Azure App Service Isolated v2 Plan | skuName=I5mv2 | meterName=I5mv2 App | armSkuName=App_Service_I5_mv2_windows | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=11.113
+    - score=0 | productName=Azure App Service Isolated v2 Plan | skuName=I5mv2 | meterName=I5mv2 App | armSkuName=App_Service_I5_mv2_windows | unitOfMeasure=1 Hour | type=Reservation | priceType=Reservation | unitPrice=67840.0
+    - score=0 | productName=Azure App Service Isolated v2 Plan | skuName=I3 v2 | meterName=I3 v2 App | armSkuName=App_Service_I3_v2_windows | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=2.28
+    - score=0 | productName=Azure App Service Isolated v2 Plan | skuName=I3 v2 | meterName=I3 v2 App | armSkuName=App_Service_I3_v2_windows | unitOfMeasure=1 Hour | type=Reservation | priceType=Reservation | unitPrice=14120.0
+    - score=0 | productName=Azure App Service Standard Plan | skuName=S1 | meterName=S1 App | armSkuName= | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.1
+    - score=0 | productName=Azure App Service Standard Plan | skuName=S1 | meterName=S1 App | armSkuName= | unitOfMeasure=1 Hour | type=DevTestConsumption | priceType=DevTestConsumption | unitPrice=0.06
+    - score=0 | productName=Azure App Service Isolated v2 Plan | skuName=I3mv2 | meterName=I3mv2 App | armSkuName=App_Service_I3_mv2_windows | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=2.778
+    - score=0 | productName=Azure App Service Isolated v2 Plan | skuName=I3mv2 | meterName=I3mv2 App | armSkuName=App_Service_I3_mv2_windows | unitOfMeasure=1 Hour | type=Reservation | priceType=Reservation | unitPrice=16960.0
+    - score=0 | productName=Azure App Service Isolated v2 Plan | skuName=I5 v2 | meterName=I5 v2 App | armSkuName=App_Service_I5_v2_windows | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=9.12
+    - score=0 | productName=Azure App Service Isolated v2 Plan | skuName=I5 v2 | meterName=I5 v2 App | armSkuName=App_Service_I5_v2_windows | unitOfMeasure=1 Hour | type=Reservation | priceType=Reservation | unitPrice=56816.0
+    - Conclusion: Ambiguous: multiple meters, need capacity-first / stricter filters.
+  - Resource: id=storage-media-blob-cost | category=storage.blob | region=westeurope | requested_sku=Standard_LRS | billing_model=payg
+    - Catalog used: `catalog/storage__westeurope__USD.jsonl` (reason: category='storage.blob' -> serviceName='Storage' via normalize_service_name; region='westeurope', currency='USD')
+    - Catalog search results: 1478 candidates
+    - score=0 | productName=General Block Blob v2 Hierarchical Namespace | skuName=Cool GRS | meterName=Cool GRS Write Operations | armSkuName= | unitOfMeasure=10K | type=Consumption | priceType=Consumption | unitPrice=0.26
+    - score=0 | productName=Tables | skuName=Standard ZRS | meterName=Read Operations | armSkuName= | unitOfMeasure=10K | type=Consumption | priceType=Consumption | unitPrice=0.00036
+    - score=0 | productName=Blob Storage | skuName=Hot RA-GRS | meterName=GRS List and Create Container Operations | armSkuName= | unitOfMeasure=10K | type=Consumption | priceType=Consumption | unitPrice=0.108
+    - score=0 | productName=Azure Data Lake Storage Gen2 Flat Namespace | skuName=Cool RA-GRS | meterName=Cool GRS Write Operations | armSkuName= | unitOfMeasure=10K | type=Consumption | priceType=Consumption | unitPrice=0.2
+    - score=0 | productName=Standard SSD Managed Disks | skuName=Disk Transactions LRS | meterName=Disk Transactions LRS Disk Operations | armSkuName=Disk Transactions | unitOfMeasure=10K | type=Consumption | priceType=Consumption | unitPrice=0.0026
+    - score=0 | productName=Azure Data Lake Storage Gen2 Hierarchical Namespace | skuName=Hot ZRS | meterName=Hot ZRS Index | armSkuName= | unitOfMeasure=1 GB/Month | type=Consumption | priceType=Consumption | unitPrice=0.035
+    - score=0 | productName=Standard Page Blob v2 | skuName=Standard RA-GZRS | meterName=Disk Data Stored | armSkuName= | unitOfMeasure=1 GB/Month | type=Consumption | priceType=Consumption | unitPrice=0.379686
+    - score=0 | productName=Tables | skuName=Standard ZRS | meterName=List Operations | armSkuName= | unitOfMeasure=10K | type=Consumption | priceType=Consumption | unitPrice=0.00036
+    - score=0 | productName=Premium Block Blob | skuName=Premium LRS | meterName=LRS Early Premium To Cool Tier Down | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.185
+    - score=0 | productName=Files v2 | skuName=Cool GRS | meterName=Cool Data Retrieval | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.01
+    - Conclusion: Ambiguous: multiple meters, need capacity-first / stricter filters.
+  - Resource: id=redis-cache-small | category=cache.redis | region=westeurope | requested_sku=Basic_C0 | billing_model=payg
+    - Catalog used: `catalog/azure_cache_for_redis__westeurope__EUR.jsonl` (reason: category='cache.redis' -> serviceName='Azure Cache for Redis' via normalize_service_name; region='westeurope', currency='EUR')
+    - Catalog search results: 0 candidates
+    - Conclusion: Correct meter is not in catalog (catalog incomplete or mapping wrong).
+  - Resource: id=vnet-app-cost | category=network.vnet | region=westeurope | requested_sku=Virtual Network | billing_model=payg
+    - Catalog used: `catalog/virtual_network__westeurope__USD.jsonl` (reason: category='network.vnet' -> serviceName='Virtual Network' via normalize_service_name; region='westeurope', currency='USD')
+    - Catalog search results: 12 candidates
+    - score=2 | productName=Global Virtual Network Peering | skuName=Inter-Region | meterName=Inter-Region Egress | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.035
+    - score=2 | productName=Global Virtual Network Peering | skuName=Inter-Region | meterName=Inter-Region Ingress | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.035
+    - score=0 | productName=IP Addresses | skuName=Standard | meterName=Standard IPv4 Static Public IP | armSkuName= | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.005
+    - score=0 | productName=IP Addresses | skuName=Standard | meterName=Standard IPv4 Static Public IP | armSkuName= | unitOfMeasure=1 Hour | type=DevTestConsumption | priceType=DevTestConsumption | unitPrice=0.005
+    - score=0 | productName=IP Addresses | skuName=Basic | meterName=Basic IPv4 Dynamic Public IP | armSkuName= | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.004
+    - score=0 | productName=IP Addresses | skuName=Basic | meterName=Basic IPv4 Dynamic Public IP | armSkuName= | unitOfMeasure=1 Hour | type=DevTestConsumption | priceType=DevTestConsumption | unitPrice=0.004
+    - score=0 | productName=Public IP Prefix | skuName=Standard | meterName=Standard Static IP Addresses | armSkuName= | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.006
+    - score=0 | productName=Public IP Prefix | skuName=Global | meterName=Global Static Public IP | armSkuName=Global | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.012
+    - score=0 | productName=IP Addresses | skuName=Basic | meterName=Basic IPv4 Static Public IP | armSkuName= | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.0036
+    - score=0 | productName=IP Addresses | skuName=Basic | meterName=Basic IPv4 Static Public IP | armSkuName= | unitOfMeasure=1 Hour | type=DevTestConsumption | priceType=DevTestConsumption | unitPrice=0.0036
+    - Conclusion: Ambiguous: multiple meters, need capacity-first / stricter filters.
+  - Resource: id=natgw-egress-cost | category=network.nat | region=westeurope | requested_sku=Standard | billing_model=payg
+    - Catalog used: `catalog/bandwidth__westeurope__USD.jsonl` (reason: category='network.nat' -> serviceName='Bandwidth' via normalize_service_name; region='westeurope', currency='USD')
+    - Catalog search results: 14 candidates
+    - score=1 | productName=Bandwidth - Routing Preference: Internet | skuName=Standard | meterName=Standard Data Transfer Out | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.0
+    - score=1 | productName=Rtn Preference: MGN | skuName=Standard | meterName=Standard Data Transfer Out | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.0
+    - score=1 | productName=Rtn Preference: MGN | skuName=Standard | meterName=Standard Inter-Availability Zone Data Transfer Out | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.01
+    - score=1 | productName=Rtn Preference: MGN | skuName=Standard | meterName=Standard Data Transfer Out - to China | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.0
+    - score=1 | productName=Rtn Preference: MGN | skuName=Standard | meterName=Standard Data Transfer In | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.0
+    - score=1 | productName=Rtn Preference: MGN | skuName=Standard | meterName=Standard Data Transfer In - from China | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.09
+    - score=1 | productName=Rtn Preference: MGN | skuName=Standard | meterName=Standard Inter-Availability Zone Data Transfer In | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.01
+    - score=1 | productName=Rtn Preference: MGN | skuName=Standard | meterName=Standard Inter-Region Data Transfer | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.02
+    - score=0 | productName=Rtn Preference: MGN | skuName=China | meterName=China Data Transfer - 1 to 5 Mbps | armSkuName= | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.0
+    - score=0 | productName=Rtn Preference: MGN | skuName=China | meterName=China Data Transfer - 1 Mbps | armSkuName= | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.0
+    - Conclusion: Ambiguous: multiple meters, need capacity-first / stricter filters.
+  - Resource: id=publicip-natgw-cost | category=network.public_ip | region=westeurope | requested_sku=Standard | billing_model=payg
+    - Catalog used: `catalog/public_ip_addresses__westeurope__EUR.jsonl` (reason: category='network.public_ip' -> serviceName='Public IP Addresses' via normalize_service_name; region='westeurope', currency='EUR')
+    - Catalog search results: 0 candidates
+    - Conclusion: Correct meter is not in catalog (catalog incomplete or mapping wrong).
+  - Resource: id=kv-cost | category=security.keyvault | region=westeurope | requested_sku=standard | billing_model=payg
+    - Catalog used: `catalog/key_vault__westeurope__USD.jsonl` (reason: category='security.keyvault' -> serviceName='Key Vault' via normalize_service_name; region='westeurope', currency='USD')
+    - Catalog search results: 14 candidates
+    - score=1 | productName=Key Vault | skuName=Standard | meterName=Advanced Key Operations | armSkuName= | unitOfMeasure=10K | type=Consumption | priceType=Consumption | unitPrice=0.15
+    - score=1 | productName=Key Vault | skuName=Standard | meterName=Automated Key Rotation | armSkuName= | unitOfMeasure=1 Rotation | type=Consumption | priceType=Consumption | unitPrice=1.0
+    - score=1 | productName=Key Vault | skuName=Standard | meterName=Secret Renewal | armSkuName= | unitOfMeasure=1 | type=Consumption | priceType=Consumption | unitPrice=1.0
+    - score=1 | productName=Azure Dedicated HSM | skuName=Standard | meterName=Standard Instance | armSkuName= | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=4.85
+    - score=1 | productName=Key Vault HSM Pool | skuName=Standard B1 | meterName=Standard B1 Instance | armSkuName= | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=3.2
+    - score=1 | productName=Key Vault | skuName=Standard | meterName=Operations | armSkuName= | unitOfMeasure=10K | type=Consumption | priceType=Consumption | unitPrice=0.03
+    - score=1 | productName=Key Vault | skuName=Standard | meterName=Certificate Renewal Request | armSkuName= | unitOfMeasure=1 | type=Consumption | priceType=Consumption | unitPrice=3.0
+    - score=0 | productName=Key Vault | skuName=Premium | meterName=Automated Key Rotation | armSkuName= | unitOfMeasure=1 Rotation | type=Consumption | priceType=Consumption | unitPrice=1.0
+    - score=0 | productName=Key Vault | skuName=Premium | meterName=Operations | armSkuName= | unitOfMeasure=10K | type=Consumption | priceType=Consumption | unitPrice=0.03
+    - score=0 | productName=Key Vault | skuName=Premium | meterName=Premium HSM-protected RSA 2048-bit key | armSkuName= | unitOfMeasure=1 | type=Consumption | priceType=Consumption | unitPrice=1.0
+    - Conclusion: Ambiguous: multiple meters, need capacity-first / stricter filters.
+  - Resource: id=loganalytics-cost | category=monitoring.loganalytics | region=westeurope | requested_sku=PerGB2018 | billing_model=payg
+    - Catalog used: `catalog/log_analytics__westeurope__USD.jsonl` (reason: category='monitoring.loganalytics' -> serviceName='Log Analytics' via normalize_service_name; region='westeurope', currency='USD')
+    - Catalog search results: 6 candidates
+    - score=0 | productName=Log Analytics | skuName=Analytics Logs | meterName=Analytics Logs Data Retention | armSkuName= | unitOfMeasure=1 GB/Month | type=Consumption | priceType=Consumption | unitPrice=0.13
+    - score=0 | productName=Log Analytics | skuName=Premium | meterName=Premium Data Analyzed | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=3.5
+    - score=0 | productName=Log Analytics | skuName=Free | meterName=Free Data Analyzed | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.0
+    - score=0 | productName=Log Analytics | skuName=Standard | meterName=Standard Data Analyzed | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=2.3
+    - score=0 | productName=Log Analytics | skuName=Analytics Logs | meterName=Analytics Logs Data Ingestion | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.0
+    - score=0 | productName=Log Analytics | skuName=Analytics Logs | meterName=Analytics Logs Data Analyzed | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=2.3
+    - Conclusion: Ambiguous: multiple meters, need capacity-first / stricter filters.
+  - Resource: id=backup-vault-cost | category=backup.vault | region=westeurope | requested_sku=Standard | billing_model=payg
+    - Catalog used: `catalog/backup__westeurope__USD.jsonl` (reason: category='backup.vault' -> serviceName='Backup' via normalize_service_name; region='westeurope', currency='USD')
+    - Catalog search results: 41 candidates
+    - score=1 | productName=Backup Reserved Capacity | skuName=Standard - 100 TB ZRS | meterName=ZRS Data Stored | armSkuName=backup_standard_zrs_data_stored_100tb | unitOfMeasure=1 GB/Month | type=Reservation | priceType=Reservation | unitPrice=30278.0
+    - score=1 | productName=Backup | skuName=Standard | meterName=LRS Data Stored | armSkuName= | unitOfMeasure=1 GB/Month | type=Consumption | priceType=Consumption | unitPrice=0.0224
+    - score=1 | productName=Backup Reserved Capacity | skuName=Standard - 100 TB LRS | meterName=LRS Data Stored | armSkuName=backup_standard_lrs_data_stored_100tb | unitOfMeasure=1 GB/Month | type=Reservation | priceType=Reservation | unitPrice=24222.0
+    - score=1 | productName=Backup Reserved Capacity | skuName=Standard - 100 TB RA-GRS | meterName=RA-GRS Data Stored | armSkuName=backup_standard_ra-grs_data_stored_100tb | unitOfMeasure=1 GB/Month | type=Reservation | priceType=Reservation | unitPrice=61528.0
+    - score=1 | productName=Backup Reserved Capacity | skuName=Standard - 1 PB GRS | meterName=GRS Data Stored | armSkuName=backup_standard_grs_data_stored_1pb | unitOfMeasure=1 GB/Month | type=Reservation | priceType=Reservation | unitPrice=473520.0
+    - score=1 | productName=Backup Reserved Capacity | skuName=Standard - 1 PB ZRS | meterName=ZRS Data Stored | armSkuName=backup_standard_zrs_data_stored_1pb | unitOfMeasure=1 GB/Month | type=Reservation | priceType=Reservation | unitPrice=295950.0
+    - score=1 | productName=Backup Reserved Capacity | skuName=Standard - 1 PB LRS | meterName=LRS Data Stored | armSkuName=backup_standard_lrs_data_stored_1pb | unitOfMeasure=1 GB/Month | type=Reservation | priceType=Reservation | unitPrice=236760.0
+    - score=1 | productName=Backup Reserved Capacity | skuName=Standard - 1 PB RA-GRS | meterName=RA-GRS Data Stored | armSkuName=backup_standard_ra-grs_data_stored_1pb | unitOfMeasure=1 GB/Month | type=Reservation | priceType=Reservation | unitPrice=601413.0
+    - score=1 | productName=Backup | skuName=Standard | meterName=ZRS Data Stored | armSkuName= | unitOfMeasure=1 GB/Month | type=Consumption | priceType=Consumption | unitPrice=0.028
+    - score=1 | productName=Backup Reserved Capacity | skuName=Standard - 100 TB GRS | meterName=GRS Data Stored | armSkuName=backup_standard_grs_data_stored_100tb | unitOfMeasure=1 GB/Month | type=Reservation | priceType=Reservation | unitPrice=48444.0
+    - Conclusion: Ambiguous: multiple meters, need capacity-first / stricter filters.
+
+- Scenario: unknown
+  - Resource: id=afd-premium-global-hp | category=network.gateway | region=global | requested_sku=Premium_AzureFrontDoor | billing_model=payg
+    - Catalog used: `catalog/azure_front_door__global__EUR.jsonl` (reason: category='network.gateway' -> serviceName='Azure Front Door' via normalize_service_name; region='global', currency='EUR')
+    - Catalog search results: 0 candidates
+    - Conclusion: Correct meter is not in catalog (catalog incomplete or mapping wrong).
+  - Resource: id=appsvc-plan-hp | category=appservice | region=westeurope | requested_sku=P2v3 | billing_model=1 Year
+    - Catalog used: `catalog/azure_app_service__westeurope__USD.jsonl` (reason: category='appservice' -> serviceName='Azure App Service' via normalize_service_name; region='westeurope', currency='USD')
+    - Catalog search results: 210 candidates
+    - score=1 | productName=Azure App Service Standard Plan | skuName=S1 | meterName=S1 App | armSkuName= | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.1
+    - score=1 | productName=Azure App Service Standard Plan | skuName=S1 | meterName=S1 App | armSkuName= | unitOfMeasure=1 Hour | type=DevTestConsumption | priceType=DevTestConsumption | unitPrice=0.06
+    - score=1 | productName=Azure App Service Isolated Plan - Linux | skuName=I12 | meterName=I12 App | armSkuName=I12 | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=1.334
+    - score=1 | productName=Azure App Service Isolated Plan | skuName=I13 | meterName=I13 App | armSkuName=I13 | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=2.801
+    - score=1 | productName=Azure App Service Isolated v2 Plan | skuName=I1 v2 | meterName=I1 v2 App | armSkuName=App_Service_I1_v2_windows | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.57
+    - score=1 | productName=Azure App Service Isolated v2 Plan | skuName=I1 v2 | meterName=I1 v2 App | armSkuName=App_Service_I1_v2_windows | unitOfMeasure=1 Hour | type=Reservation | priceType=Reservation | unitPrice=3530.0
+    - score=1 | productName=Azure App Service Free Plan | skuName=F1 | meterName=F1 App | armSkuName= | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.0
+    - score=1 | productName=Azure App Service Premium v3 Plan | skuName=P1mv3 | meterName=P1mv3 App | armSkuName=Standard_P1_mv3_Windows | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.3736
+    - score=1 | productName=Azure App Service Premium v3 Plan | skuName=P1mv3 | meterName=P1mv3 App | armSkuName=Standard_P1_mv3_Windows | unitOfMeasure=1 Hour | type=DevTestConsumption | priceType=DevTestConsumption | unitPrice=0.134
+    - score=1 | productName=Azure App Service Premium v3 Plan | skuName=P1mv3 | meterName=P1mv3 App | armSkuName=Standard_P1_mv3_Windows | unitOfMeasure=1 Hour | type=Reservation | priceType=Reservation | unitPrice=2409.0
+    - Conclusion: Ambiguous: multiple meters, need capacity-first / stricter filters.
+  - Resource: id=appsvc-webapp-hp | category=appservice | region=westeurope | requested_sku= | billing_model=reserved
+    - Catalog used: `catalog/azure_app_service__westeurope__USD.jsonl` (reason: category='appservice' -> serviceName='Azure App Service' via normalize_service_name; region='westeurope', currency='USD')
+    - Catalog search results: 210 candidates
+    - score=0 | productName=Azure App Service Isolated v2 Plan | skuName=I5mv2 | meterName=I5mv2 App | armSkuName=App_Service_I5_mv2_windows | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=11.113
+    - score=0 | productName=Azure App Service Isolated v2 Plan | skuName=I5mv2 | meterName=I5mv2 App | armSkuName=App_Service_I5_mv2_windows | unitOfMeasure=1 Hour | type=Reservation | priceType=Reservation | unitPrice=67840.0
+    - score=0 | productName=Azure App Service Isolated v2 Plan | skuName=I3 v2 | meterName=I3 v2 App | armSkuName=App_Service_I3_v2_windows | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=2.28
+    - score=0 | productName=Azure App Service Isolated v2 Plan | skuName=I3 v2 | meterName=I3 v2 App | armSkuName=App_Service_I3_v2_windows | unitOfMeasure=1 Hour | type=Reservation | priceType=Reservation | unitPrice=14120.0
+    - score=0 | productName=Azure App Service Standard Plan | skuName=S1 | meterName=S1 App | armSkuName= | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.1
+    - score=0 | productName=Azure App Service Standard Plan | skuName=S1 | meterName=S1 App | armSkuName= | unitOfMeasure=1 Hour | type=DevTestConsumption | priceType=DevTestConsumption | unitPrice=0.06
+    - score=0 | productName=Azure App Service Isolated v2 Plan | skuName=I3mv2 | meterName=I3mv2 App | armSkuName=App_Service_I3_mv2_windows | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=2.778
+    - score=0 | productName=Azure App Service Isolated v2 Plan | skuName=I3mv2 | meterName=I3mv2 App | armSkuName=App_Service_I3_mv2_windows | unitOfMeasure=1 Hour | type=Reservation | priceType=Reservation | unitPrice=16960.0
+    - score=0 | productName=Azure App Service Isolated v2 Plan | skuName=I5 v2 | meterName=I5 v2 App | armSkuName=App_Service_I5_v2_windows | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=9.12
+    - score=0 | productName=Azure App Service Isolated v2 Plan | skuName=I5 v2 | meterName=I5 v2 App | armSkuName=App_Service_I5_v2_windows | unitOfMeasure=1 Hour | type=Reservation | priceType=Reservation | unitPrice=56816.0
+    - Conclusion: Ambiguous: multiple meters, need capacity-first / stricter filters.
+  - Resource: id=storage-media-blob-hp | category=storage.blob | region=westeurope | requested_sku=Premium_ZRS | billing_model=payg
+    - Catalog used: `catalog/storage__westeurope__USD.jsonl` (reason: category='storage.blob' -> serviceName='Storage' via normalize_service_name; region='westeurope', currency='USD')
+    - Catalog search results: 1478 candidates
+    - score=1 | productName=Premium Files Reserved Capacity | skuName=Premium ZRS - 100 TB | meterName=Provisioned | armSkuName=Premium_ZRS_Provisioned_100 TB | unitOfMeasure=1 GB/Month | type=Reservation | priceType=Reservation | unitPrice=230031.0
+    - score=1 | productName=Premium Files Reserved Capacity | skuName=Premium ZRS - 10 TB | meterName=Provisioned | armSkuName=Premium_ZRS_Provisioned_10 TB | unitOfMeasure=1 GB/Month | type=Reservation | priceType=Reservation | unitPrice=24183.0
+    - score=0 | productName=General Block Blob v2 Hierarchical Namespace | skuName=Cool GRS | meterName=Cool GRS Write Operations | armSkuName= | unitOfMeasure=10K | type=Consumption | priceType=Consumption | unitPrice=0.26
+    - score=0 | productName=Tables | skuName=Standard ZRS | meterName=Read Operations | armSkuName= | unitOfMeasure=10K | type=Consumption | priceType=Consumption | unitPrice=0.00036
+    - score=0 | productName=Blob Storage | skuName=Hot RA-GRS | meterName=GRS List and Create Container Operations | armSkuName= | unitOfMeasure=10K | type=Consumption | priceType=Consumption | unitPrice=0.108
+    - score=0 | productName=Azure Data Lake Storage Gen2 Flat Namespace | skuName=Cool RA-GRS | meterName=Cool GRS Write Operations | armSkuName= | unitOfMeasure=10K | type=Consumption | priceType=Consumption | unitPrice=0.2
+    - score=0 | productName=Standard SSD Managed Disks | skuName=Disk Transactions LRS | meterName=Disk Transactions LRS Disk Operations | armSkuName=Disk Transactions | unitOfMeasure=10K | type=Consumption | priceType=Consumption | unitPrice=0.0026
+    - score=0 | productName=Azure Data Lake Storage Gen2 Hierarchical Namespace | skuName=Hot ZRS | meterName=Hot ZRS Index | armSkuName= | unitOfMeasure=1 GB/Month | type=Consumption | priceType=Consumption | unitPrice=0.035
+    - score=0 | productName=Standard Page Blob v2 | skuName=Standard RA-GZRS | meterName=Disk Data Stored | armSkuName= | unitOfMeasure=1 GB/Month | type=Consumption | priceType=Consumption | unitPrice=0.379686
+    - score=0 | productName=Tables | skuName=Standard ZRS | meterName=List Operations | armSkuName= | unitOfMeasure=10K | type=Consumption | priceType=Consumption | unitPrice=0.00036
+    - Conclusion: Ambiguous: multiple meters, need capacity-first / stricter filters.
+  - Resource: id=redis-cache-hp | category=cache.redis | region=westeurope | requested_sku=Premium_P1 | billing_model=reserved
+    - Catalog used: `catalog/azure_cache_for_redis__westeurope__EUR.jsonl` (reason: category='cache.redis' -> serviceName='Azure Cache for Redis' via normalize_service_name; region='westeurope', currency='EUR')
+    - Catalog search results: 0 candidates
+    - Conclusion: Correct meter is not in catalog (catalog incomplete or mapping wrong).
+  - Resource: id=vnet-app-hp | category=network.vnet | region=westeurope | requested_sku=Virtual Network | billing_model=payg
+    - Catalog used: `catalog/virtual_network__westeurope__USD.jsonl` (reason: category='network.vnet' -> serviceName='Virtual Network' via normalize_service_name; region='westeurope', currency='USD')
+    - Catalog search results: 12 candidates
+    - score=2 | productName=Global Virtual Network Peering | skuName=Inter-Region | meterName=Inter-Region Egress | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.035
+    - score=2 | productName=Global Virtual Network Peering | skuName=Inter-Region | meterName=Inter-Region Ingress | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.035
+    - score=0 | productName=IP Addresses | skuName=Standard | meterName=Standard IPv4 Static Public IP | armSkuName= | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.005
+    - score=0 | productName=IP Addresses | skuName=Standard | meterName=Standard IPv4 Static Public IP | armSkuName= | unitOfMeasure=1 Hour | type=DevTestConsumption | priceType=DevTestConsumption | unitPrice=0.005
+    - score=0 | productName=IP Addresses | skuName=Basic | meterName=Basic IPv4 Dynamic Public IP | armSkuName= | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.004
+    - score=0 | productName=IP Addresses | skuName=Basic | meterName=Basic IPv4 Dynamic Public IP | armSkuName= | unitOfMeasure=1 Hour | type=DevTestConsumption | priceType=DevTestConsumption | unitPrice=0.004
+    - score=0 | productName=Public IP Prefix | skuName=Standard | meterName=Standard Static IP Addresses | armSkuName= | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.006
+    - score=0 | productName=Public IP Prefix | skuName=Global | meterName=Global Static Public IP | armSkuName=Global | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.012
+    - score=0 | productName=IP Addresses | skuName=Basic | meterName=Basic IPv4 Static Public IP | armSkuName= | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.0036
+    - score=0 | productName=IP Addresses | skuName=Basic | meterName=Basic IPv4 Static Public IP | armSkuName= | unitOfMeasure=1 Hour | type=DevTestConsumption | priceType=DevTestConsumption | unitPrice=0.0036
+    - Conclusion: Ambiguous: multiple meters, need capacity-first / stricter filters.
+  - Resource: id=natgw-egress-hp | category=network.nat | region=westeurope | requested_sku=Standard | billing_model=payg
+    - Catalog used: `catalog/bandwidth__westeurope__USD.jsonl` (reason: category='network.nat' -> serviceName='Bandwidth' via normalize_service_name; region='westeurope', currency='USD')
+    - Catalog search results: 14 candidates
+    - score=1 | productName=Bandwidth - Routing Preference: Internet | skuName=Standard | meterName=Standard Data Transfer Out | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.0
+    - score=1 | productName=Rtn Preference: MGN | skuName=Standard | meterName=Standard Data Transfer Out | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.0
+    - score=1 | productName=Rtn Preference: MGN | skuName=Standard | meterName=Standard Inter-Availability Zone Data Transfer Out | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.01
+    - score=1 | productName=Rtn Preference: MGN | skuName=Standard | meterName=Standard Data Transfer Out - to China | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.0
+    - score=1 | productName=Rtn Preference: MGN | skuName=Standard | meterName=Standard Data Transfer In | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.0
+    - score=1 | productName=Rtn Preference: MGN | skuName=Standard | meterName=Standard Data Transfer In - from China | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.09
+    - score=1 | productName=Rtn Preference: MGN | skuName=Standard | meterName=Standard Inter-Availability Zone Data Transfer In | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.01
+    - score=1 | productName=Rtn Preference: MGN | skuName=Standard | meterName=Standard Inter-Region Data Transfer | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.02
+    - score=0 | productName=Rtn Preference: MGN | skuName=China | meterName=China Data Transfer - 1 to 5 Mbps | armSkuName= | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.0
+    - score=0 | productName=Rtn Preference: MGN | skuName=China | meterName=China Data Transfer - 1 Mbps | armSkuName= | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.0
+    - Conclusion: Ambiguous: multiple meters, need capacity-first / stricter filters.
+  - Resource: id=publicip-natgw-hp | category=network.public_ip | region=westeurope | requested_sku=Standard | billing_model=payg
+    - Catalog used: `catalog/public_ip_addresses__westeurope__EUR.jsonl` (reason: category='network.public_ip' -> serviceName='Public IP Addresses' via normalize_service_name; region='westeurope', currency='EUR')
+    - Catalog search results: 0 candidates
+    - Conclusion: Correct meter is not in catalog (catalog incomplete or mapping wrong).
+  - Resource: id=kv-hp | category=security.keyvault | region=westeurope | requested_sku=premium | billing_model=payg
+    - Catalog used: `catalog/key_vault__westeurope__USD.jsonl` (reason: category='security.keyvault' -> serviceName='Key Vault' via normalize_service_name; region='westeurope', currency='USD')
+    - Catalog search results: 14 candidates
+    - score=1 | productName=Key Vault | skuName=Premium | meterName=Automated Key Rotation | armSkuName= | unitOfMeasure=1 Rotation | type=Consumption | priceType=Consumption | unitPrice=1.0
+    - score=1 | productName=Key Vault | skuName=Premium | meterName=Operations | armSkuName= | unitOfMeasure=10K | type=Consumption | priceType=Consumption | unitPrice=0.03
+    - score=1 | productName=Key Vault | skuName=Premium | meterName=Premium HSM-protected RSA 2048-bit key | armSkuName= | unitOfMeasure=1 | type=Consumption | priceType=Consumption | unitPrice=1.0
+    - score=1 | productName=Key Vault | skuName=Premium | meterName=Advanced Key Operations | armSkuName= | unitOfMeasure=10K | type=Consumption | priceType=Consumption | unitPrice=0.15
+    - score=1 | productName=Key Vault | skuName=Premium | meterName=Premium HSM-protected Advanced Key | armSkuName= | unitOfMeasure=1 | type=Consumption | priceType=Consumption | unitPrice=5.0
+    - score=1 | productName=Key Vault | skuName=Premium | meterName=Certificate Renewal Request | armSkuName= | unitOfMeasure=1 | type=Consumption | priceType=Consumption | unitPrice=3.0
+    - score=1 | productName=Key Vault | skuName=Premium | meterName=Secret Renewal | armSkuName= | unitOfMeasure=1 | type=Consumption | priceType=Consumption | unitPrice=1.0
+    - score=0 | productName=Key Vault | skuName=Standard | meterName=Advanced Key Operations | armSkuName= | unitOfMeasure=10K | type=Consumption | priceType=Consumption | unitPrice=0.15
+    - score=0 | productName=Key Vault | skuName=Standard | meterName=Automated Key Rotation | armSkuName= | unitOfMeasure=1 Rotation | type=Consumption | priceType=Consumption | unitPrice=1.0
+    - score=0 | productName=Key Vault | skuName=Standard | meterName=Secret Renewal | armSkuName= | unitOfMeasure=1 | type=Consumption | priceType=Consumption | unitPrice=1.0
+    - Conclusion: Ambiguous: multiple meters, need capacity-first / stricter filters.
+  - Resource: id=loganalytics-hp | category=monitoring.loganalytics | region=westeurope | requested_sku=PerGB2018 | billing_model=payg
+    - Catalog used: `catalog/log_analytics__westeurope__USD.jsonl` (reason: category='monitoring.loganalytics' -> serviceName='Log Analytics' via normalize_service_name; region='westeurope', currency='USD')
+    - Catalog search results: 6 candidates
+    - score=0 | productName=Log Analytics | skuName=Analytics Logs | meterName=Analytics Logs Data Retention | armSkuName= | unitOfMeasure=1 GB/Month | type=Consumption | priceType=Consumption | unitPrice=0.13
+    - score=0 | productName=Log Analytics | skuName=Premium | meterName=Premium Data Analyzed | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=3.5
+    - score=0 | productName=Log Analytics | skuName=Free | meterName=Free Data Analyzed | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.0
+    - score=0 | productName=Log Analytics | skuName=Standard | meterName=Standard Data Analyzed | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=2.3
+    - score=0 | productName=Log Analytics | skuName=Analytics Logs | meterName=Analytics Logs Data Ingestion | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.0
+    - score=0 | productName=Log Analytics | skuName=Analytics Logs | meterName=Analytics Logs Data Analyzed | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=2.3
+    - Conclusion: Ambiguous: multiple meters, need capacity-first / stricter filters.
+  - Resource: id=backup-vault-hp | category=backup.vault | region=westeurope | requested_sku=Standard | billing_model=payg
+    - Catalog used: `catalog/backup__westeurope__USD.jsonl` (reason: category='backup.vault' -> serviceName='Backup' via normalize_service_name; region='westeurope', currency='USD')
+    - Catalog search results: 41 candidates
+    - score=1 | productName=Backup Reserved Capacity | skuName=Standard - 100 TB ZRS | meterName=ZRS Data Stored | armSkuName=backup_standard_zrs_data_stored_100tb | unitOfMeasure=1 GB/Month | type=Reservation | priceType=Reservation | unitPrice=30278.0
+    - score=1 | productName=Backup | skuName=Standard | meterName=LRS Data Stored | armSkuName= | unitOfMeasure=1 GB/Month | type=Consumption | priceType=Consumption | unitPrice=0.0224
+    - score=1 | productName=Backup Reserved Capacity | skuName=Standard - 100 TB LRS | meterName=LRS Data Stored | armSkuName=backup_standard_lrs_data_stored_100tb | unitOfMeasure=1 GB/Month | type=Reservation | priceType=Reservation | unitPrice=24222.0
+    - score=1 | productName=Backup Reserved Capacity | skuName=Standard - 100 TB RA-GRS | meterName=RA-GRS Data Stored | armSkuName=backup_standard_ra-grs_data_stored_100tb | unitOfMeasure=1 GB/Month | type=Reservation | priceType=Reservation | unitPrice=61528.0
+    - score=1 | productName=Backup Reserved Capacity | skuName=Standard - 1 PB GRS | meterName=GRS Data Stored | armSkuName=backup_standard_grs_data_stored_1pb | unitOfMeasure=1 GB/Month | type=Reservation | priceType=Reservation | unitPrice=473520.0
+    - score=1 | productName=Backup Reserved Capacity | skuName=Standard - 1 PB ZRS | meterName=ZRS Data Stored | armSkuName=backup_standard_zrs_data_stored_1pb | unitOfMeasure=1 GB/Month | type=Reservation | priceType=Reservation | unitPrice=295950.0
+    - score=1 | productName=Backup Reserved Capacity | skuName=Standard - 1 PB LRS | meterName=LRS Data Stored | armSkuName=backup_standard_lrs_data_stored_1pb | unitOfMeasure=1 GB/Month | type=Reservation | priceType=Reservation | unitPrice=236760.0
+    - score=1 | productName=Backup Reserved Capacity | skuName=Standard - 1 PB RA-GRS | meterName=RA-GRS Data Stored | armSkuName=backup_standard_ra-grs_data_stored_1pb | unitOfMeasure=1 GB/Month | type=Reservation | priceType=Reservation | unitPrice=601413.0
+    - score=1 | productName=Backup | skuName=Standard | meterName=ZRS Data Stored | armSkuName= | unitOfMeasure=1 GB/Month | type=Consumption | priceType=Consumption | unitPrice=0.028
+    - score=1 | productName=Backup Reserved Capacity | skuName=Standard - 100 TB GRS | meterName=GRS Data Stored | armSkuName=backup_standard_grs_data_stored_100tb | unitOfMeasure=1 GB/Month | type=Reservation | priceType=Reservation | unitPrice=48444.0
+    - Conclusion: Ambiguous: multiple meters, need capacity-first / stricter filters.
+  - Resource: id=asr-dr-hp | category=dr.asr | region=westeurope | requested_sku=ASR | billing_model=payg
+    - Catalog used: `catalog/azure_site_recovery__westeurope__USD.jsonl` (reason: category='dr.asr' -> serviceName='Azure Site Recovery' via normalize_service_name; region='westeurope', currency='USD')
+    - Catalog search results: 2 candidates
+    - score=0 | productName=Azure Site Recovery | skuName=System Center | meterName=VM Replicated to System Center | armSkuName= | unitOfMeasure=1/Month | type=Consumption | priceType=Consumption | unitPrice=16.0
+    - score=0 | productName=Azure Site Recovery | skuName=Azure | meterName=VM Replicated to Azure | armSkuName= | unitOfMeasure=1/Month | type=Consumption | priceType=Consumption | unitPrice=25.0
+    - Conclusion: Ambiguous: multiple meters, need capacity-first / stricter filters.
+
+### Run: run1_websqlredisblob
+- Scenario: unknown
+  - Resource: id=vnet-main | category=network.vnet | region=westeurope | requested_sku=Virtual Network | billing_model=payg
+    - Catalog used: `catalog/virtual_network__westeurope__EUR.jsonl` (reason: category='network.vnet' -> serviceName='Virtual Network' via normalize_service_name; region='westeurope', currency='EUR')
+    - Catalog search results: 12 candidates
+    - score=2 | productName=Global Virtual Network Peering | skuName=Inter-Region | meterName=Inter-Region Egress | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.0303
+    - score=2 | productName=Global Virtual Network Peering | skuName=Inter-Region | meterName=Inter-Region Ingress | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.0303
+    - score=0 | productName=IP Addresses | skuName=Standard | meterName=Standard IPv4 Static Public IP | armSkuName= | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.0043
+    - score=0 | productName=IP Addresses | skuName=Standard | meterName=Standard IPv4 Static Public IP | armSkuName= | unitOfMeasure=1 Hour | type=DevTestConsumption | priceType=DevTestConsumption | unitPrice=0.0043
+    - score=0 | productName=IP Addresses | skuName=Basic | meterName=Basic IPv4 Dynamic Public IP | armSkuName= | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.0035
+    - score=0 | productName=IP Addresses | skuName=Basic | meterName=Basic IPv4 Dynamic Public IP | armSkuName= | unitOfMeasure=1 Hour | type=DevTestConsumption | priceType=DevTestConsumption | unitPrice=0.0035
+    - score=0 | productName=Public IP Prefix | skuName=Standard | meterName=Standard Static IP Addresses | armSkuName= | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.0052
+    - score=0 | productName=Public IP Prefix | skuName=Global | meterName=Global Static Public IP | armSkuName=Global | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.0104
+    - score=0 | productName=IP Addresses | skuName=Basic | meterName=Basic IPv4 Static Public IP | armSkuName= | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.0031
+    - score=0 | productName=IP Addresses | skuName=Basic | meterName=Basic IPv4 Static Public IP | armSkuName= | unitOfMeasure=1 Hour | type=DevTestConsumption | priceType=DevTestConsumption | unitPrice=0.0031
+    - Conclusion: Ambiguous: multiple meters, need capacity-first / stricter filters.
+  - Resource: id=appsvc-plan-b2-like | category=appservice | region=westeurope | requested_sku=B2 | billing_model=payg
+    - Catalog used: `catalog/azure_app_service__westeurope__EUR.jsonl` (reason: category='appservice' -> serviceName='Azure App Service' via normalize_service_name; region='westeurope', currency='EUR')
+    - Catalog search results: 210 candidates
+    - score=1 | productName=Azure App Service Basic Plan - Linux | skuName=B2 | meterName=B2 | armSkuName= | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.0311
+    - score=1 | productName=Azure App Service Basic Plan | skuName=B2 | meterName=B2 App | armSkuName= | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.1297
+    - score=1 | productName=Azure App Service Basic Plan | skuName=B2 | meterName=B2 App | armSkuName= | unitOfMeasure=1 Hour | type=DevTestConsumption | priceType=DevTestConsumption | unitPrice=0.0761
+    - score=0 | productName=Azure App Service Isolated v2 Plan | skuName=I5mv2 | meterName=I5mv2 App | armSkuName=App_Service_I5_mv2_windows | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=9.6112
+    - score=0 | productName=Azure App Service Isolated v2 Plan | skuName=I5mv2 | meterName=I5mv2 App | armSkuName=App_Service_I5_mv2_windows | unitOfMeasure=1 Hour | type=Reservation | priceType=Reservation | unitPrice=58672.4324
+    - score=0 | productName=Azure App Service Isolated v2 Plan | skuName=I3 v2 | meterName=I3 v2 App | armSkuName=App_Service_I3_v2_windows | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=1.9719
+    - score=0 | productName=Azure App Service Isolated v2 Plan | skuName=I3 v2 | meterName=I3 v2 App | armSkuName=App_Service_I3_v2_windows | unitOfMeasure=1 Hour | type=Reservation | priceType=Reservation | unitPrice=12211.8919
+    - score=0 | productName=Azure App Service Standard Plan | skuName=S1 | meterName=S1 App | armSkuName= | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.0865
+    - score=0 | productName=Azure App Service Standard Plan | skuName=S1 | meterName=S1 App | armSkuName= | unitOfMeasure=1 Hour | type=DevTestConsumption | priceType=DevTestConsumption | unitPrice=0.0519
+    - score=0 | productName=Azure App Service Isolated v2 Plan | skuName=I3mv2 | meterName=I3mv2 App | armSkuName=App_Service_I3_mv2_windows | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=2.4026
+    - Conclusion: Ambiguous: multiple meters, need capacity-first / stricter filters.
+  - Resource: id=sql-db-s1-like | category=db.sql | region=westeurope | requested_sku=S1 | billing_model=payg
+    - Catalog used: `catalog/sql_database__westeurope__EUR.jsonl` (reason: category='db.sql' -> serviceName='SQL Database' via normalize_service_name; region='westeurope', currency='EUR')
+    - Catalog search results: 256 candidates
+    - score=1 | productName=SQL Database Single Standard | skuName=S1 Secondary | meterName=S1 Secondary DTUs | armSkuName= | unitOfMeasure=1/Day | type=Consumption | priceType=Consumption | unitPrice=0.6314
+    - score=1 | productName=SQL Database Single Standard | skuName=S1 | meterName=S1 DTUs | armSkuName= | unitOfMeasure=1/Day | type=Consumption | priceType=Consumption | unitPrice=0.8369
+    - score=1 | productName=SQL Database Single Premium RS | skuName=PRS1 Secondary | meterName=PRS1 Secondary DTU | armSkuName= | unitOfMeasure=1/Day | type=Consumption | priceType=Consumption | unitPrice=2.4324
+    - score=1 | productName=SQL Database Single Premium RS | skuName=PRS1 | meterName=PRS1 DTU | armSkuName= | unitOfMeasure=1/Day | type=Consumption | priceType=Consumption | unitPrice=3.2432
+    - score=1 | productName=SQL Database Single Standard | skuName=S1 Secondary Active | meterName=S1 Secondary Active DTUs | armSkuName= | unitOfMeasure=1/Day | type=Consumption | priceType=Consumption | unitPrice=0.8369
+    - score=1 | productName=SQL Database Single Premium RS | skuName=PRS1 Secondary Active | meterName=PRS1 Secondary Active DTU | armSkuName= | unitOfMeasure=1/Day | type=Consumption | priceType=Consumption | unitPrice=3.2432
+    - score=1 | productName=SQL Database Single Standard | skuName=S12 | meterName=10 DTUs | armSkuName= | unitOfMeasure=1/Day | type=Consumption | priceType=Consumption | unitPrice=125.5524
+    - score=0 | productName=SQL Database Elastic Pool - Premium | skuName=2000 DTU Pack | meterName=eDTUs | armSkuName= | unitOfMeasure=1/Day | type=Consumption | priceType=Consumption | unitPrice=311.3514
+    - score=0 | productName=SQL Database Single/Elastic Pool General Purpose - Compute Gen5 | skuName=80 vCore | meterName=vCore | armSkuName=SQLDB_GP_Compute_Gen5_80 | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=11.585
+    - score=0 | productName=SQL Database Single/Elastic Pool General Purpose - Compute FSv2 Series | skuName=72 vCore | meterName=vCore | armSkuName= | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=9.1499
+    - Conclusion: Ambiguous: multiple meters, need capacity-first / stricter filters.
+  - Resource: id=redis-cache-basic-c1 | category=cache.redis | region=westeurope | requested_sku=C1 | billing_model=payg
+    - Catalog used: `catalog/azure_cache_for_redis__westeurope__EUR.jsonl` (reason: category='cache.redis' -> serviceName='Azure Cache for Redis' via normalize_service_name; region='westeurope', currency='EUR')
+    - Catalog search results: 0 candidates
+    - Conclusion: Correct meter is not in catalog (catalog incomplete or mapping wrong).
+  - Resource: id=blob-storage-uploads | category=storage.blob | region=westeurope | requested_sku=Standard_GRS | billing_model=payg
+    - Catalog used: `catalog/storage__westeurope__EUR.jsonl` (reason: category='storage.blob' -> serviceName='Storage' via normalize_service_name; region='westeurope', currency='EUR')
+    - Catalog search results: 1478 candidates
+    - score=0 | productName=General Block Blob v2 Hierarchical Namespace | skuName=Cool GRS | meterName=Cool GRS Write Operations | armSkuName= | unitOfMeasure=10K | type=Consumption | priceType=Consumption | unitPrice=0.2249
+    - score=0 | productName=Tables | skuName=Standard ZRS | meterName=Read Operations | armSkuName= | unitOfMeasure=10K | type=Consumption | priceType=Consumption | unitPrice=0.0003
+    - score=0 | productName=Blob Storage | skuName=Hot RA-GRS | meterName=GRS List and Create Container Operations | armSkuName= | unitOfMeasure=10K | type=Consumption | priceType=Consumption | unitPrice=0.0934
+    - score=0 | productName=Azure Data Lake Storage Gen2 Flat Namespace | skuName=Cool RA-GRS | meterName=Cool GRS Write Operations | armSkuName= | unitOfMeasure=10K | type=Consumption | priceType=Consumption | unitPrice=0.173
+    - score=0 | productName=Standard SSD Managed Disks | skuName=Disk Transactions LRS | meterName=Disk Transactions LRS Disk Operations | armSkuName=Disk Transactions | unitOfMeasure=10K | type=Consumption | priceType=Consumption | unitPrice=0.0022
+    - score=0 | productName=Azure Data Lake Storage Gen2 Hierarchical Namespace | skuName=Hot ZRS | meterName=Hot ZRS Index | armSkuName= | unitOfMeasure=1 GB/Month | type=Consumption | priceType=Consumption | unitPrice=0.0303
+    - score=0 | productName=Standard Page Blob v2 | skuName=Standard RA-GZRS | meterName=Disk Data Stored | armSkuName= | unitOfMeasure=1 GB/Month | type=Consumption | priceType=Consumption | unitPrice=0.3284
+    - score=0 | productName=Tables | skuName=Standard ZRS | meterName=List Operations | armSkuName= | unitOfMeasure=10K | type=Consumption | priceType=Consumption | unitPrice=0.0003
+    - score=0 | productName=Premium Block Blob | skuName=Premium LRS | meterName=LRS Early Premium To Cool Tier Down | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.16
+    - score=0 | productName=Files v2 | skuName=Cool GRS | meterName=Cool Data Retrieval | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.0086
+    - Conclusion: Ambiguous: multiple meters, need capacity-first / stricter filters.
+  - Resource: id=appgw-waf-public | category=network.appgw | region=westeurope | requested_sku=WAF_v2 | billing_model=payg
+    - Catalog used: `catalog/application_gateway__westeurope__EUR.jsonl` (reason: category='network.appgw' -> serviceName='Application Gateway' via normalize_service_name; region='westeurope', currency='EUR')
+    - Catalog search results: 27 candidates
+    - score=0 | productName=Application Gateway WAF v2 - Discounted | skuName=Standard | meterName=Standard Fixed Cost | armSkuName=Standard | unitOfMeasure=1/Hour | type=Consumption | priceType=Consumption | unitPrice=0.2249
+    - score=0 | productName=Application Gateway Basic v2 | skuName=Basic | meterName=Basic Fixed Cost | armSkuName=Basic | unitOfMeasure=1/Hour | type=Consumption | priceType=Consumption | unitPrice=0.0234
+    - score=0 | productName=Application Gateway for Containers | skuName=Standard | meterName=Standard Association | armSkuName= | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.1349
+    - score=0 | productName=WAF Application Gateway | skuName=Large | meterName=Large Gateway | armSkuName= | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.434
+    - score=0 | productName=Application Gateway WAF v2 - Discounted | skuName=Standard | meterName=Standard Capacity Units | armSkuName=Standard | unitOfMeasure=1/Hour | type=Consumption | priceType=Consumption | unitPrice=0.0069
+    - score=0 | productName=Application Gateway for Containers WAF | skuName=Standard | meterName=Standard AGC | armSkuName=Standard | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.0346
+    - score=0 | productName=Application Gateway Standard v2 | skuName=Standard | meterName=Standard Capacity Units | armSkuName= | unitOfMeasure=1/Hour | type=Consumption | priceType=Consumption | unitPrice=0.0069
+    - score=0 | productName=Application Gateway WAF v2 | skuName=Standard | meterName=Standard Captcha Sessions | armSkuName= | unitOfMeasure=1K | type=Consumption | priceType=Consumption | unitPrice=0.3459
+    - score=0 | productName=Application Gateway for Containers WAF | skuName=Standard | meterName=Standard Capacity Units | armSkuName=Standard | unitOfMeasure=1/Hour | type=Consumption | priceType=Consumption | unitPrice=0.0164
+    - score=0 | productName=Application Gateway WAF v2 | skuName=Standard | meterName=Standard Fixed Cost | armSkuName= | unitOfMeasure=1/Hour | type=Consumption | priceType=Consumption | unitPrice=0.4048
+    - Conclusion: Ambiguous: multiple meters, need capacity-first / stricter filters.
+  - Resource: id=public-ip-appgw | category=network.public_ip | region=westeurope | requested_sku=Standard | billing_model=payg
+    - Catalog used: `catalog/public_ip_addresses__westeurope__EUR.jsonl` (reason: category='network.public_ip' -> serviceName='Public IP Addresses' via normalize_service_name; region='westeurope', currency='EUR')
+    - Catalog search results: 0 candidates
+    - Conclusion: Correct meter is not in catalog (catalog incomplete or mapping wrong).
+  - Resource: id=nat-egress | category=network.nat | region=westeurope | requested_sku=Standard | billing_model=payg
+    - Catalog used: `catalog/bandwidth__westeurope__EUR.jsonl` (reason: category='network.nat' -> serviceName='Bandwidth' via normalize_service_name; region='westeurope', currency='EUR')
+    - Catalog search results: 14 candidates
+    - score=1 | productName=Bandwidth - Routing Preference: Internet | skuName=Standard | meterName=Standard Data Transfer Out | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.0
+    - score=1 | productName=Rtn Preference: MGN | skuName=Standard | meterName=Standard Data Transfer Out | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.0
+    - score=1 | productName=Rtn Preference: MGN | skuName=Standard | meterName=Standard Inter-Availability Zone Data Transfer Out | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.0086
+    - score=1 | productName=Rtn Preference: MGN | skuName=Standard | meterName=Standard Data Transfer Out - to China | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.0
+    - score=1 | productName=Rtn Preference: MGN | skuName=Standard | meterName=Standard Data Transfer In | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.0
+    - score=1 | productName=Rtn Preference: MGN | skuName=Standard | meterName=Standard Data Transfer In - from China | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.0778
+    - score=1 | productName=Rtn Preference: MGN | skuName=Standard | meterName=Standard Inter-Availability Zone Data Transfer In | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.0086
+    - score=1 | productName=Rtn Preference: MGN | skuName=Standard | meterName=Standard Inter-Region Data Transfer | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.0173
+    - score=0 | productName=Rtn Preference: MGN | skuName=China | meterName=China Data Transfer - 1 to 5 Mbps | armSkuName= | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.0
+    - score=0 | productName=Rtn Preference: MGN | skuName=China | meterName=China Data Transfer - 1 Mbps | armSkuName= | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.0
+    - Conclusion: Ambiguous: multiple meters, need capacity-first / stricter filters.
+  - Resource: id=keyvault-main | category=security.keyvault | region=westeurope | requested_sku=standard | billing_model=payg
+    - Catalog used: `catalog/key_vault__westeurope__EUR.jsonl` (reason: category='security.keyvault' -> serviceName='Key Vault' via normalize_service_name; region='westeurope', currency='EUR')
+    - Catalog search results: 14 candidates
+    - score=1 | productName=Key Vault | skuName=Standard | meterName=Advanced Key Operations | armSkuName= | unitOfMeasure=10K | type=Consumption | priceType=Consumption | unitPrice=0.1297
+    - score=1 | productName=Key Vault | skuName=Standard | meterName=Automated Key Rotation | armSkuName= | unitOfMeasure=1 Rotation | type=Consumption | priceType=Consumption | unitPrice=0.8649
+    - score=1 | productName=Key Vault | skuName=Standard | meterName=Secret Renewal | armSkuName= | unitOfMeasure=1 | type=Consumption | priceType=Consumption | unitPrice=0.8649
+    - score=1 | productName=Azure Dedicated HSM | skuName=Standard | meterName=Standard Instance | armSkuName= | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=4.1946
+    - score=1 | productName=Key Vault HSM Pool | skuName=Standard B1 | meterName=Standard B1 Instance | armSkuName= | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=2.7676
+    - score=1 | productName=Key Vault | skuName=Standard | meterName=Operations | armSkuName= | unitOfMeasure=10K | type=Consumption | priceType=Consumption | unitPrice=0.0259
+    - score=1 | productName=Key Vault | skuName=Standard | meterName=Certificate Renewal Request | armSkuName= | unitOfMeasure=1 | type=Consumption | priceType=Consumption | unitPrice=2.5946
+    - score=0 | productName=Key Vault | skuName=Premium | meterName=Automated Key Rotation | armSkuName= | unitOfMeasure=1 Rotation | type=Consumption | priceType=Consumption | unitPrice=0.8649
+    - score=0 | productName=Key Vault | skuName=Premium | meterName=Operations | armSkuName= | unitOfMeasure=10K | type=Consumption | priceType=Consumption | unitPrice=0.0259
+    - score=0 | productName=Key Vault | skuName=Premium | meterName=Premium HSM-protected RSA 2048-bit key | armSkuName= | unitOfMeasure=1 | type=Consumption | priceType=Consumption | unitPrice=0.8649
+    - Conclusion: Ambiguous: multiple meters, need capacity-first / stricter filters.
+  - Resource: id=loganalytics-main | category=monitoring.loganalytics | region=westeurope | requested_sku=PerGB2018 | billing_model=payg
+    - Catalog used: `catalog/log_analytics__westeurope__EUR.jsonl` (reason: category='monitoring.loganalytics' -> serviceName='Log Analytics' via normalize_service_name; region='westeurope', currency='EUR')
+    - Catalog search results: 6 candidates
+    - score=0 | productName=Log Analytics | skuName=Analytics Logs | meterName=Analytics Logs Data Retention | armSkuName= | unitOfMeasure=1 GB/Month | type=Consumption | priceType=Consumption | unitPrice=0.1124
+    - score=0 | productName=Log Analytics | skuName=Premium | meterName=Premium Data Analyzed | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=3.027
+    - score=0 | productName=Log Analytics | skuName=Free | meterName=Free Data Analyzed | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.0
+    - score=0 | productName=Log Analytics | skuName=Standard | meterName=Standard Data Analyzed | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=1.9892
+    - score=0 | productName=Log Analytics | skuName=Analytics Logs | meterName=Analytics Logs Data Ingestion | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.0
+    - score=0 | productName=Log Analytics | skuName=Analytics Logs | meterName=Analytics Logs Data Analyzed | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=1.9892
+    - Conclusion: Ambiguous: multiple meters, need capacity-first / stricter filters.
+  - Resource: id=backup-vault-main | category=backup.vault | region=westeurope | requested_sku=Standard | billing_model=payg
+    - Catalog used: `catalog/backup__westeurope__EUR.jsonl` (reason: category='backup.vault' -> serviceName='Backup' via normalize_service_name; region='westeurope', currency='EUR')
+    - Catalog search results: 41 candidates
+    - score=1 | productName=Backup Reserved Capacity | skuName=Standard - 100 TB ZRS | meterName=ZRS Data Stored | armSkuName=backup_standard_zrs_data_stored_100tb | unitOfMeasure=1 GB/Month | type=Reservation | priceType=Reservation | unitPrice=26186.3784
+    - score=1 | productName=Backup | skuName=Standard | meterName=LRS Data Stored | armSkuName= | unitOfMeasure=1 GB/Month | type=Consumption | priceType=Consumption | unitPrice=0.0194
+    - score=1 | productName=Backup Reserved Capacity | skuName=Standard - 100 TB LRS | meterName=LRS Data Stored | armSkuName=backup_standard_lrs_data_stored_100tb | unitOfMeasure=1 GB/Month | type=Reservation | priceType=Reservation | unitPrice=20948.7568
+    - score=1 | productName=Backup Reserved Capacity | skuName=Standard - 100 TB RA-GRS | meterName=RA-GRS Data Stored | armSkuName=backup_standard_ra-grs_data_stored_100tb | unitOfMeasure=1 GB/Month | type=Reservation | priceType=Reservation | unitPrice=53213.4054
+    - score=1 | productName=Backup Reserved Capacity | skuName=Standard - 1 PB GRS | meterName=GRS Data Stored | armSkuName=backup_standard_grs_data_stored_1pb | unitOfMeasure=1 GB/Month | type=Reservation | priceType=Reservation | unitPrice=409530.8108
+    - score=1 | productName=Backup Reserved Capacity | skuName=Standard - 1 PB ZRS | meterName=ZRS Data Stored | armSkuName=backup_standard_zrs_data_stored_1pb | unitOfMeasure=1 GB/Month | type=Reservation | priceType=Reservation | unitPrice=255956.7568
+    - score=1 | productName=Backup Reserved Capacity | skuName=Standard - 1 PB LRS | meterName=LRS Data Stored | armSkuName=backup_standard_lrs_data_stored_1pb | unitOfMeasure=1 GB/Month | type=Reservation | priceType=Reservation | unitPrice=204765.4054
+    - score=1 | productName=Backup Reserved Capacity | skuName=Standard - 1 PB RA-GRS | meterName=RA-GRS Data Stored | armSkuName=backup_standard_ra-grs_data_stored_1pb | unitOfMeasure=1 GB/Month | type=Reservation | priceType=Reservation | unitPrice=520140.973
+    - score=1 | productName=Backup | skuName=Standard | meterName=ZRS Data Stored | armSkuName= | unitOfMeasure=1 GB/Month | type=Consumption | priceType=Consumption | unitPrice=0.0242
+    - score=1 | productName=Backup Reserved Capacity | skuName=Standard - 100 TB GRS | meterName=GRS Data Stored | armSkuName=backup_standard_grs_data_stored_100tb | unitOfMeasure=1 GB/Month | type=Reservation | priceType=Reservation | unitPrice=41897.5135
+    - Conclusion: Ambiguous: multiple meters, need capacity-first / stricter filters.
+  - Resource: id=asr-dr-sql-app | category=dr.asr | region=westeurope | requested_sku=Standard | billing_model=payg
+    - Catalog used: `catalog/azure_site_recovery__westeurope__EUR.jsonl` (reason: category='dr.asr' -> serviceName='Azure Site Recovery' via normalize_service_name; region='westeurope', currency='EUR')
+    - Catalog search results: 2 candidates
+    - score=0 | productName=Azure Site Recovery | skuName=System Center | meterName=VM Replicated to System Center | armSkuName= | unitOfMeasure=1/Month | type=Consumption | priceType=Consumption | unitPrice=13.8378
+    - score=0 | productName=Azure Site Recovery | skuName=Azure | meterName=VM Replicated to Azure | armSkuName= | unitOfMeasure=1/Month | type=Consumption | priceType=Consumption | unitPrice=21.6216
+    - Conclusion: Ambiguous: multiple meters, need capacity-first / stricter filters.
+
+- Scenario: unknown
+  - Resource: id=vnet-main-co | category=network.vnet | region=westeurope | requested_sku=Virtual Network | billing_model=payg
+    - Catalog used: `catalog/virtual_network__westeurope__EUR.jsonl` (reason: category='network.vnet' -> serviceName='Virtual Network' via normalize_service_name; region='westeurope', currency='EUR')
+    - Catalog search results: 12 candidates
+    - score=2 | productName=Global Virtual Network Peering | skuName=Inter-Region | meterName=Inter-Region Egress | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.0303
+    - score=2 | productName=Global Virtual Network Peering | skuName=Inter-Region | meterName=Inter-Region Ingress | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.0303
+    - score=0 | productName=IP Addresses | skuName=Standard | meterName=Standard IPv4 Static Public IP | armSkuName= | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.0043
+    - score=0 | productName=IP Addresses | skuName=Standard | meterName=Standard IPv4 Static Public IP | armSkuName= | unitOfMeasure=1 Hour | type=DevTestConsumption | priceType=DevTestConsumption | unitPrice=0.0043
+    - score=0 | productName=IP Addresses | skuName=Basic | meterName=Basic IPv4 Dynamic Public IP | armSkuName= | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.0035
+    - score=0 | productName=IP Addresses | skuName=Basic | meterName=Basic IPv4 Dynamic Public IP | armSkuName= | unitOfMeasure=1 Hour | type=DevTestConsumption | priceType=DevTestConsumption | unitPrice=0.0035
+    - score=0 | productName=Public IP Prefix | skuName=Standard | meterName=Standard Static IP Addresses | armSkuName= | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.0052
+    - score=0 | productName=Public IP Prefix | skuName=Global | meterName=Global Static Public IP | armSkuName=Global | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.0104
+    - score=0 | productName=IP Addresses | skuName=Basic | meterName=Basic IPv4 Static Public IP | armSkuName= | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.0031
+    - score=0 | productName=IP Addresses | skuName=Basic | meterName=Basic IPv4 Static Public IP | armSkuName= | unitOfMeasure=1 Hour | type=DevTestConsumption | priceType=DevTestConsumption | unitPrice=0.0031
+    - Conclusion: Ambiguous: multiple meters, need capacity-first / stricter filters.
+  - Resource: id=appsvc-plan-b1 | category=appservice | region=westeurope | requested_sku=B1 | billing_model=payg
+    - Catalog used: `catalog/azure_app_service__westeurope__EUR.jsonl` (reason: category='appservice' -> serviceName='Azure App Service' via normalize_service_name; region='westeurope', currency='EUR')
+    - Catalog search results: 210 candidates
+    - score=1 | productName=Azure App Service Basic Plan | skuName=B1 | meterName=B1 App | armSkuName= | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.0649
+    - score=1 | productName=Azure App Service Basic Plan | skuName=B1 | meterName=B1 App | armSkuName= | unitOfMeasure=1 Hour | type=DevTestConsumption | priceType=DevTestConsumption | unitPrice=0.0381
+    - score=1 | productName=Azure App Service Basic Plan - Linux | skuName=B1 | meterName=B1 | armSkuName= | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.0156
+    - score=0 | productName=Azure App Service Isolated v2 Plan | skuName=I5mv2 | meterName=I5mv2 App | armSkuName=App_Service_I5_mv2_windows | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=9.6112
+    - score=0 | productName=Azure App Service Isolated v2 Plan | skuName=I5mv2 | meterName=I5mv2 App | armSkuName=App_Service_I5_mv2_windows | unitOfMeasure=1 Hour | type=Reservation | priceType=Reservation | unitPrice=58672.4324
+    - score=0 | productName=Azure App Service Isolated v2 Plan | skuName=I3 v2 | meterName=I3 v2 App | armSkuName=App_Service_I3_v2_windows | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=1.9719
+    - score=0 | productName=Azure App Service Isolated v2 Plan | skuName=I3 v2 | meterName=I3 v2 App | armSkuName=App_Service_I3_v2_windows | unitOfMeasure=1 Hour | type=Reservation | priceType=Reservation | unitPrice=12211.8919
+    - score=0 | productName=Azure App Service Standard Plan | skuName=S1 | meterName=S1 App | armSkuName= | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.0865
+    - score=0 | productName=Azure App Service Standard Plan | skuName=S1 | meterName=S1 App | armSkuName= | unitOfMeasure=1 Hour | type=DevTestConsumption | priceType=DevTestConsumption | unitPrice=0.0519
+    - score=0 | productName=Azure App Service Isolated v2 Plan | skuName=I3mv2 | meterName=I3mv2 App | armSkuName=App_Service_I3_mv2_windows | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=2.4026
+    - Conclusion: Ambiguous: multiple meters, need capacity-first / stricter filters.
+  - Resource: id=sql-db-basic | category=db.sql | region=westeurope | requested_sku=Basic | billing_model=payg
+    - Catalog used: `catalog/sql_database__westeurope__EUR.jsonl` (reason: category='db.sql' -> serviceName='SQL Database' via normalize_service_name; region='westeurope', currency='EUR')
+    - Catalog search results: 256 candidates
+    - score=1 | productName=SQL Database Elastic Pool - Basic | skuName=400 DTU Pack | meterName=eDTUs | armSkuName= | unitOfMeasure=1/Day | type=Consumption | priceType=Consumption | unitPrice=16.7438
+    - score=1 | productName=SQL Database Single Basic | skuName=B Secondary Active | meterName=B Secondary Active DTU | armSkuName= | unitOfMeasure=1/Day | type=Consumption | priceType=Consumption | unitPrice=0.1392
+    - score=1 | productName=SQL Database Elastic Pool - Basic | skuName=800 DTU Pack | meterName=eDTUs | armSkuName= | unitOfMeasure=1/Day | type=Consumption | priceType=Consumption | unitPrice=33.4876
+    - score=1 | productName=SQL Database Elastic Pool - Basic | skuName=1200 DTU Pack | meterName=eDTUs | armSkuName= | unitOfMeasure=1/Day | type=Consumption | priceType=Consumption | unitPrice=50.2314
+    - score=1 | productName=SQL Database Elastic Pool - Basic | skuName=50 DTU Pack | meterName=eDTUs | armSkuName= | unitOfMeasure=1/Day | type=Consumption | priceType=Consumption | unitPrice=2.093
+    - score=1 | productName=SQL Database Elastic Pool - Basic | skuName=300 DTU Pack | meterName=eDTUs | armSkuName= | unitOfMeasure=1/Day | type=Consumption | priceType=Consumption | unitPrice=12.5578
+    - score=1 | productName=SQL Database Single Basic | skuName=B | meterName=B DTU | armSkuName= | unitOfMeasure=1/Day | type=Consumption | priceType=Consumption | unitPrice=0.1392
+    - score=1 | productName=SQL Database Elastic Pool - Basic | skuName=1600 DTU Pack | meterName=eDTUs | armSkuName= | unitOfMeasure=1/Day | type=Consumption | priceType=Consumption | unitPrice=66.9751
+    - score=1 | productName=SQL Database Elastic Pool - Basic | skuName=100 DTU Pack | meterName=eDTUs | armSkuName= | unitOfMeasure=1/Day | type=Consumption | priceType=Consumption | unitPrice=4.1859
+    - score=1 | productName=SQL Database Elastic Pool - Basic | skuName=200 DTU Pack | meterName=eDTUs | armSkuName= | unitOfMeasure=1/Day | type=Consumption | priceType=Consumption | unitPrice=8.3719
+    - Conclusion: Ambiguous: multiple meters, need capacity-first / stricter filters.
+  - Resource: id=redis-cache-basic-b0 | category=cache.redis | region=westeurope | requested_sku=B0 | billing_model=payg
+    - Catalog used: `catalog/azure_cache_for_redis__westeurope__EUR.jsonl` (reason: category='cache.redis' -> serviceName='Azure Cache for Redis' via normalize_service_name; region='westeurope', currency='EUR')
+    - Catalog search results: 0 candidates
+    - Conclusion: Correct meter is not in catalog (catalog incomplete or mapping wrong).
+  - Resource: id=blob-storage-uploads-co | category=storage.blob | region=westeurope | requested_sku=Standard_LRS | billing_model=payg
+    - Catalog used: `catalog/storage__westeurope__EUR.jsonl` (reason: category='storage.blob' -> serviceName='Storage' via normalize_service_name; region='westeurope', currency='EUR')
+    - Catalog search results: 1478 candidates
+    - score=0 | productName=General Block Blob v2 Hierarchical Namespace | skuName=Cool GRS | meterName=Cool GRS Write Operations | armSkuName= | unitOfMeasure=10K | type=Consumption | priceType=Consumption | unitPrice=0.2249
+    - score=0 | productName=Tables | skuName=Standard ZRS | meterName=Read Operations | armSkuName= | unitOfMeasure=10K | type=Consumption | priceType=Consumption | unitPrice=0.0003
+    - score=0 | productName=Blob Storage | skuName=Hot RA-GRS | meterName=GRS List and Create Container Operations | armSkuName= | unitOfMeasure=10K | type=Consumption | priceType=Consumption | unitPrice=0.0934
+    - score=0 | productName=Azure Data Lake Storage Gen2 Flat Namespace | skuName=Cool RA-GRS | meterName=Cool GRS Write Operations | armSkuName= | unitOfMeasure=10K | type=Consumption | priceType=Consumption | unitPrice=0.173
+    - score=0 | productName=Standard SSD Managed Disks | skuName=Disk Transactions LRS | meterName=Disk Transactions LRS Disk Operations | armSkuName=Disk Transactions | unitOfMeasure=10K | type=Consumption | priceType=Consumption | unitPrice=0.0022
+    - score=0 | productName=Azure Data Lake Storage Gen2 Hierarchical Namespace | skuName=Hot ZRS | meterName=Hot ZRS Index | armSkuName= | unitOfMeasure=1 GB/Month | type=Consumption | priceType=Consumption | unitPrice=0.0303
+    - score=0 | productName=Standard Page Blob v2 | skuName=Standard RA-GZRS | meterName=Disk Data Stored | armSkuName= | unitOfMeasure=1 GB/Month | type=Consumption | priceType=Consumption | unitPrice=0.3284
+    - score=0 | productName=Tables | skuName=Standard ZRS | meterName=List Operations | armSkuName= | unitOfMeasure=10K | type=Consumption | priceType=Consumption | unitPrice=0.0003
+    - score=0 | productName=Premium Block Blob | skuName=Premium LRS | meterName=LRS Early Premium To Cool Tier Down | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.16
+    - score=0 | productName=Files v2 | skuName=Cool GRS | meterName=Cool Data Retrieval | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.0086
+    - Conclusion: Ambiguous: multiple meters, need capacity-first / stricter filters.
+  - Resource: id=public-ip-appsvc-direct | category=network.public_ip | region=westeurope | requested_sku=Basic | billing_model=payg
+    - Catalog used: `catalog/public_ip_addresses__westeurope__EUR.jsonl` (reason: category='network.public_ip' -> serviceName='Public IP Addresses' via normalize_service_name; region='westeurope', currency='EUR')
+    - Catalog search results: 0 candidates
+    - Conclusion: Correct meter is not in catalog (catalog incomplete or mapping wrong).
+  - Resource: id=egress-general-co | category=network.egress | region=westeurope | requested_sku=Standard | billing_model=payg
+    - Catalog used: `catalog/bandwidth__westeurope__EUR.jsonl` (reason: category='network.egress' -> serviceName='Bandwidth' via normalize_service_name; region='westeurope', currency='EUR')
+    - Catalog search results: 14 candidates
+    - score=1 | productName=Bandwidth - Routing Preference: Internet | skuName=Standard | meterName=Standard Data Transfer Out | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.0
+    - score=1 | productName=Rtn Preference: MGN | skuName=Standard | meterName=Standard Data Transfer Out | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.0
+    - score=1 | productName=Rtn Preference: MGN | skuName=Standard | meterName=Standard Inter-Availability Zone Data Transfer Out | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.0086
+    - score=1 | productName=Rtn Preference: MGN | skuName=Standard | meterName=Standard Data Transfer Out - to China | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.0
+    - score=1 | productName=Rtn Preference: MGN | skuName=Standard | meterName=Standard Data Transfer In | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.0
+    - score=1 | productName=Rtn Preference: MGN | skuName=Standard | meterName=Standard Data Transfer In - from China | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.0778
+    - score=1 | productName=Rtn Preference: MGN | skuName=Standard | meterName=Standard Inter-Availability Zone Data Transfer In | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.0086
+    - score=1 | productName=Rtn Preference: MGN | skuName=Standard | meterName=Standard Inter-Region Data Transfer | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.0173
+    - score=0 | productName=Rtn Preference: MGN | skuName=China | meterName=China Data Transfer - 1 to 5 Mbps | armSkuName= | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.0
+    - score=0 | productName=Rtn Preference: MGN | skuName=China | meterName=China Data Transfer - 1 Mbps | armSkuName= | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.0
+    - Conclusion: Ambiguous: multiple meters, need capacity-first / stricter filters.
+  - Resource: id=keyvault-main-co | category=security.keyvault | region=westeurope | requested_sku=standard | billing_model=payg
+    - Catalog used: `catalog/key_vault__westeurope__EUR.jsonl` (reason: category='security.keyvault' -> serviceName='Key Vault' via normalize_service_name; region='westeurope', currency='EUR')
+    - Catalog search results: 14 candidates
+    - score=1 | productName=Key Vault | skuName=Standard | meterName=Advanced Key Operations | armSkuName= | unitOfMeasure=10K | type=Consumption | priceType=Consumption | unitPrice=0.1297
+    - score=1 | productName=Key Vault | skuName=Standard | meterName=Automated Key Rotation | armSkuName= | unitOfMeasure=1 Rotation | type=Consumption | priceType=Consumption | unitPrice=0.8649
+    - score=1 | productName=Key Vault | skuName=Standard | meterName=Secret Renewal | armSkuName= | unitOfMeasure=1 | type=Consumption | priceType=Consumption | unitPrice=0.8649
+    - score=1 | productName=Azure Dedicated HSM | skuName=Standard | meterName=Standard Instance | armSkuName= | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=4.1946
+    - score=1 | productName=Key Vault HSM Pool | skuName=Standard B1 | meterName=Standard B1 Instance | armSkuName= | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=2.7676
+    - score=1 | productName=Key Vault | skuName=Standard | meterName=Operations | armSkuName= | unitOfMeasure=10K | type=Consumption | priceType=Consumption | unitPrice=0.0259
+    - score=1 | productName=Key Vault | skuName=Standard | meterName=Certificate Renewal Request | armSkuName= | unitOfMeasure=1 | type=Consumption | priceType=Consumption | unitPrice=2.5946
+    - score=0 | productName=Key Vault | skuName=Premium | meterName=Automated Key Rotation | armSkuName= | unitOfMeasure=1 Rotation | type=Consumption | priceType=Consumption | unitPrice=0.8649
+    - score=0 | productName=Key Vault | skuName=Premium | meterName=Operations | armSkuName= | unitOfMeasure=10K | type=Consumption | priceType=Consumption | unitPrice=0.0259
+    - score=0 | productName=Key Vault | skuName=Premium | meterName=Premium HSM-protected RSA 2048-bit key | armSkuName= | unitOfMeasure=1 | type=Consumption | priceType=Consumption | unitPrice=0.8649
+    - Conclusion: Ambiguous: multiple meters, need capacity-first / stricter filters.
+  - Resource: id=loganalytics-main-co | category=monitoring.loganalytics | region=westeurope | requested_sku=PerGB2018 | billing_model=payg
+    - Catalog used: `catalog/log_analytics__westeurope__EUR.jsonl` (reason: category='monitoring.loganalytics' -> serviceName='Log Analytics' via normalize_service_name; region='westeurope', currency='EUR')
+    - Catalog search results: 6 candidates
+    - score=0 | productName=Log Analytics | skuName=Analytics Logs | meterName=Analytics Logs Data Retention | armSkuName= | unitOfMeasure=1 GB/Month | type=Consumption | priceType=Consumption | unitPrice=0.1124
+    - score=0 | productName=Log Analytics | skuName=Premium | meterName=Premium Data Analyzed | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=3.027
+    - score=0 | productName=Log Analytics | skuName=Free | meterName=Free Data Analyzed | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.0
+    - score=0 | productName=Log Analytics | skuName=Standard | meterName=Standard Data Analyzed | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=1.9892
+    - score=0 | productName=Log Analytics | skuName=Analytics Logs | meterName=Analytics Logs Data Ingestion | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.0
+    - score=0 | productName=Log Analytics | skuName=Analytics Logs | meterName=Analytics Logs Data Analyzed | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=1.9892
+    - Conclusion: Ambiguous: multiple meters, need capacity-first / stricter filters.
+  - Resource: id=backup-vault-main-co | category=backup.vault | region=westeurope | requested_sku=Standard | billing_model=payg
+    - Catalog used: `catalog/backup__westeurope__EUR.jsonl` (reason: category='backup.vault' -> serviceName='Backup' via normalize_service_name; region='westeurope', currency='EUR')
+    - Catalog search results: 41 candidates
+    - score=1 | productName=Backup Reserved Capacity | skuName=Standard - 100 TB ZRS | meterName=ZRS Data Stored | armSkuName=backup_standard_zrs_data_stored_100tb | unitOfMeasure=1 GB/Month | type=Reservation | priceType=Reservation | unitPrice=26186.3784
+    - score=1 | productName=Backup | skuName=Standard | meterName=LRS Data Stored | armSkuName= | unitOfMeasure=1 GB/Month | type=Consumption | priceType=Consumption | unitPrice=0.0194
+    - score=1 | productName=Backup Reserved Capacity | skuName=Standard - 100 TB LRS | meterName=LRS Data Stored | armSkuName=backup_standard_lrs_data_stored_100tb | unitOfMeasure=1 GB/Month | type=Reservation | priceType=Reservation | unitPrice=20948.7568
+    - score=1 | productName=Backup Reserved Capacity | skuName=Standard - 100 TB RA-GRS | meterName=RA-GRS Data Stored | armSkuName=backup_standard_ra-grs_data_stored_100tb | unitOfMeasure=1 GB/Month | type=Reservation | priceType=Reservation | unitPrice=53213.4054
+    - score=1 | productName=Backup Reserved Capacity | skuName=Standard - 1 PB GRS | meterName=GRS Data Stored | armSkuName=backup_standard_grs_data_stored_1pb | unitOfMeasure=1 GB/Month | type=Reservation | priceType=Reservation | unitPrice=409530.8108
+    - score=1 | productName=Backup Reserved Capacity | skuName=Standard - 1 PB ZRS | meterName=ZRS Data Stored | armSkuName=backup_standard_zrs_data_stored_1pb | unitOfMeasure=1 GB/Month | type=Reservation | priceType=Reservation | unitPrice=255956.7568
+    - score=1 | productName=Backup Reserved Capacity | skuName=Standard - 1 PB LRS | meterName=LRS Data Stored | armSkuName=backup_standard_lrs_data_stored_1pb | unitOfMeasure=1 GB/Month | type=Reservation | priceType=Reservation | unitPrice=204765.4054
+    - score=1 | productName=Backup Reserved Capacity | skuName=Standard - 1 PB RA-GRS | meterName=RA-GRS Data Stored | armSkuName=backup_standard_ra-grs_data_stored_1pb | unitOfMeasure=1 GB/Month | type=Reservation | priceType=Reservation | unitPrice=520140.973
+    - score=1 | productName=Backup | skuName=Standard | meterName=ZRS Data Stored | armSkuName= | unitOfMeasure=1 GB/Month | type=Consumption | priceType=Consumption | unitPrice=0.0242
+    - score=1 | productName=Backup Reserved Capacity | skuName=Standard - 100 TB GRS | meterName=GRS Data Stored | armSkuName=backup_standard_grs_data_stored_100tb | unitOfMeasure=1 GB/Month | type=Reservation | priceType=Reservation | unitPrice=41897.5135
+    - Conclusion: Ambiguous: multiple meters, need capacity-first / stricter filters.
+
+- Scenario: unknown
+  - Resource: id=vnet-main-hp | category=network.vnet | region=westeurope | requested_sku=Virtual Network | billing_model=payg
+    - Catalog used: `catalog/virtual_network__westeurope__EUR.jsonl` (reason: category='network.vnet' -> serviceName='Virtual Network' via normalize_service_name; region='westeurope', currency='EUR')
+    - Catalog search results: 12 candidates
+    - score=2 | productName=Global Virtual Network Peering | skuName=Inter-Region | meterName=Inter-Region Egress | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.0303
+    - score=2 | productName=Global Virtual Network Peering | skuName=Inter-Region | meterName=Inter-Region Ingress | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.0303
+    - score=0 | productName=IP Addresses | skuName=Standard | meterName=Standard IPv4 Static Public IP | armSkuName= | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.0043
+    - score=0 | productName=IP Addresses | skuName=Standard | meterName=Standard IPv4 Static Public IP | armSkuName= | unitOfMeasure=1 Hour | type=DevTestConsumption | priceType=DevTestConsumption | unitPrice=0.0043
+    - score=0 | productName=IP Addresses | skuName=Basic | meterName=Basic IPv4 Dynamic Public IP | armSkuName= | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.0035
+    - score=0 | productName=IP Addresses | skuName=Basic | meterName=Basic IPv4 Dynamic Public IP | armSkuName= | unitOfMeasure=1 Hour | type=DevTestConsumption | priceType=DevTestConsumption | unitPrice=0.0035
+    - score=0 | productName=Public IP Prefix | skuName=Standard | meterName=Standard Static IP Addresses | armSkuName= | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.0052
+    - score=0 | productName=Public IP Prefix | skuName=Global | meterName=Global Static Public IP | armSkuName=Global | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.0104
+    - score=0 | productName=IP Addresses | skuName=Basic | meterName=Basic IPv4 Static Public IP | armSkuName= | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.0031
+    - score=0 | productName=IP Addresses | skuName=Basic | meterName=Basic IPv4 Static Public IP | armSkuName= | unitOfMeasure=1 Hour | type=DevTestConsumption | priceType=DevTestConsumption | unitPrice=0.0031
+    - Conclusion: Ambiguous: multiple meters, need capacity-first / stricter filters.
+  - Resource: id=appsvc-plan-p1v2 | category=appservice | region=westeurope | requested_sku=P1v2 | billing_model=payg
+    - Catalog used: `catalog/azure_app_service__westeurope__EUR.jsonl` (reason: category='appservice' -> serviceName='Azure App Service' via normalize_service_name; region='westeurope', currency='EUR')
+    - Catalog search results: 210 candidates
+    - score=0 | productName=Azure App Service Isolated v2 Plan | skuName=I5mv2 | meterName=I5mv2 App | armSkuName=App_Service_I5_mv2_windows | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=9.6112
+    - score=0 | productName=Azure App Service Isolated v2 Plan | skuName=I5mv2 | meterName=I5mv2 App | armSkuName=App_Service_I5_mv2_windows | unitOfMeasure=1 Hour | type=Reservation | priceType=Reservation | unitPrice=58672.4324
+    - score=0 | productName=Azure App Service Isolated v2 Plan | skuName=I3 v2 | meterName=I3 v2 App | armSkuName=App_Service_I3_v2_windows | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=1.9719
+    - score=0 | productName=Azure App Service Isolated v2 Plan | skuName=I3 v2 | meterName=I3 v2 App | armSkuName=App_Service_I3_v2_windows | unitOfMeasure=1 Hour | type=Reservation | priceType=Reservation | unitPrice=12211.8919
+    - score=0 | productName=Azure App Service Standard Plan | skuName=S1 | meterName=S1 App | armSkuName= | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.0865
+    - score=0 | productName=Azure App Service Standard Plan | skuName=S1 | meterName=S1 App | armSkuName= | unitOfMeasure=1 Hour | type=DevTestConsumption | priceType=DevTestConsumption | unitPrice=0.0519
+    - score=0 | productName=Azure App Service Isolated v2 Plan | skuName=I3mv2 | meterName=I3mv2 App | armSkuName=App_Service_I3_mv2_windows | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=2.4026
+    - score=0 | productName=Azure App Service Isolated v2 Plan | skuName=I3mv2 | meterName=I3mv2 App | armSkuName=App_Service_I3_mv2_windows | unitOfMeasure=1 Hour | type=Reservation | priceType=Reservation | unitPrice=14668.1081
+    - score=0 | productName=Azure App Service Isolated v2 Plan | skuName=I5 v2 | meterName=I5 v2 App | armSkuName=App_Service_I5_v2_windows | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=7.8876
+    - score=0 | productName=Azure App Service Isolated v2 Plan | skuName=I5 v2 | meterName=I5 v2 App | armSkuName=App_Service_I5_v2_windows | unitOfMeasure=1 Hour | type=Reservation | priceType=Reservation | unitPrice=49138.1622
+    - Conclusion: Ambiguous: multiple meters, need capacity-first / stricter filters.
+  - Resource: id=sql-db-s2 | category=db.sql | region=westeurope | requested_sku=S2 | billing_model=payg
+    - Catalog used: `catalog/sql_database__westeurope__EUR.jsonl` (reason: category='db.sql' -> serviceName='SQL Database' via normalize_service_name; region='westeurope', currency='EUR')
+    - Catalog search results: 256 candidates
+    - score=1 | productName=SQL Database Single Premium RS | skuName=PRS2 Secondary Active | meterName=PRS2 Secondary Active DTU | armSkuName= | unitOfMeasure=1/Day | type=Consumption | priceType=Consumption | unitPrice=6.4865
+    - score=1 | productName=SQL Database Single Standard | skuName=S2 Secondary | meterName=S2 Secondary DTUs | armSkuName= | unitOfMeasure=1/Day | type=Consumption | priceType=Consumption | unitPrice=1.5654
+    - score=1 | productName=SQL Database Single Standard | skuName=S2 | meterName=S2 DTUs | armSkuName= | unitOfMeasure=1/Day | type=Consumption | priceType=Consumption | unitPrice=2.093
+    - score=1 | productName=SQL Database Single Standard | skuName=S2 Secondary Active | meterName=S2 Secondary Active DTUs | armSkuName= | unitOfMeasure=1/Day | type=Consumption | priceType=Consumption | unitPrice=2.093
+    - score=1 | productName=SQL Database Single Premium RS | skuName=PRS2 | meterName=PRS2 DTU | armSkuName= | unitOfMeasure=1/Day | type=Consumption | priceType=Consumption | unitPrice=6.4865
+    - score=0 | productName=SQL Database Elastic Pool - Premium | skuName=2000 DTU Pack | meterName=eDTUs | armSkuName= | unitOfMeasure=1/Day | type=Consumption | priceType=Consumption | unitPrice=311.3514
+    - score=0 | productName=SQL Database Single/Elastic Pool General Purpose - Compute Gen5 | skuName=80 vCore | meterName=vCore | armSkuName=SQLDB_GP_Compute_Gen5_80 | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=11.585
+    - score=0 | productName=SQL Database Single/Elastic Pool General Purpose - Compute FSv2 Series | skuName=72 vCore | meterName=vCore | armSkuName= | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=9.1499
+    - score=0 | productName=SQL Database SingleDB/Elastic Pool Hyperscale - Compute Gen5 | skuName=1 vCore | meterName=vCore | armSkuName=SQLDB_HS_Compute_Gen5_1 | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.1738
+    - score=0 | productName=SQL Database Single/Elastic Pool PITR Backup Storage | skuName=Backup RA-GRS | meterName=RA-GRS Data Stored | armSkuName= | unitOfMeasure=1 GB/Month | type=Consumption | priceType=Consumption | unitPrice=0.2058
+    - Conclusion: Ambiguous: multiple meters, need capacity-first / stricter filters.
+  - Resource: id=redis-cache-premium-p1 | category=cache.redis | region=westeurope | requested_sku=P1 | billing_model=payg
+    - Catalog used: `catalog/azure_cache_for_redis__westeurope__EUR.jsonl` (reason: category='cache.redis' -> serviceName='Azure Cache for Redis' via normalize_service_name; region='westeurope', currency='EUR')
+    - Catalog search results: 0 candidates
+    - Conclusion: Correct meter is not in catalog (catalog incomplete or mapping wrong).
+  - Resource: id=blob-storage-uploads-hp | category=storage.blob | region=westeurope | requested_sku=Standard_GZRS | billing_model=payg
+    - Catalog used: `catalog/storage__westeurope__EUR.jsonl` (reason: category='storage.blob' -> serviceName='Storage' via normalize_service_name; region='westeurope', currency='EUR')
+    - Catalog search results: 1478 candidates
+    - score=0 | productName=General Block Blob v2 Hierarchical Namespace | skuName=Cool GRS | meterName=Cool GRS Write Operations | armSkuName= | unitOfMeasure=10K | type=Consumption | priceType=Consumption | unitPrice=0.2249
+    - score=0 | productName=Tables | skuName=Standard ZRS | meterName=Read Operations | armSkuName= | unitOfMeasure=10K | type=Consumption | priceType=Consumption | unitPrice=0.0003
+    - score=0 | productName=Blob Storage | skuName=Hot RA-GRS | meterName=GRS List and Create Container Operations | armSkuName= | unitOfMeasure=10K | type=Consumption | priceType=Consumption | unitPrice=0.0934
+    - score=0 | productName=Azure Data Lake Storage Gen2 Flat Namespace | skuName=Cool RA-GRS | meterName=Cool GRS Write Operations | armSkuName= | unitOfMeasure=10K | type=Consumption | priceType=Consumption | unitPrice=0.173
+    - score=0 | productName=Standard SSD Managed Disks | skuName=Disk Transactions LRS | meterName=Disk Transactions LRS Disk Operations | armSkuName=Disk Transactions | unitOfMeasure=10K | type=Consumption | priceType=Consumption | unitPrice=0.0022
+    - score=0 | productName=Azure Data Lake Storage Gen2 Hierarchical Namespace | skuName=Hot ZRS | meterName=Hot ZRS Index | armSkuName= | unitOfMeasure=1 GB/Month | type=Consumption | priceType=Consumption | unitPrice=0.0303
+    - score=0 | productName=Standard Page Blob v2 | skuName=Standard RA-GZRS | meterName=Disk Data Stored | armSkuName= | unitOfMeasure=1 GB/Month | type=Consumption | priceType=Consumption | unitPrice=0.3284
+    - score=0 | productName=Tables | skuName=Standard ZRS | meterName=List Operations | armSkuName= | unitOfMeasure=10K | type=Consumption | priceType=Consumption | unitPrice=0.0003
+    - score=0 | productName=Premium Block Blob | skuName=Premium LRS | meterName=LRS Early Premium To Cool Tier Down | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.16
+    - score=0 | productName=Files v2 | skuName=Cool GRS | meterName=Cool Data Retrieval | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.0086
+    - Conclusion: Ambiguous: multiple meters, need capacity-first / stricter filters.
+  - Resource: id=appgw-waf-v2-hp | category=network.appgw | region=westeurope | requested_sku=WAF_v2 | billing_model=payg
+    - Catalog used: `catalog/application_gateway__westeurope__EUR.jsonl` (reason: category='network.appgw' -> serviceName='Application Gateway' via normalize_service_name; region='westeurope', currency='EUR')
+    - Catalog search results: 27 candidates
+    - score=0 | productName=Application Gateway WAF v2 - Discounted | skuName=Standard | meterName=Standard Fixed Cost | armSkuName=Standard | unitOfMeasure=1/Hour | type=Consumption | priceType=Consumption | unitPrice=0.2249
+    - score=0 | productName=Application Gateway Basic v2 | skuName=Basic | meterName=Basic Fixed Cost | armSkuName=Basic | unitOfMeasure=1/Hour | type=Consumption | priceType=Consumption | unitPrice=0.0234
+    - score=0 | productName=Application Gateway for Containers | skuName=Standard | meterName=Standard Association | armSkuName= | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.1349
+    - score=0 | productName=WAF Application Gateway | skuName=Large | meterName=Large Gateway | armSkuName= | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.434
+    - score=0 | productName=Application Gateway WAF v2 - Discounted | skuName=Standard | meterName=Standard Capacity Units | armSkuName=Standard | unitOfMeasure=1/Hour | type=Consumption | priceType=Consumption | unitPrice=0.0069
+    - score=0 | productName=Application Gateway for Containers WAF | skuName=Standard | meterName=Standard AGC | armSkuName=Standard | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.0346
+    - score=0 | productName=Application Gateway Standard v2 | skuName=Standard | meterName=Standard Capacity Units | armSkuName= | unitOfMeasure=1/Hour | type=Consumption | priceType=Consumption | unitPrice=0.0069
+    - score=0 | productName=Application Gateway WAF v2 | skuName=Standard | meterName=Standard Captcha Sessions | armSkuName= | unitOfMeasure=1K | type=Consumption | priceType=Consumption | unitPrice=0.3459
+    - score=0 | productName=Application Gateway for Containers WAF | skuName=Standard | meterName=Standard Capacity Units | armSkuName=Standard | unitOfMeasure=1/Hour | type=Consumption | priceType=Consumption | unitPrice=0.0164
+    - score=0 | productName=Application Gateway WAF v2 | skuName=Standard | meterName=Standard Fixed Cost | armSkuName= | unitOfMeasure=1/Hour | type=Consumption | priceType=Consumption | unitPrice=0.4048
+    - Conclusion: Ambiguous: multiple meters, need capacity-first / stricter filters.
+  - Resource: id=public-ip-appgw-hp | category=network.public_ip | region=westeurope | requested_sku=Standard | billing_model=payg
+    - Catalog used: `catalog/public_ip_addresses__westeurope__EUR.jsonl` (reason: category='network.public_ip' -> serviceName='Public IP Addresses' via normalize_service_name; region='westeurope', currency='EUR')
+    - Catalog search results: 0 candidates
+    - Conclusion: Correct meter is not in catalog (catalog incomplete or mapping wrong).
+  - Resource: id=nat-egress-hp | category=network.nat | region=westeurope | requested_sku=Standard | billing_model=payg
+    - Catalog used: `catalog/bandwidth__westeurope__EUR.jsonl` (reason: category='network.nat' -> serviceName='Bandwidth' via normalize_service_name; region='westeurope', currency='EUR')
+    - Catalog search results: 14 candidates
+    - score=1 | productName=Bandwidth - Routing Preference: Internet | skuName=Standard | meterName=Standard Data Transfer Out | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.0
+    - score=1 | productName=Rtn Preference: MGN | skuName=Standard | meterName=Standard Data Transfer Out | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.0
+    - score=1 | productName=Rtn Preference: MGN | skuName=Standard | meterName=Standard Inter-Availability Zone Data Transfer Out | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.0086
+    - score=1 | productName=Rtn Preference: MGN | skuName=Standard | meterName=Standard Data Transfer Out - to China | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.0
+    - score=1 | productName=Rtn Preference: MGN | skuName=Standard | meterName=Standard Data Transfer In | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.0
+    - score=1 | productName=Rtn Preference: MGN | skuName=Standard | meterName=Standard Data Transfer In - from China | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.0778
+    - score=1 | productName=Rtn Preference: MGN | skuName=Standard | meterName=Standard Inter-Availability Zone Data Transfer In | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.0086
+    - score=1 | productName=Rtn Preference: MGN | skuName=Standard | meterName=Standard Inter-Region Data Transfer | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.0173
+    - score=0 | productName=Rtn Preference: MGN | skuName=China | meterName=China Data Transfer - 1 to 5 Mbps | armSkuName= | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.0
+    - score=0 | productName=Rtn Preference: MGN | skuName=China | meterName=China Data Transfer - 1 Mbps | armSkuName= | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.0
+    - Conclusion: Ambiguous: multiple meters, need capacity-first / stricter filters.
+  - Resource: id=keyvault-main-hp | category=security.keyvault | region=westeurope | requested_sku=premium | billing_model=payg
+    - Catalog used: `catalog/key_vault__westeurope__EUR.jsonl` (reason: category='security.keyvault' -> serviceName='Key Vault' via normalize_service_name; region='westeurope', currency='EUR')
+    - Catalog search results: 14 candidates
+    - score=1 | productName=Key Vault | skuName=Premium | meterName=Automated Key Rotation | armSkuName= | unitOfMeasure=1 Rotation | type=Consumption | priceType=Consumption | unitPrice=0.8649
+    - score=1 | productName=Key Vault | skuName=Premium | meterName=Operations | armSkuName= | unitOfMeasure=10K | type=Consumption | priceType=Consumption | unitPrice=0.0259
+    - score=1 | productName=Key Vault | skuName=Premium | meterName=Premium HSM-protected RSA 2048-bit key | armSkuName= | unitOfMeasure=1 | type=Consumption | priceType=Consumption | unitPrice=0.8649
+    - score=1 | productName=Key Vault | skuName=Premium | meterName=Advanced Key Operations | armSkuName= | unitOfMeasure=10K | type=Consumption | priceType=Consumption | unitPrice=0.1297
+    - score=1 | productName=Key Vault | skuName=Premium | meterName=Premium HSM-protected Advanced Key | armSkuName= | unitOfMeasure=1 | type=Consumption | priceType=Consumption | unitPrice=4.3243
+    - score=1 | productName=Key Vault | skuName=Premium | meterName=Certificate Renewal Request | armSkuName= | unitOfMeasure=1 | type=Consumption | priceType=Consumption | unitPrice=2.5946
+    - score=1 | productName=Key Vault | skuName=Premium | meterName=Secret Renewal | armSkuName= | unitOfMeasure=1 | type=Consumption | priceType=Consumption | unitPrice=0.8649
+    - score=0 | productName=Key Vault | skuName=Standard | meterName=Advanced Key Operations | armSkuName= | unitOfMeasure=10K | type=Consumption | priceType=Consumption | unitPrice=0.1297
+    - score=0 | productName=Key Vault | skuName=Standard | meterName=Automated Key Rotation | armSkuName= | unitOfMeasure=1 Rotation | type=Consumption | priceType=Consumption | unitPrice=0.8649
+    - score=0 | productName=Key Vault | skuName=Standard | meterName=Secret Renewal | armSkuName= | unitOfMeasure=1 | type=Consumption | priceType=Consumption | unitPrice=0.8649
+    - Conclusion: Ambiguous: multiple meters, need capacity-first / stricter filters.
+  - Resource: id=loganalytics-main-hp | category=monitoring.loganalytics | region=westeurope | requested_sku=PerGB2018 | billing_model=payg
+    - Catalog used: `catalog/log_analytics__westeurope__EUR.jsonl` (reason: category='monitoring.loganalytics' -> serviceName='Log Analytics' via normalize_service_name; region='westeurope', currency='EUR')
+    - Catalog search results: 6 candidates
+    - score=0 | productName=Log Analytics | skuName=Analytics Logs | meterName=Analytics Logs Data Retention | armSkuName= | unitOfMeasure=1 GB/Month | type=Consumption | priceType=Consumption | unitPrice=0.1124
+    - score=0 | productName=Log Analytics | skuName=Premium | meterName=Premium Data Analyzed | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=3.027
+    - score=0 | productName=Log Analytics | skuName=Free | meterName=Free Data Analyzed | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.0
+    - score=0 | productName=Log Analytics | skuName=Standard | meterName=Standard Data Analyzed | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=1.9892
+    - score=0 | productName=Log Analytics | skuName=Analytics Logs | meterName=Analytics Logs Data Ingestion | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.0
+    - score=0 | productName=Log Analytics | skuName=Analytics Logs | meterName=Analytics Logs Data Analyzed | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=1.9892
+    - Conclusion: Ambiguous: multiple meters, need capacity-first / stricter filters.
+  - Resource: id=backup-vault-main-hp | category=backup.vault | region=westeurope | requested_sku=Standard | billing_model=payg
+    - Catalog used: `catalog/backup__westeurope__EUR.jsonl` (reason: category='backup.vault' -> serviceName='Backup' via normalize_service_name; region='westeurope', currency='EUR')
+    - Catalog search results: 41 candidates
+    - score=1 | productName=Backup Reserved Capacity | skuName=Standard - 100 TB ZRS | meterName=ZRS Data Stored | armSkuName=backup_standard_zrs_data_stored_100tb | unitOfMeasure=1 GB/Month | type=Reservation | priceType=Reservation | unitPrice=26186.3784
+    - score=1 | productName=Backup | skuName=Standard | meterName=LRS Data Stored | armSkuName= | unitOfMeasure=1 GB/Month | type=Consumption | priceType=Consumption | unitPrice=0.0194
+    - score=1 | productName=Backup Reserved Capacity | skuName=Standard - 100 TB LRS | meterName=LRS Data Stored | armSkuName=backup_standard_lrs_data_stored_100tb | unitOfMeasure=1 GB/Month | type=Reservation | priceType=Reservation | unitPrice=20948.7568
+    - score=1 | productName=Backup Reserved Capacity | skuName=Standard - 100 TB RA-GRS | meterName=RA-GRS Data Stored | armSkuName=backup_standard_ra-grs_data_stored_100tb | unitOfMeasure=1 GB/Month | type=Reservation | priceType=Reservation | unitPrice=53213.4054
+    - score=1 | productName=Backup Reserved Capacity | skuName=Standard - 1 PB GRS | meterName=GRS Data Stored | armSkuName=backup_standard_grs_data_stored_1pb | unitOfMeasure=1 GB/Month | type=Reservation | priceType=Reservation | unitPrice=409530.8108
+    - score=1 | productName=Backup Reserved Capacity | skuName=Standard - 1 PB ZRS | meterName=ZRS Data Stored | armSkuName=backup_standard_zrs_data_stored_1pb | unitOfMeasure=1 GB/Month | type=Reservation | priceType=Reservation | unitPrice=255956.7568
+    - score=1 | productName=Backup Reserved Capacity | skuName=Standard - 1 PB LRS | meterName=LRS Data Stored | armSkuName=backup_standard_lrs_data_stored_1pb | unitOfMeasure=1 GB/Month | type=Reservation | priceType=Reservation | unitPrice=204765.4054
+    - score=1 | productName=Backup Reserved Capacity | skuName=Standard - 1 PB RA-GRS | meterName=RA-GRS Data Stored | armSkuName=backup_standard_ra-grs_data_stored_1pb | unitOfMeasure=1 GB/Month | type=Reservation | priceType=Reservation | unitPrice=520140.973
+    - score=1 | productName=Backup | skuName=Standard | meterName=ZRS Data Stored | armSkuName= | unitOfMeasure=1 GB/Month | type=Consumption | priceType=Consumption | unitPrice=0.0242
+    - score=1 | productName=Backup Reserved Capacity | skuName=Standard - 100 TB GRS | meterName=GRS Data Stored | armSkuName=backup_standard_grs_data_stored_100tb | unitOfMeasure=1 GB/Month | type=Reservation | priceType=Reservation | unitPrice=41897.5135
+    - Conclusion: Ambiguous: multiple meters, need capacity-first / stricter filters.
+  - Resource: id=asr-dr-hp | category=dr.asr | region=westeurope | requested_sku=Standard | billing_model=payg
+    - Catalog used: `catalog/azure_site_recovery__westeurope__EUR.jsonl` (reason: category='dr.asr' -> serviceName='Azure Site Recovery' via normalize_service_name; region='westeurope', currency='EUR')
+    - Catalog search results: 2 candidates
+    - score=0 | productName=Azure Site Recovery | skuName=System Center | meterName=VM Replicated to System Center | armSkuName= | unitOfMeasure=1/Month | type=Consumption | priceType=Consumption | unitPrice=13.8378
+    - score=0 | productName=Azure Site Recovery | skuName=Azure | meterName=VM Replicated to Azure | armSkuName= | unitOfMeasure=1/Month | type=Consumption | priceType=Consumption | unitPrice=21.6216
+    - Conclusion: Ambiguous: multiple meters, need capacity-first / stricter filters.
+
+### Run: run2_frontdoor_waf_pe
+- Scenario: unknown
+  - Resource: id=vnet-main | category=network.vnet | region=westeurope | requested_sku=Virtual Network | billing_model=payg
+    - Catalog used: `catalog/virtual_network__westeurope__EUR.jsonl` (reason: category='network.vnet' -> serviceName='Virtual Network' via normalize_service_name; region='westeurope', currency='EUR')
+    - Catalog search results: 12 candidates
+    - score=2 | productName=Global Virtual Network Peering | skuName=Inter-Region | meterName=Inter-Region Egress | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.0303
+    - score=2 | productName=Global Virtual Network Peering | skuName=Inter-Region | meterName=Inter-Region Ingress | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.0303
+    - score=0 | productName=IP Addresses | skuName=Standard | meterName=Standard IPv4 Static Public IP | armSkuName= | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.0043
+    - score=0 | productName=IP Addresses | skuName=Standard | meterName=Standard IPv4 Static Public IP | armSkuName= | unitOfMeasure=1 Hour | type=DevTestConsumption | priceType=DevTestConsumption | unitPrice=0.0043
+    - score=0 | productName=IP Addresses | skuName=Basic | meterName=Basic IPv4 Dynamic Public IP | armSkuName= | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.0035
+    - score=0 | productName=IP Addresses | skuName=Basic | meterName=Basic IPv4 Dynamic Public IP | armSkuName= | unitOfMeasure=1 Hour | type=DevTestConsumption | priceType=DevTestConsumption | unitPrice=0.0035
+    - score=0 | productName=Public IP Prefix | skuName=Standard | meterName=Standard Static IP Addresses | armSkuName= | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.0052
+    - score=0 | productName=Public IP Prefix | skuName=Global | meterName=Global Static Public IP | armSkuName=Global | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.0104
+    - score=0 | productName=IP Addresses | skuName=Basic | meterName=Basic IPv4 Static Public IP | armSkuName= | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.0031
+    - score=0 | productName=IP Addresses | skuName=Basic | meterName=Basic IPv4 Static Public IP | armSkuName= | unitOfMeasure=1 Hour | type=DevTestConsumption | priceType=DevTestConsumption | unitPrice=0.0031
+    - Conclusion: Ambiguous: multiple meters, need capacity-first / stricter filters.
+  - Resource: id=afd-waf | category=network.gateway | region=northeurope | requested_sku=Premium_AzureFrontDoor | billing_model=payg
+    - Catalog used: `catalog/azure_front_door__northeurope__EUR.jsonl` (reason: category='network.gateway' -> serviceName='Azure Front Door' via normalize_service_name; region='northeurope', currency='EUR')
+    - Catalog search results: 0 candidates
+    - Conclusion: Correct meter is not in catalog (catalog incomplete or mapping wrong).
+  - Resource: id=appsvc-plan-prod | category=appservice | region=westeurope | requested_sku=P1v3 | billing_model=payg
+    - Catalog used: `catalog/azure_app_service__westeurope__EUR.jsonl` (reason: category='appservice' -> serviceName='Azure App Service' via normalize_service_name; region='westeurope', currency='EUR')
+    - Catalog search results: 210 candidates
+    - score=0 | productName=Azure App Service Isolated v2 Plan | skuName=I5mv2 | meterName=I5mv2 App | armSkuName=App_Service_I5_mv2_windows | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=9.6112
+    - score=0 | productName=Azure App Service Isolated v2 Plan | skuName=I5mv2 | meterName=I5mv2 App | armSkuName=App_Service_I5_mv2_windows | unitOfMeasure=1 Hour | type=Reservation | priceType=Reservation | unitPrice=58672.4324
+    - score=0 | productName=Azure App Service Isolated v2 Plan | skuName=I3 v2 | meterName=I3 v2 App | armSkuName=App_Service_I3_v2_windows | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=1.9719
+    - score=0 | productName=Azure App Service Isolated v2 Plan | skuName=I3 v2 | meterName=I3 v2 App | armSkuName=App_Service_I3_v2_windows | unitOfMeasure=1 Hour | type=Reservation | priceType=Reservation | unitPrice=12211.8919
+    - score=0 | productName=Azure App Service Standard Plan | skuName=S1 | meterName=S1 App | armSkuName= | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.0865
+    - score=0 | productName=Azure App Service Standard Plan | skuName=S1 | meterName=S1 App | armSkuName= | unitOfMeasure=1 Hour | type=DevTestConsumption | priceType=DevTestConsumption | unitPrice=0.0519
+    - score=0 | productName=Azure App Service Isolated v2 Plan | skuName=I3mv2 | meterName=I3mv2 App | armSkuName=App_Service_I3_mv2_windows | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=2.4026
+    - score=0 | productName=Azure App Service Isolated v2 Plan | skuName=I3mv2 | meterName=I3mv2 App | armSkuName=App_Service_I3_mv2_windows | unitOfMeasure=1 Hour | type=Reservation | priceType=Reservation | unitPrice=14668.1081
+    - score=0 | productName=Azure App Service Isolated v2 Plan | skuName=I5 v2 | meterName=I5 v2 App | armSkuName=App_Service_I5_v2_windows | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=7.8876
+    - score=0 | productName=Azure App Service Isolated v2 Plan | skuName=I5 v2 | meterName=I5 v2 App | armSkuName=App_Service_I5_v2_windows | unitOfMeasure=1 Hour | type=Reservation | priceType=Reservation | unitPrice=49138.1622
+    - Conclusion: Ambiguous: multiple meters, need capacity-first / stricter filters.
+  - Resource: id=appsvc-webapp | category=appservice | region=westeurope | requested_sku= | billing_model=payg
+    - Catalog used: `catalog/azure_app_service__westeurope__EUR.jsonl` (reason: category='appservice' -> serviceName='Azure App Service' via normalize_service_name; region='westeurope', currency='EUR')
+    - Catalog search results: 210 candidates
+    - score=0 | productName=Azure App Service Isolated v2 Plan | skuName=I5mv2 | meterName=I5mv2 App | armSkuName=App_Service_I5_mv2_windows | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=9.6112
+    - score=0 | productName=Azure App Service Isolated v2 Plan | skuName=I5mv2 | meterName=I5mv2 App | armSkuName=App_Service_I5_mv2_windows | unitOfMeasure=1 Hour | type=Reservation | priceType=Reservation | unitPrice=58672.4324
+    - score=0 | productName=Azure App Service Isolated v2 Plan | skuName=I3 v2 | meterName=I3 v2 App | armSkuName=App_Service_I3_v2_windows | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=1.9719
+    - score=0 | productName=Azure App Service Isolated v2 Plan | skuName=I3 v2 | meterName=I3 v2 App | armSkuName=App_Service_I3_v2_windows | unitOfMeasure=1 Hour | type=Reservation | priceType=Reservation | unitPrice=12211.8919
+    - score=0 | productName=Azure App Service Standard Plan | skuName=S1 | meterName=S1 App | armSkuName= | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.0865
+    - score=0 | productName=Azure App Service Standard Plan | skuName=S1 | meterName=S1 App | armSkuName= | unitOfMeasure=1 Hour | type=DevTestConsumption | priceType=DevTestConsumption | unitPrice=0.0519
+    - score=0 | productName=Azure App Service Isolated v2 Plan | skuName=I3mv2 | meterName=I3mv2 App | armSkuName=App_Service_I3_mv2_windows | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=2.4026
+    - score=0 | productName=Azure App Service Isolated v2 Plan | skuName=I3mv2 | meterName=I3mv2 App | armSkuName=App_Service_I3_mv2_windows | unitOfMeasure=1 Hour | type=Reservation | priceType=Reservation | unitPrice=14668.1081
+    - score=0 | productName=Azure App Service Isolated v2 Plan | skuName=I5 v2 | meterName=I5 v2 App | armSkuName=App_Service_I5_v2_windows | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=7.8876
+    - score=0 | productName=Azure App Service Isolated v2 Plan | skuName=I5 v2 | meterName=I5 v2 App | armSkuName=App_Service_I5_v2_windows | unitOfMeasure=1 Hour | type=Reservation | priceType=Reservation | unitPrice=49138.1622
+    - Conclusion: Ambiguous: multiple meters, need capacity-first / stricter filters.
+  - Resource: id=sql-db-prod | category=db.sql | region=westeurope | requested_sku=GP_Gen5_4 | billing_model=1 Year
+    - Catalog used: `catalog/sql_database__westeurope__EUR.jsonl` (reason: category='db.sql' -> serviceName='SQL Database' via normalize_service_name; region='westeurope', currency='EUR')
+    - Catalog search results: 256 candidates
+    - score=1 | productName=SQL Database SingleDB/Elastic Pool Hyperscale - Compute Gen5 | skuName=1 vCore | meterName=vCore | armSkuName=SQLDB_HS_Compute_Gen5_1 | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.1738
+    - score=1 | productName=SQL Database Single/Elastic Pool General Purpose - Compute DC-Series | skuName=1 vCore | meterName=vCore | armSkuName= | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.3425
+    - score=1 | productName=SQL Database Single/Elastic Pool General Purpose - Compute DC-Series | skuName=12 vCore | meterName=vCore | armSkuName=12 vCore | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=4.1098
+    - score=1 | productName=SQL Database Single/Elastic Pool General Purpose - Compute FSv2 Series | skuName=12 vCore | meterName=vCore | armSkuName=12 vCore | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=1.525
+    - score=1 | productName=SQL Database Single/Elastic Pool Business Critical - Compute Gen5 | skuName=18 vCore | meterName=vCore | armSkuName= | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=5.2133
+    - score=1 | productName=SQL Database Single/Elastic Pool General Purpose - Compute FSv2 Series | skuName=10 vCore | meterName=vCore | armSkuName=10 vCore | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=1.2708
+    - score=1 | productName=SQL Database Single Premium | skuName=P1 Secondary Active | meterName=P1 Secondary Active DTU | armSkuName= | unitOfMeasure=1/Day | type=Consumption | priceType=Consumption | unitPrice=12.973
+    - score=1 | productName=SQL Database Single/Elastic Pool Business Critical - Compute Gen5 | skuName=14 vCore | meterName=vCore | armSkuName= | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=4.0548
+    - score=1 | productName=SQL Database Single/Elastic Pool General Purpose - Compute Gen5 | skuName=18 vCore | meterName=vCore | armSkuName=SQLDB_GP_Compute_Gen5_18 | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=2.6066
+    - score=1 | productName=SQL Database Single/Elastic Pool General Purpose - Compute Gen5 | skuName=14 vCore | meterName=vCore | armSkuName=SQLDB_GP_Compute_Gen5_14 | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=2.0274
+    - Conclusion: Ambiguous: multiple meters, need capacity-first / stricter filters.
+  - Resource: id=redis-cache-prod | category=cache.redis | region=westeurope | requested_sku=Standard_C1 | billing_model=payg
+    - Catalog used: `catalog/azure_cache_for_redis__westeurope__EUR.jsonl` (reason: category='cache.redis' -> serviceName='Azure Cache for Redis' via normalize_service_name; region='westeurope', currency='EUR')
+    - Catalog search results: 0 candidates
+    - Conclusion: Correct meter is not in catalog (catalog incomplete or mapping wrong).
+  - Resource: id=blob-storage-prod | category=storage.blob | region=westeurope | requested_sku=Standard_GRS | billing_model=payg
+    - Catalog used: `catalog/storage__westeurope__EUR.jsonl` (reason: category='storage.blob' -> serviceName='Storage' via normalize_service_name; region='westeurope', currency='EUR')
+    - Catalog search results: 1478 candidates
+    - score=0 | productName=General Block Blob v2 Hierarchical Namespace | skuName=Cool GRS | meterName=Cool GRS Write Operations | armSkuName= | unitOfMeasure=10K | type=Consumption | priceType=Consumption | unitPrice=0.2249
+    - score=0 | productName=Tables | skuName=Standard ZRS | meterName=Read Operations | armSkuName= | unitOfMeasure=10K | type=Consumption | priceType=Consumption | unitPrice=0.0003
+    - score=0 | productName=Blob Storage | skuName=Hot RA-GRS | meterName=GRS List and Create Container Operations | armSkuName= | unitOfMeasure=10K | type=Consumption | priceType=Consumption | unitPrice=0.0934
+    - score=0 | productName=Azure Data Lake Storage Gen2 Flat Namespace | skuName=Cool RA-GRS | meterName=Cool GRS Write Operations | armSkuName= | unitOfMeasure=10K | type=Consumption | priceType=Consumption | unitPrice=0.173
+    - score=0 | productName=Standard SSD Managed Disks | skuName=Disk Transactions LRS | meterName=Disk Transactions LRS Disk Operations | armSkuName=Disk Transactions | unitOfMeasure=10K | type=Consumption | priceType=Consumption | unitPrice=0.0022
+    - score=0 | productName=Azure Data Lake Storage Gen2 Hierarchical Namespace | skuName=Hot ZRS | meterName=Hot ZRS Index | armSkuName= | unitOfMeasure=1 GB/Month | type=Consumption | priceType=Consumption | unitPrice=0.0303
+    - score=0 | productName=Standard Page Blob v2 | skuName=Standard RA-GZRS | meterName=Disk Data Stored | armSkuName= | unitOfMeasure=1 GB/Month | type=Consumption | priceType=Consumption | unitPrice=0.3284
+    - score=0 | productName=Tables | skuName=Standard ZRS | meterName=List Operations | armSkuName= | unitOfMeasure=10K | type=Consumption | priceType=Consumption | unitPrice=0.0003
+    - score=0 | productName=Premium Block Blob | skuName=Premium LRS | meterName=LRS Early Premium To Cool Tier Down | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.16
+    - score=0 | productName=Files v2 | skuName=Cool GRS | meterName=Cool Data Retrieval | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.0086
+    - Conclusion: Ambiguous: multiple meters, need capacity-first / stricter filters.
+  - Resource: id=pe-sql | category=network.gateway | region=westeurope | requested_sku= | billing_model=payg
+    - Catalog used: `catalog/azure_front_door__westeurope__EUR.jsonl` (reason: category='network.gateway' -> serviceName='Azure Front Door' via normalize_service_name; region='westeurope', currency='EUR')
+    - Catalog search results: 0 candidates
+    - Conclusion: Correct meter is not in catalog (catalog incomplete or mapping wrong).
+  - Resource: id=pe-blob | category=network.gateway | region=westeurope | requested_sku= | billing_model=payg
+    - Catalog used: `catalog/azure_front_door__westeurope__EUR.jsonl` (reason: category='network.gateway' -> serviceName='Azure Front Door' via normalize_service_name; region='westeurope', currency='EUR')
+    - Catalog search results: 0 candidates
+    - Conclusion: Correct meter is not in catalog (catalog incomplete or mapping wrong).
+  - Resource: id=nat-egress | category=network.nat | region=westeurope | requested_sku=Standard | billing_model=payg
+    - Catalog used: `catalog/bandwidth__westeurope__EUR.jsonl` (reason: category='network.nat' -> serviceName='Bandwidth' via normalize_service_name; region='westeurope', currency='EUR')
+    - Catalog search results: 14 candidates
+    - score=1 | productName=Bandwidth - Routing Preference: Internet | skuName=Standard | meterName=Standard Data Transfer Out | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.0
+    - score=1 | productName=Rtn Preference: MGN | skuName=Standard | meterName=Standard Data Transfer Out | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.0
+    - score=1 | productName=Rtn Preference: MGN | skuName=Standard | meterName=Standard Inter-Availability Zone Data Transfer Out | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.0086
+    - score=1 | productName=Rtn Preference: MGN | skuName=Standard | meterName=Standard Data Transfer Out - to China | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.0
+    - score=1 | productName=Rtn Preference: MGN | skuName=Standard | meterName=Standard Data Transfer In | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.0
+    - score=1 | productName=Rtn Preference: MGN | skuName=Standard | meterName=Standard Data Transfer In - from China | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.0778
+    - score=1 | productName=Rtn Preference: MGN | skuName=Standard | meterName=Standard Inter-Availability Zone Data Transfer In | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.0086
+    - score=1 | productName=Rtn Preference: MGN | skuName=Standard | meterName=Standard Inter-Region Data Transfer | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.0173
+    - score=0 | productName=Rtn Preference: MGN | skuName=China | meterName=China Data Transfer - 1 to 5 Mbps | armSkuName= | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.0
+    - score=0 | productName=Rtn Preference: MGN | skuName=China | meterName=China Data Transfer - 1 Mbps | armSkuName= | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.0
+    - Conclusion: Ambiguous: multiple meters, need capacity-first / stricter filters.
+  - Resource: id=public-ip-nat | category=network.public_ip | region=westeurope | requested_sku=Standard | billing_model=payg
+    - Catalog used: `catalog/public_ip_addresses__westeurope__EUR.jsonl` (reason: category='network.public_ip' -> serviceName='Public IP Addresses' via normalize_service_name; region='westeurope', currency='EUR')
+    - Catalog search results: 0 candidates
+    - Conclusion: Correct meter is not in catalog (catalog incomplete or mapping wrong).
+  - Resource: id=keyvault-prod | category=security.keyvault | region=westeurope | requested_sku=standard | billing_model=payg
+    - Catalog used: `catalog/key_vault__westeurope__EUR.jsonl` (reason: category='security.keyvault' -> serviceName='Key Vault' via normalize_service_name; region='westeurope', currency='EUR')
+    - Catalog search results: 14 candidates
+    - score=1 | productName=Key Vault | skuName=Standard | meterName=Advanced Key Operations | armSkuName= | unitOfMeasure=10K | type=Consumption | priceType=Consumption | unitPrice=0.1297
+    - score=1 | productName=Key Vault | skuName=Standard | meterName=Automated Key Rotation | armSkuName= | unitOfMeasure=1 Rotation | type=Consumption | priceType=Consumption | unitPrice=0.8649
+    - score=1 | productName=Key Vault | skuName=Standard | meterName=Secret Renewal | armSkuName= | unitOfMeasure=1 | type=Consumption | priceType=Consumption | unitPrice=0.8649
+    - score=1 | productName=Azure Dedicated HSM | skuName=Standard | meterName=Standard Instance | armSkuName= | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=4.1946
+    - score=1 | productName=Key Vault HSM Pool | skuName=Standard B1 | meterName=Standard B1 Instance | armSkuName= | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=2.7676
+    - score=1 | productName=Key Vault | skuName=Standard | meterName=Operations | armSkuName= | unitOfMeasure=10K | type=Consumption | priceType=Consumption | unitPrice=0.0259
+    - score=1 | productName=Key Vault | skuName=Standard | meterName=Certificate Renewal Request | armSkuName= | unitOfMeasure=1 | type=Consumption | priceType=Consumption | unitPrice=2.5946
+    - score=0 | productName=Key Vault | skuName=Premium | meterName=Automated Key Rotation | armSkuName= | unitOfMeasure=1 Rotation | type=Consumption | priceType=Consumption | unitPrice=0.8649
+    - score=0 | productName=Key Vault | skuName=Premium | meterName=Operations | armSkuName= | unitOfMeasure=10K | type=Consumption | priceType=Consumption | unitPrice=0.0259
+    - score=0 | productName=Key Vault | skuName=Premium | meterName=Premium HSM-protected RSA 2048-bit key | armSkuName= | unitOfMeasure=1 | type=Consumption | priceType=Consumption | unitPrice=0.8649
+    - Conclusion: Ambiguous: multiple meters, need capacity-first / stricter filters.
+  - Resource: id=loganalytics-prod | category=monitoring.loganalytics | region=westeurope | requested_sku=PerGB2018 | billing_model=payg
+    - Catalog used: `catalog/log_analytics__westeurope__EUR.jsonl` (reason: category='monitoring.loganalytics' -> serviceName='Log Analytics' via normalize_service_name; region='westeurope', currency='EUR')
+    - Catalog search results: 6 candidates
+    - score=0 | productName=Log Analytics | skuName=Analytics Logs | meterName=Analytics Logs Data Retention | armSkuName= | unitOfMeasure=1 GB/Month | type=Consumption | priceType=Consumption | unitPrice=0.1124
+    - score=0 | productName=Log Analytics | skuName=Premium | meterName=Premium Data Analyzed | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=3.027
+    - score=0 | productName=Log Analytics | skuName=Free | meterName=Free Data Analyzed | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.0
+    - score=0 | productName=Log Analytics | skuName=Standard | meterName=Standard Data Analyzed | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=1.9892
+    - score=0 | productName=Log Analytics | skuName=Analytics Logs | meterName=Analytics Logs Data Ingestion | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.0
+    - score=0 | productName=Log Analytics | skuName=Analytics Logs | meterName=Analytics Logs Data Analyzed | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=1.9892
+    - Conclusion: Ambiguous: multiple meters, need capacity-first / stricter filters.
+  - Resource: id=backup-vault-prod | category=backup.vault | region=westeurope | requested_sku=ADLS Gen2 Vaulted | billing_model=payg
+    - Catalog used: `catalog/backup__westeurope__EUR.jsonl` (reason: category='backup.vault' -> serviceName='Backup' via normalize_service_name; region='westeurope', currency='EUR')
+    - Catalog search results: 41 candidates
+    - score=3 | productName=Backup | skuName=ADLS Gen2 Vaulted | meterName=ADLS Gen2 Vaulted RA-GRS Write Operations | armSkuName=ADLS Gen2 Vaulted | unitOfMeasure=10K | type=Consumption | priceType=Consumption | unitPrice=0.0934
+    - score=3 | productName=Backup | skuName=ADLS Gen2 Vaulted | meterName=ADLS Gen2 Vaulted GRS Write Operations | armSkuName=ADLS Gen2 Vaulted | unitOfMeasure=10K | type=Consumption | priceType=Consumption | unitPrice=0.0934
+    - score=3 | productName=Backup | skuName=ADLS Gen2 Vaulted | meterName=ADLS Gen2 Vaulted ZRS Write Operations | armSkuName=ADLS Gen2 Vaulted | unitOfMeasure=10K | type=Consumption | priceType=Consumption | unitPrice=0.0584
+    - score=3 | productName=Backup | skuName=ADLS Gen2 Vaulted | meterName=ADLS Gen2 Vaulted Protected Instances | armSkuName=ADLS Gen2 Vaulted | unitOfMeasure=1/Month | type=Consumption | priceType=Consumption | unitPrice=11.2432
+    - score=3 | productName=Backup | skuName=ADLS Gen2 Vaulted | meterName=ADLS Gen2 Vaulted LRS Write Operations | armSkuName=ADLS Gen2 Vaulted | unitOfMeasure=10K | type=Consumption | priceType=Consumption | unitPrice=0.0467
+    - score=1 | productName=Backup | skuName=Azure Files Vaulted | meterName=ZRS Data Stored | armSkuName=Azure Files Vaulted | unitOfMeasure=1 GB/Month | type=Consumption | priceType=Consumption | unitPrice=0.054
+    - score=1 | productName=Backup | skuName=Azure Files Vaulted | meterName=LRS Data Stored | armSkuName=Azure Files Vaulted | unitOfMeasure=1 GB/Month | type=Consumption | priceType=Consumption | unitPrice=0.0461
+    - score=1 | productName=Backup | skuName=Azure Files Vaulted | meterName=Azure Files Vaulted Protected Instances | armSkuName=Azure Files Vaulted | unitOfMeasure=1/Month | type=Consumption | priceType=Consumption | unitPrice=11.2432
+    - score=1 | productName=Backup | skuName=Azure Files Vaulted | meterName=RA-GRS Data Stored | armSkuName=Azure Files Vaulted | unitOfMeasure=1 GB/Month | type=Consumption | priceType=Consumption | unitPrice=0.1091
+    - score=1 | productName=Backup | skuName=Azure Files Vaulted | meterName=GRS Data Stored | armSkuName=Azure Files Vaulted | unitOfMeasure=1 GB/Month | type=Consumption | priceType=Consumption | unitPrice=0.0854
+    - Conclusion: Ambiguous: multiple meters, need capacity-first / stricter filters.
+
+- Scenario: unknown
+  - Resource: id=vnet-main-co | category=network.vnet | region=westeurope | requested_sku=Virtual Network | billing_model=payg
+    - Catalog used: `catalog/virtual_network__westeurope__EUR.jsonl` (reason: category='network.vnet' -> serviceName='Virtual Network' via normalize_service_name; region='westeurope', currency='EUR')
+    - Catalog search results: 12 candidates
+    - score=2 | productName=Global Virtual Network Peering | skuName=Inter-Region | meterName=Inter-Region Egress | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.0303
+    - score=2 | productName=Global Virtual Network Peering | skuName=Inter-Region | meterName=Inter-Region Ingress | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.0303
+    - score=0 | productName=IP Addresses | skuName=Standard | meterName=Standard IPv4 Static Public IP | armSkuName= | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.0043
+    - score=0 | productName=IP Addresses | skuName=Standard | meterName=Standard IPv4 Static Public IP | armSkuName= | unitOfMeasure=1 Hour | type=DevTestConsumption | priceType=DevTestConsumption | unitPrice=0.0043
+    - score=0 | productName=IP Addresses | skuName=Basic | meterName=Basic IPv4 Dynamic Public IP | armSkuName= | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.0035
+    - score=0 | productName=IP Addresses | skuName=Basic | meterName=Basic IPv4 Dynamic Public IP | armSkuName= | unitOfMeasure=1 Hour | type=DevTestConsumption | priceType=DevTestConsumption | unitPrice=0.0035
+    - score=0 | productName=Public IP Prefix | skuName=Standard | meterName=Standard Static IP Addresses | armSkuName= | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.0052
+    - score=0 | productName=Public IP Prefix | skuName=Global | meterName=Global Static Public IP | armSkuName=Global | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.0104
+    - score=0 | productName=IP Addresses | skuName=Basic | meterName=Basic IPv4 Static Public IP | armSkuName= | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.0031
+    - score=0 | productName=IP Addresses | skuName=Basic | meterName=Basic IPv4 Static Public IP | armSkuName= | unitOfMeasure=1 Hour | type=DevTestConsumption | priceType=DevTestConsumption | unitPrice=0.0031
+    - Conclusion: Ambiguous: multiple meters, need capacity-first / stricter filters.
+  - Resource: id=afd-standard-co | category=network.gateway | region=northeurope | requested_sku=Standard_AzureFrontDoor | billing_model=payg
+    - Catalog used: `catalog/azure_front_door__northeurope__EUR.jsonl` (reason: category='network.gateway' -> serviceName='Azure Front Door' via normalize_service_name; region='northeurope', currency='EUR')
+    - Catalog search results: 0 candidates
+    - Conclusion: Correct meter is not in catalog (catalog incomplete or mapping wrong).
+  - Resource: id=appsvc-plan-co | category=appservice | region=westeurope | requested_sku=S1 | billing_model=payg
+    - Catalog used: `catalog/azure_app_service__westeurope__EUR.jsonl` (reason: category='appservice' -> serviceName='Azure App Service' via normalize_service_name; region='westeurope', currency='EUR')
+    - Catalog search results: 210 candidates
+    - score=1 | productName=Azure App Service Standard Plan | skuName=S1 | meterName=S1 App | armSkuName= | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.0865
+    - score=1 | productName=Azure App Service Standard Plan | skuName=S1 | meterName=S1 App | armSkuName= | unitOfMeasure=1 Hour | type=DevTestConsumption | priceType=DevTestConsumption | unitPrice=0.0519
+    - score=1 | productName=Azure App Service Standard Plan - Linux | skuName=S1 | meterName=S1 App | armSkuName= | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.0822
+    - score=0 | productName=Azure App Service Isolated v2 Plan | skuName=I5mv2 | meterName=I5mv2 App | armSkuName=App_Service_I5_mv2_windows | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=9.6112
+    - score=0 | productName=Azure App Service Isolated v2 Plan | skuName=I5mv2 | meterName=I5mv2 App | armSkuName=App_Service_I5_mv2_windows | unitOfMeasure=1 Hour | type=Reservation | priceType=Reservation | unitPrice=58672.4324
+    - score=0 | productName=Azure App Service Isolated v2 Plan | skuName=I3 v2 | meterName=I3 v2 App | armSkuName=App_Service_I3_v2_windows | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=1.9719
+    - score=0 | productName=Azure App Service Isolated v2 Plan | skuName=I3 v2 | meterName=I3 v2 App | armSkuName=App_Service_I3_v2_windows | unitOfMeasure=1 Hour | type=Reservation | priceType=Reservation | unitPrice=12211.8919
+    - score=0 | productName=Azure App Service Isolated v2 Plan | skuName=I3mv2 | meterName=I3mv2 App | armSkuName=App_Service_I3_mv2_windows | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=2.4026
+    - score=0 | productName=Azure App Service Isolated v2 Plan | skuName=I3mv2 | meterName=I3mv2 App | armSkuName=App_Service_I3_mv2_windows | unitOfMeasure=1 Hour | type=Reservation | priceType=Reservation | unitPrice=14668.1081
+    - score=0 | productName=Azure App Service Isolated v2 Plan | skuName=I5 v2 | meterName=I5 v2 App | armSkuName=App_Service_I5_v2_windows | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=7.8876
+    - Conclusion: Ambiguous: multiple meters, need capacity-first / stricter filters.
+  - Resource: id=appsvc-webapp-co | category=appservice | region=westeurope | requested_sku= | billing_model=payg
+    - Catalog used: `catalog/azure_app_service__westeurope__EUR.jsonl` (reason: category='appservice' -> serviceName='Azure App Service' via normalize_service_name; region='westeurope', currency='EUR')
+    - Catalog search results: 210 candidates
+    - score=0 | productName=Azure App Service Isolated v2 Plan | skuName=I5mv2 | meterName=I5mv2 App | armSkuName=App_Service_I5_mv2_windows | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=9.6112
+    - score=0 | productName=Azure App Service Isolated v2 Plan | skuName=I5mv2 | meterName=I5mv2 App | armSkuName=App_Service_I5_mv2_windows | unitOfMeasure=1 Hour | type=Reservation | priceType=Reservation | unitPrice=58672.4324
+    - score=0 | productName=Azure App Service Isolated v2 Plan | skuName=I3 v2 | meterName=I3 v2 App | armSkuName=App_Service_I3_v2_windows | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=1.9719
+    - score=0 | productName=Azure App Service Isolated v2 Plan | skuName=I3 v2 | meterName=I3 v2 App | armSkuName=App_Service_I3_v2_windows | unitOfMeasure=1 Hour | type=Reservation | priceType=Reservation | unitPrice=12211.8919
+    - score=0 | productName=Azure App Service Standard Plan | skuName=S1 | meterName=S1 App | armSkuName= | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.0865
+    - score=0 | productName=Azure App Service Standard Plan | skuName=S1 | meterName=S1 App | armSkuName= | unitOfMeasure=1 Hour | type=DevTestConsumption | priceType=DevTestConsumption | unitPrice=0.0519
+    - score=0 | productName=Azure App Service Isolated v2 Plan | skuName=I3mv2 | meterName=I3mv2 App | armSkuName=App_Service_I3_mv2_windows | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=2.4026
+    - score=0 | productName=Azure App Service Isolated v2 Plan | skuName=I3mv2 | meterName=I3mv2 App | armSkuName=App_Service_I3_mv2_windows | unitOfMeasure=1 Hour | type=Reservation | priceType=Reservation | unitPrice=14668.1081
+    - score=0 | productName=Azure App Service Isolated v2 Plan | skuName=I5 v2 | meterName=I5 v2 App | armSkuName=App_Service_I5_v2_windows | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=7.8876
+    - score=0 | productName=Azure App Service Isolated v2 Plan | skuName=I5 v2 | meterName=I5 v2 App | armSkuName=App_Service_I5_v2_windows | unitOfMeasure=1 Hour | type=Reservation | priceType=Reservation | unitPrice=49138.1622
+    - Conclusion: Ambiguous: multiple meters, need capacity-first / stricter filters.
+  - Resource: id=sql-db-co | category=db.sql | region=westeurope | requested_sku=GP_Gen5_2 | billing_model=1 Year
+    - Catalog used: `catalog/sql_database__westeurope__EUR.jsonl` (reason: category='db.sql' -> serviceName='SQL Database' via normalize_service_name; region='westeurope', currency='EUR')
+    - Catalog search results: 256 candidates
+    - score=1 | productName=SQL Database SingleDB/Elastic Pool Hyperscale - Compute Gen5 | skuName=1 vCore | meterName=vCore | armSkuName=SQLDB_HS_Compute_Gen5_1 | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.1738
+    - score=1 | productName=SQL Database Single/Elastic Pool General Purpose - Compute DC-Series | skuName=1 vCore | meterName=vCore | armSkuName= | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.3425
+    - score=1 | productName=SQL Database Single/Elastic Pool General Purpose - Compute DC-Series | skuName=12 vCore | meterName=vCore | armSkuName=12 vCore | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=4.1098
+    - score=1 | productName=SQL Database Single/Elastic Pool General Purpose - Compute FSv2 Series | skuName=12 vCore | meterName=vCore | armSkuName=12 vCore | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=1.525
+    - score=1 | productName=SQL Database Single/Elastic Pool Business Critical - Compute Gen5 | skuName=18 vCore | meterName=vCore | armSkuName= | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=5.2133
+    - score=1 | productName=SQL Database Single/Elastic Pool General Purpose - Compute FSv2 Series | skuName=10 vCore | meterName=vCore | armSkuName=10 vCore | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=1.2708
+    - score=1 | productName=SQL Database Single Premium | skuName=P1 Secondary Active | meterName=P1 Secondary Active DTU | armSkuName= | unitOfMeasure=1/Day | type=Consumption | priceType=Consumption | unitPrice=12.973
+    - score=1 | productName=SQL Database Single/Elastic Pool Business Critical - Compute Gen5 | skuName=14 vCore | meterName=vCore | armSkuName= | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=4.0548
+    - score=1 | productName=SQL Database Single/Elastic Pool General Purpose - Compute Gen5 | skuName=18 vCore | meterName=vCore | armSkuName=SQLDB_GP_Compute_Gen5_18 | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=2.6066
+    - score=1 | productName=SQL Database Single/Elastic Pool General Purpose - Compute Gen5 | skuName=14 vCore | meterName=vCore | armSkuName=SQLDB_GP_Compute_Gen5_14 | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=2.0274
+    - Conclusion: Ambiguous: multiple meters, need capacity-first / stricter filters.
+  - Resource: id=redis-cache-co | category=cache.redis | region=westeurope | requested_sku=Basic_C0 | billing_model=payg
+    - Catalog used: `catalog/azure_cache_for_redis__westeurope__EUR.jsonl` (reason: category='cache.redis' -> serviceName='Azure Cache for Redis' via normalize_service_name; region='westeurope', currency='EUR')
+    - Catalog search results: 0 candidates
+    - Conclusion: Correct meter is not in catalog (catalog incomplete or mapping wrong).
+  - Resource: id=blob-storage-co | category=storage.blob | region=westeurope | requested_sku=Standard_LRS | billing_model=payg
+    - Catalog used: `catalog/storage__westeurope__EUR.jsonl` (reason: category='storage.blob' -> serviceName='Storage' via normalize_service_name; region='westeurope', currency='EUR')
+    - Catalog search results: 1478 candidates
+    - score=0 | productName=General Block Blob v2 Hierarchical Namespace | skuName=Cool GRS | meterName=Cool GRS Write Operations | armSkuName= | unitOfMeasure=10K | type=Consumption | priceType=Consumption | unitPrice=0.2249
+    - score=0 | productName=Tables | skuName=Standard ZRS | meterName=Read Operations | armSkuName= | unitOfMeasure=10K | type=Consumption | priceType=Consumption | unitPrice=0.0003
+    - score=0 | productName=Blob Storage | skuName=Hot RA-GRS | meterName=GRS List and Create Container Operations | armSkuName= | unitOfMeasure=10K | type=Consumption | priceType=Consumption | unitPrice=0.0934
+    - score=0 | productName=Azure Data Lake Storage Gen2 Flat Namespace | skuName=Cool RA-GRS | meterName=Cool GRS Write Operations | armSkuName= | unitOfMeasure=10K | type=Consumption | priceType=Consumption | unitPrice=0.173
+    - score=0 | productName=Standard SSD Managed Disks | skuName=Disk Transactions LRS | meterName=Disk Transactions LRS Disk Operations | armSkuName=Disk Transactions | unitOfMeasure=10K | type=Consumption | priceType=Consumption | unitPrice=0.0022
+    - score=0 | productName=Azure Data Lake Storage Gen2 Hierarchical Namespace | skuName=Hot ZRS | meterName=Hot ZRS Index | armSkuName= | unitOfMeasure=1 GB/Month | type=Consumption | priceType=Consumption | unitPrice=0.0303
+    - score=0 | productName=Standard Page Blob v2 | skuName=Standard RA-GZRS | meterName=Disk Data Stored | armSkuName= | unitOfMeasure=1 GB/Month | type=Consumption | priceType=Consumption | unitPrice=0.3284
+    - score=0 | productName=Tables | skuName=Standard ZRS | meterName=List Operations | armSkuName= | unitOfMeasure=10K | type=Consumption | priceType=Consumption | unitPrice=0.0003
+    - score=0 | productName=Premium Block Blob | skuName=Premium LRS | meterName=LRS Early Premium To Cool Tier Down | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.16
+    - score=0 | productName=Files v2 | skuName=Cool GRS | meterName=Cool Data Retrieval | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.0086
+    - Conclusion: Ambiguous: multiple meters, need capacity-first / stricter filters.
+  - Resource: id=pe-sql-co | category=network.gateway | region=westeurope | requested_sku= | billing_model=payg
+    - Catalog used: `catalog/azure_front_door__westeurope__EUR.jsonl` (reason: category='network.gateway' -> serviceName='Azure Front Door' via normalize_service_name; region='westeurope', currency='EUR')
+    - Catalog search results: 0 candidates
+    - Conclusion: Correct meter is not in catalog (catalog incomplete or mapping wrong).
+  - Resource: id=pe-blob-co | category=network.gateway | region=westeurope | requested_sku= | billing_model=payg
+    - Catalog used: `catalog/azure_front_door__westeurope__EUR.jsonl` (reason: category='network.gateway' -> serviceName='Azure Front Door' via normalize_service_name; region='westeurope', currency='EUR')
+    - Catalog search results: 0 candidates
+    - Conclusion: Correct meter is not in catalog (catalog incomplete or mapping wrong).
+  - Resource: id=nat-egress-co | category=network.nat | region=westeurope | requested_sku=Standard | billing_model=payg
+    - Catalog used: `catalog/bandwidth__westeurope__EUR.jsonl` (reason: category='network.nat' -> serviceName='Bandwidth' via normalize_service_name; region='westeurope', currency='EUR')
+    - Catalog search results: 14 candidates
+    - score=1 | productName=Bandwidth - Routing Preference: Internet | skuName=Standard | meterName=Standard Data Transfer Out | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.0
+    - score=1 | productName=Rtn Preference: MGN | skuName=Standard | meterName=Standard Data Transfer Out | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.0
+    - score=1 | productName=Rtn Preference: MGN | skuName=Standard | meterName=Standard Inter-Availability Zone Data Transfer Out | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.0086
+    - score=1 | productName=Rtn Preference: MGN | skuName=Standard | meterName=Standard Data Transfer Out - to China | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.0
+    - score=1 | productName=Rtn Preference: MGN | skuName=Standard | meterName=Standard Data Transfer In | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.0
+    - score=1 | productName=Rtn Preference: MGN | skuName=Standard | meterName=Standard Data Transfer In - from China | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.0778
+    - score=1 | productName=Rtn Preference: MGN | skuName=Standard | meterName=Standard Inter-Availability Zone Data Transfer In | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.0086
+    - score=1 | productName=Rtn Preference: MGN | skuName=Standard | meterName=Standard Inter-Region Data Transfer | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.0173
+    - score=0 | productName=Rtn Preference: MGN | skuName=China | meterName=China Data Transfer - 1 to 5 Mbps | armSkuName= | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.0
+    - score=0 | productName=Rtn Preference: MGN | skuName=China | meterName=China Data Transfer - 1 Mbps | armSkuName= | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.0
+    - Conclusion: Ambiguous: multiple meters, need capacity-first / stricter filters.
+  - Resource: id=public-ip-nat-co | category=network.public_ip | region=westeurope | requested_sku=Standard | billing_model=payg
+    - Catalog used: `catalog/public_ip_addresses__westeurope__EUR.jsonl` (reason: category='network.public_ip' -> serviceName='Public IP Addresses' via normalize_service_name; region='westeurope', currency='EUR')
+    - Catalog search results: 0 candidates
+    - Conclusion: Correct meter is not in catalog (catalog incomplete or mapping wrong).
+  - Resource: id=keyvault-co | category=security.keyvault | region=westeurope | requested_sku=standard | billing_model=payg
+    - Catalog used: `catalog/key_vault__westeurope__EUR.jsonl` (reason: category='security.keyvault' -> serviceName='Key Vault' via normalize_service_name; region='westeurope', currency='EUR')
+    - Catalog search results: 14 candidates
+    - score=1 | productName=Key Vault | skuName=Standard | meterName=Advanced Key Operations | armSkuName= | unitOfMeasure=10K | type=Consumption | priceType=Consumption | unitPrice=0.1297
+    - score=1 | productName=Key Vault | skuName=Standard | meterName=Automated Key Rotation | armSkuName= | unitOfMeasure=1 Rotation | type=Consumption | priceType=Consumption | unitPrice=0.8649
+    - score=1 | productName=Key Vault | skuName=Standard | meterName=Secret Renewal | armSkuName= | unitOfMeasure=1 | type=Consumption | priceType=Consumption | unitPrice=0.8649
+    - score=1 | productName=Azure Dedicated HSM | skuName=Standard | meterName=Standard Instance | armSkuName= | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=4.1946
+    - score=1 | productName=Key Vault HSM Pool | skuName=Standard B1 | meterName=Standard B1 Instance | armSkuName= | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=2.7676
+    - score=1 | productName=Key Vault | skuName=Standard | meterName=Operations | armSkuName= | unitOfMeasure=10K | type=Consumption | priceType=Consumption | unitPrice=0.0259
+    - score=1 | productName=Key Vault | skuName=Standard | meterName=Certificate Renewal Request | armSkuName= | unitOfMeasure=1 | type=Consumption | priceType=Consumption | unitPrice=2.5946
+    - score=0 | productName=Key Vault | skuName=Premium | meterName=Automated Key Rotation | armSkuName= | unitOfMeasure=1 Rotation | type=Consumption | priceType=Consumption | unitPrice=0.8649
+    - score=0 | productName=Key Vault | skuName=Premium | meterName=Operations | armSkuName= | unitOfMeasure=10K | type=Consumption | priceType=Consumption | unitPrice=0.0259
+    - score=0 | productName=Key Vault | skuName=Premium | meterName=Premium HSM-protected RSA 2048-bit key | armSkuName= | unitOfMeasure=1 | type=Consumption | priceType=Consumption | unitPrice=0.8649
+    - Conclusion: Ambiguous: multiple meters, need capacity-first / stricter filters.
+  - Resource: id=loganalytics-co | category=monitoring.loganalytics | region=westeurope | requested_sku=PerGB2018 | billing_model=payg
+    - Catalog used: `catalog/log_analytics__westeurope__EUR.jsonl` (reason: category='monitoring.loganalytics' -> serviceName='Log Analytics' via normalize_service_name; region='westeurope', currency='EUR')
+    - Catalog search results: 6 candidates
+    - score=0 | productName=Log Analytics | skuName=Analytics Logs | meterName=Analytics Logs Data Retention | armSkuName= | unitOfMeasure=1 GB/Month | type=Consumption | priceType=Consumption | unitPrice=0.1124
+    - score=0 | productName=Log Analytics | skuName=Premium | meterName=Premium Data Analyzed | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=3.027
+    - score=0 | productName=Log Analytics | skuName=Free | meterName=Free Data Analyzed | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.0
+    - score=0 | productName=Log Analytics | skuName=Standard | meterName=Standard Data Analyzed | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=1.9892
+    - score=0 | productName=Log Analytics | skuName=Analytics Logs | meterName=Analytics Logs Data Ingestion | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.0
+    - score=0 | productName=Log Analytics | skuName=Analytics Logs | meterName=Analytics Logs Data Analyzed | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=1.9892
+    - Conclusion: Ambiguous: multiple meters, need capacity-first / stricter filters.
+  - Resource: id=backup-vault-co | category=backup.vault | region=westeurope | requested_sku=ADLS Gen2 Vaulted | billing_model=payg
+    - Catalog used: `catalog/backup__westeurope__EUR.jsonl` (reason: category='backup.vault' -> serviceName='Backup' via normalize_service_name; region='westeurope', currency='EUR')
+    - Catalog search results: 41 candidates
+    - score=3 | productName=Backup | skuName=ADLS Gen2 Vaulted | meterName=ADLS Gen2 Vaulted RA-GRS Write Operations | armSkuName=ADLS Gen2 Vaulted | unitOfMeasure=10K | type=Consumption | priceType=Consumption | unitPrice=0.0934
+    - score=3 | productName=Backup | skuName=ADLS Gen2 Vaulted | meterName=ADLS Gen2 Vaulted GRS Write Operations | armSkuName=ADLS Gen2 Vaulted | unitOfMeasure=10K | type=Consumption | priceType=Consumption | unitPrice=0.0934
+    - score=3 | productName=Backup | skuName=ADLS Gen2 Vaulted | meterName=ADLS Gen2 Vaulted ZRS Write Operations | armSkuName=ADLS Gen2 Vaulted | unitOfMeasure=10K | type=Consumption | priceType=Consumption | unitPrice=0.0584
+    - score=3 | productName=Backup | skuName=ADLS Gen2 Vaulted | meterName=ADLS Gen2 Vaulted Protected Instances | armSkuName=ADLS Gen2 Vaulted | unitOfMeasure=1/Month | type=Consumption | priceType=Consumption | unitPrice=11.2432
+    - score=3 | productName=Backup | skuName=ADLS Gen2 Vaulted | meterName=ADLS Gen2 Vaulted LRS Write Operations | armSkuName=ADLS Gen2 Vaulted | unitOfMeasure=10K | type=Consumption | priceType=Consumption | unitPrice=0.0467
+    - score=1 | productName=Backup | skuName=Azure Files Vaulted | meterName=ZRS Data Stored | armSkuName=Azure Files Vaulted | unitOfMeasure=1 GB/Month | type=Consumption | priceType=Consumption | unitPrice=0.054
+    - score=1 | productName=Backup | skuName=Azure Files Vaulted | meterName=LRS Data Stored | armSkuName=Azure Files Vaulted | unitOfMeasure=1 GB/Month | type=Consumption | priceType=Consumption | unitPrice=0.0461
+    - score=1 | productName=Backup | skuName=Azure Files Vaulted | meterName=Azure Files Vaulted Protected Instances | armSkuName=Azure Files Vaulted | unitOfMeasure=1/Month | type=Consumption | priceType=Consumption | unitPrice=11.2432
+    - score=1 | productName=Backup | skuName=Azure Files Vaulted | meterName=RA-GRS Data Stored | armSkuName=Azure Files Vaulted | unitOfMeasure=1 GB/Month | type=Consumption | priceType=Consumption | unitPrice=0.1091
+    - score=1 | productName=Backup | skuName=Azure Files Vaulted | meterName=GRS Data Stored | armSkuName=Azure Files Vaulted | unitOfMeasure=1 GB/Month | type=Consumption | priceType=Consumption | unitPrice=0.0854
+    - Conclusion: Ambiguous: multiple meters, need capacity-first / stricter filters.
+
+- Scenario: unknown
+  - Resource: id=vnet-main-hp | category=network.vnet | region=westeurope | requested_sku=Virtual Network | billing_model=payg
+    - Catalog used: `catalog/virtual_network__westeurope__EUR.jsonl` (reason: category='network.vnet' -> serviceName='Virtual Network' via normalize_service_name; region='westeurope', currency='EUR')
+    - Catalog search results: 12 candidates
+    - score=2 | productName=Global Virtual Network Peering | skuName=Inter-Region | meterName=Inter-Region Egress | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.0303
+    - score=2 | productName=Global Virtual Network Peering | skuName=Inter-Region | meterName=Inter-Region Ingress | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.0303
+    - score=0 | productName=IP Addresses | skuName=Standard | meterName=Standard IPv4 Static Public IP | armSkuName= | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.0043
+    - score=0 | productName=IP Addresses | skuName=Standard | meterName=Standard IPv4 Static Public IP | armSkuName= | unitOfMeasure=1 Hour | type=DevTestConsumption | priceType=DevTestConsumption | unitPrice=0.0043
+    - score=0 | productName=IP Addresses | skuName=Basic | meterName=Basic IPv4 Dynamic Public IP | armSkuName= | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.0035
+    - score=0 | productName=IP Addresses | skuName=Basic | meterName=Basic IPv4 Dynamic Public IP | armSkuName= | unitOfMeasure=1 Hour | type=DevTestConsumption | priceType=DevTestConsumption | unitPrice=0.0035
+    - score=0 | productName=Public IP Prefix | skuName=Standard | meterName=Standard Static IP Addresses | armSkuName= | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.0052
+    - score=0 | productName=Public IP Prefix | skuName=Global | meterName=Global Static Public IP | armSkuName=Global | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.0104
+    - score=0 | productName=IP Addresses | skuName=Basic | meterName=Basic IPv4 Static Public IP | armSkuName= | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.0031
+    - score=0 | productName=IP Addresses | skuName=Basic | meterName=Basic IPv4 Static Public IP | armSkuName= | unitOfMeasure=1 Hour | type=DevTestConsumption | priceType=DevTestConsumption | unitPrice=0.0031
+    - Conclusion: Ambiguous: multiple meters, need capacity-first / stricter filters.
+  - Resource: id=afd-premium-hp | category=network.gateway | region=northeurope | requested_sku=Premium_AzureFrontDoor | billing_model=payg
+    - Catalog used: `catalog/azure_front_door__northeurope__EUR.jsonl` (reason: category='network.gateway' -> serviceName='Azure Front Door' via normalize_service_name; region='northeurope', currency='EUR')
+    - Catalog search results: 0 candidates
+    - Conclusion: Correct meter is not in catalog (catalog incomplete or mapping wrong).
+  - Resource: id=appsvc-plan-hp | category=appservice | region=westeurope | requested_sku=P2v3 | billing_model=1 Year
+    - Catalog used: `catalog/azure_app_service__westeurope__EUR.jsonl` (reason: category='appservice' -> serviceName='Azure App Service' via normalize_service_name; region='westeurope', currency='EUR')
+    - Catalog search results: 210 candidates
+    - score=1 | productName=Azure App Service Standard Plan | skuName=S1 | meterName=S1 App | armSkuName= | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.0865
+    - score=1 | productName=Azure App Service Standard Plan | skuName=S1 | meterName=S1 App | armSkuName= | unitOfMeasure=1 Hour | type=DevTestConsumption | priceType=DevTestConsumption | unitPrice=0.0519
+    - score=1 | productName=Azure App Service Isolated Plan - Linux | skuName=I12 | meterName=I12 App | armSkuName=I12 | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=1.1537
+    - score=1 | productName=Azure App Service Isolated Plan | skuName=I13 | meterName=I13 App | armSkuName=I13 | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=2.4225
+    - score=1 | productName=Azure App Service Isolated v2 Plan | skuName=I1 v2 | meterName=I1 v2 App | armSkuName=App_Service_I1_v2_windows | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.493
+    - score=1 | productName=Azure App Service Isolated v2 Plan | skuName=I1 v2 | meterName=I1 v2 App | armSkuName=App_Service_I1_v2_windows | unitOfMeasure=1 Hour | type=Reservation | priceType=Reservation | unitPrice=3052.973
+    - score=1 | productName=Azure App Service Free Plan | skuName=F1 | meterName=F1 App | armSkuName= | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.0
+    - score=1 | productName=Azure App Service Premium v3 Plan | skuName=P1mv3 | meterName=P1mv3 App | armSkuName=Standard_P1_mv3_Windows | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.3231
+    - score=1 | productName=Azure App Service Premium v3 Plan | skuName=P1mv3 | meterName=P1mv3 App | armSkuName=Standard_P1_mv3_Windows | unitOfMeasure=1 Hour | type=DevTestConsumption | priceType=DevTestConsumption | unitPrice=0.1159
+    - score=1 | productName=Azure App Service Premium v3 Plan | skuName=P1mv3 | meterName=P1mv3 App | armSkuName=Standard_P1_mv3_Windows | unitOfMeasure=1 Hour | type=Reservation | priceType=Reservation | unitPrice=2083.4595
+    - Conclusion: Ambiguous: multiple meters, need capacity-first / stricter filters.
+  - Resource: id=appsvc-webapp-hp | category=appservice | region=westeurope | requested_sku= | billing_model=payg
+    - Catalog used: `catalog/azure_app_service__westeurope__EUR.jsonl` (reason: category='appservice' -> serviceName='Azure App Service' via normalize_service_name; region='westeurope', currency='EUR')
+    - Catalog search results: 210 candidates
+    - score=0 | productName=Azure App Service Isolated v2 Plan | skuName=I5mv2 | meterName=I5mv2 App | armSkuName=App_Service_I5_mv2_windows | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=9.6112
+    - score=0 | productName=Azure App Service Isolated v2 Plan | skuName=I5mv2 | meterName=I5mv2 App | armSkuName=App_Service_I5_mv2_windows | unitOfMeasure=1 Hour | type=Reservation | priceType=Reservation | unitPrice=58672.4324
+    - score=0 | productName=Azure App Service Isolated v2 Plan | skuName=I3 v2 | meterName=I3 v2 App | armSkuName=App_Service_I3_v2_windows | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=1.9719
+    - score=0 | productName=Azure App Service Isolated v2 Plan | skuName=I3 v2 | meterName=I3 v2 App | armSkuName=App_Service_I3_v2_windows | unitOfMeasure=1 Hour | type=Reservation | priceType=Reservation | unitPrice=12211.8919
+    - score=0 | productName=Azure App Service Standard Plan | skuName=S1 | meterName=S1 App | armSkuName= | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.0865
+    - score=0 | productName=Azure App Service Standard Plan | skuName=S1 | meterName=S1 App | armSkuName= | unitOfMeasure=1 Hour | type=DevTestConsumption | priceType=DevTestConsumption | unitPrice=0.0519
+    - score=0 | productName=Azure App Service Isolated v2 Plan | skuName=I3mv2 | meterName=I3mv2 App | armSkuName=App_Service_I3_mv2_windows | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=2.4026
+    - score=0 | productName=Azure App Service Isolated v2 Plan | skuName=I3mv2 | meterName=I3mv2 App | armSkuName=App_Service_I3_mv2_windows | unitOfMeasure=1 Hour | type=Reservation | priceType=Reservation | unitPrice=14668.1081
+    - score=0 | productName=Azure App Service Isolated v2 Plan | skuName=I5 v2 | meterName=I5 v2 App | armSkuName=App_Service_I5_v2_windows | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=7.8876
+    - score=0 | productName=Azure App Service Isolated v2 Plan | skuName=I5 v2 | meterName=I5 v2 App | armSkuName=App_Service_I5_v2_windows | unitOfMeasure=1 Hour | type=Reservation | priceType=Reservation | unitPrice=49138.1622
+    - Conclusion: Ambiguous: multiple meters, need capacity-first / stricter filters.
+  - Resource: id=sql-db-hp | category=db.sql | region=westeurope | requested_sku=HS_Gen5_8 | billing_model=1 Year
+    - Catalog used: `catalog/sql_database__westeurope__EUR.jsonl` (reason: category='db.sql' -> serviceName='SQL Database' via normalize_service_name; region='westeurope', currency='EUR')
+    - Catalog search results: 256 candidates
+    - score=1 | productName=SQL Database SingleDB/Elastic Pool Hyperscale - Compute Gen5 | skuName=1 vCore | meterName=vCore | armSkuName=SQLDB_HS_Compute_Gen5_1 | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.1738
+    - score=1 | productName=SQL Database Single/Elastic Pool General Purpose - Compute DC-Series | skuName=1 vCore | meterName=vCore | armSkuName= | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.3425
+    - score=1 | productName=SQL Database Single/Elastic Pool General Purpose - Compute DC-Series | skuName=12 vCore | meterName=vCore | armSkuName=12 vCore | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=4.1098
+    - score=1 | productName=SQL Database Single/Elastic Pool General Purpose - Compute FSv2 Series | skuName=12 vCore | meterName=vCore | armSkuName=12 vCore | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=1.525
+    - score=1 | productName=SQL Database Single/Elastic Pool Business Critical - Compute Gen5 | skuName=18 vCore | meterName=vCore | armSkuName= | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=5.2133
+    - score=1 | productName=SQL Database Single/Elastic Pool General Purpose - Compute FSv2 Series | skuName=10 vCore | meterName=vCore | armSkuName=10 vCore | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=1.2708
+    - score=1 | productName=SQL Database Single Premium | skuName=P1 Secondary Active | meterName=P1 Secondary Active DTU | armSkuName= | unitOfMeasure=1/Day | type=Consumption | priceType=Consumption | unitPrice=12.973
+    - score=1 | productName=SQL Database Single/Elastic Pool Business Critical - Compute Gen5 | skuName=14 vCore | meterName=vCore | armSkuName= | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=4.0548
+    - score=1 | productName=SQL Database Single/Elastic Pool General Purpose - Compute Gen5 | skuName=18 vCore | meterName=vCore | armSkuName=SQLDB_GP_Compute_Gen5_18 | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=2.6066
+    - score=1 | productName=SQL Database Single/Elastic Pool General Purpose - Compute Gen5 | skuName=14 vCore | meterName=vCore | armSkuName=SQLDB_GP_Compute_Gen5_14 | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=2.0274
+    - Conclusion: Ambiguous: multiple meters, need capacity-first / stricter filters.
+  - Resource: id=redis-cache-hp | category=cache.redis | region=westeurope | requested_sku=Premium_P2 | billing_model=reserved
+    - Catalog used: `catalog/azure_cache_for_redis__westeurope__EUR.jsonl` (reason: category='cache.redis' -> serviceName='Azure Cache for Redis' via normalize_service_name; region='westeurope', currency='EUR')
+    - Catalog search results: 0 candidates
+    - Conclusion: Correct meter is not in catalog (catalog incomplete or mapping wrong).
+  - Resource: id=blob-storage-hp | category=storage.blob | region=westeurope | requested_sku=Standard_GZRS | billing_model=payg
+    - Catalog used: `catalog/storage__westeurope__EUR.jsonl` (reason: category='storage.blob' -> serviceName='Storage' via normalize_service_name; region='westeurope', currency='EUR')
+    - Catalog search results: 1478 candidates
+    - score=0 | productName=General Block Blob v2 Hierarchical Namespace | skuName=Cool GRS | meterName=Cool GRS Write Operations | armSkuName= | unitOfMeasure=10K | type=Consumption | priceType=Consumption | unitPrice=0.2249
+    - score=0 | productName=Tables | skuName=Standard ZRS | meterName=Read Operations | armSkuName= | unitOfMeasure=10K | type=Consumption | priceType=Consumption | unitPrice=0.0003
+    - score=0 | productName=Blob Storage | skuName=Hot RA-GRS | meterName=GRS List and Create Container Operations | armSkuName= | unitOfMeasure=10K | type=Consumption | priceType=Consumption | unitPrice=0.0934
+    - score=0 | productName=Azure Data Lake Storage Gen2 Flat Namespace | skuName=Cool RA-GRS | meterName=Cool GRS Write Operations | armSkuName= | unitOfMeasure=10K | type=Consumption | priceType=Consumption | unitPrice=0.173
+    - score=0 | productName=Standard SSD Managed Disks | skuName=Disk Transactions LRS | meterName=Disk Transactions LRS Disk Operations | armSkuName=Disk Transactions | unitOfMeasure=10K | type=Consumption | priceType=Consumption | unitPrice=0.0022
+    - score=0 | productName=Azure Data Lake Storage Gen2 Hierarchical Namespace | skuName=Hot ZRS | meterName=Hot ZRS Index | armSkuName= | unitOfMeasure=1 GB/Month | type=Consumption | priceType=Consumption | unitPrice=0.0303
+    - score=0 | productName=Standard Page Blob v2 | skuName=Standard RA-GZRS | meterName=Disk Data Stored | armSkuName= | unitOfMeasure=1 GB/Month | type=Consumption | priceType=Consumption | unitPrice=0.3284
+    - score=0 | productName=Tables | skuName=Standard ZRS | meterName=List Operations | armSkuName= | unitOfMeasure=10K | type=Consumption | priceType=Consumption | unitPrice=0.0003
+    - score=0 | productName=Premium Block Blob | skuName=Premium LRS | meterName=LRS Early Premium To Cool Tier Down | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.16
+    - score=0 | productName=Files v2 | skuName=Cool GRS | meterName=Cool Data Retrieval | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.0086
+    - Conclusion: Ambiguous: multiple meters, need capacity-first / stricter filters.
+  - Resource: id=pe-sql-hp | category=network.gateway | region=westeurope | requested_sku= | billing_model=payg
+    - Catalog used: `catalog/azure_front_door__westeurope__EUR.jsonl` (reason: category='network.gateway' -> serviceName='Azure Front Door' via normalize_service_name; region='westeurope', currency='EUR')
+    - Catalog search results: 0 candidates
+    - Conclusion: Correct meter is not in catalog (catalog incomplete or mapping wrong).
+  - Resource: id=pe-blob-hp | category=network.gateway | region=westeurope | requested_sku= | billing_model=payg
+    - Catalog used: `catalog/azure_front_door__westeurope__EUR.jsonl` (reason: category='network.gateway' -> serviceName='Azure Front Door' via normalize_service_name; region='westeurope', currency='EUR')
+    - Catalog search results: 0 candidates
+    - Conclusion: Correct meter is not in catalog (catalog incomplete or mapping wrong).
+  - Resource: id=nat-egress-hp | category=network.nat | region=westeurope | requested_sku=Standard | billing_model=payg
+    - Catalog used: `catalog/bandwidth__westeurope__EUR.jsonl` (reason: category='network.nat' -> serviceName='Bandwidth' via normalize_service_name; region='westeurope', currency='EUR')
+    - Catalog search results: 14 candidates
+    - score=1 | productName=Bandwidth - Routing Preference: Internet | skuName=Standard | meterName=Standard Data Transfer Out | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.0
+    - score=1 | productName=Rtn Preference: MGN | skuName=Standard | meterName=Standard Data Transfer Out | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.0
+    - score=1 | productName=Rtn Preference: MGN | skuName=Standard | meterName=Standard Inter-Availability Zone Data Transfer Out | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.0086
+    - score=1 | productName=Rtn Preference: MGN | skuName=Standard | meterName=Standard Data Transfer Out - to China | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.0
+    - score=1 | productName=Rtn Preference: MGN | skuName=Standard | meterName=Standard Data Transfer In | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.0
+    - score=1 | productName=Rtn Preference: MGN | skuName=Standard | meterName=Standard Data Transfer In - from China | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.0778
+    - score=1 | productName=Rtn Preference: MGN | skuName=Standard | meterName=Standard Inter-Availability Zone Data Transfer In | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.0086
+    - score=1 | productName=Rtn Preference: MGN | skuName=Standard | meterName=Standard Inter-Region Data Transfer | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.0173
+    - score=0 | productName=Rtn Preference: MGN | skuName=China | meterName=China Data Transfer - 1 to 5 Mbps | armSkuName= | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.0
+    - score=0 | productName=Rtn Preference: MGN | skuName=China | meterName=China Data Transfer - 1 Mbps | armSkuName= | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.0
+    - Conclusion: Ambiguous: multiple meters, need capacity-first / stricter filters.
+  - Resource: id=public-ip-nat-hp | category=network.public_ip | region=westeurope | requested_sku=Standard | billing_model=payg
+    - Catalog used: `catalog/public_ip_addresses__westeurope__EUR.jsonl` (reason: category='network.public_ip' -> serviceName='Public IP Addresses' via normalize_service_name; region='westeurope', currency='EUR')
+    - Catalog search results: 0 candidates
+    - Conclusion: Correct meter is not in catalog (catalog incomplete or mapping wrong).
+  - Resource: id=keyvault-hp | category=security.keyvault | region=westeurope | requested_sku=premium | billing_model=payg
+    - Catalog used: `catalog/key_vault__westeurope__EUR.jsonl` (reason: category='security.keyvault' -> serviceName='Key Vault' via normalize_service_name; region='westeurope', currency='EUR')
+    - Catalog search results: 14 candidates
+    - score=1 | productName=Key Vault | skuName=Premium | meterName=Automated Key Rotation | armSkuName= | unitOfMeasure=1 Rotation | type=Consumption | priceType=Consumption | unitPrice=0.8649
+    - score=1 | productName=Key Vault | skuName=Premium | meterName=Operations | armSkuName= | unitOfMeasure=10K | type=Consumption | priceType=Consumption | unitPrice=0.0259
+    - score=1 | productName=Key Vault | skuName=Premium | meterName=Premium HSM-protected RSA 2048-bit key | armSkuName= | unitOfMeasure=1 | type=Consumption | priceType=Consumption | unitPrice=0.8649
+    - score=1 | productName=Key Vault | skuName=Premium | meterName=Advanced Key Operations | armSkuName= | unitOfMeasure=10K | type=Consumption | priceType=Consumption | unitPrice=0.1297
+    - score=1 | productName=Key Vault | skuName=Premium | meterName=Premium HSM-protected Advanced Key | armSkuName= | unitOfMeasure=1 | type=Consumption | priceType=Consumption | unitPrice=4.3243
+    - score=1 | productName=Key Vault | skuName=Premium | meterName=Certificate Renewal Request | armSkuName= | unitOfMeasure=1 | type=Consumption | priceType=Consumption | unitPrice=2.5946
+    - score=1 | productName=Key Vault | skuName=Premium | meterName=Secret Renewal | armSkuName= | unitOfMeasure=1 | type=Consumption | priceType=Consumption | unitPrice=0.8649
+    - score=0 | productName=Key Vault | skuName=Standard | meterName=Advanced Key Operations | armSkuName= | unitOfMeasure=10K | type=Consumption | priceType=Consumption | unitPrice=0.1297
+    - score=0 | productName=Key Vault | skuName=Standard | meterName=Automated Key Rotation | armSkuName= | unitOfMeasure=1 Rotation | type=Consumption | priceType=Consumption | unitPrice=0.8649
+    - score=0 | productName=Key Vault | skuName=Standard | meterName=Secret Renewal | armSkuName= | unitOfMeasure=1 | type=Consumption | priceType=Consumption | unitPrice=0.8649
+    - Conclusion: Ambiguous: multiple meters, need capacity-first / stricter filters.
+  - Resource: id=loganalytics-hp | category=monitoring.loganalytics | region=westeurope | requested_sku=PerGB2018 | billing_model=payg
+    - Catalog used: `catalog/log_analytics__westeurope__EUR.jsonl` (reason: category='monitoring.loganalytics' -> serviceName='Log Analytics' via normalize_service_name; region='westeurope', currency='EUR')
+    - Catalog search results: 6 candidates
+    - score=0 | productName=Log Analytics | skuName=Analytics Logs | meterName=Analytics Logs Data Retention | armSkuName= | unitOfMeasure=1 GB/Month | type=Consumption | priceType=Consumption | unitPrice=0.1124
+    - score=0 | productName=Log Analytics | skuName=Premium | meterName=Premium Data Analyzed | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=3.027
+    - score=0 | productName=Log Analytics | skuName=Free | meterName=Free Data Analyzed | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.0
+    - score=0 | productName=Log Analytics | skuName=Standard | meterName=Standard Data Analyzed | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=1.9892
+    - score=0 | productName=Log Analytics | skuName=Analytics Logs | meterName=Analytics Logs Data Ingestion | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.0
+    - score=0 | productName=Log Analytics | skuName=Analytics Logs | meterName=Analytics Logs Data Analyzed | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=1.9892
+    - Conclusion: Ambiguous: multiple meters, need capacity-first / stricter filters.
+  - Resource: id=backup-vault-hp | category=backup.vault | region=westeurope | requested_sku=ADLS Gen2 Vaulted | billing_model=payg
+    - Catalog used: `catalog/backup__westeurope__EUR.jsonl` (reason: category='backup.vault' -> serviceName='Backup' via normalize_service_name; region='westeurope', currency='EUR')
+    - Catalog search results: 41 candidates
+    - score=3 | productName=Backup | skuName=ADLS Gen2 Vaulted | meterName=ADLS Gen2 Vaulted RA-GRS Write Operations | armSkuName=ADLS Gen2 Vaulted | unitOfMeasure=10K | type=Consumption | priceType=Consumption | unitPrice=0.0934
+    - score=3 | productName=Backup | skuName=ADLS Gen2 Vaulted | meterName=ADLS Gen2 Vaulted GRS Write Operations | armSkuName=ADLS Gen2 Vaulted | unitOfMeasure=10K | type=Consumption | priceType=Consumption | unitPrice=0.0934
+    - score=3 | productName=Backup | skuName=ADLS Gen2 Vaulted | meterName=ADLS Gen2 Vaulted ZRS Write Operations | armSkuName=ADLS Gen2 Vaulted | unitOfMeasure=10K | type=Consumption | priceType=Consumption | unitPrice=0.0584
+    - score=3 | productName=Backup | skuName=ADLS Gen2 Vaulted | meterName=ADLS Gen2 Vaulted Protected Instances | armSkuName=ADLS Gen2 Vaulted | unitOfMeasure=1/Month | type=Consumption | priceType=Consumption | unitPrice=11.2432
+    - score=3 | productName=Backup | skuName=ADLS Gen2 Vaulted | meterName=ADLS Gen2 Vaulted LRS Write Operations | armSkuName=ADLS Gen2 Vaulted | unitOfMeasure=10K | type=Consumption | priceType=Consumption | unitPrice=0.0467
+    - score=1 | productName=Backup | skuName=Azure Files Vaulted | meterName=ZRS Data Stored | armSkuName=Azure Files Vaulted | unitOfMeasure=1 GB/Month | type=Consumption | priceType=Consumption | unitPrice=0.054
+    - score=1 | productName=Backup | skuName=Azure Files Vaulted | meterName=LRS Data Stored | armSkuName=Azure Files Vaulted | unitOfMeasure=1 GB/Month | type=Consumption | priceType=Consumption | unitPrice=0.0461
+    - score=1 | productName=Backup | skuName=Azure Files Vaulted | meterName=Azure Files Vaulted Protected Instances | armSkuName=Azure Files Vaulted | unitOfMeasure=1/Month | type=Consumption | priceType=Consumption | unitPrice=11.2432
+    - score=1 | productName=Backup | skuName=Azure Files Vaulted | meterName=RA-GRS Data Stored | armSkuName=Azure Files Vaulted | unitOfMeasure=1 GB/Month | type=Consumption | priceType=Consumption | unitPrice=0.1091
+    - score=1 | productName=Backup | skuName=Azure Files Vaulted | meterName=GRS Data Stored | armSkuName=Azure Files Vaulted | unitOfMeasure=1 GB/Month | type=Consumption | priceType=Consumption | unitPrice=0.0854
+    - Conclusion: Ambiguous: multiple meters, need capacity-first / stricter filters.
+
+### Run: run3_storage_tiers
+- Scenario: unknown
+  - Resource: id=log-vnet | category=network.vnet | region=westeurope | requested_sku=Virtual Network | billing_model=payg
+    - Catalog used: `catalog/virtual_network__westeurope__GBP.jsonl` (reason: category='network.vnet' -> serviceName='Virtual Network' via normalize_service_name; region='westeurope', currency='GBP')
+    - Catalog search results: 12 candidates
+    - score=2 | productName=Global Virtual Network Peering | skuName=Inter-Region | meterName=Inter-Region Egress | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.0266
+    - score=2 | productName=Global Virtual Network Peering | skuName=Inter-Region | meterName=Inter-Region Ingress | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.0266
+    - score=0 | productName=IP Addresses | skuName=Standard | meterName=Standard IPv4 Static Public IP | armSkuName= | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.0038
+    - score=0 | productName=IP Addresses | skuName=Standard | meterName=Standard IPv4 Static Public IP | armSkuName= | unitOfMeasure=1 Hour | type=DevTestConsumption | priceType=DevTestConsumption | unitPrice=0.0038
+    - score=0 | productName=IP Addresses | skuName=Basic | meterName=Basic IPv4 Dynamic Public IP | armSkuName= | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.003
+    - score=0 | productName=IP Addresses | skuName=Basic | meterName=Basic IPv4 Dynamic Public IP | armSkuName= | unitOfMeasure=1 Hour | type=DevTestConsumption | priceType=DevTestConsumption | unitPrice=0.003
+    - score=0 | productName=Public IP Prefix | skuName=Standard | meterName=Standard Static IP Addresses | armSkuName= | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.0046
+    - score=0 | productName=Public IP Prefix | skuName=Global | meterName=Global Static Public IP | armSkuName=Global | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.0091
+    - score=0 | productName=IP Addresses | skuName=Basic | meterName=Basic IPv4 Static Public IP | armSkuName= | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.0027
+    - score=0 | productName=IP Addresses | skuName=Basic | meterName=Basic IPv4 Static Public IP | armSkuName= | unitOfMeasure=1 Hour | type=DevTestConsumption | priceType=DevTestConsumption | unitPrice=0.0027
+    - Conclusion: Ambiguous: multiple meters, need capacity-first / stricter filters.
+  - Resource: id=log-blob-grs | category=storage.blob | region=westeurope | requested_sku=Standard_GRS | billing_model=payg
+    - Catalog used: `catalog/storage__westeurope__GBP.jsonl` (reason: category='storage.blob' -> serviceName='Storage' via normalize_service_name; region='westeurope', currency='GBP')
+    - Catalog search results: 1478 candidates
+    - score=0 | productName=General Block Blob v2 Hierarchical Namespace | skuName=Cool GRS | meterName=Cool GRS Write Operations | armSkuName= | unitOfMeasure=10K | type=Consumption | priceType=Consumption | unitPrice=0.1973
+    - score=0 | productName=Tables | skuName=Standard ZRS | meterName=Read Operations | armSkuName= | unitOfMeasure=10K | type=Consumption | priceType=Consumption | unitPrice=0.0003
+    - score=0 | productName=Blob Storage | skuName=Hot RA-GRS | meterName=GRS List and Create Container Operations | armSkuName= | unitOfMeasure=10K | type=Consumption | priceType=Consumption | unitPrice=0.082
+    - score=0 | productName=Azure Data Lake Storage Gen2 Flat Namespace | skuName=Cool RA-GRS | meterName=Cool GRS Write Operations | armSkuName= | unitOfMeasure=10K | type=Consumption | priceType=Consumption | unitPrice=0.1518
+    - score=0 | productName=Standard SSD Managed Disks | skuName=Disk Transactions LRS | meterName=Disk Transactions LRS Disk Operations | armSkuName=Disk Transactions | unitOfMeasure=10K | type=Consumption | priceType=Consumption | unitPrice=0.002
+    - score=0 | productName=Azure Data Lake Storage Gen2 Hierarchical Namespace | skuName=Hot ZRS | meterName=Hot ZRS Index | armSkuName= | unitOfMeasure=1 GB/Month | type=Consumption | priceType=Consumption | unitPrice=0.0266
+    - score=0 | productName=Standard Page Blob v2 | skuName=Standard RA-GZRS | meterName=Disk Data Stored | armSkuName= | unitOfMeasure=1 GB/Month | type=Consumption | priceType=Consumption | unitPrice=0.2882
+    - score=0 | productName=Tables | skuName=Standard ZRS | meterName=List Operations | armSkuName= | unitOfMeasure=10K | type=Consumption | priceType=Consumption | unitPrice=0.0003
+    - score=0 | productName=Premium Block Blob | skuName=Premium LRS | meterName=LRS Early Premium To Cool Tier Down | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.1404
+    - score=0 | productName=Files v2 | skuName=Cool GRS | meterName=Cool Data Retrieval | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.0076
+    - Conclusion: Ambiguous: multiple meters, need capacity-first / stricter filters.
+  - Resource: id=log-egress | category=network.egress | region=westeurope | requested_sku=Standard | billing_model=payg
+    - Catalog used: `catalog/bandwidth__westeurope__GBP.jsonl` (reason: category='network.egress' -> serviceName='Bandwidth' via normalize_service_name; region='westeurope', currency='GBP')
+    - Catalog search results: 14 candidates
+    - score=1 | productName=Bandwidth - Routing Preference: Internet | skuName=Standard | meterName=Standard Data Transfer Out | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.0
+    - score=1 | productName=Rtn Preference: MGN | skuName=Standard | meterName=Standard Data Transfer Out | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.0
+    - score=1 | productName=Rtn Preference: MGN | skuName=Standard | meterName=Standard Inter-Availability Zone Data Transfer Out | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.0076
+    - score=1 | productName=Rtn Preference: MGN | skuName=Standard | meterName=Standard Data Transfer Out - to China | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.0
+    - score=1 | productName=Rtn Preference: MGN | skuName=Standard | meterName=Standard Data Transfer In | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.0
+    - score=1 | productName=Rtn Preference: MGN | skuName=Standard | meterName=Standard Data Transfer In - from China | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.0683
+    - score=1 | productName=Rtn Preference: MGN | skuName=Standard | meterName=Standard Inter-Availability Zone Data Transfer In | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.0076
+    - score=1 | productName=Rtn Preference: MGN | skuName=Standard | meterName=Standard Inter-Region Data Transfer | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.0152
+    - score=0 | productName=Rtn Preference: MGN | skuName=China | meterName=China Data Transfer - 1 to 5 Mbps | armSkuName= | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.0
+    - score=0 | productName=Rtn Preference: MGN | skuName=China | meterName=China Data Transfer - 1 Mbps | armSkuName= | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.0
+    - Conclusion: Ambiguous: multiple meters, need capacity-first / stricter filters.
+  - Resource: id=log-keyvault | category=security.keyvault | region=westeurope | requested_sku=standard | billing_model=payg
+    - Catalog used: `catalog/key_vault__westeurope__GBP.jsonl` (reason: category='security.keyvault' -> serviceName='Key Vault' via normalize_service_name; region='westeurope', currency='GBP')
+    - Catalog search results: 14 candidates
+    - score=1 | productName=Key Vault | skuName=Standard | meterName=Advanced Key Operations | armSkuName= | unitOfMeasure=10K | type=Consumption | priceType=Consumption | unitPrice=0.1138
+    - score=1 | productName=Key Vault | skuName=Standard | meterName=Automated Key Rotation | armSkuName= | unitOfMeasure=1 Rotation | type=Consumption | priceType=Consumption | unitPrice=0.7589
+    - score=1 | productName=Key Vault | skuName=Standard | meterName=Secret Renewal | armSkuName= | unitOfMeasure=1 | type=Consumption | priceType=Consumption | unitPrice=0.7589
+    - score=1 | productName=Azure Dedicated HSM | skuName=Standard | meterName=Standard Instance | armSkuName= | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=3.6808
+    - score=1 | productName=Key Vault HSM Pool | skuName=Standard B1 | meterName=Standard B1 Instance | armSkuName= | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=2.4286
+    - score=1 | productName=Key Vault | skuName=Standard | meterName=Operations | armSkuName= | unitOfMeasure=10K | type=Consumption | priceType=Consumption | unitPrice=0.0228
+    - score=1 | productName=Key Vault | skuName=Standard | meterName=Certificate Renewal Request | armSkuName= | unitOfMeasure=1 | type=Consumption | priceType=Consumption | unitPrice=2.2768
+    - score=0 | productName=Key Vault | skuName=Premium | meterName=Automated Key Rotation | armSkuName= | unitOfMeasure=1 Rotation | type=Consumption | priceType=Consumption | unitPrice=0.7589
+    - score=0 | productName=Key Vault | skuName=Premium | meterName=Operations | armSkuName= | unitOfMeasure=10K | type=Consumption | priceType=Consumption | unitPrice=0.0228
+    - score=0 | productName=Key Vault | skuName=Premium | meterName=Premium HSM-protected RSA 2048-bit key | armSkuName= | unitOfMeasure=1 | type=Consumption | priceType=Consumption | unitPrice=0.7589
+    - Conclusion: Ambiguous: multiple meters, need capacity-first / stricter filters.
+  - Resource: id=log-la | category=monitoring.loganalytics | region=westeurope | requested_sku=PerGB2018 | billing_model=payg
+    - Catalog used: `catalog/log_analytics__westeurope__GBP.jsonl` (reason: category='monitoring.loganalytics' -> serviceName='Log Analytics' via normalize_service_name; region='westeurope', currency='GBP')
+    - Catalog search results: 6 candidates
+    - score=0 | productName=Log Analytics | skuName=Analytics Logs | meterName=Analytics Logs Data Retention | armSkuName= | unitOfMeasure=1 GB/Month | type=Consumption | priceType=Consumption | unitPrice=0.0987
+    - score=0 | productName=Log Analytics | skuName=Premium | meterName=Premium Data Analyzed | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=2.6562
+    - score=0 | productName=Log Analytics | skuName=Free | meterName=Free Data Analyzed | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.0
+    - score=0 | productName=Log Analytics | skuName=Standard | meterName=Standard Data Analyzed | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=1.7455
+    - score=0 | productName=Log Analytics | skuName=Analytics Logs | meterName=Analytics Logs Data Ingestion | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.0
+    - score=0 | productName=Log Analytics | skuName=Analytics Logs | meterName=Analytics Logs Data Analyzed | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=1.7455
+    - Conclusion: Ambiguous: multiple meters, need capacity-first / stricter filters.
+  - Resource: id=log-backup-vault | category=backup.vault | region=westeurope | requested_sku=Standard | billing_model=payg
+    - Catalog used: `catalog/backup__westeurope__GBP.jsonl` (reason: category='backup.vault' -> serviceName='Backup' via normalize_service_name; region='westeurope', currency='GBP')
+    - Catalog search results: 41 candidates
+    - score=1 | productName=Backup Reserved Capacity | skuName=Standard - 100 TB ZRS | meterName=ZRS Data Stored | armSkuName=backup_standard_zrs_data_stored_100tb | unitOfMeasure=1 GB/Month | type=Reservation | priceType=Reservation | unitPrice=22978.788
+    - score=1 | productName=Backup | skuName=Standard | meterName=LRS Data Stored | armSkuName= | unitOfMeasure=1 GB/Month | type=Consumption | priceType=Consumption | unitPrice=0.017
+    - score=1 | productName=Backup Reserved Capacity | skuName=Standard - 100 TB LRS | meterName=LRS Data Stored | armSkuName=backup_standard_lrs_data_stored_100tb | unitOfMeasure=1 GB/Month | type=Reservation | priceType=Reservation | unitPrice=18382.7268
+    - score=1 | productName=Backup Reserved Capacity | skuName=Standard - 100 TB RA-GRS | meterName=RA-GRS Data Stored | armSkuName=backup_standard_ra-grs_data_stored_100tb | unitOfMeasure=1 GB/Month | type=Reservation | priceType=Reservation | unitPrice=46695.2529
+    - score=1 | productName=Backup Reserved Capacity | skuName=Standard - 1 PB GRS | meterName=GRS Data Stored | armSkuName=backup_standard_grs_data_stored_1pb | unitOfMeasure=1 GB/Month | type=Reservation | priceType=Reservation | unitPrice=359367.055
+    - score=1 | productName=Backup Reserved Capacity | skuName=Standard - 1 PB ZRS | meterName=ZRS Data Stored | armSkuName=backup_standard_zrs_data_stored_1pb | unitOfMeasure=1 GB/Month | type=Reservation | priceType=Reservation | unitPrice=224604.4094
+    - score=1 | productName=Backup Reserved Capacity | skuName=Standard - 1 PB LRS | meterName=LRS Data Stored | armSkuName=backup_standard_lrs_data_stored_1pb | unitOfMeasure=1 GB/Month | type=Reservation | priceType=Reservation | unitPrice=179683.5275
+    - score=1 | productName=Backup Reserved Capacity | skuName=Standard - 1 PB RA-GRS | meterName=RA-GRS Data Stored | armSkuName=backup_standard_ra-grs_data_stored_1pb | unitOfMeasure=1 GB/Month | type=Reservation | priceType=Reservation | unitPrice=456428.4901
+    - score=1 | productName=Backup | skuName=Standard | meterName=ZRS Data Stored | armSkuName= | unitOfMeasure=1 GB/Month | type=Consumption | priceType=Consumption | unitPrice=0.0212
+    - score=1 | productName=Backup Reserved Capacity | skuName=Standard - 100 TB GRS | meterName=GRS Data Stored | armSkuName=backup_standard_grs_data_stored_100tb | unitOfMeasure=1 GB/Month | type=Reservation | priceType=Reservation | unitPrice=36765.4536
+    - Conclusion: Ambiguous: multiple meters, need capacity-first / stricter filters.
+
+- Scenario: unknown
+  - Resource: id=log-vnet-co | category=network.vnet | region=westeurope | requested_sku=Virtual Network | billing_model=payg
+    - Catalog used: `catalog/virtual_network__westeurope__GBP.jsonl` (reason: category='network.vnet' -> serviceName='Virtual Network' via normalize_service_name; region='westeurope', currency='GBP')
+    - Catalog search results: 12 candidates
+    - score=2 | productName=Global Virtual Network Peering | skuName=Inter-Region | meterName=Inter-Region Egress | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.0266
+    - score=2 | productName=Global Virtual Network Peering | skuName=Inter-Region | meterName=Inter-Region Ingress | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.0266
+    - score=0 | productName=IP Addresses | skuName=Standard | meterName=Standard IPv4 Static Public IP | armSkuName= | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.0038
+    - score=0 | productName=IP Addresses | skuName=Standard | meterName=Standard IPv4 Static Public IP | armSkuName= | unitOfMeasure=1 Hour | type=DevTestConsumption | priceType=DevTestConsumption | unitPrice=0.0038
+    - score=0 | productName=IP Addresses | skuName=Basic | meterName=Basic IPv4 Dynamic Public IP | armSkuName= | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.003
+    - score=0 | productName=IP Addresses | skuName=Basic | meterName=Basic IPv4 Dynamic Public IP | armSkuName= | unitOfMeasure=1 Hour | type=DevTestConsumption | priceType=DevTestConsumption | unitPrice=0.003
+    - score=0 | productName=Public IP Prefix | skuName=Standard | meterName=Standard Static IP Addresses | armSkuName= | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.0046
+    - score=0 | productName=Public IP Prefix | skuName=Global | meterName=Global Static Public IP | armSkuName=Global | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.0091
+    - score=0 | productName=IP Addresses | skuName=Basic | meterName=Basic IPv4 Static Public IP | armSkuName= | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.0027
+    - score=0 | productName=IP Addresses | skuName=Basic | meterName=Basic IPv4 Static Public IP | armSkuName= | unitOfMeasure=1 Hour | type=DevTestConsumption | priceType=DevTestConsumption | unitPrice=0.0027
+    - Conclusion: Ambiguous: multiple meters, need capacity-first / stricter filters.
+  - Resource: id=log-blob-grs-co | category=storage.blob | region=westeurope | requested_sku=Standard_GRS | billing_model=payg
+    - Catalog used: `catalog/storage__westeurope__GBP.jsonl` (reason: category='storage.blob' -> serviceName='Storage' via normalize_service_name; region='westeurope', currency='GBP')
+    - Catalog search results: 1478 candidates
+    - score=0 | productName=General Block Blob v2 Hierarchical Namespace | skuName=Cool GRS | meterName=Cool GRS Write Operations | armSkuName= | unitOfMeasure=10K | type=Consumption | priceType=Consumption | unitPrice=0.1973
+    - score=0 | productName=Tables | skuName=Standard ZRS | meterName=Read Operations | armSkuName= | unitOfMeasure=10K | type=Consumption | priceType=Consumption | unitPrice=0.0003
+    - score=0 | productName=Blob Storage | skuName=Hot RA-GRS | meterName=GRS List and Create Container Operations | armSkuName= | unitOfMeasure=10K | type=Consumption | priceType=Consumption | unitPrice=0.082
+    - score=0 | productName=Azure Data Lake Storage Gen2 Flat Namespace | skuName=Cool RA-GRS | meterName=Cool GRS Write Operations | armSkuName= | unitOfMeasure=10K | type=Consumption | priceType=Consumption | unitPrice=0.1518
+    - score=0 | productName=Standard SSD Managed Disks | skuName=Disk Transactions LRS | meterName=Disk Transactions LRS Disk Operations | armSkuName=Disk Transactions | unitOfMeasure=10K | type=Consumption | priceType=Consumption | unitPrice=0.002
+    - score=0 | productName=Azure Data Lake Storage Gen2 Hierarchical Namespace | skuName=Hot ZRS | meterName=Hot ZRS Index | armSkuName= | unitOfMeasure=1 GB/Month | type=Consumption | priceType=Consumption | unitPrice=0.0266
+    - score=0 | productName=Standard Page Blob v2 | skuName=Standard RA-GZRS | meterName=Disk Data Stored | armSkuName= | unitOfMeasure=1 GB/Month | type=Consumption | priceType=Consumption | unitPrice=0.2882
+    - score=0 | productName=Tables | skuName=Standard ZRS | meterName=List Operations | armSkuName= | unitOfMeasure=10K | type=Consumption | priceType=Consumption | unitPrice=0.0003
+    - score=0 | productName=Premium Block Blob | skuName=Premium LRS | meterName=LRS Early Premium To Cool Tier Down | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.1404
+    - score=0 | productName=Files v2 | skuName=Cool GRS | meterName=Cool Data Retrieval | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.0076
+    - Conclusion: Ambiguous: multiple meters, need capacity-first / stricter filters.
+  - Resource: id=log-egress-co | category=network.egress | region=westeurope | requested_sku=Standard | billing_model=payg
+    - Catalog used: `catalog/bandwidth__westeurope__GBP.jsonl` (reason: category='network.egress' -> serviceName='Bandwidth' via normalize_service_name; region='westeurope', currency='GBP')
+    - Catalog search results: 14 candidates
+    - score=1 | productName=Bandwidth - Routing Preference: Internet | skuName=Standard | meterName=Standard Data Transfer Out | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.0
+    - score=1 | productName=Rtn Preference: MGN | skuName=Standard | meterName=Standard Data Transfer Out | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.0
+    - score=1 | productName=Rtn Preference: MGN | skuName=Standard | meterName=Standard Inter-Availability Zone Data Transfer Out | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.0076
+    - score=1 | productName=Rtn Preference: MGN | skuName=Standard | meterName=Standard Data Transfer Out - to China | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.0
+    - score=1 | productName=Rtn Preference: MGN | skuName=Standard | meterName=Standard Data Transfer In | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.0
+    - score=1 | productName=Rtn Preference: MGN | skuName=Standard | meterName=Standard Data Transfer In - from China | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.0683
+    - score=1 | productName=Rtn Preference: MGN | skuName=Standard | meterName=Standard Inter-Availability Zone Data Transfer In | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.0076
+    - score=1 | productName=Rtn Preference: MGN | skuName=Standard | meterName=Standard Inter-Region Data Transfer | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.0152
+    - score=0 | productName=Rtn Preference: MGN | skuName=China | meterName=China Data Transfer - 1 to 5 Mbps | armSkuName= | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.0
+    - score=0 | productName=Rtn Preference: MGN | skuName=China | meterName=China Data Transfer - 1 Mbps | armSkuName= | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.0
+    - Conclusion: Ambiguous: multiple meters, need capacity-first / stricter filters.
+  - Resource: id=log-keyvault-co | category=security.keyvault | region=westeurope | requested_sku=standard | billing_model=payg
+    - Catalog used: `catalog/key_vault__westeurope__GBP.jsonl` (reason: category='security.keyvault' -> serviceName='Key Vault' via normalize_service_name; region='westeurope', currency='GBP')
+    - Catalog search results: 14 candidates
+    - score=1 | productName=Key Vault | skuName=Standard | meterName=Advanced Key Operations | armSkuName= | unitOfMeasure=10K | type=Consumption | priceType=Consumption | unitPrice=0.1138
+    - score=1 | productName=Key Vault | skuName=Standard | meterName=Automated Key Rotation | armSkuName= | unitOfMeasure=1 Rotation | type=Consumption | priceType=Consumption | unitPrice=0.7589
+    - score=1 | productName=Key Vault | skuName=Standard | meterName=Secret Renewal | armSkuName= | unitOfMeasure=1 | type=Consumption | priceType=Consumption | unitPrice=0.7589
+    - score=1 | productName=Azure Dedicated HSM | skuName=Standard | meterName=Standard Instance | armSkuName= | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=3.6808
+    - score=1 | productName=Key Vault HSM Pool | skuName=Standard B1 | meterName=Standard B1 Instance | armSkuName= | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=2.4286
+    - score=1 | productName=Key Vault | skuName=Standard | meterName=Operations | armSkuName= | unitOfMeasure=10K | type=Consumption | priceType=Consumption | unitPrice=0.0228
+    - score=1 | productName=Key Vault | skuName=Standard | meterName=Certificate Renewal Request | armSkuName= | unitOfMeasure=1 | type=Consumption | priceType=Consumption | unitPrice=2.2768
+    - score=0 | productName=Key Vault | skuName=Premium | meterName=Automated Key Rotation | armSkuName= | unitOfMeasure=1 Rotation | type=Consumption | priceType=Consumption | unitPrice=0.7589
+    - score=0 | productName=Key Vault | skuName=Premium | meterName=Operations | armSkuName= | unitOfMeasure=10K | type=Consumption | priceType=Consumption | unitPrice=0.0228
+    - score=0 | productName=Key Vault | skuName=Premium | meterName=Premium HSM-protected RSA 2048-bit key | armSkuName= | unitOfMeasure=1 | type=Consumption | priceType=Consumption | unitPrice=0.7589
+    - Conclusion: Ambiguous: multiple meters, need capacity-first / stricter filters.
+  - Resource: id=log-la-co | category=monitoring.loganalytics | region=westeurope | requested_sku=PerGB2018 | billing_model=payg
+    - Catalog used: `catalog/log_analytics__westeurope__GBP.jsonl` (reason: category='monitoring.loganalytics' -> serviceName='Log Analytics' via normalize_service_name; region='westeurope', currency='GBP')
+    - Catalog search results: 6 candidates
+    - score=0 | productName=Log Analytics | skuName=Analytics Logs | meterName=Analytics Logs Data Retention | armSkuName= | unitOfMeasure=1 GB/Month | type=Consumption | priceType=Consumption | unitPrice=0.0987
+    - score=0 | productName=Log Analytics | skuName=Premium | meterName=Premium Data Analyzed | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=2.6562
+    - score=0 | productName=Log Analytics | skuName=Free | meterName=Free Data Analyzed | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.0
+    - score=0 | productName=Log Analytics | skuName=Standard | meterName=Standard Data Analyzed | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=1.7455
+    - score=0 | productName=Log Analytics | skuName=Analytics Logs | meterName=Analytics Logs Data Ingestion | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.0
+    - score=0 | productName=Log Analytics | skuName=Analytics Logs | meterName=Analytics Logs Data Analyzed | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=1.7455
+    - Conclusion: Ambiguous: multiple meters, need capacity-first / stricter filters.
+  - Resource: id=log-backup-vault-co | category=backup.vault | region=westeurope | requested_sku=Standard | billing_model=payg
+    - Catalog used: `catalog/backup__westeurope__GBP.jsonl` (reason: category='backup.vault' -> serviceName='Backup' via normalize_service_name; region='westeurope', currency='GBP')
+    - Catalog search results: 41 candidates
+    - score=1 | productName=Backup Reserved Capacity | skuName=Standard - 100 TB ZRS | meterName=ZRS Data Stored | armSkuName=backup_standard_zrs_data_stored_100tb | unitOfMeasure=1 GB/Month | type=Reservation | priceType=Reservation | unitPrice=22978.788
+    - score=1 | productName=Backup | skuName=Standard | meterName=LRS Data Stored | armSkuName= | unitOfMeasure=1 GB/Month | type=Consumption | priceType=Consumption | unitPrice=0.017
+    - score=1 | productName=Backup Reserved Capacity | skuName=Standard - 100 TB LRS | meterName=LRS Data Stored | armSkuName=backup_standard_lrs_data_stored_100tb | unitOfMeasure=1 GB/Month | type=Reservation | priceType=Reservation | unitPrice=18382.7268
+    - score=1 | productName=Backup Reserved Capacity | skuName=Standard - 100 TB RA-GRS | meterName=RA-GRS Data Stored | armSkuName=backup_standard_ra-grs_data_stored_100tb | unitOfMeasure=1 GB/Month | type=Reservation | priceType=Reservation | unitPrice=46695.2529
+    - score=1 | productName=Backup Reserved Capacity | skuName=Standard - 1 PB GRS | meterName=GRS Data Stored | armSkuName=backup_standard_grs_data_stored_1pb | unitOfMeasure=1 GB/Month | type=Reservation | priceType=Reservation | unitPrice=359367.055
+    - score=1 | productName=Backup Reserved Capacity | skuName=Standard - 1 PB ZRS | meterName=ZRS Data Stored | armSkuName=backup_standard_zrs_data_stored_1pb | unitOfMeasure=1 GB/Month | type=Reservation | priceType=Reservation | unitPrice=224604.4094
+    - score=1 | productName=Backup Reserved Capacity | skuName=Standard - 1 PB LRS | meterName=LRS Data Stored | armSkuName=backup_standard_lrs_data_stored_1pb | unitOfMeasure=1 GB/Month | type=Reservation | priceType=Reservation | unitPrice=179683.5275
+    - score=1 | productName=Backup Reserved Capacity | skuName=Standard - 1 PB RA-GRS | meterName=RA-GRS Data Stored | armSkuName=backup_standard_ra-grs_data_stored_1pb | unitOfMeasure=1 GB/Month | type=Reservation | priceType=Reservation | unitPrice=456428.4901
+    - score=1 | productName=Backup | skuName=Standard | meterName=ZRS Data Stored | armSkuName= | unitOfMeasure=1 GB/Month | type=Consumption | priceType=Consumption | unitPrice=0.0212
+    - score=1 | productName=Backup Reserved Capacity | skuName=Standard - 100 TB GRS | meterName=GRS Data Stored | armSkuName=backup_standard_grs_data_stored_100tb | unitOfMeasure=1 GB/Month | type=Reservation | priceType=Reservation | unitPrice=36765.4536
+    - Conclusion: Ambiguous: multiple meters, need capacity-first / stricter filters.
+
+- Scenario: unknown
+  - Resource: id=log-vnet-hp | category=network.vnet | region=westeurope | requested_sku=Virtual Network | billing_model=payg
+    - Catalog used: `catalog/virtual_network__westeurope__GBP.jsonl` (reason: category='network.vnet' -> serviceName='Virtual Network' via normalize_service_name; region='westeurope', currency='GBP')
+    - Catalog search results: 12 candidates
+    - score=2 | productName=Global Virtual Network Peering | skuName=Inter-Region | meterName=Inter-Region Egress | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.0266
+    - score=2 | productName=Global Virtual Network Peering | skuName=Inter-Region | meterName=Inter-Region Ingress | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.0266
+    - score=0 | productName=IP Addresses | skuName=Standard | meterName=Standard IPv4 Static Public IP | armSkuName= | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.0038
+    - score=0 | productName=IP Addresses | skuName=Standard | meterName=Standard IPv4 Static Public IP | armSkuName= | unitOfMeasure=1 Hour | type=DevTestConsumption | priceType=DevTestConsumption | unitPrice=0.0038
+    - score=0 | productName=IP Addresses | skuName=Basic | meterName=Basic IPv4 Dynamic Public IP | armSkuName= | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.003
+    - score=0 | productName=IP Addresses | skuName=Basic | meterName=Basic IPv4 Dynamic Public IP | armSkuName= | unitOfMeasure=1 Hour | type=DevTestConsumption | priceType=DevTestConsumption | unitPrice=0.003
+    - score=0 | productName=Public IP Prefix | skuName=Standard | meterName=Standard Static IP Addresses | armSkuName= | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.0046
+    - score=0 | productName=Public IP Prefix | skuName=Global | meterName=Global Static Public IP | armSkuName=Global | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.0091
+    - score=0 | productName=IP Addresses | skuName=Basic | meterName=Basic IPv4 Static Public IP | armSkuName= | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.0027
+    - score=0 | productName=IP Addresses | skuName=Basic | meterName=Basic IPv4 Static Public IP | armSkuName= | unitOfMeasure=1 Hour | type=DevTestConsumption | priceType=DevTestConsumption | unitPrice=0.0027
+    - Conclusion: Ambiguous: multiple meters, need capacity-first / stricter filters.
+  - Resource: id=log-blob-grs-hp | category=storage.blob | region=westeurope | requested_sku=Standard_GRS | billing_model=payg
+    - Catalog used: `catalog/storage__westeurope__GBP.jsonl` (reason: category='storage.blob' -> serviceName='Storage' via normalize_service_name; region='westeurope', currency='GBP')
+    - Catalog search results: 1478 candidates
+    - score=0 | productName=General Block Blob v2 Hierarchical Namespace | skuName=Cool GRS | meterName=Cool GRS Write Operations | armSkuName= | unitOfMeasure=10K | type=Consumption | priceType=Consumption | unitPrice=0.1973
+    - score=0 | productName=Tables | skuName=Standard ZRS | meterName=Read Operations | armSkuName= | unitOfMeasure=10K | type=Consumption | priceType=Consumption | unitPrice=0.0003
+    - score=0 | productName=Blob Storage | skuName=Hot RA-GRS | meterName=GRS List and Create Container Operations | armSkuName= | unitOfMeasure=10K | type=Consumption | priceType=Consumption | unitPrice=0.082
+    - score=0 | productName=Azure Data Lake Storage Gen2 Flat Namespace | skuName=Cool RA-GRS | meterName=Cool GRS Write Operations | armSkuName= | unitOfMeasure=10K | type=Consumption | priceType=Consumption | unitPrice=0.1518
+    - score=0 | productName=Standard SSD Managed Disks | skuName=Disk Transactions LRS | meterName=Disk Transactions LRS Disk Operations | armSkuName=Disk Transactions | unitOfMeasure=10K | type=Consumption | priceType=Consumption | unitPrice=0.002
+    - score=0 | productName=Azure Data Lake Storage Gen2 Hierarchical Namespace | skuName=Hot ZRS | meterName=Hot ZRS Index | armSkuName= | unitOfMeasure=1 GB/Month | type=Consumption | priceType=Consumption | unitPrice=0.0266
+    - score=0 | productName=Standard Page Blob v2 | skuName=Standard RA-GZRS | meterName=Disk Data Stored | armSkuName= | unitOfMeasure=1 GB/Month | type=Consumption | priceType=Consumption | unitPrice=0.2882
+    - score=0 | productName=Tables | skuName=Standard ZRS | meterName=List Operations | armSkuName= | unitOfMeasure=10K | type=Consumption | priceType=Consumption | unitPrice=0.0003
+    - score=0 | productName=Premium Block Blob | skuName=Premium LRS | meterName=LRS Early Premium To Cool Tier Down | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.1404
+    - score=0 | productName=Files v2 | skuName=Cool GRS | meterName=Cool Data Retrieval | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.0076
+    - Conclusion: Ambiguous: multiple meters, need capacity-first / stricter filters.
+  - Resource: id=log-egress-hp | category=network.egress | region=westeurope | requested_sku=Standard | billing_model=payg
+    - Catalog used: `catalog/bandwidth__westeurope__GBP.jsonl` (reason: category='network.egress' -> serviceName='Bandwidth' via normalize_service_name; region='westeurope', currency='GBP')
+    - Catalog search results: 14 candidates
+    - score=1 | productName=Bandwidth - Routing Preference: Internet | skuName=Standard | meterName=Standard Data Transfer Out | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.0
+    - score=1 | productName=Rtn Preference: MGN | skuName=Standard | meterName=Standard Data Transfer Out | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.0
+    - score=1 | productName=Rtn Preference: MGN | skuName=Standard | meterName=Standard Inter-Availability Zone Data Transfer Out | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.0076
+    - score=1 | productName=Rtn Preference: MGN | skuName=Standard | meterName=Standard Data Transfer Out - to China | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.0
+    - score=1 | productName=Rtn Preference: MGN | skuName=Standard | meterName=Standard Data Transfer In | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.0
+    - score=1 | productName=Rtn Preference: MGN | skuName=Standard | meterName=Standard Data Transfer In - from China | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.0683
+    - score=1 | productName=Rtn Preference: MGN | skuName=Standard | meterName=Standard Inter-Availability Zone Data Transfer In | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.0076
+    - score=1 | productName=Rtn Preference: MGN | skuName=Standard | meterName=Standard Inter-Region Data Transfer | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.0152
+    - score=0 | productName=Rtn Preference: MGN | skuName=China | meterName=China Data Transfer - 1 to 5 Mbps | armSkuName= | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.0
+    - score=0 | productName=Rtn Preference: MGN | skuName=China | meterName=China Data Transfer - 1 Mbps | armSkuName= | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.0
+    - Conclusion: Ambiguous: multiple meters, need capacity-first / stricter filters.
+  - Resource: id=log-keyvault-hp | category=security.keyvault | region=westeurope | requested_sku=standard | billing_model=payg
+    - Catalog used: `catalog/key_vault__westeurope__GBP.jsonl` (reason: category='security.keyvault' -> serviceName='Key Vault' via normalize_service_name; region='westeurope', currency='GBP')
+    - Catalog search results: 14 candidates
+    - score=1 | productName=Key Vault | skuName=Standard | meterName=Advanced Key Operations | armSkuName= | unitOfMeasure=10K | type=Consumption | priceType=Consumption | unitPrice=0.1138
+    - score=1 | productName=Key Vault | skuName=Standard | meterName=Automated Key Rotation | armSkuName= | unitOfMeasure=1 Rotation | type=Consumption | priceType=Consumption | unitPrice=0.7589
+    - score=1 | productName=Key Vault | skuName=Standard | meterName=Secret Renewal | armSkuName= | unitOfMeasure=1 | type=Consumption | priceType=Consumption | unitPrice=0.7589
+    - score=1 | productName=Azure Dedicated HSM | skuName=Standard | meterName=Standard Instance | armSkuName= | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=3.6808
+    - score=1 | productName=Key Vault HSM Pool | skuName=Standard B1 | meterName=Standard B1 Instance | armSkuName= | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=2.4286
+    - score=1 | productName=Key Vault | skuName=Standard | meterName=Operations | armSkuName= | unitOfMeasure=10K | type=Consumption | priceType=Consumption | unitPrice=0.0228
+    - score=1 | productName=Key Vault | skuName=Standard | meterName=Certificate Renewal Request | armSkuName= | unitOfMeasure=1 | type=Consumption | priceType=Consumption | unitPrice=2.2768
+    - score=0 | productName=Key Vault | skuName=Premium | meterName=Automated Key Rotation | armSkuName= | unitOfMeasure=1 Rotation | type=Consumption | priceType=Consumption | unitPrice=0.7589
+    - score=0 | productName=Key Vault | skuName=Premium | meterName=Operations | armSkuName= | unitOfMeasure=10K | type=Consumption | priceType=Consumption | unitPrice=0.0228
+    - score=0 | productName=Key Vault | skuName=Premium | meterName=Premium HSM-protected RSA 2048-bit key | armSkuName= | unitOfMeasure=1 | type=Consumption | priceType=Consumption | unitPrice=0.7589
+    - Conclusion: Ambiguous: multiple meters, need capacity-first / stricter filters.
+  - Resource: id=log-la-hp | category=monitoring.loganalytics | region=westeurope | requested_sku=PerGB2018 | billing_model=payg
+    - Catalog used: `catalog/log_analytics__westeurope__GBP.jsonl` (reason: category='monitoring.loganalytics' -> serviceName='Log Analytics' via normalize_service_name; region='westeurope', currency='GBP')
+    - Catalog search results: 6 candidates
+    - score=0 | productName=Log Analytics | skuName=Analytics Logs | meterName=Analytics Logs Data Retention | armSkuName= | unitOfMeasure=1 GB/Month | type=Consumption | priceType=Consumption | unitPrice=0.0987
+    - score=0 | productName=Log Analytics | skuName=Premium | meterName=Premium Data Analyzed | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=2.6562
+    - score=0 | productName=Log Analytics | skuName=Free | meterName=Free Data Analyzed | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.0
+    - score=0 | productName=Log Analytics | skuName=Standard | meterName=Standard Data Analyzed | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=1.7455
+    - score=0 | productName=Log Analytics | skuName=Analytics Logs | meterName=Analytics Logs Data Ingestion | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.0
+    - score=0 | productName=Log Analytics | skuName=Analytics Logs | meterName=Analytics Logs Data Analyzed | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=1.7455
+    - Conclusion: Ambiguous: multiple meters, need capacity-first / stricter filters.
+  - Resource: id=log-backup-vault-hp | category=backup.vault | region=westeurope | requested_sku=Standard | billing_model=payg
+    - Catalog used: `catalog/backup__westeurope__GBP.jsonl` (reason: category='backup.vault' -> serviceName='Backup' via normalize_service_name; region='westeurope', currency='GBP')
+    - Catalog search results: 41 candidates
+    - score=1 | productName=Backup Reserved Capacity | skuName=Standard - 100 TB ZRS | meterName=ZRS Data Stored | armSkuName=backup_standard_zrs_data_stored_100tb | unitOfMeasure=1 GB/Month | type=Reservation | priceType=Reservation | unitPrice=22978.788
+    - score=1 | productName=Backup | skuName=Standard | meterName=LRS Data Stored | armSkuName= | unitOfMeasure=1 GB/Month | type=Consumption | priceType=Consumption | unitPrice=0.017
+    - score=1 | productName=Backup Reserved Capacity | skuName=Standard - 100 TB LRS | meterName=LRS Data Stored | armSkuName=backup_standard_lrs_data_stored_100tb | unitOfMeasure=1 GB/Month | type=Reservation | priceType=Reservation | unitPrice=18382.7268
+    - score=1 | productName=Backup Reserved Capacity | skuName=Standard - 100 TB RA-GRS | meterName=RA-GRS Data Stored | armSkuName=backup_standard_ra-grs_data_stored_100tb | unitOfMeasure=1 GB/Month | type=Reservation | priceType=Reservation | unitPrice=46695.2529
+    - score=1 | productName=Backup Reserved Capacity | skuName=Standard - 1 PB GRS | meterName=GRS Data Stored | armSkuName=backup_standard_grs_data_stored_1pb | unitOfMeasure=1 GB/Month | type=Reservation | priceType=Reservation | unitPrice=359367.055
+    - score=1 | productName=Backup Reserved Capacity | skuName=Standard - 1 PB ZRS | meterName=ZRS Data Stored | armSkuName=backup_standard_zrs_data_stored_1pb | unitOfMeasure=1 GB/Month | type=Reservation | priceType=Reservation | unitPrice=224604.4094
+    - score=1 | productName=Backup Reserved Capacity | skuName=Standard - 1 PB LRS | meterName=LRS Data Stored | armSkuName=backup_standard_lrs_data_stored_1pb | unitOfMeasure=1 GB/Month | type=Reservation | priceType=Reservation | unitPrice=179683.5275
+    - score=1 | productName=Backup Reserved Capacity | skuName=Standard - 1 PB RA-GRS | meterName=RA-GRS Data Stored | armSkuName=backup_standard_ra-grs_data_stored_1pb | unitOfMeasure=1 GB/Month | type=Reservation | priceType=Reservation | unitPrice=456428.4901
+    - score=1 | productName=Backup | skuName=Standard | meterName=ZRS Data Stored | armSkuName= | unitOfMeasure=1 GB/Month | type=Consumption | priceType=Consumption | unitPrice=0.0212
+    - score=1 | productName=Backup Reserved Capacity | skuName=Standard - 100 TB GRS | meterName=GRS Data Stored | armSkuName=backup_standard_grs_data_stored_100tb | unitOfMeasure=1 GB/Month | type=Reservation | priceType=Reservation | unitPrice=36765.4536
+    - Conclusion: Ambiguous: multiple meters, need capacity-first / stricter filters.
+
+### Run: run4_sql_reservation
+- Scenario: unknown
+  - Resource: id=vnet-main | category=network.vnet | region=westeurope | requested_sku=Virtual Network | billing_model=payg
+    - Catalog used: `catalog/virtual_network__westeurope__USD.jsonl` (reason: category='network.vnet' -> serviceName='Virtual Network' via normalize_service_name; region='westeurope', currency='USD')
+    - Catalog search results: 12 candidates
+    - score=2 | productName=Global Virtual Network Peering | skuName=Inter-Region | meterName=Inter-Region Egress | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.035
+    - score=2 | productName=Global Virtual Network Peering | skuName=Inter-Region | meterName=Inter-Region Ingress | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.035
+    - score=0 | productName=IP Addresses | skuName=Standard | meterName=Standard IPv4 Static Public IP | armSkuName= | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.005
+    - score=0 | productName=IP Addresses | skuName=Standard | meterName=Standard IPv4 Static Public IP | armSkuName= | unitOfMeasure=1 Hour | type=DevTestConsumption | priceType=DevTestConsumption | unitPrice=0.005
+    - score=0 | productName=IP Addresses | skuName=Basic | meterName=Basic IPv4 Dynamic Public IP | armSkuName= | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.004
+    - score=0 | productName=IP Addresses | skuName=Basic | meterName=Basic IPv4 Dynamic Public IP | armSkuName= | unitOfMeasure=1 Hour | type=DevTestConsumption | priceType=DevTestConsumption | unitPrice=0.004
+    - score=0 | productName=Public IP Prefix | skuName=Standard | meterName=Standard Static IP Addresses | armSkuName= | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.006
+    - score=0 | productName=Public IP Prefix | skuName=Global | meterName=Global Static Public IP | armSkuName=Global | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.012
+    - score=0 | productName=IP Addresses | skuName=Basic | meterName=Basic IPv4 Static Public IP | armSkuName= | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.0036
+    - score=0 | productName=IP Addresses | skuName=Basic | meterName=Basic IPv4 Static Public IP | armSkuName= | unitOfMeasure=1 Hour | type=DevTestConsumption | priceType=DevTestConsumption | unitPrice=0.0036
+    - Conclusion: Ambiguous: multiple meters, need capacity-first / stricter filters.
+  - Resource: id=appsvc-plan-prod | category=appservice | region=westeurope | requested_sku=P1v3 | billing_model=payg
+    - Catalog used: `catalog/azure_app_service__westeurope__USD.jsonl` (reason: category='appservice' -> serviceName='Azure App Service' via normalize_service_name; region='westeurope', currency='USD')
+    - Catalog search results: 210 candidates
+    - score=0 | productName=Azure App Service Isolated v2 Plan | skuName=I5mv2 | meterName=I5mv2 App | armSkuName=App_Service_I5_mv2_windows | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=11.113
+    - score=0 | productName=Azure App Service Isolated v2 Plan | skuName=I5mv2 | meterName=I5mv2 App | armSkuName=App_Service_I5_mv2_windows | unitOfMeasure=1 Hour | type=Reservation | priceType=Reservation | unitPrice=67840.0
+    - score=0 | productName=Azure App Service Isolated v2 Plan | skuName=I3 v2 | meterName=I3 v2 App | armSkuName=App_Service_I3_v2_windows | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=2.28
+    - score=0 | productName=Azure App Service Isolated v2 Plan | skuName=I3 v2 | meterName=I3 v2 App | armSkuName=App_Service_I3_v2_windows | unitOfMeasure=1 Hour | type=Reservation | priceType=Reservation | unitPrice=14120.0
+    - score=0 | productName=Azure App Service Standard Plan | skuName=S1 | meterName=S1 App | armSkuName= | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.1
+    - score=0 | productName=Azure App Service Standard Plan | skuName=S1 | meterName=S1 App | armSkuName= | unitOfMeasure=1 Hour | type=DevTestConsumption | priceType=DevTestConsumption | unitPrice=0.06
+    - score=0 | productName=Azure App Service Isolated v2 Plan | skuName=I3mv2 | meterName=I3mv2 App | armSkuName=App_Service_I3_mv2_windows | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=2.778
+    - score=0 | productName=Azure App Service Isolated v2 Plan | skuName=I3mv2 | meterName=I3mv2 App | armSkuName=App_Service_I3_mv2_windows | unitOfMeasure=1 Hour | type=Reservation | priceType=Reservation | unitPrice=16960.0
+    - score=0 | productName=Azure App Service Isolated v2 Plan | skuName=I5 v2 | meterName=I5 v2 App | armSkuName=App_Service_I5_v2_windows | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=9.12
+    - score=0 | productName=Azure App Service Isolated v2 Plan | skuName=I5 v2 | meterName=I5 v2 App | armSkuName=App_Service_I5_v2_windows | unitOfMeasure=1 Hour | type=Reservation | priceType=Reservation | unitPrice=56816.0
+    - Conclusion: Ambiguous: multiple meters, need capacity-first / stricter filters.
+  - Resource: id=sql-db-bc4-pag | category=db.sql | region=westeurope | requested_sku=BC_Gen5_4 | billing_model=payg
+    - Catalog used: `catalog/sql_database__westeurope__USD.jsonl` (reason: category='db.sql' -> serviceName='SQL Database' via normalize_service_name; region='westeurope', currency='USD')
+    - Catalog search results: 256 candidates
+    - score=0 | productName=SQL Database Elastic Pool - Premium | skuName=2000 DTU Pack | meterName=eDTUs | armSkuName= | unitOfMeasure=1/Day | type=Consumption | priceType=Consumption | unitPrice=360.0
+    - score=0 | productName=SQL Database Single/Elastic Pool General Purpose - Compute Gen5 | skuName=80 vCore | meterName=vCore | armSkuName=SQLDB_GP_Compute_Gen5_80 | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=13.39512
+    - score=0 | productName=SQL Database Single/Elastic Pool General Purpose - Compute FSv2 Series | skuName=72 vCore | meterName=vCore | armSkuName= | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=10.579536
+    - score=0 | productName=SQL Database SingleDB/Elastic Pool Hyperscale - Compute Gen5 | skuName=1 vCore | meterName=vCore | armSkuName=SQLDB_HS_Compute_Gen5_1 | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.200926
+    - score=0 | productName=SQL Database Single/Elastic Pool PITR Backup Storage | skuName=Backup RA-GRS | meterName=RA-GRS Data Stored | armSkuName= | unitOfMeasure=1 GB/Month | type=Consumption | priceType=Consumption | unitPrice=0.238
+    - score=0 | productName=SQL Database Single/Elastic Pool General Purpose - Compute DC-Series | skuName=1 vCore | meterName=vCore | armSkuName= | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.396
+    - score=0 | productName=SQL Database Single/Elastic Pool General Purpose - Compute DC-Series | skuName=12 vCore | meterName=vCore | armSkuName=12 vCore | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=4.752
+    - score=0 | productName=SQL Database Elastic Pool - Premium RS | skuName=3500 DTU Pack | meterName=eDTUs | armSkuName= | unitOfMeasure=1/Day | type=Consumption | priceType=Consumption | unitPrice=157.5
+    - score=0 | productName=SQL Database Single/Elastic Pool General Purpose - Compute DC-Series | skuName=6 vCore | meterName=vCore | armSkuName= | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=2.375
+    - score=0 | productName=SQL Database Single/Elastic Pool General Purpose - Compute DC-Series | skuName=2 vCore | meterName=vCore | armSkuName= | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.792
+    - Conclusion: Ambiguous: multiple meters, need capacity-first / stricter filters.
+  - Resource: id=sql-db-bc4-backup-storage | category=storage.blob | region=westeurope | requested_sku=Standard_GRS | billing_model=payg
+    - Catalog used: `catalog/storage__westeurope__USD.jsonl` (reason: category='storage.blob' -> serviceName='Storage' via normalize_service_name; region='westeurope', currency='USD')
+    - Catalog search results: 1478 candidates
+    - score=0 | productName=General Block Blob v2 Hierarchical Namespace | skuName=Cool GRS | meterName=Cool GRS Write Operations | armSkuName= | unitOfMeasure=10K | type=Consumption | priceType=Consumption | unitPrice=0.26
+    - score=0 | productName=Tables | skuName=Standard ZRS | meterName=Read Operations | armSkuName= | unitOfMeasure=10K | type=Consumption | priceType=Consumption | unitPrice=0.00036
+    - score=0 | productName=Blob Storage | skuName=Hot RA-GRS | meterName=GRS List and Create Container Operations | armSkuName= | unitOfMeasure=10K | type=Consumption | priceType=Consumption | unitPrice=0.108
+    - score=0 | productName=Azure Data Lake Storage Gen2 Flat Namespace | skuName=Cool RA-GRS | meterName=Cool GRS Write Operations | armSkuName= | unitOfMeasure=10K | type=Consumption | priceType=Consumption | unitPrice=0.2
+    - score=0 | productName=Standard SSD Managed Disks | skuName=Disk Transactions LRS | meterName=Disk Transactions LRS Disk Operations | armSkuName=Disk Transactions | unitOfMeasure=10K | type=Consumption | priceType=Consumption | unitPrice=0.0026
+    - score=0 | productName=Azure Data Lake Storage Gen2 Hierarchical Namespace | skuName=Hot ZRS | meterName=Hot ZRS Index | armSkuName= | unitOfMeasure=1 GB/Month | type=Consumption | priceType=Consumption | unitPrice=0.035
+    - score=0 | productName=Standard Page Blob v2 | skuName=Standard RA-GZRS | meterName=Disk Data Stored | armSkuName= | unitOfMeasure=1 GB/Month | type=Consumption | priceType=Consumption | unitPrice=0.379686
+    - score=0 | productName=Tables | skuName=Standard ZRS | meterName=List Operations | armSkuName= | unitOfMeasure=10K | type=Consumption | priceType=Consumption | unitPrice=0.00036
+    - score=0 | productName=Premium Block Blob | skuName=Premium LRS | meterName=LRS Early Premium To Cool Tier Down | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.185
+    - score=0 | productName=Files v2 | skuName=Cool GRS | meterName=Cool Data Retrieval | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.01
+    - Conclusion: Ambiguous: multiple meters, need capacity-first / stricter filters.
+  - Resource: id=appgw-waf-public | category=network.appgw | region=westeurope | requested_sku=WAF_v2 | billing_model=payg
+    - Catalog used: `catalog/application_gateway__westeurope__USD.jsonl` (reason: category='network.appgw' -> serviceName='Application Gateway' via normalize_service_name; region='westeurope', currency='USD')
+    - Catalog search results: 27 candidates
+    - score=0 | productName=Application Gateway WAF v2 - Discounted | skuName=Standard | meterName=Standard Fixed Cost | armSkuName=Standard | unitOfMeasure=1/Hour | type=Consumption | priceType=Consumption | unitPrice=0.26
+    - score=0 | productName=Application Gateway Basic v2 | skuName=Basic | meterName=Basic Fixed Cost | armSkuName=Basic | unitOfMeasure=1/Hour | type=Consumption | priceType=Consumption | unitPrice=0.027
+    - score=0 | productName=Application Gateway for Containers | skuName=Standard | meterName=Standard Association | armSkuName= | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.156
+    - score=0 | productName=WAF Application Gateway | skuName=Large | meterName=Large Gateway | armSkuName= | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.50176
+    - score=0 | productName=Application Gateway WAF v2 - Discounted | skuName=Standard | meterName=Standard Capacity Units | armSkuName=Standard | unitOfMeasure=1/Hour | type=Consumption | priceType=Consumption | unitPrice=0.008
+    - score=0 | productName=Application Gateway for Containers WAF | skuName=Standard | meterName=Standard AGC | armSkuName=Standard | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.04
+    - score=0 | productName=Application Gateway Standard v2 | skuName=Standard | meterName=Standard Capacity Units | armSkuName= | unitOfMeasure=1/Hour | type=Consumption | priceType=Consumption | unitPrice=0.008
+    - score=0 | productName=Application Gateway WAF v2 | skuName=Standard | meterName=Standard Captcha Sessions | armSkuName= | unitOfMeasure=1K | type=Consumption | priceType=Consumption | unitPrice=0.4
+    - score=0 | productName=Application Gateway for Containers WAF | skuName=Standard | meterName=Standard Capacity Units | armSkuName=Standard | unitOfMeasure=1/Hour | type=Consumption | priceType=Consumption | unitPrice=0.019
+    - score=0 | productName=Application Gateway WAF v2 | skuName=Standard | meterName=Standard Fixed Cost | armSkuName= | unitOfMeasure=1/Hour | type=Consumption | priceType=Consumption | unitPrice=0.468
+    - Conclusion: Ambiguous: multiple meters, need capacity-first / stricter filters.
+  - Resource: id=public-ip-appgw | category=network.public_ip | region=westeurope | requested_sku=Standard | billing_model=payg
+    - Catalog used: `catalog/public_ip_addresses__westeurope__EUR.jsonl` (reason: category='network.public_ip' -> serviceName='Public IP Addresses' via normalize_service_name; region='westeurope', currency='EUR')
+    - Catalog search results: 0 candidates
+    - Conclusion: Correct meter is not in catalog (catalog incomplete or mapping wrong).
+  - Resource: id=nat-egress | category=network.nat | region=westeurope | requested_sku=Standard | billing_model=payg
+    - Catalog used: `catalog/bandwidth__westeurope__USD.jsonl` (reason: category='network.nat' -> serviceName='Bandwidth' via normalize_service_name; region='westeurope', currency='USD')
+    - Catalog search results: 14 candidates
+    - score=1 | productName=Bandwidth - Routing Preference: Internet | skuName=Standard | meterName=Standard Data Transfer Out | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.0
+    - score=1 | productName=Rtn Preference: MGN | skuName=Standard | meterName=Standard Data Transfer Out | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.0
+    - score=1 | productName=Rtn Preference: MGN | skuName=Standard | meterName=Standard Inter-Availability Zone Data Transfer Out | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.01
+    - score=1 | productName=Rtn Preference: MGN | skuName=Standard | meterName=Standard Data Transfer Out - to China | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.0
+    - score=1 | productName=Rtn Preference: MGN | skuName=Standard | meterName=Standard Data Transfer In | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.0
+    - score=1 | productName=Rtn Preference: MGN | skuName=Standard | meterName=Standard Data Transfer In - from China | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.09
+    - score=1 | productName=Rtn Preference: MGN | skuName=Standard | meterName=Standard Inter-Availability Zone Data Transfer In | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.01
+    - score=1 | productName=Rtn Preference: MGN | skuName=Standard | meterName=Standard Inter-Region Data Transfer | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.02
+    - score=0 | productName=Rtn Preference: MGN | skuName=China | meterName=China Data Transfer - 1 to 5 Mbps | armSkuName= | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.0
+    - score=0 | productName=Rtn Preference: MGN | skuName=China | meterName=China Data Transfer - 1 Mbps | armSkuName= | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.0
+    - Conclusion: Ambiguous: multiple meters, need capacity-first / stricter filters.
+  - Resource: id=kv-main | category=security.keyvault | region=westeurope | requested_sku=standard | billing_model=payg
+    - Catalog used: `catalog/key_vault__westeurope__USD.jsonl` (reason: category='security.keyvault' -> serviceName='Key Vault' via normalize_service_name; region='westeurope', currency='USD')
+    - Catalog search results: 14 candidates
+    - score=1 | productName=Key Vault | skuName=Standard | meterName=Advanced Key Operations | armSkuName= | unitOfMeasure=10K | type=Consumption | priceType=Consumption | unitPrice=0.15
+    - score=1 | productName=Key Vault | skuName=Standard | meterName=Automated Key Rotation | armSkuName= | unitOfMeasure=1 Rotation | type=Consumption | priceType=Consumption | unitPrice=1.0
+    - score=1 | productName=Key Vault | skuName=Standard | meterName=Secret Renewal | armSkuName= | unitOfMeasure=1 | type=Consumption | priceType=Consumption | unitPrice=1.0
+    - score=1 | productName=Azure Dedicated HSM | skuName=Standard | meterName=Standard Instance | armSkuName= | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=4.85
+    - score=1 | productName=Key Vault HSM Pool | skuName=Standard B1 | meterName=Standard B1 Instance | armSkuName= | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=3.2
+    - score=1 | productName=Key Vault | skuName=Standard | meterName=Operations | armSkuName= | unitOfMeasure=10K | type=Consumption | priceType=Consumption | unitPrice=0.03
+    - score=1 | productName=Key Vault | skuName=Standard | meterName=Certificate Renewal Request | armSkuName= | unitOfMeasure=1 | type=Consumption | priceType=Consumption | unitPrice=3.0
+    - score=0 | productName=Key Vault | skuName=Premium | meterName=Automated Key Rotation | armSkuName= | unitOfMeasure=1 Rotation | type=Consumption | priceType=Consumption | unitPrice=1.0
+    - score=0 | productName=Key Vault | skuName=Premium | meterName=Operations | armSkuName= | unitOfMeasure=10K | type=Consumption | priceType=Consumption | unitPrice=0.03
+    - score=0 | productName=Key Vault | skuName=Premium | meterName=Premium HSM-protected RSA 2048-bit key | armSkuName= | unitOfMeasure=1 | type=Consumption | priceType=Consumption | unitPrice=1.0
+    - Conclusion: Ambiguous: multiple meters, need capacity-first / stricter filters.
+  - Resource: id=redis-cache-basic | category=cache.redis | region=westeurope | requested_sku=C1 | billing_model=payg
+    - Catalog used: `catalog/azure_cache_for_redis__westeurope__EUR.jsonl` (reason: category='cache.redis' -> serviceName='Azure Cache for Redis' via normalize_service_name; region='westeurope', currency='EUR')
+    - Catalog search results: 0 candidates
+    - Conclusion: Correct meter is not in catalog (catalog incomplete or mapping wrong).
+  - Resource: id=log-analytics-main | category=monitoring.loganalytics | region=westeurope | requested_sku=PerGB2018 | billing_model=payg
+    - Catalog used: `catalog/log_analytics__westeurope__USD.jsonl` (reason: category='monitoring.loganalytics' -> serviceName='Log Analytics' via normalize_service_name; region='westeurope', currency='USD')
+    - Catalog search results: 6 candidates
+    - score=0 | productName=Log Analytics | skuName=Analytics Logs | meterName=Analytics Logs Data Retention | armSkuName= | unitOfMeasure=1 GB/Month | type=Consumption | priceType=Consumption | unitPrice=0.13
+    - score=0 | productName=Log Analytics | skuName=Premium | meterName=Premium Data Analyzed | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=3.5
+    - score=0 | productName=Log Analytics | skuName=Free | meterName=Free Data Analyzed | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.0
+    - score=0 | productName=Log Analytics | skuName=Standard | meterName=Standard Data Analyzed | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=2.3
+    - score=0 | productName=Log Analytics | skuName=Analytics Logs | meterName=Analytics Logs Data Ingestion | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.0
+    - score=0 | productName=Log Analytics | skuName=Analytics Logs | meterName=Analytics Logs Data Analyzed | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=2.3
+    - Conclusion: Ambiguous: multiple meters, need capacity-first / stricter filters.
+  - Resource: id=backup-vault-main | category=backup.vault | region=westeurope | requested_sku=Standard | billing_model=payg
+    - Catalog used: `catalog/backup__westeurope__USD.jsonl` (reason: category='backup.vault' -> serviceName='Backup' via normalize_service_name; region='westeurope', currency='USD')
+    - Catalog search results: 41 candidates
+    - score=1 | productName=Backup Reserved Capacity | skuName=Standard - 100 TB ZRS | meterName=ZRS Data Stored | armSkuName=backup_standard_zrs_data_stored_100tb | unitOfMeasure=1 GB/Month | type=Reservation | priceType=Reservation | unitPrice=30278.0
+    - score=1 | productName=Backup | skuName=Standard | meterName=LRS Data Stored | armSkuName= | unitOfMeasure=1 GB/Month | type=Consumption | priceType=Consumption | unitPrice=0.0224
+    - score=1 | productName=Backup Reserved Capacity | skuName=Standard - 100 TB LRS | meterName=LRS Data Stored | armSkuName=backup_standard_lrs_data_stored_100tb | unitOfMeasure=1 GB/Month | type=Reservation | priceType=Reservation | unitPrice=24222.0
+    - score=1 | productName=Backup Reserved Capacity | skuName=Standard - 100 TB RA-GRS | meterName=RA-GRS Data Stored | armSkuName=backup_standard_ra-grs_data_stored_100tb | unitOfMeasure=1 GB/Month | type=Reservation | priceType=Reservation | unitPrice=61528.0
+    - score=1 | productName=Backup Reserved Capacity | skuName=Standard - 1 PB GRS | meterName=GRS Data Stored | armSkuName=backup_standard_grs_data_stored_1pb | unitOfMeasure=1 GB/Month | type=Reservation | priceType=Reservation | unitPrice=473520.0
+    - score=1 | productName=Backup Reserved Capacity | skuName=Standard - 1 PB ZRS | meterName=ZRS Data Stored | armSkuName=backup_standard_zrs_data_stored_1pb | unitOfMeasure=1 GB/Month | type=Reservation | priceType=Reservation | unitPrice=295950.0
+    - score=1 | productName=Backup Reserved Capacity | skuName=Standard - 1 PB LRS | meterName=LRS Data Stored | armSkuName=backup_standard_lrs_data_stored_1pb | unitOfMeasure=1 GB/Month | type=Reservation | priceType=Reservation | unitPrice=236760.0
+    - score=1 | productName=Backup Reserved Capacity | skuName=Standard - 1 PB RA-GRS | meterName=RA-GRS Data Stored | armSkuName=backup_standard_ra-grs_data_stored_1pb | unitOfMeasure=1 GB/Month | type=Reservation | priceType=Reservation | unitPrice=601413.0
+    - score=1 | productName=Backup | skuName=Standard | meterName=ZRS Data Stored | armSkuName= | unitOfMeasure=1 GB/Month | type=Consumption | priceType=Consumption | unitPrice=0.028
+    - score=1 | productName=Backup Reserved Capacity | skuName=Standard - 100 TB GRS | meterName=GRS Data Stored | armSkuName=backup_standard_grs_data_stored_100tb | unitOfMeasure=1 GB/Month | type=Reservation | priceType=Reservation | unitPrice=48444.0
+    - Conclusion: Ambiguous: multiple meters, need capacity-first / stricter filters.
+  - Resource: id=asr-dr | category=dr.asr | region=westeurope | requested_sku=System Center | billing_model=payg
+    - Catalog used: `catalog/azure_site_recovery__westeurope__USD.jsonl` (reason: category='dr.asr' -> serviceName='Azure Site Recovery' via normalize_service_name; region='westeurope', currency='USD')
+    - Catalog search results: 2 candidates
+    - score=2 | productName=Azure Site Recovery | skuName=System Center | meterName=VM Replicated to System Center | armSkuName= | unitOfMeasure=1/Month | type=Consumption | priceType=Consumption | unitPrice=16.0
+    - score=0 | productName=Azure Site Recovery | skuName=Azure | meterName=VM Replicated to Azure | armSkuName= | unitOfMeasure=1/Month | type=Consumption | priceType=Consumption | unitPrice=25.0
+    - Conclusion: Ambiguous: multiple meters, need capacity-first / stricter filters.
+
+- Scenario: unknown
+  - Resource: id=vnet-main-co | category=network.vnet | region=westeurope | requested_sku=Virtual Network | billing_model=reserved
+    - Catalog used: `catalog/virtual_network__westeurope__USD.jsonl` (reason: category='network.vnet' -> serviceName='Virtual Network' via normalize_service_name; region='westeurope', currency='USD')
+    - Catalog search results: 12 candidates
+    - score=2 | productName=Global Virtual Network Peering | skuName=Inter-Region | meterName=Inter-Region Egress | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.035
+    - score=2 | productName=Global Virtual Network Peering | skuName=Inter-Region | meterName=Inter-Region Ingress | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.035
+    - score=0 | productName=IP Addresses | skuName=Standard | meterName=Standard IPv4 Static Public IP | armSkuName= | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.005
+    - score=0 | productName=IP Addresses | skuName=Standard | meterName=Standard IPv4 Static Public IP | armSkuName= | unitOfMeasure=1 Hour | type=DevTestConsumption | priceType=DevTestConsumption | unitPrice=0.005
+    - score=0 | productName=IP Addresses | skuName=Basic | meterName=Basic IPv4 Dynamic Public IP | armSkuName= | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.004
+    - score=0 | productName=IP Addresses | skuName=Basic | meterName=Basic IPv4 Dynamic Public IP | armSkuName= | unitOfMeasure=1 Hour | type=DevTestConsumption | priceType=DevTestConsumption | unitPrice=0.004
+    - score=0 | productName=Public IP Prefix | skuName=Standard | meterName=Standard Static IP Addresses | armSkuName= | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.006
+    - score=0 | productName=Public IP Prefix | skuName=Global | meterName=Global Static Public IP | armSkuName=Global | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.012
+    - score=0 | productName=IP Addresses | skuName=Basic | meterName=Basic IPv4 Static Public IP | armSkuName= | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.0036
+    - score=0 | productName=IP Addresses | skuName=Basic | meterName=Basic IPv4 Static Public IP | armSkuName= | unitOfMeasure=1 Hour | type=DevTestConsumption | priceType=DevTestConsumption | unitPrice=0.0036
+    - Conclusion: Ambiguous: multiple meters, need capacity-first / stricter filters.
+  - Resource: id=appsvc-plan-co | category=appservice | region=westeurope | requested_sku=P1v3 | billing_model=payg
+    - Catalog used: `catalog/azure_app_service__westeurope__USD.jsonl` (reason: category='appservice' -> serviceName='Azure App Service' via normalize_service_name; region='westeurope', currency='USD')
+    - Catalog search results: 210 candidates
+    - score=0 | productName=Azure App Service Isolated v2 Plan | skuName=I5mv2 | meterName=I5mv2 App | armSkuName=App_Service_I5_mv2_windows | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=11.113
+    - score=0 | productName=Azure App Service Isolated v2 Plan | skuName=I5mv2 | meterName=I5mv2 App | armSkuName=App_Service_I5_mv2_windows | unitOfMeasure=1 Hour | type=Reservation | priceType=Reservation | unitPrice=67840.0
+    - score=0 | productName=Azure App Service Isolated v2 Plan | skuName=I3 v2 | meterName=I3 v2 App | armSkuName=App_Service_I3_v2_windows | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=2.28
+    - score=0 | productName=Azure App Service Isolated v2 Plan | skuName=I3 v2 | meterName=I3 v2 App | armSkuName=App_Service_I3_v2_windows | unitOfMeasure=1 Hour | type=Reservation | priceType=Reservation | unitPrice=14120.0
+    - score=0 | productName=Azure App Service Standard Plan | skuName=S1 | meterName=S1 App | armSkuName= | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.1
+    - score=0 | productName=Azure App Service Standard Plan | skuName=S1 | meterName=S1 App | armSkuName= | unitOfMeasure=1 Hour | type=DevTestConsumption | priceType=DevTestConsumption | unitPrice=0.06
+    - score=0 | productName=Azure App Service Isolated v2 Plan | skuName=I3mv2 | meterName=I3mv2 App | armSkuName=App_Service_I3_mv2_windows | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=2.778
+    - score=0 | productName=Azure App Service Isolated v2 Plan | skuName=I3mv2 | meterName=I3mv2 App | armSkuName=App_Service_I3_mv2_windows | unitOfMeasure=1 Hour | type=Reservation | priceType=Reservation | unitPrice=16960.0
+    - score=0 | productName=Azure App Service Isolated v2 Plan | skuName=I5 v2 | meterName=I5 v2 App | armSkuName=App_Service_I5_v2_windows | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=9.12
+    - score=0 | productName=Azure App Service Isolated v2 Plan | skuName=I5 v2 | meterName=I5 v2 App | armSkuName=App_Service_I5_v2_windows | unitOfMeasure=1 Hour | type=Reservation | priceType=Reservation | unitPrice=56816.0
+    - Conclusion: Ambiguous: multiple meters, need capacity-first / stricter filters.
+  - Resource: id=sql-db-bc4-res1y | category=db.sql | region=westeurope | requested_sku=BC_Gen5_4 | billing_model=1 Year
+    - Catalog used: `catalog/sql_database__westeurope__USD.jsonl` (reason: category='db.sql' -> serviceName='SQL Database' via normalize_service_name; region='westeurope', currency='USD')
+    - Catalog search results: 256 candidates
+    - score=1 | productName=SQL Database SingleDB/Elastic Pool Hyperscale - Compute Gen5 | skuName=1 vCore | meterName=vCore | armSkuName=SQLDB_HS_Compute_Gen5_1 | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.200926
+    - score=1 | productName=SQL Database Single/Elastic Pool General Purpose - Compute DC-Series | skuName=1 vCore | meterName=vCore | armSkuName= | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.396
+    - score=1 | productName=SQL Database Single/Elastic Pool General Purpose - Compute DC-Series | skuName=12 vCore | meterName=vCore | armSkuName=12 vCore | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=4.752
+    - score=1 | productName=SQL Database Single/Elastic Pool General Purpose - Compute FSv2 Series | skuName=12 vCore | meterName=vCore | armSkuName=12 vCore | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=1.763256
+    - score=1 | productName=SQL Database Single/Elastic Pool Business Critical - Compute Gen5 | skuName=18 vCore | meterName=vCore | armSkuName= | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=6.027822
+    - score=1 | productName=SQL Database Single/Elastic Pool General Purpose - Compute FSv2 Series | skuName=10 vCore | meterName=vCore | armSkuName=10 vCore | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=1.46938
+    - score=1 | productName=SQL Database Single Premium | skuName=P1 Secondary Active | meterName=P1 Secondary Active DTU | armSkuName= | unitOfMeasure=1/Day | type=Consumption | priceType=Consumption | unitPrice=15.0
+    - score=1 | productName=SQL Database Single/Elastic Pool Business Critical - Compute Gen5 | skuName=14 vCore | meterName=vCore | armSkuName= | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=4.688306
+    - score=1 | productName=SQL Database Single/Elastic Pool General Purpose - Compute Gen5 | skuName=18 vCore | meterName=vCore | armSkuName=SQLDB_GP_Compute_Gen5_18 | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=3.013902
+    - score=1 | productName=SQL Database Single/Elastic Pool General Purpose - Compute Gen5 | skuName=14 vCore | meterName=vCore | armSkuName=SQLDB_GP_Compute_Gen5_14 | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=2.344146
+    - Conclusion: Ambiguous: multiple meters, need capacity-first / stricter filters.
+  - Resource: id=sql-db-bc4-backup-storage-co | category=storage.blob | region=westeurope | requested_sku=Standard_LRS | billing_model=payg
+    - Catalog used: `catalog/storage__westeurope__USD.jsonl` (reason: category='storage.blob' -> serviceName='Storage' via normalize_service_name; region='westeurope', currency='USD')
+    - Catalog search results: 1478 candidates
+    - score=0 | productName=General Block Blob v2 Hierarchical Namespace | skuName=Cool GRS | meterName=Cool GRS Write Operations | armSkuName= | unitOfMeasure=10K | type=Consumption | priceType=Consumption | unitPrice=0.26
+    - score=0 | productName=Tables | skuName=Standard ZRS | meterName=Read Operations | armSkuName= | unitOfMeasure=10K | type=Consumption | priceType=Consumption | unitPrice=0.00036
+    - score=0 | productName=Blob Storage | skuName=Hot RA-GRS | meterName=GRS List and Create Container Operations | armSkuName= | unitOfMeasure=10K | type=Consumption | priceType=Consumption | unitPrice=0.108
+    - score=0 | productName=Azure Data Lake Storage Gen2 Flat Namespace | skuName=Cool RA-GRS | meterName=Cool GRS Write Operations | armSkuName= | unitOfMeasure=10K | type=Consumption | priceType=Consumption | unitPrice=0.2
+    - score=0 | productName=Standard SSD Managed Disks | skuName=Disk Transactions LRS | meterName=Disk Transactions LRS Disk Operations | armSkuName=Disk Transactions | unitOfMeasure=10K | type=Consumption | priceType=Consumption | unitPrice=0.0026
+    - score=0 | productName=Azure Data Lake Storage Gen2 Hierarchical Namespace | skuName=Hot ZRS | meterName=Hot ZRS Index | armSkuName= | unitOfMeasure=1 GB/Month | type=Consumption | priceType=Consumption | unitPrice=0.035
+    - score=0 | productName=Standard Page Blob v2 | skuName=Standard RA-GZRS | meterName=Disk Data Stored | armSkuName= | unitOfMeasure=1 GB/Month | type=Consumption | priceType=Consumption | unitPrice=0.379686
+    - score=0 | productName=Tables | skuName=Standard ZRS | meterName=List Operations | armSkuName= | unitOfMeasure=10K | type=Consumption | priceType=Consumption | unitPrice=0.00036
+    - score=0 | productName=Premium Block Blob | skuName=Premium LRS | meterName=LRS Early Premium To Cool Tier Down | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.185
+    - score=0 | productName=Files v2 | skuName=Cool GRS | meterName=Cool Data Retrieval | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.01
+    - Conclusion: Ambiguous: multiple meters, need capacity-first / stricter filters.
+  - Resource: id=appgw-waf-public-co | category=network.appgw | region=westeurope | requested_sku=WAF_v2 | billing_model=payg
+    - Catalog used: `catalog/application_gateway__westeurope__USD.jsonl` (reason: category='network.appgw' -> serviceName='Application Gateway' via normalize_service_name; region='westeurope', currency='USD')
+    - Catalog search results: 27 candidates
+    - score=0 | productName=Application Gateway WAF v2 - Discounted | skuName=Standard | meterName=Standard Fixed Cost | armSkuName=Standard | unitOfMeasure=1/Hour | type=Consumption | priceType=Consumption | unitPrice=0.26
+    - score=0 | productName=Application Gateway Basic v2 | skuName=Basic | meterName=Basic Fixed Cost | armSkuName=Basic | unitOfMeasure=1/Hour | type=Consumption | priceType=Consumption | unitPrice=0.027
+    - score=0 | productName=Application Gateway for Containers | skuName=Standard | meterName=Standard Association | armSkuName= | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.156
+    - score=0 | productName=WAF Application Gateway | skuName=Large | meterName=Large Gateway | armSkuName= | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.50176
+    - score=0 | productName=Application Gateway WAF v2 - Discounted | skuName=Standard | meterName=Standard Capacity Units | armSkuName=Standard | unitOfMeasure=1/Hour | type=Consumption | priceType=Consumption | unitPrice=0.008
+    - score=0 | productName=Application Gateway for Containers WAF | skuName=Standard | meterName=Standard AGC | armSkuName=Standard | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.04
+    - score=0 | productName=Application Gateway Standard v2 | skuName=Standard | meterName=Standard Capacity Units | armSkuName= | unitOfMeasure=1/Hour | type=Consumption | priceType=Consumption | unitPrice=0.008
+    - score=0 | productName=Application Gateway WAF v2 | skuName=Standard | meterName=Standard Captcha Sessions | armSkuName= | unitOfMeasure=1K | type=Consumption | priceType=Consumption | unitPrice=0.4
+    - score=0 | productName=Application Gateway for Containers WAF | skuName=Standard | meterName=Standard Capacity Units | armSkuName=Standard | unitOfMeasure=1/Hour | type=Consumption | priceType=Consumption | unitPrice=0.019
+    - score=0 | productName=Application Gateway WAF v2 | skuName=Standard | meterName=Standard Fixed Cost | armSkuName= | unitOfMeasure=1/Hour | type=Consumption | priceType=Consumption | unitPrice=0.468
+    - Conclusion: Ambiguous: multiple meters, need capacity-first / stricter filters.
+  - Resource: id=public-ip-appgw-co | category=network.public_ip | region=westeurope | requested_sku=Standard | billing_model=payg
+    - Catalog used: `catalog/public_ip_addresses__westeurope__EUR.jsonl` (reason: category='network.public_ip' -> serviceName='Public IP Addresses' via normalize_service_name; region='westeurope', currency='EUR')
+    - Catalog search results: 0 candidates
+    - Conclusion: Correct meter is not in catalog (catalog incomplete or mapping wrong).
+  - Resource: id=nat-egress-co | category=network.nat | region=westeurope | requested_sku=Standard | billing_model=payg
+    - Catalog used: `catalog/bandwidth__westeurope__USD.jsonl` (reason: category='network.nat' -> serviceName='Bandwidth' via normalize_service_name; region='westeurope', currency='USD')
+    - Catalog search results: 14 candidates
+    - score=1 | productName=Bandwidth - Routing Preference: Internet | skuName=Standard | meterName=Standard Data Transfer Out | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.0
+    - score=1 | productName=Rtn Preference: MGN | skuName=Standard | meterName=Standard Data Transfer Out | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.0
+    - score=1 | productName=Rtn Preference: MGN | skuName=Standard | meterName=Standard Inter-Availability Zone Data Transfer Out | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.01
+    - score=1 | productName=Rtn Preference: MGN | skuName=Standard | meterName=Standard Data Transfer Out - to China | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.0
+    - score=1 | productName=Rtn Preference: MGN | skuName=Standard | meterName=Standard Data Transfer In | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.0
+    - score=1 | productName=Rtn Preference: MGN | skuName=Standard | meterName=Standard Data Transfer In - from China | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.09
+    - score=1 | productName=Rtn Preference: MGN | skuName=Standard | meterName=Standard Inter-Availability Zone Data Transfer In | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.01
+    - score=1 | productName=Rtn Preference: MGN | skuName=Standard | meterName=Standard Inter-Region Data Transfer | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.02
+    - score=0 | productName=Rtn Preference: MGN | skuName=China | meterName=China Data Transfer - 1 to 5 Mbps | armSkuName= | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.0
+    - score=0 | productName=Rtn Preference: MGN | skuName=China | meterName=China Data Transfer - 1 Mbps | armSkuName= | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.0
+    - Conclusion: Ambiguous: multiple meters, need capacity-first / stricter filters.
+  - Resource: id=kv-main-co | category=security.keyvault | region=westeurope | requested_sku=standard | billing_model=payg
+    - Catalog used: `catalog/key_vault__westeurope__USD.jsonl` (reason: category='security.keyvault' -> serviceName='Key Vault' via normalize_service_name; region='westeurope', currency='USD')
+    - Catalog search results: 14 candidates
+    - score=1 | productName=Key Vault | skuName=Standard | meterName=Advanced Key Operations | armSkuName= | unitOfMeasure=10K | type=Consumption | priceType=Consumption | unitPrice=0.15
+    - score=1 | productName=Key Vault | skuName=Standard | meterName=Automated Key Rotation | armSkuName= | unitOfMeasure=1 Rotation | type=Consumption | priceType=Consumption | unitPrice=1.0
+    - score=1 | productName=Key Vault | skuName=Standard | meterName=Secret Renewal | armSkuName= | unitOfMeasure=1 | type=Consumption | priceType=Consumption | unitPrice=1.0
+    - score=1 | productName=Azure Dedicated HSM | skuName=Standard | meterName=Standard Instance | armSkuName= | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=4.85
+    - score=1 | productName=Key Vault HSM Pool | skuName=Standard B1 | meterName=Standard B1 Instance | armSkuName= | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=3.2
+    - score=1 | productName=Key Vault | skuName=Standard | meterName=Operations | armSkuName= | unitOfMeasure=10K | type=Consumption | priceType=Consumption | unitPrice=0.03
+    - score=1 | productName=Key Vault | skuName=Standard | meterName=Certificate Renewal Request | armSkuName= | unitOfMeasure=1 | type=Consumption | priceType=Consumption | unitPrice=3.0
+    - score=0 | productName=Key Vault | skuName=Premium | meterName=Automated Key Rotation | armSkuName= | unitOfMeasure=1 Rotation | type=Consumption | priceType=Consumption | unitPrice=1.0
+    - score=0 | productName=Key Vault | skuName=Premium | meterName=Operations | armSkuName= | unitOfMeasure=10K | type=Consumption | priceType=Consumption | unitPrice=0.03
+    - score=0 | productName=Key Vault | skuName=Premium | meterName=Premium HSM-protected RSA 2048-bit key | armSkuName= | unitOfMeasure=1 | type=Consumption | priceType=Consumption | unitPrice=1.0
+    - Conclusion: Ambiguous: multiple meters, need capacity-first / stricter filters.
+  - Resource: id=redis-cache-co | category=cache.redis | region=westeurope | requested_sku=B1 | billing_model=payg
+    - Catalog used: `catalog/azure_cache_for_redis__westeurope__EUR.jsonl` (reason: category='cache.redis' -> serviceName='Azure Cache for Redis' via normalize_service_name; region='westeurope', currency='EUR')
+    - Catalog search results: 0 candidates
+    - Conclusion: Correct meter is not in catalog (catalog incomplete or mapping wrong).
+  - Resource: id=log-analytics-co | category=monitoring.loganalytics | region=westeurope | requested_sku=PerGB2018 | billing_model=payg
+    - Catalog used: `catalog/log_analytics__westeurope__USD.jsonl` (reason: category='monitoring.loganalytics' -> serviceName='Log Analytics' via normalize_service_name; region='westeurope', currency='USD')
+    - Catalog search results: 6 candidates
+    - score=0 | productName=Log Analytics | skuName=Analytics Logs | meterName=Analytics Logs Data Retention | armSkuName= | unitOfMeasure=1 GB/Month | type=Consumption | priceType=Consumption | unitPrice=0.13
+    - score=0 | productName=Log Analytics | skuName=Premium | meterName=Premium Data Analyzed | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=3.5
+    - score=0 | productName=Log Analytics | skuName=Free | meterName=Free Data Analyzed | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.0
+    - score=0 | productName=Log Analytics | skuName=Standard | meterName=Standard Data Analyzed | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=2.3
+    - score=0 | productName=Log Analytics | skuName=Analytics Logs | meterName=Analytics Logs Data Ingestion | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.0
+    - score=0 | productName=Log Analytics | skuName=Analytics Logs | meterName=Analytics Logs Data Analyzed | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=2.3
+    - Conclusion: Ambiguous: multiple meters, need capacity-first / stricter filters.
+  - Resource: id=backup-vault-co | category=backup.vault | region=westeurope | requested_sku=Standard | billing_model=payg
+    - Catalog used: `catalog/backup__westeurope__USD.jsonl` (reason: category='backup.vault' -> serviceName='Backup' via normalize_service_name; region='westeurope', currency='USD')
+    - Catalog search results: 41 candidates
+    - score=1 | productName=Backup Reserved Capacity | skuName=Standard - 100 TB ZRS | meterName=ZRS Data Stored | armSkuName=backup_standard_zrs_data_stored_100tb | unitOfMeasure=1 GB/Month | type=Reservation | priceType=Reservation | unitPrice=30278.0
+    - score=1 | productName=Backup | skuName=Standard | meterName=LRS Data Stored | armSkuName= | unitOfMeasure=1 GB/Month | type=Consumption | priceType=Consumption | unitPrice=0.0224
+    - score=1 | productName=Backup Reserved Capacity | skuName=Standard - 100 TB LRS | meterName=LRS Data Stored | armSkuName=backup_standard_lrs_data_stored_100tb | unitOfMeasure=1 GB/Month | type=Reservation | priceType=Reservation | unitPrice=24222.0
+    - score=1 | productName=Backup Reserved Capacity | skuName=Standard - 100 TB RA-GRS | meterName=RA-GRS Data Stored | armSkuName=backup_standard_ra-grs_data_stored_100tb | unitOfMeasure=1 GB/Month | type=Reservation | priceType=Reservation | unitPrice=61528.0
+    - score=1 | productName=Backup Reserved Capacity | skuName=Standard - 1 PB GRS | meterName=GRS Data Stored | armSkuName=backup_standard_grs_data_stored_1pb | unitOfMeasure=1 GB/Month | type=Reservation | priceType=Reservation | unitPrice=473520.0
+    - score=1 | productName=Backup Reserved Capacity | skuName=Standard - 1 PB ZRS | meterName=ZRS Data Stored | armSkuName=backup_standard_zrs_data_stored_1pb | unitOfMeasure=1 GB/Month | type=Reservation | priceType=Reservation | unitPrice=295950.0
+    - score=1 | productName=Backup Reserved Capacity | skuName=Standard - 1 PB LRS | meterName=LRS Data Stored | armSkuName=backup_standard_lrs_data_stored_1pb | unitOfMeasure=1 GB/Month | type=Reservation | priceType=Reservation | unitPrice=236760.0
+    - score=1 | productName=Backup Reserved Capacity | skuName=Standard - 1 PB RA-GRS | meterName=RA-GRS Data Stored | armSkuName=backup_standard_ra-grs_data_stored_1pb | unitOfMeasure=1 GB/Month | type=Reservation | priceType=Reservation | unitPrice=601413.0
+    - score=1 | productName=Backup | skuName=Standard | meterName=ZRS Data Stored | armSkuName= | unitOfMeasure=1 GB/Month | type=Consumption | priceType=Consumption | unitPrice=0.028
+    - score=1 | productName=Backup Reserved Capacity | skuName=Standard - 100 TB GRS | meterName=GRS Data Stored | armSkuName=backup_standard_grs_data_stored_100tb | unitOfMeasure=1 GB/Month | type=Reservation | priceType=Reservation | unitPrice=48444.0
+    - Conclusion: Ambiguous: multiple meters, need capacity-first / stricter filters.
+  - Resource: id=asr-dr-co | category=dr.asr | region=westeurope | requested_sku=System Center | billing_model=payg
+    - Catalog used: `catalog/azure_site_recovery__westeurope__USD.jsonl` (reason: category='dr.asr' -> serviceName='Azure Site Recovery' via normalize_service_name; region='westeurope', currency='USD')
+    - Catalog search results: 2 candidates
+    - score=2 | productName=Azure Site Recovery | skuName=System Center | meterName=VM Replicated to System Center | armSkuName= | unitOfMeasure=1/Month | type=Consumption | priceType=Consumption | unitPrice=16.0
+    - score=0 | productName=Azure Site Recovery | skuName=Azure | meterName=VM Replicated to Azure | armSkuName= | unitOfMeasure=1/Month | type=Consumption | priceType=Consumption | unitPrice=25.0
+    - Conclusion: Ambiguous: multiple meters, need capacity-first / stricter filters.
+
+### Run: run5_nat_egress
+- Scenario: unknown
+  - Resource: id=vnet-main | category=network.vnet | region=westeurope | requested_sku=Virtual Network | billing_model=payg
+    - Catalog used: `catalog/virtual_network__westeurope__USD.jsonl` (reason: category='network.vnet' -> serviceName='Virtual Network' via normalize_service_name; region='westeurope', currency='USD')
+    - Catalog search results: 12 candidates
+    - score=2 | productName=Global Virtual Network Peering | skuName=Inter-Region | meterName=Inter-Region Egress | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.035
+    - score=2 | productName=Global Virtual Network Peering | skuName=Inter-Region | meterName=Inter-Region Ingress | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.035
+    - score=0 | productName=IP Addresses | skuName=Standard | meterName=Standard IPv4 Static Public IP | armSkuName= | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.005
+    - score=0 | productName=IP Addresses | skuName=Standard | meterName=Standard IPv4 Static Public IP | armSkuName= | unitOfMeasure=1 Hour | type=DevTestConsumption | priceType=DevTestConsumption | unitPrice=0.005
+    - score=0 | productName=IP Addresses | skuName=Basic | meterName=Basic IPv4 Dynamic Public IP | armSkuName= | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.004
+    - score=0 | productName=IP Addresses | skuName=Basic | meterName=Basic IPv4 Dynamic Public IP | armSkuName= | unitOfMeasure=1 Hour | type=DevTestConsumption | priceType=DevTestConsumption | unitPrice=0.004
+    - score=0 | productName=Public IP Prefix | skuName=Standard | meterName=Standard Static IP Addresses | armSkuName= | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.006
+    - score=0 | productName=Public IP Prefix | skuName=Global | meterName=Global Static Public IP | armSkuName=Global | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.012
+    - score=0 | productName=IP Addresses | skuName=Basic | meterName=Basic IPv4 Static Public IP | armSkuName= | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.0036
+    - score=0 | productName=IP Addresses | skuName=Basic | meterName=Basic IPv4 Static Public IP | armSkuName= | unitOfMeasure=1 Hour | type=DevTestConsumption | priceType=DevTestConsumption | unitPrice=0.0036
+    - Conclusion: Ambiguous: multiple meters, need capacity-first / stricter filters.
+  - Resource: id=aks-system-nodes | category=compute.aks | region=westeurope | requested_sku=Standard_D4s_v3 | billing_model=payg
+    - Catalog used: `catalog/virtual_machines__westeurope__USD.jsonl` (reason: category='compute.aks' -> serviceName='Virtual Machines' via normalize_service_name; region='westeurope', currency='USD')
+    - Catalog search results: 11279 candidates
+    - score=1 | productName=Virtual Machines DSv3 Series Windows | skuName=D4s v3 Low Priority | meterName=D4s v3 Low Priority | armSkuName=Standard_D4s_v3 | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.17
+    - score=1 | productName=Virtual Machines DSv3 Series Windows | skuName=D4s v3 Low Priority | meterName=D4s v3 Low Priority | armSkuName=Standard_D4s_v3 | unitOfMeasure=1 Hour | type=DevTestConsumption | priceType=DevTestConsumption | unitPrice=0.048
+    - score=1 | productName=Virtual Machines DSv3 Series | skuName=D4s v3 Low Priority | meterName=D4s v3 Low Priority | armSkuName=Standard_D4s_v3 | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.048
+    - score=1 | productName=Virtual Machines DSv3 Series | skuName=D4s v3 Spot | meterName=D4s v3 Spot | armSkuName=Standard_D4s_v3 | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.044352
+    - score=1 | productName=Virtual Machines DSv3 Series | skuName=D4s v3 | meterName=D4s v3 | armSkuName=Standard_D4s_v3 | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.24
+    - score=1 | productName=Virtual Machines DSv3 Series | skuName=D4s v3 | meterName=D4s v3 | armSkuName=Standard_D4s_v3 | unitOfMeasure=1 Hour | type=Reservation | priceType=Reservation | unitPrice=1339.0
+    - score=1 | productName=Virtual Machines DSv3 Series Windows | skuName=D4s v3 Spot | meterName=D4s v3 Spot | armSkuName=Standard_D4s_v3 | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.078355
+    - score=1 | productName=Virtual Machines DSv3 Series Windows | skuName=D4s v3 Spot | meterName=D4s v3 Spot | armSkuName=Standard_D4s_v3 | unitOfMeasure=1 Hour | type=DevTestConsumption | priceType=DevTestConsumption | unitPrice=0.044352
+    - score=1 | productName=Virtual Machines DSv3 Series Windows | skuName=D4s v3 | meterName=D4s v3 | armSkuName=Standard_D4s_v3 | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.424
+    - score=1 | productName=Virtual Machines DSv3 Series Windows | skuName=D4s v3 | meterName=D4s v3 | armSkuName=Standard_D4s_v3 | unitOfMeasure=1 Hour | type=DevTestConsumption | priceType=DevTestConsumption | unitPrice=0.24
+    - Conclusion: Ambiguous: multiple meters, need capacity-first / stricter filters.
+  - Resource: id=aks-control-plane | category=compute.aks | region=westeurope | requested_sku=B2pts v2 Low Priority | billing_model=payg
+    - Catalog used: `catalog/virtual_machines__westeurope__USD.jsonl` (reason: category='compute.aks' -> serviceName='Virtual Machines' via normalize_service_name; region='westeurope', currency='USD')
+    - Catalog search results: 11279 candidates
+    - score=4 | productName=Bpsv2 Series Cloud Services | skuName=B2pts v2 Low Priority | meterName=B2pts v2 Low Priority | armSkuName=Standard_B2pts_v2 | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.00752
+    - score=4 | productName=Virtual Machines Bpsv2 Series | skuName=B2pts v2 Low Priority | meterName=B2pts v2 Low Priority | armSkuName=Standard_B2pts_v2 | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.00192
+    - score=4 | productName=Virtual Machines Bpsv2 Series Windows | skuName=B2pts v2 Low Priority | meterName=B2pts v2 Low Priority | armSkuName=Standard_B2pts_v2 | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.00752
+    - score=4 | productName=Virtual Machines Bpsv2 Series Windows | skuName=B2pts v2 Low Priority | meterName=B2pts v2 Low Priority | armSkuName=Standard_B2pts_v2 | unitOfMeasure=1 Hour | type=DevTestConsumption | priceType=DevTestConsumption | unitPrice=0.00192
+    - score=3 | productName=Virtual Machines MSv2 Series Windows | skuName=M416-208s_v2 Low Priority | meterName=M416-208s_v2 Low Priority | armSkuName=Standard_M416-208s_v2 | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=31.452
+    - score=3 | productName=Virtual Machines MSv2 Series Windows | skuName=M416-208s_v2 Low Priority | meterName=M416-208s_v2 Low Priority | armSkuName=Standard_M416-208s_v2 | unitOfMeasure=1 Hour | type=DevTestConsumption | priceType=DevTestConsumption | unitPrice=11.899
+    - score=3 | productName=Virtual Machines Bsv2 Series | skuName=B32ls v2 Low Priority | meterName=B32ls v2 Low Priority | armSkuName=Standard_B32ls_v2 | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.272
+    - score=3 | productName=Virtual Machines Bsv2 Series | skuName=B32s v2 Low Priority | meterName=B32s v2 Low Priority | armSkuName=Standard_B32s_v2 | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.307
+    - score=3 | productName=Virtual Machines Basv2 Series | skuName=B2ats v2 Low Priority | meterName=B2ats v2 Low Priority | armSkuName=Standard_B2ats_v2 | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.00216
+    - score=3 | productName=Virtual Machines Bpsv2 Series | skuName=B16ps v2 Low Priority | meterName=B16ps v2 Low Priority | armSkuName=Standard_B16ps_v2 | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.123
+    - Conclusion: Ambiguous: multiple meters, need capacity-first / stricter filters.
+  - Resource: id=nat-gateway | category=network.nat | region=westeurope | requested_sku=Standard | billing_model=payg
+    - Catalog used: `catalog/bandwidth__westeurope__USD.jsonl` (reason: category='network.nat' -> serviceName='Bandwidth' via normalize_service_name; region='westeurope', currency='USD')
+    - Catalog search results: 14 candidates
+    - score=1 | productName=Bandwidth - Routing Preference: Internet | skuName=Standard | meterName=Standard Data Transfer Out | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.0
+    - score=1 | productName=Rtn Preference: MGN | skuName=Standard | meterName=Standard Data Transfer Out | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.0
+    - score=1 | productName=Rtn Preference: MGN | skuName=Standard | meterName=Standard Inter-Availability Zone Data Transfer Out | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.01
+    - score=1 | productName=Rtn Preference: MGN | skuName=Standard | meterName=Standard Data Transfer Out - to China | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.0
+    - score=1 | productName=Rtn Preference: MGN | skuName=Standard | meterName=Standard Data Transfer In | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.0
+    - score=1 | productName=Rtn Preference: MGN | skuName=Standard | meterName=Standard Data Transfer In - from China | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.09
+    - score=1 | productName=Rtn Preference: MGN | skuName=Standard | meterName=Standard Inter-Availability Zone Data Transfer In | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.01
+    - score=1 | productName=Rtn Preference: MGN | skuName=Standard | meterName=Standard Inter-Region Data Transfer | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.02
+    - score=0 | productName=Rtn Preference: MGN | skuName=China | meterName=China Data Transfer - 1 to 5 Mbps | armSkuName= | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.0
+    - score=0 | productName=Rtn Preference: MGN | skuName=China | meterName=China Data Transfer - 1 Mbps | armSkuName= | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.0
+    - Conclusion: Ambiguous: multiple meters, need capacity-first / stricter filters.
+  - Resource: id=public-ip-static | category=network.public_ip | region=westeurope | requested_sku=Standard | billing_model=payg
+    - Catalog used: `catalog/public_ip_addresses__westeurope__EUR.jsonl` (reason: category='network.public_ip' -> serviceName='Public IP Addresses' via normalize_service_name; region='westeurope', currency='EUR')
+    - Catalog search results: 0 candidates
+    - Conclusion: Correct meter is not in catalog (catalog incomplete or mapping wrong).
+  - Resource: id=egress-bandwidth | category=network.egress | region=westeurope | requested_sku=Standard | billing_model=payg
+    - Catalog used: `catalog/bandwidth__westeurope__USD.jsonl` (reason: category='network.egress' -> serviceName='Bandwidth' via normalize_service_name; region='westeurope', currency='USD')
+    - Catalog search results: 14 candidates
+    - score=1 | productName=Bandwidth - Routing Preference: Internet | skuName=Standard | meterName=Standard Data Transfer Out | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.0
+    - score=1 | productName=Rtn Preference: MGN | skuName=Standard | meterName=Standard Data Transfer Out | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.0
+    - score=1 | productName=Rtn Preference: MGN | skuName=Standard | meterName=Standard Inter-Availability Zone Data Transfer Out | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.01
+    - score=1 | productName=Rtn Preference: MGN | skuName=Standard | meterName=Standard Data Transfer Out - to China | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.0
+    - score=1 | productName=Rtn Preference: MGN | skuName=Standard | meterName=Standard Data Transfer In | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.0
+    - score=1 | productName=Rtn Preference: MGN | skuName=Standard | meterName=Standard Data Transfer In - from China | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.09
+    - score=1 | productName=Rtn Preference: MGN | skuName=Standard | meterName=Standard Inter-Availability Zone Data Transfer In | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.01
+    - score=1 | productName=Rtn Preference: MGN | skuName=Standard | meterName=Standard Inter-Region Data Transfer | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.02
+    - score=0 | productName=Rtn Preference: MGN | skuName=China | meterName=China Data Transfer - 1 to 5 Mbps | armSkuName= | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.0
+    - score=0 | productName=Rtn Preference: MGN | skuName=China | meterName=China Data Transfer - 1 Mbps | armSkuName= | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.0
+    - Conclusion: Ambiguous: multiple meters, need capacity-first / stricter filters.
+  - Resource: id=log-analytics | category=monitoring.loganalytics | region=westeurope | requested_sku=PerGB2018 | billing_model=payg
+    - Catalog used: `catalog/log_analytics__westeurope__USD.jsonl` (reason: category='monitoring.loganalytics' -> serviceName='Log Analytics' via normalize_service_name; region='westeurope', currency='USD')
+    - Catalog search results: 6 candidates
+    - score=0 | productName=Log Analytics | skuName=Analytics Logs | meterName=Analytics Logs Data Retention | armSkuName= | unitOfMeasure=1 GB/Month | type=Consumption | priceType=Consumption | unitPrice=0.13
+    - score=0 | productName=Log Analytics | skuName=Premium | meterName=Premium Data Analyzed | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=3.5
+    - score=0 | productName=Log Analytics | skuName=Free | meterName=Free Data Analyzed | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.0
+    - score=0 | productName=Log Analytics | skuName=Standard | meterName=Standard Data Analyzed | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=2.3
+    - score=0 | productName=Log Analytics | skuName=Analytics Logs | meterName=Analytics Logs Data Ingestion | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.0
+    - score=0 | productName=Log Analytics | skuName=Analytics Logs | meterName=Analytics Logs Data Analyzed | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=2.3
+    - Conclusion: Ambiguous: multiple meters, need capacity-first / stricter filters.
+  - Resource: id=keyvault-main | category=security.keyvault | region=westeurope | requested_sku=standard | billing_model=payg
+    - Catalog used: `catalog/key_vault__westeurope__USD.jsonl` (reason: category='security.keyvault' -> serviceName='Key Vault' via normalize_service_name; region='westeurope', currency='USD')
+    - Catalog search results: 14 candidates
+    - score=1 | productName=Key Vault | skuName=Standard | meterName=Advanced Key Operations | armSkuName= | unitOfMeasure=10K | type=Consumption | priceType=Consumption | unitPrice=0.15
+    - score=1 | productName=Key Vault | skuName=Standard | meterName=Automated Key Rotation | armSkuName= | unitOfMeasure=1 Rotation | type=Consumption | priceType=Consumption | unitPrice=1.0
+    - score=1 | productName=Key Vault | skuName=Standard | meterName=Secret Renewal | armSkuName= | unitOfMeasure=1 | type=Consumption | priceType=Consumption | unitPrice=1.0
+    - score=1 | productName=Azure Dedicated HSM | skuName=Standard | meterName=Standard Instance | armSkuName= | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=4.85
+    - score=1 | productName=Key Vault HSM Pool | skuName=Standard B1 | meterName=Standard B1 Instance | armSkuName= | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=3.2
+    - score=1 | productName=Key Vault | skuName=Standard | meterName=Operations | armSkuName= | unitOfMeasure=10K | type=Consumption | priceType=Consumption | unitPrice=0.03
+    - score=1 | productName=Key Vault | skuName=Standard | meterName=Certificate Renewal Request | armSkuName= | unitOfMeasure=1 | type=Consumption | priceType=Consumption | unitPrice=3.0
+    - score=0 | productName=Key Vault | skuName=Premium | meterName=Automated Key Rotation | armSkuName= | unitOfMeasure=1 Rotation | type=Consumption | priceType=Consumption | unitPrice=1.0
+    - score=0 | productName=Key Vault | skuName=Premium | meterName=Operations | armSkuName= | unitOfMeasure=10K | type=Consumption | priceType=Consumption | unitPrice=0.03
+    - score=0 | productName=Key Vault | skuName=Premium | meterName=Premium HSM-protected RSA 2048-bit key | armSkuName= | unitOfMeasure=1 | type=Consumption | priceType=Consumption | unitPrice=1.0
+    - Conclusion: Ambiguous: multiple meters, need capacity-first / stricter filters.
+  - Resource: id=backup-vault | category=backup.vault | region=westeurope | requested_sku=ADLS Gen2 Vaulted | billing_model=payg
+    - Catalog used: `catalog/backup__westeurope__USD.jsonl` (reason: category='backup.vault' -> serviceName='Backup' via normalize_service_name; region='westeurope', currency='USD')
+    - Catalog search results: 41 candidates
+    - score=3 | productName=Backup | skuName=ADLS Gen2 Vaulted | meterName=ADLS Gen2 Vaulted RA-GRS Write Operations | armSkuName=ADLS Gen2 Vaulted | unitOfMeasure=10K | type=Consumption | priceType=Consumption | unitPrice=0.108
+    - score=3 | productName=Backup | skuName=ADLS Gen2 Vaulted | meterName=ADLS Gen2 Vaulted GRS Write Operations | armSkuName=ADLS Gen2 Vaulted | unitOfMeasure=10K | type=Consumption | priceType=Consumption | unitPrice=0.108
+    - score=3 | productName=Backup | skuName=ADLS Gen2 Vaulted | meterName=ADLS Gen2 Vaulted ZRS Write Operations | armSkuName=ADLS Gen2 Vaulted | unitOfMeasure=10K | type=Consumption | priceType=Consumption | unitPrice=0.0675
+    - score=3 | productName=Backup | skuName=ADLS Gen2 Vaulted | meterName=ADLS Gen2 Vaulted Protected Instances | armSkuName=ADLS Gen2 Vaulted | unitOfMeasure=1/Month | type=Consumption | priceType=Consumption | unitPrice=13.0
+    - score=3 | productName=Backup | skuName=ADLS Gen2 Vaulted | meterName=ADLS Gen2 Vaulted LRS Write Operations | armSkuName=ADLS Gen2 Vaulted | unitOfMeasure=10K | type=Consumption | priceType=Consumption | unitPrice=0.054
+    - score=1 | productName=Backup | skuName=Azure Files Vaulted | meterName=ZRS Data Stored | armSkuName=Azure Files Vaulted | unitOfMeasure=1 GB/Month | type=Consumption | priceType=Consumption | unitPrice=0.0624
+    - score=1 | productName=Backup | skuName=Azure Files Vaulted | meterName=LRS Data Stored | armSkuName=Azure Files Vaulted | unitOfMeasure=1 GB/Month | type=Consumption | priceType=Consumption | unitPrice=0.0533
+    - score=1 | productName=Backup | skuName=Azure Files Vaulted | meterName=Azure Files Vaulted Protected Instances | armSkuName=Azure Files Vaulted | unitOfMeasure=1/Month | type=Consumption | priceType=Consumption | unitPrice=13.0
+    - score=1 | productName=Backup | skuName=Azure Files Vaulted | meterName=RA-GRS Data Stored | armSkuName=Azure Files Vaulted | unitOfMeasure=1 GB/Month | type=Consumption | priceType=Consumption | unitPrice=0.1261
+    - score=1 | productName=Backup | skuName=Azure Files Vaulted | meterName=GRS Data Stored | armSkuName=Azure Files Vaulted | unitOfMeasure=1 GB/Month | type=Consumption | priceType=Consumption | unitPrice=0.0988
+    - Conclusion: Ambiguous: multiple meters, need capacity-first / stricter filters.
+
+- Scenario: unknown
+  - Resource: id=vnet-main-co | category=network.vnet | region=westeurope | requested_sku=Virtual Network | billing_model=payg
+    - Catalog used: `catalog/virtual_network__westeurope__USD.jsonl` (reason: category='network.vnet' -> serviceName='Virtual Network' via normalize_service_name; region='westeurope', currency='USD')
+    - Catalog search results: 12 candidates
+    - score=2 | productName=Global Virtual Network Peering | skuName=Inter-Region | meterName=Inter-Region Egress | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.035
+    - score=2 | productName=Global Virtual Network Peering | skuName=Inter-Region | meterName=Inter-Region Ingress | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.035
+    - score=0 | productName=IP Addresses | skuName=Standard | meterName=Standard IPv4 Static Public IP | armSkuName= | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.005
+    - score=0 | productName=IP Addresses | skuName=Standard | meterName=Standard IPv4 Static Public IP | armSkuName= | unitOfMeasure=1 Hour | type=DevTestConsumption | priceType=DevTestConsumption | unitPrice=0.005
+    - score=0 | productName=IP Addresses | skuName=Basic | meterName=Basic IPv4 Dynamic Public IP | armSkuName= | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.004
+    - score=0 | productName=IP Addresses | skuName=Basic | meterName=Basic IPv4 Dynamic Public IP | armSkuName= | unitOfMeasure=1 Hour | type=DevTestConsumption | priceType=DevTestConsumption | unitPrice=0.004
+    - score=0 | productName=Public IP Prefix | skuName=Standard | meterName=Standard Static IP Addresses | armSkuName= | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.006
+    - score=0 | productName=Public IP Prefix | skuName=Global | meterName=Global Static Public IP | armSkuName=Global | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.012
+    - score=0 | productName=IP Addresses | skuName=Basic | meterName=Basic IPv4 Static Public IP | armSkuName= | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.0036
+    - score=0 | productName=IP Addresses | skuName=Basic | meterName=Basic IPv4 Static Public IP | armSkuName= | unitOfMeasure=1 Hour | type=DevTestConsumption | priceType=DevTestConsumption | unitPrice=0.0036
+    - Conclusion: Ambiguous: multiple meters, need capacity-first / stricter filters.
+  - Resource: id=aks-nodes-co | category=compute.aks | region=westeurope | requested_sku=Standard_D2s_v3 | billing_model=1 Year
+    - Catalog used: `catalog/virtual_machines__westeurope__USD.jsonl` (reason: category='compute.aks' -> serviceName='Virtual Machines' via normalize_service_name; region='westeurope', currency='USD')
+    - Catalog search results: 11279 candidates
+    - score=1 | productName=Virtual Machines MSv2 Series Windows | skuName=M416-208s_v2 Low Priority | meterName=M416-208s_v2 Low Priority | armSkuName=Standard_M416-208s_v2 | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=31.452
+    - score=1 | productName=Virtual Machines MSv2 Series Windows | skuName=M416-208s_v2 Low Priority | meterName=M416-208s_v2 Low Priority | armSkuName=Standard_M416-208s_v2 | unitOfMeasure=1 Hour | type=DevTestConsumption | priceType=DevTestConsumption | unitPrice=11.899
+    - score=1 | productName=Virtual Machines Easv5 Series | skuName=E16-4as v5 Low Priority | meterName=E16-4as v5 Low Priority | armSkuName=Standard_E16-4as_v5 | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.219
+    - score=1 | productName=Virtual Machines Ev3 Series | skuName=E16 v3 | meterName=E16 v3/E16s v3 | armSkuName=Standard_E16_v3 | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=1.28
+    - score=1 | productName=Virtual Machines Ev3 Series | skuName=E16 v3 | meterName=E16 v3/E16s v3 | armSkuName=Standard_E16_v3 | unitOfMeasure=1 Hour | type=Reservation | priceType=Reservation | unitPrice=6595.0
+    - score=1 | productName=DCsv3 Series Linux | skuName=standard_DC16s_v3 Low Priority | meterName=DC16s_v3 Low Priority | armSkuName=Standard_DC16s_v3 | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.368
+    - score=1 | productName=Virtual Machines Mdsv3 Medium Memory Series Linux | skuName=Standard_M176-88ds_4_v3 | meterName=Standard_M176-88ds_4_v3 | armSkuName=Standard_M176ds-88_4_v3 | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=37.05
+    - score=1 | productName=Virtual Machines Mdsv3 Medium Memory Series Linux | skuName=Standard_M176-88ds_4_v3 | meterName=Standard_M176-88ds_4_v3 | armSkuName=Standard_M176ds-88_4_v3 | unitOfMeasure=1 Hour | type=Reservation | priceType=Reservation | unitPrice=188763.0
+    - score=1 | productName=Virtual Machines Eadsv5 Series Windows | skuName=E32-16ads v5 Spot | meterName=E32-16ads v5 Spot | armSkuName=Standard_E32-16ads_v5 | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.8148
+    - score=1 | productName=Virtual Machines Eadsv5 Series Windows | skuName=E32-16ads v5 Spot | meterName=E32-16ads v5 Spot | armSkuName=Standard_E32-16ads_v5 | unitOfMeasure=1 Hour | type=DevTestConsumption | priceType=DevTestConsumption | unitPrice=0.514954
+    - Conclusion: Ambiguous: multiple meters, need capacity-first / stricter filters.
+  - Resource: id=aks-control-plane-co | category=compute.aks | region=westeurope | requested_sku=B2pts v2 Low Priority | billing_model=payg
+    - Catalog used: `catalog/virtual_machines__westeurope__USD.jsonl` (reason: category='compute.aks' -> serviceName='Virtual Machines' via normalize_service_name; region='westeurope', currency='USD')
+    - Catalog search results: 11279 candidates
+    - score=4 | productName=Bpsv2 Series Cloud Services | skuName=B2pts v2 Low Priority | meterName=B2pts v2 Low Priority | armSkuName=Standard_B2pts_v2 | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.00752
+    - score=4 | productName=Virtual Machines Bpsv2 Series | skuName=B2pts v2 Low Priority | meterName=B2pts v2 Low Priority | armSkuName=Standard_B2pts_v2 | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.00192
+    - score=4 | productName=Virtual Machines Bpsv2 Series Windows | skuName=B2pts v2 Low Priority | meterName=B2pts v2 Low Priority | armSkuName=Standard_B2pts_v2 | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.00752
+    - score=4 | productName=Virtual Machines Bpsv2 Series Windows | skuName=B2pts v2 Low Priority | meterName=B2pts v2 Low Priority | armSkuName=Standard_B2pts_v2 | unitOfMeasure=1 Hour | type=DevTestConsumption | priceType=DevTestConsumption | unitPrice=0.00192
+    - score=3 | productName=Virtual Machines MSv2 Series Windows | skuName=M416-208s_v2 Low Priority | meterName=M416-208s_v2 Low Priority | armSkuName=Standard_M416-208s_v2 | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=31.452
+    - score=3 | productName=Virtual Machines MSv2 Series Windows | skuName=M416-208s_v2 Low Priority | meterName=M416-208s_v2 Low Priority | armSkuName=Standard_M416-208s_v2 | unitOfMeasure=1 Hour | type=DevTestConsumption | priceType=DevTestConsumption | unitPrice=11.899
+    - score=3 | productName=Virtual Machines Bsv2 Series | skuName=B32ls v2 Low Priority | meterName=B32ls v2 Low Priority | armSkuName=Standard_B32ls_v2 | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.272
+    - score=3 | productName=Virtual Machines Bsv2 Series | skuName=B32s v2 Low Priority | meterName=B32s v2 Low Priority | armSkuName=Standard_B32s_v2 | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.307
+    - score=3 | productName=Virtual Machines Basv2 Series | skuName=B2ats v2 Low Priority | meterName=B2ats v2 Low Priority | armSkuName=Standard_B2ats_v2 | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.00216
+    - score=3 | productName=Virtual Machines Bpsv2 Series | skuName=B16ps v2 Low Priority | meterName=B16ps v2 Low Priority | armSkuName=Standard_B16ps_v2 | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.123
+    - Conclusion: Ambiguous: multiple meters, need capacity-first / stricter filters.
+  - Resource: id=nat-gateway-co | category=network.nat | region=westeurope | requested_sku=Standard | billing_model=payg
+    - Catalog used: `catalog/bandwidth__westeurope__USD.jsonl` (reason: category='network.nat' -> serviceName='Bandwidth' via normalize_service_name; region='westeurope', currency='USD')
+    - Catalog search results: 14 candidates
+    - score=1 | productName=Bandwidth - Routing Preference: Internet | skuName=Standard | meterName=Standard Data Transfer Out | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.0
+    - score=1 | productName=Rtn Preference: MGN | skuName=Standard | meterName=Standard Data Transfer Out | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.0
+    - score=1 | productName=Rtn Preference: MGN | skuName=Standard | meterName=Standard Inter-Availability Zone Data Transfer Out | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.01
+    - score=1 | productName=Rtn Preference: MGN | skuName=Standard | meterName=Standard Data Transfer Out - to China | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.0
+    - score=1 | productName=Rtn Preference: MGN | skuName=Standard | meterName=Standard Data Transfer In | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.0
+    - score=1 | productName=Rtn Preference: MGN | skuName=Standard | meterName=Standard Data Transfer In - from China | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.09
+    - score=1 | productName=Rtn Preference: MGN | skuName=Standard | meterName=Standard Inter-Availability Zone Data Transfer In | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.01
+    - score=1 | productName=Rtn Preference: MGN | skuName=Standard | meterName=Standard Inter-Region Data Transfer | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.02
+    - score=0 | productName=Rtn Preference: MGN | skuName=China | meterName=China Data Transfer - 1 to 5 Mbps | armSkuName= | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.0
+    - score=0 | productName=Rtn Preference: MGN | skuName=China | meterName=China Data Transfer - 1 Mbps | armSkuName= | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.0
+    - Conclusion: Ambiguous: multiple meters, need capacity-first / stricter filters.
+  - Resource: id=public-ip-static-co | category=network.public_ip | region=westeurope | requested_sku=Standard | billing_model=payg
+    - Catalog used: `catalog/public_ip_addresses__westeurope__EUR.jsonl` (reason: category='network.public_ip' -> serviceName='Public IP Addresses' via normalize_service_name; region='westeurope', currency='EUR')
+    - Catalog search results: 0 candidates
+    - Conclusion: Correct meter is not in catalog (catalog incomplete or mapping wrong).
+  - Resource: id=egress-bandwidth-co | category=network.egress | region=westeurope | requested_sku=Standard | billing_model=payg
+    - Catalog used: `catalog/bandwidth__westeurope__USD.jsonl` (reason: category='network.egress' -> serviceName='Bandwidth' via normalize_service_name; region='westeurope', currency='USD')
+    - Catalog search results: 14 candidates
+    - score=1 | productName=Bandwidth - Routing Preference: Internet | skuName=Standard | meterName=Standard Data Transfer Out | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.0
+    - score=1 | productName=Rtn Preference: MGN | skuName=Standard | meterName=Standard Data Transfer Out | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.0
+    - score=1 | productName=Rtn Preference: MGN | skuName=Standard | meterName=Standard Inter-Availability Zone Data Transfer Out | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.01
+    - score=1 | productName=Rtn Preference: MGN | skuName=Standard | meterName=Standard Data Transfer Out - to China | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.0
+    - score=1 | productName=Rtn Preference: MGN | skuName=Standard | meterName=Standard Data Transfer In | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.0
+    - score=1 | productName=Rtn Preference: MGN | skuName=Standard | meterName=Standard Data Transfer In - from China | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.09
+    - score=1 | productName=Rtn Preference: MGN | skuName=Standard | meterName=Standard Inter-Availability Zone Data Transfer In | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.01
+    - score=1 | productName=Rtn Preference: MGN | skuName=Standard | meterName=Standard Inter-Region Data Transfer | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.02
+    - score=0 | productName=Rtn Preference: MGN | skuName=China | meterName=China Data Transfer - 1 to 5 Mbps | armSkuName= | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.0
+    - score=0 | productName=Rtn Preference: MGN | skuName=China | meterName=China Data Transfer - 1 Mbps | armSkuName= | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.0
+    - Conclusion: Ambiguous: multiple meters, need capacity-first / stricter filters.
+  - Resource: id=log-analytics-co | category=monitoring.loganalytics | region=westeurope | requested_sku=PerGB2018 | billing_model=payg
+    - Catalog used: `catalog/log_analytics__westeurope__USD.jsonl` (reason: category='monitoring.loganalytics' -> serviceName='Log Analytics' via normalize_service_name; region='westeurope', currency='USD')
+    - Catalog search results: 6 candidates
+    - score=0 | productName=Log Analytics | skuName=Analytics Logs | meterName=Analytics Logs Data Retention | armSkuName= | unitOfMeasure=1 GB/Month | type=Consumption | priceType=Consumption | unitPrice=0.13
+    - score=0 | productName=Log Analytics | skuName=Premium | meterName=Premium Data Analyzed | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=3.5
+    - score=0 | productName=Log Analytics | skuName=Free | meterName=Free Data Analyzed | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.0
+    - score=0 | productName=Log Analytics | skuName=Standard | meterName=Standard Data Analyzed | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=2.3
+    - score=0 | productName=Log Analytics | skuName=Analytics Logs | meterName=Analytics Logs Data Ingestion | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.0
+    - score=0 | productName=Log Analytics | skuName=Analytics Logs | meterName=Analytics Logs Data Analyzed | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=2.3
+    - Conclusion: Ambiguous: multiple meters, need capacity-first / stricter filters.
+  - Resource: id=keyvault-co | category=security.keyvault | region=westeurope | requested_sku=standard | billing_model=payg
+    - Catalog used: `catalog/key_vault__westeurope__USD.jsonl` (reason: category='security.keyvault' -> serviceName='Key Vault' via normalize_service_name; region='westeurope', currency='USD')
+    - Catalog search results: 14 candidates
+    - score=1 | productName=Key Vault | skuName=Standard | meterName=Advanced Key Operations | armSkuName= | unitOfMeasure=10K | type=Consumption | priceType=Consumption | unitPrice=0.15
+    - score=1 | productName=Key Vault | skuName=Standard | meterName=Automated Key Rotation | armSkuName= | unitOfMeasure=1 Rotation | type=Consumption | priceType=Consumption | unitPrice=1.0
+    - score=1 | productName=Key Vault | skuName=Standard | meterName=Secret Renewal | armSkuName= | unitOfMeasure=1 | type=Consumption | priceType=Consumption | unitPrice=1.0
+    - score=1 | productName=Azure Dedicated HSM | skuName=Standard | meterName=Standard Instance | armSkuName= | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=4.85
+    - score=1 | productName=Key Vault HSM Pool | skuName=Standard B1 | meterName=Standard B1 Instance | armSkuName= | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=3.2
+    - score=1 | productName=Key Vault | skuName=Standard | meterName=Operations | armSkuName= | unitOfMeasure=10K | type=Consumption | priceType=Consumption | unitPrice=0.03
+    - score=1 | productName=Key Vault | skuName=Standard | meterName=Certificate Renewal Request | armSkuName= | unitOfMeasure=1 | type=Consumption | priceType=Consumption | unitPrice=3.0
+    - score=0 | productName=Key Vault | skuName=Premium | meterName=Automated Key Rotation | armSkuName= | unitOfMeasure=1 Rotation | type=Consumption | priceType=Consumption | unitPrice=1.0
+    - score=0 | productName=Key Vault | skuName=Premium | meterName=Operations | armSkuName= | unitOfMeasure=10K | type=Consumption | priceType=Consumption | unitPrice=0.03
+    - score=0 | productName=Key Vault | skuName=Premium | meterName=Premium HSM-protected RSA 2048-bit key | armSkuName= | unitOfMeasure=1 | type=Consumption | priceType=Consumption | unitPrice=1.0
+    - Conclusion: Ambiguous: multiple meters, need capacity-first / stricter filters.
+  - Resource: id=backup-vault-co | category=backup.vault | region=westeurope | requested_sku=ADLS Gen2 Vaulted | billing_model=payg
+    - Catalog used: `catalog/backup__westeurope__USD.jsonl` (reason: category='backup.vault' -> serviceName='Backup' via normalize_service_name; region='westeurope', currency='USD')
+    - Catalog search results: 41 candidates
+    - score=3 | productName=Backup | skuName=ADLS Gen2 Vaulted | meterName=ADLS Gen2 Vaulted RA-GRS Write Operations | armSkuName=ADLS Gen2 Vaulted | unitOfMeasure=10K | type=Consumption | priceType=Consumption | unitPrice=0.108
+    - score=3 | productName=Backup | skuName=ADLS Gen2 Vaulted | meterName=ADLS Gen2 Vaulted GRS Write Operations | armSkuName=ADLS Gen2 Vaulted | unitOfMeasure=10K | type=Consumption | priceType=Consumption | unitPrice=0.108
+    - score=3 | productName=Backup | skuName=ADLS Gen2 Vaulted | meterName=ADLS Gen2 Vaulted ZRS Write Operations | armSkuName=ADLS Gen2 Vaulted | unitOfMeasure=10K | type=Consumption | priceType=Consumption | unitPrice=0.0675
+    - score=3 | productName=Backup | skuName=ADLS Gen2 Vaulted | meterName=ADLS Gen2 Vaulted Protected Instances | armSkuName=ADLS Gen2 Vaulted | unitOfMeasure=1/Month | type=Consumption | priceType=Consumption | unitPrice=13.0
+    - score=3 | productName=Backup | skuName=ADLS Gen2 Vaulted | meterName=ADLS Gen2 Vaulted LRS Write Operations | armSkuName=ADLS Gen2 Vaulted | unitOfMeasure=10K | type=Consumption | priceType=Consumption | unitPrice=0.054
+    - score=1 | productName=Backup | skuName=Azure Files Vaulted | meterName=ZRS Data Stored | armSkuName=Azure Files Vaulted | unitOfMeasure=1 GB/Month | type=Consumption | priceType=Consumption | unitPrice=0.0624
+    - score=1 | productName=Backup | skuName=Azure Files Vaulted | meterName=LRS Data Stored | armSkuName=Azure Files Vaulted | unitOfMeasure=1 GB/Month | type=Consumption | priceType=Consumption | unitPrice=0.0533
+    - score=1 | productName=Backup | skuName=Azure Files Vaulted | meterName=Azure Files Vaulted Protected Instances | armSkuName=Azure Files Vaulted | unitOfMeasure=1/Month | type=Consumption | priceType=Consumption | unitPrice=13.0
+    - score=1 | productName=Backup | skuName=Azure Files Vaulted | meterName=RA-GRS Data Stored | armSkuName=Azure Files Vaulted | unitOfMeasure=1 GB/Month | type=Consumption | priceType=Consumption | unitPrice=0.1261
+    - score=1 | productName=Backup | skuName=Azure Files Vaulted | meterName=GRS Data Stored | armSkuName=Azure Files Vaulted | unitOfMeasure=1 GB/Month | type=Consumption | priceType=Consumption | unitPrice=0.0988
+    - Conclusion: Ambiguous: multiple meters, need capacity-first / stricter filters.
+
+- Scenario: unknown
+  - Resource: id=vnet-main-hp | category=network.vnet | region=westeurope | requested_sku=Virtual Network | billing_model=payg
+    - Catalog used: `catalog/virtual_network__westeurope__USD.jsonl` (reason: category='network.vnet' -> serviceName='Virtual Network' via normalize_service_name; region='westeurope', currency='USD')
+    - Catalog search results: 12 candidates
+    - score=2 | productName=Global Virtual Network Peering | skuName=Inter-Region | meterName=Inter-Region Egress | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.035
+    - score=2 | productName=Global Virtual Network Peering | skuName=Inter-Region | meterName=Inter-Region Ingress | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.035
+    - score=0 | productName=IP Addresses | skuName=Standard | meterName=Standard IPv4 Static Public IP | armSkuName= | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.005
+    - score=0 | productName=IP Addresses | skuName=Standard | meterName=Standard IPv4 Static Public IP | armSkuName= | unitOfMeasure=1 Hour | type=DevTestConsumption | priceType=DevTestConsumption | unitPrice=0.005
+    - score=0 | productName=IP Addresses | skuName=Basic | meterName=Basic IPv4 Dynamic Public IP | armSkuName= | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.004
+    - score=0 | productName=IP Addresses | skuName=Basic | meterName=Basic IPv4 Dynamic Public IP | armSkuName= | unitOfMeasure=1 Hour | type=DevTestConsumption | priceType=DevTestConsumption | unitPrice=0.004
+    - score=0 | productName=Public IP Prefix | skuName=Standard | meterName=Standard Static IP Addresses | armSkuName= | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.006
+    - score=0 | productName=Public IP Prefix | skuName=Global | meterName=Global Static Public IP | armSkuName=Global | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.012
+    - score=0 | productName=IP Addresses | skuName=Basic | meterName=Basic IPv4 Static Public IP | armSkuName= | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.0036
+    - score=0 | productName=IP Addresses | skuName=Basic | meterName=Basic IPv4 Static Public IP | armSkuName= | unitOfMeasure=1 Hour | type=DevTestConsumption | priceType=DevTestConsumption | unitPrice=0.0036
+    - Conclusion: Ambiguous: multiple meters, need capacity-first / stricter filters.
+  - Resource: id=aks-nodes-hp | category=compute.aks | region=westeurope | requested_sku=Standard_D8s_v3 | billing_model=payg
+    - Catalog used: `catalog/virtual_machines__westeurope__USD.jsonl` (reason: category='compute.aks' -> serviceName='Virtual Machines' via normalize_service_name; region='westeurope', currency='USD')
+    - Catalog search results: 11279 candidates
+    - score=1 | productName=Virtual Machines DSv3 Series Windows | skuName=D8s v3 | meterName=D8s v3 | armSkuName=Standard_D8s_v3 | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.848
+    - score=1 | productName=Virtual Machines DSv3 Series Windows | skuName=D8s v3 | meterName=D8s v3 | armSkuName=Standard_D8s_v3 | unitOfMeasure=1 Hour | type=DevTestConsumption | priceType=DevTestConsumption | unitPrice=0.48
+    - score=1 | productName=Virtual Machines DSv3 Series | skuName=D8s v3 Low Priority | meterName=D8s v3 Low Priority | armSkuName=Standard_D8s_v3 | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.096
+    - score=1 | productName=Virtual Machines DSv3 Series | skuName=D8s v3 | meterName=D8s v3 | armSkuName=Standard_D8s_v3 | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.48
+    - score=1 | productName=Virtual Machines DSv3 Series | skuName=D8s v3 | meterName=D8s v3 | armSkuName=Standard_D8s_v3 | unitOfMeasure=1 Hour | type=Reservation | priceType=Reservation | unitPrice=2678.0
+    - score=1 | productName=Virtual Machines DSv3 Series Windows | skuName=D8s v3 Low Priority | meterName=D8s v3 Low Priority | armSkuName=Standard_D8s_v3 | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.339
+    - score=1 | productName=Virtual Machines DSv3 Series Windows | skuName=D8s v3 Low Priority | meterName=D8s v3 Low Priority | armSkuName=Standard_D8s_v3 | unitOfMeasure=1 Hour | type=DevTestConsumption | priceType=DevTestConsumption | unitPrice=0.096
+    - score=1 | productName=Virtual Machines DSv3 Series | skuName=D8s v3 Spot | meterName=D8s v3 Spot | armSkuName=Standard_D8s_v3 | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.088704
+    - score=1 | productName=Virtual Machines DSv3 Series Windows | skuName=D8s v3 Spot | meterName=D8s v3 Spot | armSkuName=Standard_D8s_v3 | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.15671
+    - score=1 | productName=Virtual Machines DSv3 Series Windows | skuName=D8s v3 Spot | meterName=D8s v3 Spot | armSkuName=Standard_D8s_v3 | unitOfMeasure=1 Hour | type=DevTestConsumption | priceType=DevTestConsumption | unitPrice=0.088704
+    - Conclusion: Ambiguous: multiple meters, need capacity-first / stricter filters.
+  - Resource: id=aks-control-plane-hp | category=compute.aks | region=westeurope | requested_sku=B2pts v2 Low Priority | billing_model=payg
+    - Catalog used: `catalog/virtual_machines__westeurope__USD.jsonl` (reason: category='compute.aks' -> serviceName='Virtual Machines' via normalize_service_name; region='westeurope', currency='USD')
+    - Catalog search results: 11279 candidates
+    - score=4 | productName=Bpsv2 Series Cloud Services | skuName=B2pts v2 Low Priority | meterName=B2pts v2 Low Priority | armSkuName=Standard_B2pts_v2 | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.00752
+    - score=4 | productName=Virtual Machines Bpsv2 Series | skuName=B2pts v2 Low Priority | meterName=B2pts v2 Low Priority | armSkuName=Standard_B2pts_v2 | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.00192
+    - score=4 | productName=Virtual Machines Bpsv2 Series Windows | skuName=B2pts v2 Low Priority | meterName=B2pts v2 Low Priority | armSkuName=Standard_B2pts_v2 | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.00752
+    - score=4 | productName=Virtual Machines Bpsv2 Series Windows | skuName=B2pts v2 Low Priority | meterName=B2pts v2 Low Priority | armSkuName=Standard_B2pts_v2 | unitOfMeasure=1 Hour | type=DevTestConsumption | priceType=DevTestConsumption | unitPrice=0.00192
+    - score=3 | productName=Virtual Machines MSv2 Series Windows | skuName=M416-208s_v2 Low Priority | meterName=M416-208s_v2 Low Priority | armSkuName=Standard_M416-208s_v2 | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=31.452
+    - score=3 | productName=Virtual Machines MSv2 Series Windows | skuName=M416-208s_v2 Low Priority | meterName=M416-208s_v2 Low Priority | armSkuName=Standard_M416-208s_v2 | unitOfMeasure=1 Hour | type=DevTestConsumption | priceType=DevTestConsumption | unitPrice=11.899
+    - score=3 | productName=Virtual Machines Bsv2 Series | skuName=B32ls v2 Low Priority | meterName=B32ls v2 Low Priority | armSkuName=Standard_B32ls_v2 | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.272
+    - score=3 | productName=Virtual Machines Bsv2 Series | skuName=B32s v2 Low Priority | meterName=B32s v2 Low Priority | armSkuName=Standard_B32s_v2 | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.307
+    - score=3 | productName=Virtual Machines Basv2 Series | skuName=B2ats v2 Low Priority | meterName=B2ats v2 Low Priority | armSkuName=Standard_B2ats_v2 | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.00216
+    - score=3 | productName=Virtual Machines Bpsv2 Series | skuName=B16ps v2 Low Priority | meterName=B16ps v2 Low Priority | armSkuName=Standard_B16ps_v2 | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.123
+    - Conclusion: Ambiguous: multiple meters, need capacity-first / stricter filters.
+  - Resource: id=nat-gateway-hp | category=network.nat | region=westeurope | requested_sku=Standard | billing_model=payg
+    - Catalog used: `catalog/bandwidth__westeurope__USD.jsonl` (reason: category='network.nat' -> serviceName='Bandwidth' via normalize_service_name; region='westeurope', currency='USD')
+    - Catalog search results: 14 candidates
+    - score=1 | productName=Bandwidth - Routing Preference: Internet | skuName=Standard | meterName=Standard Data Transfer Out | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.0
+    - score=1 | productName=Rtn Preference: MGN | skuName=Standard | meterName=Standard Data Transfer Out | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.0
+    - score=1 | productName=Rtn Preference: MGN | skuName=Standard | meterName=Standard Inter-Availability Zone Data Transfer Out | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.01
+    - score=1 | productName=Rtn Preference: MGN | skuName=Standard | meterName=Standard Data Transfer Out - to China | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.0
+    - score=1 | productName=Rtn Preference: MGN | skuName=Standard | meterName=Standard Data Transfer In | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.0
+    - score=1 | productName=Rtn Preference: MGN | skuName=Standard | meterName=Standard Data Transfer In - from China | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.09
+    - score=1 | productName=Rtn Preference: MGN | skuName=Standard | meterName=Standard Inter-Availability Zone Data Transfer In | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.01
+    - score=1 | productName=Rtn Preference: MGN | skuName=Standard | meterName=Standard Inter-Region Data Transfer | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.02
+    - score=0 | productName=Rtn Preference: MGN | skuName=China | meterName=China Data Transfer - 1 to 5 Mbps | armSkuName= | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.0
+    - score=0 | productName=Rtn Preference: MGN | skuName=China | meterName=China Data Transfer - 1 Mbps | armSkuName= | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.0
+    - Conclusion: Ambiguous: multiple meters, need capacity-first / stricter filters.
+  - Resource: id=public-ip-static-hp | category=network.public_ip | region=westeurope | requested_sku=Standard | billing_model=payg
+    - Catalog used: `catalog/public_ip_addresses__westeurope__EUR.jsonl` (reason: category='network.public_ip' -> serviceName='Public IP Addresses' via normalize_service_name; region='westeurope', currency='EUR')
+    - Catalog search results: 0 candidates
+    - Conclusion: Correct meter is not in catalog (catalog incomplete or mapping wrong).
+  - Resource: id=egress-bandwidth-hp | category=network.egress | region=westeurope | requested_sku=Standard | billing_model=payg
+    - Catalog used: `catalog/bandwidth__westeurope__USD.jsonl` (reason: category='network.egress' -> serviceName='Bandwidth' via normalize_service_name; region='westeurope', currency='USD')
+    - Catalog search results: 14 candidates
+    - score=1 | productName=Bandwidth - Routing Preference: Internet | skuName=Standard | meterName=Standard Data Transfer Out | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.0
+    - score=1 | productName=Rtn Preference: MGN | skuName=Standard | meterName=Standard Data Transfer Out | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.0
+    - score=1 | productName=Rtn Preference: MGN | skuName=Standard | meterName=Standard Inter-Availability Zone Data Transfer Out | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.01
+    - score=1 | productName=Rtn Preference: MGN | skuName=Standard | meterName=Standard Data Transfer Out - to China | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.0
+    - score=1 | productName=Rtn Preference: MGN | skuName=Standard | meterName=Standard Data Transfer In | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.0
+    - score=1 | productName=Rtn Preference: MGN | skuName=Standard | meterName=Standard Data Transfer In - from China | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.09
+    - score=1 | productName=Rtn Preference: MGN | skuName=Standard | meterName=Standard Inter-Availability Zone Data Transfer In | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.01
+    - score=1 | productName=Rtn Preference: MGN | skuName=Standard | meterName=Standard Inter-Region Data Transfer | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.02
+    - score=0 | productName=Rtn Preference: MGN | skuName=China | meterName=China Data Transfer - 1 to 5 Mbps | armSkuName= | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.0
+    - score=0 | productName=Rtn Preference: MGN | skuName=China | meterName=China Data Transfer - 1 Mbps | armSkuName= | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.0
+    - Conclusion: Ambiguous: multiple meters, need capacity-first / stricter filters.
+  - Resource: id=log-analytics-hp | category=monitoring.loganalytics | region=westeurope | requested_sku=PerGB2018 | billing_model=payg
+    - Catalog used: `catalog/log_analytics__westeurope__USD.jsonl` (reason: category='monitoring.loganalytics' -> serviceName='Log Analytics' via normalize_service_name; region='westeurope', currency='USD')
+    - Catalog search results: 6 candidates
+    - score=0 | productName=Log Analytics | skuName=Analytics Logs | meterName=Analytics Logs Data Retention | armSkuName= | unitOfMeasure=1 GB/Month | type=Consumption | priceType=Consumption | unitPrice=0.13
+    - score=0 | productName=Log Analytics | skuName=Premium | meterName=Premium Data Analyzed | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=3.5
+    - score=0 | productName=Log Analytics | skuName=Free | meterName=Free Data Analyzed | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.0
+    - score=0 | productName=Log Analytics | skuName=Standard | meterName=Standard Data Analyzed | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=2.3
+    - score=0 | productName=Log Analytics | skuName=Analytics Logs | meterName=Analytics Logs Data Ingestion | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.0
+    - score=0 | productName=Log Analytics | skuName=Analytics Logs | meterName=Analytics Logs Data Analyzed | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=2.3
+    - Conclusion: Ambiguous: multiple meters, need capacity-first / stricter filters.
+  - Resource: id=keyvault-hp | category=security.keyvault | region=westeurope | requested_sku=standard | billing_model=payg
+    - Catalog used: `catalog/key_vault__westeurope__USD.jsonl` (reason: category='security.keyvault' -> serviceName='Key Vault' via normalize_service_name; region='westeurope', currency='USD')
+    - Catalog search results: 14 candidates
+    - score=1 | productName=Key Vault | skuName=Standard | meterName=Advanced Key Operations | armSkuName= | unitOfMeasure=10K | type=Consumption | priceType=Consumption | unitPrice=0.15
+    - score=1 | productName=Key Vault | skuName=Standard | meterName=Automated Key Rotation | armSkuName= | unitOfMeasure=1 Rotation | type=Consumption | priceType=Consumption | unitPrice=1.0
+    - score=1 | productName=Key Vault | skuName=Standard | meterName=Secret Renewal | armSkuName= | unitOfMeasure=1 | type=Consumption | priceType=Consumption | unitPrice=1.0
+    - score=1 | productName=Azure Dedicated HSM | skuName=Standard | meterName=Standard Instance | armSkuName= | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=4.85
+    - score=1 | productName=Key Vault HSM Pool | skuName=Standard B1 | meterName=Standard B1 Instance | armSkuName= | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=3.2
+    - score=1 | productName=Key Vault | skuName=Standard | meterName=Operations | armSkuName= | unitOfMeasure=10K | type=Consumption | priceType=Consumption | unitPrice=0.03
+    - score=1 | productName=Key Vault | skuName=Standard | meterName=Certificate Renewal Request | armSkuName= | unitOfMeasure=1 | type=Consumption | priceType=Consumption | unitPrice=3.0
+    - score=0 | productName=Key Vault | skuName=Premium | meterName=Automated Key Rotation | armSkuName= | unitOfMeasure=1 Rotation | type=Consumption | priceType=Consumption | unitPrice=1.0
+    - score=0 | productName=Key Vault | skuName=Premium | meterName=Operations | armSkuName= | unitOfMeasure=10K | type=Consumption | priceType=Consumption | unitPrice=0.03
+    - score=0 | productName=Key Vault | skuName=Premium | meterName=Premium HSM-protected RSA 2048-bit key | armSkuName= | unitOfMeasure=1 | type=Consumption | priceType=Consumption | unitPrice=1.0
+    - Conclusion: Ambiguous: multiple meters, need capacity-first / stricter filters.
+  - Resource: id=backup-vault-hp | category=backup.vault | region=westeurope | requested_sku=ADLS Gen2 Vaulted | billing_model=payg
+    - Catalog used: `catalog/backup__westeurope__USD.jsonl` (reason: category='backup.vault' -> serviceName='Backup' via normalize_service_name; region='westeurope', currency='USD')
+    - Catalog search results: 41 candidates
+    - score=3 | productName=Backup | skuName=ADLS Gen2 Vaulted | meterName=ADLS Gen2 Vaulted RA-GRS Write Operations | armSkuName=ADLS Gen2 Vaulted | unitOfMeasure=10K | type=Consumption | priceType=Consumption | unitPrice=0.108
+    - score=3 | productName=Backup | skuName=ADLS Gen2 Vaulted | meterName=ADLS Gen2 Vaulted GRS Write Operations | armSkuName=ADLS Gen2 Vaulted | unitOfMeasure=10K | type=Consumption | priceType=Consumption | unitPrice=0.108
+    - score=3 | productName=Backup | skuName=ADLS Gen2 Vaulted | meterName=ADLS Gen2 Vaulted ZRS Write Operations | armSkuName=ADLS Gen2 Vaulted | unitOfMeasure=10K | type=Consumption | priceType=Consumption | unitPrice=0.0675
+    - score=3 | productName=Backup | skuName=ADLS Gen2 Vaulted | meterName=ADLS Gen2 Vaulted Protected Instances | armSkuName=ADLS Gen2 Vaulted | unitOfMeasure=1/Month | type=Consumption | priceType=Consumption | unitPrice=13.0
+    - score=3 | productName=Backup | skuName=ADLS Gen2 Vaulted | meterName=ADLS Gen2 Vaulted LRS Write Operations | armSkuName=ADLS Gen2 Vaulted | unitOfMeasure=10K | type=Consumption | priceType=Consumption | unitPrice=0.054
+    - score=1 | productName=Backup | skuName=Azure Files Vaulted | meterName=ZRS Data Stored | armSkuName=Azure Files Vaulted | unitOfMeasure=1 GB/Month | type=Consumption | priceType=Consumption | unitPrice=0.0624
+    - score=1 | productName=Backup | skuName=Azure Files Vaulted | meterName=LRS Data Stored | armSkuName=Azure Files Vaulted | unitOfMeasure=1 GB/Month | type=Consumption | priceType=Consumption | unitPrice=0.0533
+    - score=1 | productName=Backup | skuName=Azure Files Vaulted | meterName=Azure Files Vaulted Protected Instances | armSkuName=Azure Files Vaulted | unitOfMeasure=1/Month | type=Consumption | priceType=Consumption | unitPrice=13.0
+    - score=1 | productName=Backup | skuName=Azure Files Vaulted | meterName=RA-GRS Data Stored | armSkuName=Azure Files Vaulted | unitOfMeasure=1 GB/Month | type=Consumption | priceType=Consumption | unitPrice=0.1261
+    - score=1 | productName=Backup | skuName=Azure Files Vaulted | meterName=GRS Data Stored | armSkuName=Azure Files Vaulted | unitOfMeasure=1 GB/Month | type=Consumption | priceType=Consumption | unitPrice=0.0988
+    - Conclusion: Ambiguous: multiple meters, need capacity-first / stricter filters.
+
+### Run: run6_minimal_defaults
+- Scenario: unknown
+  - Resource: id=vnet-main | category=network.vnet | region=westeurope | requested_sku=Virtual Network | billing_model=payg
+    - Catalog used: `catalog/virtual_network__westeurope__USD.jsonl` (reason: category='network.vnet' -> serviceName='Virtual Network' via normalize_service_name; region='westeurope', currency='USD')
+    - Catalog search results: 12 candidates
+    - score=2 | productName=Global Virtual Network Peering | skuName=Inter-Region | meterName=Inter-Region Egress | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.035
+    - score=2 | productName=Global Virtual Network Peering | skuName=Inter-Region | meterName=Inter-Region Ingress | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.035
+    - score=0 | productName=IP Addresses | skuName=Standard | meterName=Standard IPv4 Static Public IP | armSkuName= | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.005
+    - score=0 | productName=IP Addresses | skuName=Standard | meterName=Standard IPv4 Static Public IP | armSkuName= | unitOfMeasure=1 Hour | type=DevTestConsumption | priceType=DevTestConsumption | unitPrice=0.005
+    - score=0 | productName=IP Addresses | skuName=Basic | meterName=Basic IPv4 Dynamic Public IP | armSkuName= | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.004
+    - score=0 | productName=IP Addresses | skuName=Basic | meterName=Basic IPv4 Dynamic Public IP | armSkuName= | unitOfMeasure=1 Hour | type=DevTestConsumption | priceType=DevTestConsumption | unitPrice=0.004
+    - score=0 | productName=Public IP Prefix | skuName=Standard | meterName=Standard Static IP Addresses | armSkuName= | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.006
+    - score=0 | productName=Public IP Prefix | skuName=Global | meterName=Global Static Public IP | armSkuName=Global | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.012
+    - score=0 | productName=IP Addresses | skuName=Basic | meterName=Basic IPv4 Static Public IP | armSkuName= | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.0036
+    - score=0 | productName=IP Addresses | skuName=Basic | meterName=Basic IPv4 Static Public IP | armSkuName= | unitOfMeasure=1 Hour | type=DevTestConsumption | priceType=DevTestConsumption | unitPrice=0.0036
+    - Conclusion: Ambiguous: multiple meters, need capacity-first / stricter filters.
+  - Resource: id=vm-internal-tool | category=compute.vm | region=westeurope | requested_sku=Standard_D2s_v3 | billing_model=payg
+    - Catalog used: `catalog/virtual_machines__westeurope__USD.jsonl` (reason: category='compute.vm' -> serviceName='Virtual Machines' via normalize_service_name; region='westeurope', currency='USD')
+    - Catalog search results: 11279 candidates
+    - score=1 | productName=Virtual Machines DSv3 Series Windows | skuName=D2s v3 | meterName=D2s v3 | armSkuName=Standard_D2s_v3 | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.212
+    - score=1 | productName=Virtual Machines DSv3 Series Windows | skuName=D2s v3 | meterName=D2s v3 | armSkuName=Standard_D2s_v3 | unitOfMeasure=1 Hour | type=DevTestConsumption | priceType=DevTestConsumption | unitPrice=0.12
+    - score=1 | productName=Virtual Machines DSv3 Series Windows | skuName=D2s v3 Low Priority | meterName=D2s v3 Low Priority | armSkuName=Standard_D2s_v3 | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.0848
+    - score=1 | productName=Virtual Machines DSv3 Series Windows | skuName=D2s v3 Low Priority | meterName=D2s v3 Low Priority | armSkuName=Standard_D2s_v3 | unitOfMeasure=1 Hour | type=DevTestConsumption | priceType=DevTestConsumption | unitPrice=0.024
+    - score=1 | productName=Virtual Machines DSv3 Series Windows | skuName=D2s v3 Spot | meterName=D2s v3 Spot | armSkuName=Standard_D2s_v3 | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.039178
+    - score=1 | productName=Virtual Machines DSv3 Series Windows | skuName=D2s v3 Spot | meterName=D2s v3 Spot | armSkuName=Standard_D2s_v3 | unitOfMeasure=1 Hour | type=DevTestConsumption | priceType=DevTestConsumption | unitPrice=0.022176
+    - score=1 | productName=Virtual Machines DSv3 Series | skuName=D2s v3 | meterName=D2s v3 | armSkuName=Standard_D2s_v3 | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.12
+    - score=1 | productName=Virtual Machines DSv3 Series | skuName=D2s v3 | meterName=D2s v3 | armSkuName=Standard_D2s_v3 | unitOfMeasure=1 Hour | type=Reservation | priceType=Reservation | unitPrice=670.0
+    - score=1 | productName=Virtual Machines DSv3 Series | skuName=D2s v3 Low Priority | meterName=D2s v3 Low Priority | armSkuName=Standard_D2s_v3 | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.024
+    - score=1 | productName=Virtual Machines DSv3 Series | skuName=D2s v3 Spot | meterName=D2s v3 Spot | armSkuName=Standard_D2s_v3 | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.022176
+    - Conclusion: Ambiguous: multiple meters, need capacity-first / stricter filters.
+  - Resource: id=disk-os-vm-internal-tool | category=storage.disk | region=westeurope | requested_sku=P6 | billing_model=payg
+    - Catalog used: `catalog/storage__westeurope__USD.jsonl` (reason: category='storage.disk' -> serviceName='Storage' via normalize_service_name; region='westeurope', currency='USD')
+    - Catalog search results: 1478 candidates
+    - score=1 | productName=Premium SSD Managed Disks | skuName=P60 LRS | meterName=P60 LRS Disk Mount | armSkuName=Premium_SSD_Managed_Disks_P60 | unitOfMeasure=1/Month | type=Consumption | priceType=Consumption | unitPrice=66.43
+    - score=1 | productName=Premium SSD Managed Disks | skuName=P60 ZRS | meterName=P60 ZRS Disk | armSkuName=Premium_SSD_Managed_Disks_P60 | unitOfMeasure=1/Month | type=Consumption | priceType=Consumption | unitPrice=1560.93
+    - score=1 | productName=Premium SSD Managed Disks | skuName=P6 LRS | meterName=P6 LRS Disk | armSkuName=Premium_SSD_Managed_Disk_P6 | unitOfMeasure=1/Month | type=Consumption | priceType=Consumption | unitPrice=11.2272
+    - score=1 | productName=Premium SSD Managed Disks | skuName=P60 LRS | meterName=P60 LRS Disk | armSkuName=Premium_SSD_Managed_Disks_P60 | unitOfMeasure=1/Month | type=Consumption | priceType=Consumption | unitPrice=1040.64
+    - score=1 | productName=Premium SSD Managed Disks | skuName=P60 LRS | meterName=P60 LRS Disk | armSkuName=Premium_SSD_Managed_Disks_P60 | unitOfMeasure=1/Month | type=Reservation | priceType=Reservation | unitPrice=11863.0
+    - score=1 | productName=Premium SSD Managed Disks | skuName=P6 LRS | meterName=P6 LRS Disk Mount | armSkuName=Premium_SSD_Managed_Disk_P6 | unitOfMeasure=1/Month | type=Consumption | priceType=Consumption | unitPrice=0.611
+    - score=1 | productName=Premium SSD Managed Disks | skuName=P6 ZRS | meterName=P6 ZRS Disk | armSkuName=Premium_SSD_Managed_Disk_P6 | unitOfMeasure=1/Month | type=Consumption | priceType=Consumption | unitPrice=16.841
+    - score=1 | productName=Premium SSD Managed Disks | skuName=P60 ZRS | meterName=P60 ZRS Disk Mount | armSkuName=Premium_SSD_Managed_Disks_P60 | unitOfMeasure=1/Month | type=Consumption | priceType=Consumption | unitPrice=66.19
+    - score=1 | productName=Premium Page Blob | skuName=P60 LRS | meterName=P60 LRS Disk | armSkuName= | unitOfMeasure=1/Month | type=Consumption | priceType=Consumption | unitPrice=1040.64
+    - score=1 | productName=Premium Page Blob | skuName=P6 ZRS | meterName=P6 ZRS Disk | armSkuName= | unitOfMeasure=1/Month | type=Consumption | priceType=Consumption | unitPrice=16.8408
+    - Conclusion: Ambiguous: multiple meters, need capacity-first / stricter filters.
+  - Resource: id=la-workspace | category=monitoring.loganalytics | region=westeurope | requested_sku=Analytics Logs | billing_model=payg
+    - Catalog used: `catalog/log_analytics__westeurope__USD.jsonl` (reason: category='monitoring.loganalytics' -> serviceName='Log Analytics' via normalize_service_name; region='westeurope', currency='USD')
+    - Catalog search results: 6 candidates
+    - score=2 | productName=Log Analytics | skuName=Analytics Logs | meterName=Analytics Logs Data Retention | armSkuName= | unitOfMeasure=1 GB/Month | type=Consumption | priceType=Consumption | unitPrice=0.13
+    - score=2 | productName=Log Analytics | skuName=Analytics Logs | meterName=Analytics Logs Data Ingestion | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.0
+    - score=2 | productName=Log Analytics | skuName=Analytics Logs | meterName=Analytics Logs Data Analyzed | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=2.3
+    - score=1 | productName=Log Analytics | skuName=Premium | meterName=Premium Data Analyzed | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=3.5
+    - score=1 | productName=Log Analytics | skuName=Free | meterName=Free Data Analyzed | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.0
+    - score=1 | productName=Log Analytics | skuName=Standard | meterName=Standard Data Analyzed | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=2.3
+    - Conclusion: Ambiguous: multiple meters, need capacity-first / stricter filters.
+  - Resource: id=backup-vault-main | category=backup.vault | region=westeurope | requested_sku=ADLS Gen2 Vaulted | billing_model=payg
+    - Catalog used: `catalog/backup__westeurope__USD.jsonl` (reason: category='backup.vault' -> serviceName='Backup' via normalize_service_name; region='westeurope', currency='USD')
+    - Catalog search results: 41 candidates
+    - score=3 | productName=Backup | skuName=ADLS Gen2 Vaulted | meterName=ADLS Gen2 Vaulted RA-GRS Write Operations | armSkuName=ADLS Gen2 Vaulted | unitOfMeasure=10K | type=Consumption | priceType=Consumption | unitPrice=0.108
+    - score=3 | productName=Backup | skuName=ADLS Gen2 Vaulted | meterName=ADLS Gen2 Vaulted GRS Write Operations | armSkuName=ADLS Gen2 Vaulted | unitOfMeasure=10K | type=Consumption | priceType=Consumption | unitPrice=0.108
+    - score=3 | productName=Backup | skuName=ADLS Gen2 Vaulted | meterName=ADLS Gen2 Vaulted ZRS Write Operations | armSkuName=ADLS Gen2 Vaulted | unitOfMeasure=10K | type=Consumption | priceType=Consumption | unitPrice=0.0675
+    - score=3 | productName=Backup | skuName=ADLS Gen2 Vaulted | meterName=ADLS Gen2 Vaulted Protected Instances | armSkuName=ADLS Gen2 Vaulted | unitOfMeasure=1/Month | type=Consumption | priceType=Consumption | unitPrice=13.0
+    - score=3 | productName=Backup | skuName=ADLS Gen2 Vaulted | meterName=ADLS Gen2 Vaulted LRS Write Operations | armSkuName=ADLS Gen2 Vaulted | unitOfMeasure=10K | type=Consumption | priceType=Consumption | unitPrice=0.054
+    - score=1 | productName=Backup | skuName=Azure Files Vaulted | meterName=ZRS Data Stored | armSkuName=Azure Files Vaulted | unitOfMeasure=1 GB/Month | type=Consumption | priceType=Consumption | unitPrice=0.0624
+    - score=1 | productName=Backup | skuName=Azure Files Vaulted | meterName=LRS Data Stored | armSkuName=Azure Files Vaulted | unitOfMeasure=1 GB/Month | type=Consumption | priceType=Consumption | unitPrice=0.0533
+    - score=1 | productName=Backup | skuName=Azure Files Vaulted | meterName=Azure Files Vaulted Protected Instances | armSkuName=Azure Files Vaulted | unitOfMeasure=1/Month | type=Consumption | priceType=Consumption | unitPrice=13.0
+    - score=1 | productName=Backup | skuName=Azure Files Vaulted | meterName=RA-GRS Data Stored | armSkuName=Azure Files Vaulted | unitOfMeasure=1 GB/Month | type=Consumption | priceType=Consumption | unitPrice=0.1261
+    - score=1 | productName=Backup | skuName=Azure Files Vaulted | meterName=GRS Data Stored | armSkuName=Azure Files Vaulted | unitOfMeasure=1 GB/Month | type=Consumption | priceType=Consumption | unitPrice=0.0988
+    - Conclusion: Ambiguous: multiple meters, need capacity-first / stricter filters.
+  - Resource: id=keyvault-main | category=security.keyvault | region=westeurope | requested_sku=standard | billing_model=payg
+    - Catalog used: `catalog/key_vault__westeurope__USD.jsonl` (reason: category='security.keyvault' -> serviceName='Key Vault' via normalize_service_name; region='westeurope', currency='USD')
+    - Catalog search results: 14 candidates
+    - score=1 | productName=Key Vault | skuName=Standard | meterName=Advanced Key Operations | armSkuName= | unitOfMeasure=10K | type=Consumption | priceType=Consumption | unitPrice=0.15
+    - score=1 | productName=Key Vault | skuName=Standard | meterName=Automated Key Rotation | armSkuName= | unitOfMeasure=1 Rotation | type=Consumption | priceType=Consumption | unitPrice=1.0
+    - score=1 | productName=Key Vault | skuName=Standard | meterName=Secret Renewal | armSkuName= | unitOfMeasure=1 | type=Consumption | priceType=Consumption | unitPrice=1.0
+    - score=1 | productName=Azure Dedicated HSM | skuName=Standard | meterName=Standard Instance | armSkuName= | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=4.85
+    - score=1 | productName=Key Vault HSM Pool | skuName=Standard B1 | meterName=Standard B1 Instance | armSkuName= | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=3.2
+    - score=1 | productName=Key Vault | skuName=Standard | meterName=Operations | armSkuName= | unitOfMeasure=10K | type=Consumption | priceType=Consumption | unitPrice=0.03
+    - score=1 | productName=Key Vault | skuName=Standard | meterName=Certificate Renewal Request | armSkuName= | unitOfMeasure=1 | type=Consumption | priceType=Consumption | unitPrice=3.0
+    - score=0 | productName=Key Vault | skuName=Premium | meterName=Automated Key Rotation | armSkuName= | unitOfMeasure=1 Rotation | type=Consumption | priceType=Consumption | unitPrice=1.0
+    - score=0 | productName=Key Vault | skuName=Premium | meterName=Operations | armSkuName= | unitOfMeasure=10K | type=Consumption | priceType=Consumption | unitPrice=0.03
+    - score=0 | productName=Key Vault | skuName=Premium | meterName=Premium HSM-protected RSA 2048-bit key | armSkuName= | unitOfMeasure=1 | type=Consumption | priceType=Consumption | unitPrice=1.0
+    - Conclusion: Ambiguous: multiple meters, need capacity-first / stricter filters.
+  - Resource: id=nat-egress | category=network.nat | region=westeurope | requested_sku=Standard | billing_model=payg
+    - Catalog used: `catalog/bandwidth__westeurope__USD.jsonl` (reason: category='network.nat' -> serviceName='Bandwidth' via normalize_service_name; region='westeurope', currency='USD')
+    - Catalog search results: 14 candidates
+    - score=1 | productName=Bandwidth - Routing Preference: Internet | skuName=Standard | meterName=Standard Data Transfer Out | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.0
+    - score=1 | productName=Rtn Preference: MGN | skuName=Standard | meterName=Standard Data Transfer Out | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.0
+    - score=1 | productName=Rtn Preference: MGN | skuName=Standard | meterName=Standard Inter-Availability Zone Data Transfer Out | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.01
+    - score=1 | productName=Rtn Preference: MGN | skuName=Standard | meterName=Standard Data Transfer Out - to China | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.0
+    - score=1 | productName=Rtn Preference: MGN | skuName=Standard | meterName=Standard Data Transfer In | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.0
+    - score=1 | productName=Rtn Preference: MGN | skuName=Standard | meterName=Standard Data Transfer In - from China | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.09
+    - score=1 | productName=Rtn Preference: MGN | skuName=Standard | meterName=Standard Inter-Availability Zone Data Transfer In | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.01
+    - score=1 | productName=Rtn Preference: MGN | skuName=Standard | meterName=Standard Inter-Region Data Transfer | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.02
+    - score=0 | productName=Rtn Preference: MGN | skuName=China | meterName=China Data Transfer - 1 to 5 Mbps | armSkuName= | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.0
+    - score=0 | productName=Rtn Preference: MGN | skuName=China | meterName=China Data Transfer - 1 Mbps | armSkuName= | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.0
+    - Conclusion: Ambiguous: multiple meters, need capacity-first / stricter filters.
+  - Resource: id=public-ip-nat | category=network.public_ip | region=westeurope | requested_sku=Standard | billing_model=payg
+    - Catalog used: `catalog/public_ip_addresses__westeurope__EUR.jsonl` (reason: category='network.public_ip' -> serviceName='Public IP Addresses' via normalize_service_name; region='westeurope', currency='EUR')
+    - Catalog search results: 0 candidates
+    - Conclusion: Correct meter is not in catalog (catalog incomplete or mapping wrong).
+  - Resource: id=bastion-host | category=network.bastion | region=westeurope | requested_sku=Basic | billing_model=payg
+    - Catalog used: `catalog/azure_bastion__westeurope__USD.jsonl` (reason: category='network.bastion' -> serviceName='Azure Bastion' via normalize_service_name; region='westeurope', currency='USD')
+    - Catalog search results: 8 candidates
+    - score=1 | productName=Azure Bastion | skuName=Basic | meterName=Basic Gateway | armSkuName= | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.19
+    - score=1 | productName=Azure Bastion | skuName=Basic | meterName=Basic Data Transfer Out | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.0
+    - score=0 | productName=Azure Bastion | skuName=Standard | meterName=Standard Additional Gateway | armSkuName= | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.14
+    - score=0 | productName=Azure Bastion | skuName=Premium | meterName=Premium Data Transfer Out | armSkuName=Premium | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.0
+    - score=0 | productName=Azure Bastion | skuName=Premium | meterName=Premium Gateway | armSkuName=Premium | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.45
+    - score=0 | productName=Azure Bastion | skuName=Premium | meterName=Premium Additional Gateway | armSkuName=Premium | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.22
+    - score=0 | productName=Azure Bastion | skuName=Standard | meterName=Standard Gateway | armSkuName= | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.29
+    - score=0 | productName=Azure Bastion | skuName=Standard | meterName=Standard Data Transfer Out | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.0
+    - Conclusion: Ambiguous: multiple meters, need capacity-first / stricter filters.
+
+- Scenario: unknown
+  - Resource: id=vnet-main-co | category=network.vnet | region=westeurope | requested_sku=Virtual Network | billing_model=payg
+    - Catalog used: `catalog/virtual_network__westeurope__USD.jsonl` (reason: category='network.vnet' -> serviceName='Virtual Network' via normalize_service_name; region='westeurope', currency='USD')
+    - Catalog search results: 12 candidates
+    - score=2 | productName=Global Virtual Network Peering | skuName=Inter-Region | meterName=Inter-Region Egress | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.035
+    - score=2 | productName=Global Virtual Network Peering | skuName=Inter-Region | meterName=Inter-Region Ingress | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.035
+    - score=0 | productName=IP Addresses | skuName=Standard | meterName=Standard IPv4 Static Public IP | armSkuName= | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.005
+    - score=0 | productName=IP Addresses | skuName=Standard | meterName=Standard IPv4 Static Public IP | armSkuName= | unitOfMeasure=1 Hour | type=DevTestConsumption | priceType=DevTestConsumption | unitPrice=0.005
+    - score=0 | productName=IP Addresses | skuName=Basic | meterName=Basic IPv4 Dynamic Public IP | armSkuName= | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.004
+    - score=0 | productName=IP Addresses | skuName=Basic | meterName=Basic IPv4 Dynamic Public IP | armSkuName= | unitOfMeasure=1 Hour | type=DevTestConsumption | priceType=DevTestConsumption | unitPrice=0.004
+    - score=0 | productName=Public IP Prefix | skuName=Standard | meterName=Standard Static IP Addresses | armSkuName= | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.006
+    - score=0 | productName=Public IP Prefix | skuName=Global | meterName=Global Static Public IP | armSkuName=Global | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.012
+    - score=0 | productName=IP Addresses | skuName=Basic | meterName=Basic IPv4 Static Public IP | armSkuName= | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.0036
+    - score=0 | productName=IP Addresses | skuName=Basic | meterName=Basic IPv4 Static Public IP | armSkuName= | unitOfMeasure=1 Hour | type=DevTestConsumption | priceType=DevTestConsumption | unitPrice=0.0036
+    - Conclusion: Ambiguous: multiple meters, need capacity-first / stricter filters.
+  - Resource: id=vm-internal-tool-co | category=compute.vm | region=westeurope | requested_sku=Standard_B2s | billing_model=payg
+    - Catalog used: `catalog/virtual_machines__westeurope__USD.jsonl` (reason: category='compute.vm' -> serviceName='Virtual Machines' via normalize_service_name; region='westeurope', currency='USD')
+    - Catalog search results: 11279 candidates
+    - score=1 | productName=Virtual Machines Bsv2 Series | skuName=B2s v2 Low Priority | meterName=B2s v2 Low Priority | armSkuName=Standard_B2s_v2 | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.0192
+    - score=1 | productName=Bsv2 Series Cloud Services | skuName=B2s v2 | meterName=B2s v2 | armSkuName=Standard_B2s_v2 | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.105
+    - score=1 | productName=Virtual Machines Bsv2 Series | skuName=B2s v2 | meterName=B2s v2 | armSkuName=Standard_B2s_v2 | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.096
+    - score=1 | productName=Virtual Machines Bsv2 Series | skuName=B2s v2 | meterName=B2s v2 | armSkuName=Standard_B2s_v2 | unitOfMeasure=1 Hour | type=Reservation | priceType=Reservation | unitPrice=496.0
+    - score=1 | productName=Virtual Machines Bsv2 Series Windows | skuName=B2s v2 | meterName=B2s v2 | armSkuName=Standard_B2s_v2 | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.105
+    - score=1 | productName=Virtual Machines Bsv2 Series Windows | skuName=B2s v2 | meterName=B2s v2 | armSkuName=Standard_B2s_v2 | unitOfMeasure=1 Hour | type=DevTestConsumption | priceType=DevTestConsumption | unitPrice=0.096
+    - score=1 | productName=Bsv2 Series Cloud Services | skuName=B2s v2 Low Priority | meterName=B2s v2 Low Priority | armSkuName=Standard_B2s_v2 | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.0421
+    - score=1 | productName=Virtual Machines Bsv2 Series Windows | skuName=B2s v2 Spot | meterName=B2s v2 Spot | armSkuName=Standard_B2s_v2 | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.0945
+    - score=1 | productName=Virtual Machines Bsv2 Series Windows | skuName=B2s v2 Spot | meterName=B2s v2 Spot | armSkuName=Standard_B2s_v2 | unitOfMeasure=1 Hour | type=DevTestConsumption | priceType=DevTestConsumption | unitPrice=0.0864
+    - score=1 | productName=Virtual Machines Bsv2 Series | skuName=B2s v2 Spot | meterName=B2s v2 Spot | armSkuName=Standard_B2s_v2 | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.0864
+    - Conclusion: Ambiguous: multiple meters, need capacity-first / stricter filters.
+  - Resource: id=disk-os-vm-internal-tool-co | category=storage.disk | region=westeurope | requested_sku=P4 | billing_model=payg
+    - Catalog used: `catalog/storage__westeurope__USD.jsonl` (reason: category='storage.disk' -> serviceName='Storage' via normalize_service_name; region='westeurope', currency='USD')
+    - Catalog search results: 1478 candidates
+    - score=1 | productName=Premium Page Blob | skuName=P4 ZRS | meterName=P4 ZRS Disk | armSkuName= | unitOfMeasure=1/Month | type=Consumption | priceType=Consumption | unitPrice=8.7108
+    - score=1 | productName=Premium SSD Managed Disks | skuName=P40 LRS | meterName=P40 LRS Disk | armSkuName=Premium_SSD_Managed_Disks_P40 | unitOfMeasure=1/Month | type=Consumption | priceType=Consumption | unitPrice=284.9371
+    - score=1 | productName=Premium SSD Managed Disks | skuName=P40 LRS | meterName=P40 LRS Disk | armSkuName=Premium_SSD_Managed_Disks_P40 | unitOfMeasure=1/Month | type=Reservation | priceType=Reservation | unitPrice=3248.0
+    - score=1 | productName=Premium SSD Managed Disks | skuName=P40 ZRS | meterName=P40 ZRS Disk | armSkuName=Premium_SSD_Managed_Disks_P40 | unitOfMeasure=1/Month | type=Consumption | priceType=Consumption | unitPrice=427.4
+    - score=1 | productName=Premium SSD Managed Disks | skuName=P40 LRS | meterName=P40 LRS Disk Mount | armSkuName=Premium_SSD_Managed_Disks_P40 | unitOfMeasure=1/Month | type=Consumption | priceType=Consumption | unitPrice=17.082
+    - score=1 | productName=Premium Page Blob | skuName=P40 ZRS | meterName=P40 ZRS Disk | armSkuName= | unitOfMeasure=1/Month | type=Consumption | priceType=Consumption | unitPrice=427.40565
+    - score=1 | productName=Premium Page Blob | skuName=P40 LRS | meterName=P40 LRS Disk | armSkuName= | unitOfMeasure=1/Month | type=Consumption | priceType=Consumption | unitPrice=284.9371
+    - score=1 | productName=Premium SSD Managed Disks | skuName=P40 ZRS | meterName=P40 ZRS Disk Mount | armSkuName=Premium_SSD_Managed_Disks_P40 | unitOfMeasure=1/Month | type=Consumption | priceType=Consumption | unitPrice=17.081
+    - score=1 | productName=Premium SSD Managed Disks | skuName=P4 ZRS | meterName=P4 ZRS Disk Mount | armSkuName= | unitOfMeasure=1/Month | type=Consumption | priceType=Consumption | unitPrice=0.338
+    - score=1 | productName=Premium SSD Managed Disks | skuName=P4 LRS | meterName=P4 LRS Disk | armSkuName= | unitOfMeasure=1/Month | type=Consumption | priceType=Consumption | unitPrice=5.8072
+    - Conclusion: Ambiguous: multiple meters, need capacity-first / stricter filters.
+  - Resource: id=la-workspace-co | category=monitoring.loganalytics | region=westeurope | requested_sku=Analytics Logs | billing_model=payg
+    - Catalog used: `catalog/log_analytics__westeurope__USD.jsonl` (reason: category='monitoring.loganalytics' -> serviceName='Log Analytics' via normalize_service_name; region='westeurope', currency='USD')
+    - Catalog search results: 6 candidates
+    - score=2 | productName=Log Analytics | skuName=Analytics Logs | meterName=Analytics Logs Data Retention | armSkuName= | unitOfMeasure=1 GB/Month | type=Consumption | priceType=Consumption | unitPrice=0.13
+    - score=2 | productName=Log Analytics | skuName=Analytics Logs | meterName=Analytics Logs Data Ingestion | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.0
+    - score=2 | productName=Log Analytics | skuName=Analytics Logs | meterName=Analytics Logs Data Analyzed | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=2.3
+    - score=1 | productName=Log Analytics | skuName=Premium | meterName=Premium Data Analyzed | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=3.5
+    - score=1 | productName=Log Analytics | skuName=Free | meterName=Free Data Analyzed | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.0
+    - score=1 | productName=Log Analytics | skuName=Standard | meterName=Standard Data Analyzed | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=2.3
+    - Conclusion: Ambiguous: multiple meters, need capacity-first / stricter filters.
+  - Resource: id=backup-vault-co | category=backup.vault | region=westeurope | requested_sku=ADLS Gen2 Vaulted | billing_model=payg
+    - Catalog used: `catalog/backup__westeurope__USD.jsonl` (reason: category='backup.vault' -> serviceName='Backup' via normalize_service_name; region='westeurope', currency='USD')
+    - Catalog search results: 41 candidates
+    - score=3 | productName=Backup | skuName=ADLS Gen2 Vaulted | meterName=ADLS Gen2 Vaulted RA-GRS Write Operations | armSkuName=ADLS Gen2 Vaulted | unitOfMeasure=10K | type=Consumption | priceType=Consumption | unitPrice=0.108
+    - score=3 | productName=Backup | skuName=ADLS Gen2 Vaulted | meterName=ADLS Gen2 Vaulted GRS Write Operations | armSkuName=ADLS Gen2 Vaulted | unitOfMeasure=10K | type=Consumption | priceType=Consumption | unitPrice=0.108
+    - score=3 | productName=Backup | skuName=ADLS Gen2 Vaulted | meterName=ADLS Gen2 Vaulted ZRS Write Operations | armSkuName=ADLS Gen2 Vaulted | unitOfMeasure=10K | type=Consumption | priceType=Consumption | unitPrice=0.0675
+    - score=3 | productName=Backup | skuName=ADLS Gen2 Vaulted | meterName=ADLS Gen2 Vaulted Protected Instances | armSkuName=ADLS Gen2 Vaulted | unitOfMeasure=1/Month | type=Consumption | priceType=Consumption | unitPrice=13.0
+    - score=3 | productName=Backup | skuName=ADLS Gen2 Vaulted | meterName=ADLS Gen2 Vaulted LRS Write Operations | armSkuName=ADLS Gen2 Vaulted | unitOfMeasure=10K | type=Consumption | priceType=Consumption | unitPrice=0.054
+    - score=1 | productName=Backup | skuName=Azure Files Vaulted | meterName=ZRS Data Stored | armSkuName=Azure Files Vaulted | unitOfMeasure=1 GB/Month | type=Consumption | priceType=Consumption | unitPrice=0.0624
+    - score=1 | productName=Backup | skuName=Azure Files Vaulted | meterName=LRS Data Stored | armSkuName=Azure Files Vaulted | unitOfMeasure=1 GB/Month | type=Consumption | priceType=Consumption | unitPrice=0.0533
+    - score=1 | productName=Backup | skuName=Azure Files Vaulted | meterName=Azure Files Vaulted Protected Instances | armSkuName=Azure Files Vaulted | unitOfMeasure=1/Month | type=Consumption | priceType=Consumption | unitPrice=13.0
+    - score=1 | productName=Backup | skuName=Azure Files Vaulted | meterName=RA-GRS Data Stored | armSkuName=Azure Files Vaulted | unitOfMeasure=1 GB/Month | type=Consumption | priceType=Consumption | unitPrice=0.1261
+    - score=1 | productName=Backup | skuName=Azure Files Vaulted | meterName=GRS Data Stored | armSkuName=Azure Files Vaulted | unitOfMeasure=1 GB/Month | type=Consumption | priceType=Consumption | unitPrice=0.0988
+    - Conclusion: Ambiguous: multiple meters, need capacity-first / stricter filters.
+  - Resource: id=keyvault-co | category=security.keyvault | region=westeurope | requested_sku=standard | billing_model=payg
+    - Catalog used: `catalog/key_vault__westeurope__USD.jsonl` (reason: category='security.keyvault' -> serviceName='Key Vault' via normalize_service_name; region='westeurope', currency='USD')
+    - Catalog search results: 14 candidates
+    - score=1 | productName=Key Vault | skuName=Standard | meterName=Advanced Key Operations | armSkuName= | unitOfMeasure=10K | type=Consumption | priceType=Consumption | unitPrice=0.15
+    - score=1 | productName=Key Vault | skuName=Standard | meterName=Automated Key Rotation | armSkuName= | unitOfMeasure=1 Rotation | type=Consumption | priceType=Consumption | unitPrice=1.0
+    - score=1 | productName=Key Vault | skuName=Standard | meterName=Secret Renewal | armSkuName= | unitOfMeasure=1 | type=Consumption | priceType=Consumption | unitPrice=1.0
+    - score=1 | productName=Azure Dedicated HSM | skuName=Standard | meterName=Standard Instance | armSkuName= | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=4.85
+    - score=1 | productName=Key Vault HSM Pool | skuName=Standard B1 | meterName=Standard B1 Instance | armSkuName= | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=3.2
+    - score=1 | productName=Key Vault | skuName=Standard | meterName=Operations | armSkuName= | unitOfMeasure=10K | type=Consumption | priceType=Consumption | unitPrice=0.03
+    - score=1 | productName=Key Vault | skuName=Standard | meterName=Certificate Renewal Request | armSkuName= | unitOfMeasure=1 | type=Consumption | priceType=Consumption | unitPrice=3.0
+    - score=0 | productName=Key Vault | skuName=Premium | meterName=Automated Key Rotation | armSkuName= | unitOfMeasure=1 Rotation | type=Consumption | priceType=Consumption | unitPrice=1.0
+    - score=0 | productName=Key Vault | skuName=Premium | meterName=Operations | armSkuName= | unitOfMeasure=10K | type=Consumption | priceType=Consumption | unitPrice=0.03
+    - score=0 | productName=Key Vault | skuName=Premium | meterName=Premium HSM-protected RSA 2048-bit key | armSkuName= | unitOfMeasure=1 | type=Consumption | priceType=Consumption | unitPrice=1.0
+    - Conclusion: Ambiguous: multiple meters, need capacity-first / stricter filters.
+  - Resource: id=nat-egress-co | category=network.nat | region=westeurope | requested_sku=Standard | billing_model=payg
+    - Catalog used: `catalog/bandwidth__westeurope__USD.jsonl` (reason: category='network.nat' -> serviceName='Bandwidth' via normalize_service_name; region='westeurope', currency='USD')
+    - Catalog search results: 14 candidates
+    - score=1 | productName=Bandwidth - Routing Preference: Internet | skuName=Standard | meterName=Standard Data Transfer Out | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.0
+    - score=1 | productName=Rtn Preference: MGN | skuName=Standard | meterName=Standard Data Transfer Out | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.0
+    - score=1 | productName=Rtn Preference: MGN | skuName=Standard | meterName=Standard Inter-Availability Zone Data Transfer Out | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.01
+    - score=1 | productName=Rtn Preference: MGN | skuName=Standard | meterName=Standard Data Transfer Out - to China | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.0
+    - score=1 | productName=Rtn Preference: MGN | skuName=Standard | meterName=Standard Data Transfer In | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.0
+    - score=1 | productName=Rtn Preference: MGN | skuName=Standard | meterName=Standard Data Transfer In - from China | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.09
+    - score=1 | productName=Rtn Preference: MGN | skuName=Standard | meterName=Standard Inter-Availability Zone Data Transfer In | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.01
+    - score=1 | productName=Rtn Preference: MGN | skuName=Standard | meterName=Standard Inter-Region Data Transfer | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.02
+    - score=0 | productName=Rtn Preference: MGN | skuName=China | meterName=China Data Transfer - 1 to 5 Mbps | armSkuName= | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.0
+    - score=0 | productName=Rtn Preference: MGN | skuName=China | meterName=China Data Transfer - 1 Mbps | armSkuName= | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.0
+    - Conclusion: Ambiguous: multiple meters, need capacity-first / stricter filters.
+  - Resource: id=public-ip-nat-co | category=network.public_ip | region=westeurope | requested_sku=Standard | billing_model=payg
+    - Catalog used: `catalog/public_ip_addresses__westeurope__EUR.jsonl` (reason: category='network.public_ip' -> serviceName='Public IP Addresses' via normalize_service_name; region='westeurope', currency='EUR')
+    - Catalog search results: 0 candidates
+    - Conclusion: Correct meter is not in catalog (catalog incomplete or mapping wrong).
+  - Resource: id=bastion-co | category=network.bastion | region=westeurope | requested_sku=Basic | billing_model=payg
+    - Catalog used: `catalog/azure_bastion__westeurope__USD.jsonl` (reason: category='network.bastion' -> serviceName='Azure Bastion' via normalize_service_name; region='westeurope', currency='USD')
+    - Catalog search results: 8 candidates
+    - score=1 | productName=Azure Bastion | skuName=Basic | meterName=Basic Gateway | armSkuName= | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.19
+    - score=1 | productName=Azure Bastion | skuName=Basic | meterName=Basic Data Transfer Out | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.0
+    - score=0 | productName=Azure Bastion | skuName=Standard | meterName=Standard Additional Gateway | armSkuName= | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.14
+    - score=0 | productName=Azure Bastion | skuName=Premium | meterName=Premium Data Transfer Out | armSkuName=Premium | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.0
+    - score=0 | productName=Azure Bastion | skuName=Premium | meterName=Premium Gateway | armSkuName=Premium | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.45
+    - score=0 | productName=Azure Bastion | skuName=Premium | meterName=Premium Additional Gateway | armSkuName=Premium | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.22
+    - score=0 | productName=Azure Bastion | skuName=Standard | meterName=Standard Gateway | armSkuName= | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.29
+    - score=0 | productName=Azure Bastion | skuName=Standard | meterName=Standard Data Transfer Out | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.0
+    - Conclusion: Ambiguous: multiple meters, need capacity-first / stricter filters.
+
+- Scenario: unknown
+  - Resource: id=vnet-main-hp | category=network.vnet | region=westeurope | requested_sku=Virtual Network | billing_model=payg
+    - Catalog used: `catalog/virtual_network__westeurope__USD.jsonl` (reason: category='network.vnet' -> serviceName='Virtual Network' via normalize_service_name; region='westeurope', currency='USD')
+    - Catalog search results: 12 candidates
+    - score=2 | productName=Global Virtual Network Peering | skuName=Inter-Region | meterName=Inter-Region Egress | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.035
+    - score=2 | productName=Global Virtual Network Peering | skuName=Inter-Region | meterName=Inter-Region Ingress | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.035
+    - score=0 | productName=IP Addresses | skuName=Standard | meterName=Standard IPv4 Static Public IP | armSkuName= | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.005
+    - score=0 | productName=IP Addresses | skuName=Standard | meterName=Standard IPv4 Static Public IP | armSkuName= | unitOfMeasure=1 Hour | type=DevTestConsumption | priceType=DevTestConsumption | unitPrice=0.005
+    - score=0 | productName=IP Addresses | skuName=Basic | meterName=Basic IPv4 Dynamic Public IP | armSkuName= | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.004
+    - score=0 | productName=IP Addresses | skuName=Basic | meterName=Basic IPv4 Dynamic Public IP | armSkuName= | unitOfMeasure=1 Hour | type=DevTestConsumption | priceType=DevTestConsumption | unitPrice=0.004
+    - score=0 | productName=Public IP Prefix | skuName=Standard | meterName=Standard Static IP Addresses | armSkuName= | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.006
+    - score=0 | productName=Public IP Prefix | skuName=Global | meterName=Global Static Public IP | armSkuName=Global | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.012
+    - score=0 | productName=IP Addresses | skuName=Basic | meterName=Basic IPv4 Static Public IP | armSkuName= | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.0036
+    - score=0 | productName=IP Addresses | skuName=Basic | meterName=Basic IPv4 Static Public IP | armSkuName= | unitOfMeasure=1 Hour | type=DevTestConsumption | priceType=DevTestConsumption | unitPrice=0.0036
+    - Conclusion: Ambiguous: multiple meters, need capacity-first / stricter filters.
+  - Resource: id=vm-internal-tool-hp | category=compute.vm | region=westeurope | requested_sku=Standard_D4s_v3 | billing_model=payg
+    - Catalog used: `catalog/virtual_machines__westeurope__USD.jsonl` (reason: category='compute.vm' -> serviceName='Virtual Machines' via normalize_service_name; region='westeurope', currency='USD')
+    - Catalog search results: 11279 candidates
+    - score=1 | productName=Virtual Machines DSv3 Series Windows | skuName=D4s v3 Low Priority | meterName=D4s v3 Low Priority | armSkuName=Standard_D4s_v3 | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.17
+    - score=1 | productName=Virtual Machines DSv3 Series Windows | skuName=D4s v3 Low Priority | meterName=D4s v3 Low Priority | armSkuName=Standard_D4s_v3 | unitOfMeasure=1 Hour | type=DevTestConsumption | priceType=DevTestConsumption | unitPrice=0.048
+    - score=1 | productName=Virtual Machines DSv3 Series | skuName=D4s v3 Low Priority | meterName=D4s v3 Low Priority | armSkuName=Standard_D4s_v3 | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.048
+    - score=1 | productName=Virtual Machines DSv3 Series | skuName=D4s v3 Spot | meterName=D4s v3 Spot | armSkuName=Standard_D4s_v3 | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.044352
+    - score=1 | productName=Virtual Machines DSv3 Series | skuName=D4s v3 | meterName=D4s v3 | armSkuName=Standard_D4s_v3 | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.24
+    - score=1 | productName=Virtual Machines DSv3 Series | skuName=D4s v3 | meterName=D4s v3 | armSkuName=Standard_D4s_v3 | unitOfMeasure=1 Hour | type=Reservation | priceType=Reservation | unitPrice=1339.0
+    - score=1 | productName=Virtual Machines DSv3 Series Windows | skuName=D4s v3 Spot | meterName=D4s v3 Spot | armSkuName=Standard_D4s_v3 | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.078355
+    - score=1 | productName=Virtual Machines DSv3 Series Windows | skuName=D4s v3 Spot | meterName=D4s v3 Spot | armSkuName=Standard_D4s_v3 | unitOfMeasure=1 Hour | type=DevTestConsumption | priceType=DevTestConsumption | unitPrice=0.044352
+    - score=1 | productName=Virtual Machines DSv3 Series Windows | skuName=D4s v3 | meterName=D4s v3 | armSkuName=Standard_D4s_v3 | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.424
+    - score=1 | productName=Virtual Machines DSv3 Series Windows | skuName=D4s v3 | meterName=D4s v3 | armSkuName=Standard_D4s_v3 | unitOfMeasure=1 Hour | type=DevTestConsumption | priceType=DevTestConsumption | unitPrice=0.24
+    - Conclusion: Ambiguous: multiple meters, need capacity-first / stricter filters.
+  - Resource: id=disk-os-vm-internal-tool-hp | category=storage.disk | region=westeurope | requested_sku=P10 | billing_model=payg
+    - Catalog used: `catalog/storage__westeurope__USD.jsonl` (reason: category='storage.disk' -> serviceName='Storage' via normalize_service_name; region='westeurope', currency='USD')
+    - Catalog search results: 1478 candidates
+    - score=1 | productName=Premium SSD Managed Disks | skuName=P10 LRS | meterName=P10 LRS Disk | armSkuName=Premium_SSD_Managed_Disk_P10 | unitOfMeasure=1/Month | type=Consumption | priceType=Consumption | unitPrice=21.68
+    - score=1 | productName=Premium Page Blob | skuName=P10 ZRS | meterName=P10 ZRS Disk | armSkuName= | unitOfMeasure=1/Month | type=Consumption | priceType=Consumption | unitPrice=32.52
+    - score=1 | productName=Premium SSD Managed Disks | skuName=P10 LRS | meterName=P10 LRS Disk Mount | armSkuName=Premium_SSD_Managed_Disk_P10 | unitOfMeasure=1/Month | type=Consumption | priceType=Consumption | unitPrice=1.183
+    - score=1 | productName=Premium Page Blob | skuName=P10 LRS | meterName=P10 LRS Disk | armSkuName= | unitOfMeasure=1/Month | type=Consumption | priceType=Consumption | unitPrice=21.68
+    - score=1 | productName=Premium SSD Managed Disks | skuName=P10 ZRS | meterName=P10 ZRS Disk Mount | armSkuName=Premium_SSD_Managed_Disk_P10 | unitOfMeasure=1/Month | type=Consumption | priceType=Consumption | unitPrice=1.183
+    - score=1 | productName=Premium SSD Managed Disks | skuName=P10 ZRS | meterName=P10 ZRS Disk | armSkuName=Premium_SSD_Managed_Disk_P10 | unitOfMeasure=1/Month | type=Consumption | priceType=Consumption | unitPrice=32.519
+    - score=0 | productName=General Block Blob v2 Hierarchical Namespace | skuName=Cool GRS | meterName=Cool GRS Write Operations | armSkuName= | unitOfMeasure=10K | type=Consumption | priceType=Consumption | unitPrice=0.26
+    - score=0 | productName=Tables | skuName=Standard ZRS | meterName=Read Operations | armSkuName= | unitOfMeasure=10K | type=Consumption | priceType=Consumption | unitPrice=0.00036
+    - score=0 | productName=Blob Storage | skuName=Hot RA-GRS | meterName=GRS List and Create Container Operations | armSkuName= | unitOfMeasure=10K | type=Consumption | priceType=Consumption | unitPrice=0.108
+    - score=0 | productName=Azure Data Lake Storage Gen2 Flat Namespace | skuName=Cool RA-GRS | meterName=Cool GRS Write Operations | armSkuName= | unitOfMeasure=10K | type=Consumption | priceType=Consumption | unitPrice=0.2
+    - Conclusion: Ambiguous: multiple meters, need capacity-first / stricter filters.
+  - Resource: id=la-workspace-hp | category=monitoring.loganalytics | region=westeurope | requested_sku=Analytics Logs | billing_model=payg
+    - Catalog used: `catalog/log_analytics__westeurope__USD.jsonl` (reason: category='monitoring.loganalytics' -> serviceName='Log Analytics' via normalize_service_name; region='westeurope', currency='USD')
+    - Catalog search results: 6 candidates
+    - score=2 | productName=Log Analytics | skuName=Analytics Logs | meterName=Analytics Logs Data Retention | armSkuName= | unitOfMeasure=1 GB/Month | type=Consumption | priceType=Consumption | unitPrice=0.13
+    - score=2 | productName=Log Analytics | skuName=Analytics Logs | meterName=Analytics Logs Data Ingestion | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.0
+    - score=2 | productName=Log Analytics | skuName=Analytics Logs | meterName=Analytics Logs Data Analyzed | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=2.3
+    - score=1 | productName=Log Analytics | skuName=Premium | meterName=Premium Data Analyzed | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=3.5
+    - score=1 | productName=Log Analytics | skuName=Free | meterName=Free Data Analyzed | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.0
+    - score=1 | productName=Log Analytics | skuName=Standard | meterName=Standard Data Analyzed | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=2.3
+    - Conclusion: Ambiguous: multiple meters, need capacity-first / stricter filters.
+  - Resource: id=backup-vault-hp | category=backup.vault | region=westeurope | requested_sku=ADLS Gen2 Vaulted | billing_model=payg
+    - Catalog used: `catalog/backup__westeurope__USD.jsonl` (reason: category='backup.vault' -> serviceName='Backup' via normalize_service_name; region='westeurope', currency='USD')
+    - Catalog search results: 41 candidates
+    - score=3 | productName=Backup | skuName=ADLS Gen2 Vaulted | meterName=ADLS Gen2 Vaulted RA-GRS Write Operations | armSkuName=ADLS Gen2 Vaulted | unitOfMeasure=10K | type=Consumption | priceType=Consumption | unitPrice=0.108
+    - score=3 | productName=Backup | skuName=ADLS Gen2 Vaulted | meterName=ADLS Gen2 Vaulted GRS Write Operations | armSkuName=ADLS Gen2 Vaulted | unitOfMeasure=10K | type=Consumption | priceType=Consumption | unitPrice=0.108
+    - score=3 | productName=Backup | skuName=ADLS Gen2 Vaulted | meterName=ADLS Gen2 Vaulted ZRS Write Operations | armSkuName=ADLS Gen2 Vaulted | unitOfMeasure=10K | type=Consumption | priceType=Consumption | unitPrice=0.0675
+    - score=3 | productName=Backup | skuName=ADLS Gen2 Vaulted | meterName=ADLS Gen2 Vaulted Protected Instances | armSkuName=ADLS Gen2 Vaulted | unitOfMeasure=1/Month | type=Consumption | priceType=Consumption | unitPrice=13.0
+    - score=3 | productName=Backup | skuName=ADLS Gen2 Vaulted | meterName=ADLS Gen2 Vaulted LRS Write Operations | armSkuName=ADLS Gen2 Vaulted | unitOfMeasure=10K | type=Consumption | priceType=Consumption | unitPrice=0.054
+    - score=1 | productName=Backup | skuName=Azure Files Vaulted | meterName=ZRS Data Stored | armSkuName=Azure Files Vaulted | unitOfMeasure=1 GB/Month | type=Consumption | priceType=Consumption | unitPrice=0.0624
+    - score=1 | productName=Backup | skuName=Azure Files Vaulted | meterName=LRS Data Stored | armSkuName=Azure Files Vaulted | unitOfMeasure=1 GB/Month | type=Consumption | priceType=Consumption | unitPrice=0.0533
+    - score=1 | productName=Backup | skuName=Azure Files Vaulted | meterName=Azure Files Vaulted Protected Instances | armSkuName=Azure Files Vaulted | unitOfMeasure=1/Month | type=Consumption | priceType=Consumption | unitPrice=13.0
+    - score=1 | productName=Backup | skuName=Azure Files Vaulted | meterName=RA-GRS Data Stored | armSkuName=Azure Files Vaulted | unitOfMeasure=1 GB/Month | type=Consumption | priceType=Consumption | unitPrice=0.1261
+    - score=1 | productName=Backup | skuName=Azure Files Vaulted | meterName=GRS Data Stored | armSkuName=Azure Files Vaulted | unitOfMeasure=1 GB/Month | type=Consumption | priceType=Consumption | unitPrice=0.0988
+    - Conclusion: Ambiguous: multiple meters, need capacity-first / stricter filters.
+  - Resource: id=keyvault-hp | category=security.keyvault | region=westeurope | requested_sku=standard | billing_model=payg
+    - Catalog used: `catalog/key_vault__westeurope__USD.jsonl` (reason: category='security.keyvault' -> serviceName='Key Vault' via normalize_service_name; region='westeurope', currency='USD')
+    - Catalog search results: 14 candidates
+    - score=1 | productName=Key Vault | skuName=Standard | meterName=Advanced Key Operations | armSkuName= | unitOfMeasure=10K | type=Consumption | priceType=Consumption | unitPrice=0.15
+    - score=1 | productName=Key Vault | skuName=Standard | meterName=Automated Key Rotation | armSkuName= | unitOfMeasure=1 Rotation | type=Consumption | priceType=Consumption | unitPrice=1.0
+    - score=1 | productName=Key Vault | skuName=Standard | meterName=Secret Renewal | armSkuName= | unitOfMeasure=1 | type=Consumption | priceType=Consumption | unitPrice=1.0
+    - score=1 | productName=Azure Dedicated HSM | skuName=Standard | meterName=Standard Instance | armSkuName= | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=4.85
+    - score=1 | productName=Key Vault HSM Pool | skuName=Standard B1 | meterName=Standard B1 Instance | armSkuName= | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=3.2
+    - score=1 | productName=Key Vault | skuName=Standard | meterName=Operations | armSkuName= | unitOfMeasure=10K | type=Consumption | priceType=Consumption | unitPrice=0.03
+    - score=1 | productName=Key Vault | skuName=Standard | meterName=Certificate Renewal Request | armSkuName= | unitOfMeasure=1 | type=Consumption | priceType=Consumption | unitPrice=3.0
+    - score=0 | productName=Key Vault | skuName=Premium | meterName=Automated Key Rotation | armSkuName= | unitOfMeasure=1 Rotation | type=Consumption | priceType=Consumption | unitPrice=1.0
+    - score=0 | productName=Key Vault | skuName=Premium | meterName=Operations | armSkuName= | unitOfMeasure=10K | type=Consumption | priceType=Consumption | unitPrice=0.03
+    - score=0 | productName=Key Vault | skuName=Premium | meterName=Premium HSM-protected RSA 2048-bit key | armSkuName= | unitOfMeasure=1 | type=Consumption | priceType=Consumption | unitPrice=1.0
+    - Conclusion: Ambiguous: multiple meters, need capacity-first / stricter filters.
+  - Resource: id=nat-egress-hp | category=network.nat | region=westeurope | requested_sku=Standard | billing_model=payg
+    - Catalog used: `catalog/bandwidth__westeurope__USD.jsonl` (reason: category='network.nat' -> serviceName='Bandwidth' via normalize_service_name; region='westeurope', currency='USD')
+    - Catalog search results: 14 candidates
+    - score=1 | productName=Bandwidth - Routing Preference: Internet | skuName=Standard | meterName=Standard Data Transfer Out | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.0
+    - score=1 | productName=Rtn Preference: MGN | skuName=Standard | meterName=Standard Data Transfer Out | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.0
+    - score=1 | productName=Rtn Preference: MGN | skuName=Standard | meterName=Standard Inter-Availability Zone Data Transfer Out | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.01
+    - score=1 | productName=Rtn Preference: MGN | skuName=Standard | meterName=Standard Data Transfer Out - to China | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.0
+    - score=1 | productName=Rtn Preference: MGN | skuName=Standard | meterName=Standard Data Transfer In | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.0
+    - score=1 | productName=Rtn Preference: MGN | skuName=Standard | meterName=Standard Data Transfer In - from China | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.09
+    - score=1 | productName=Rtn Preference: MGN | skuName=Standard | meterName=Standard Inter-Availability Zone Data Transfer In | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.01
+    - score=1 | productName=Rtn Preference: MGN | skuName=Standard | meterName=Standard Inter-Region Data Transfer | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.02
+    - score=0 | productName=Rtn Preference: MGN | skuName=China | meterName=China Data Transfer - 1 to 5 Mbps | armSkuName= | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.0
+    - score=0 | productName=Rtn Preference: MGN | skuName=China | meterName=China Data Transfer - 1 Mbps | armSkuName= | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.0
+    - Conclusion: Ambiguous: multiple meters, need capacity-first / stricter filters.
+  - Resource: id=public-ip-nat-hp | category=network.public_ip | region=westeurope | requested_sku=Standard | billing_model=payg
+    - Catalog used: `catalog/public_ip_addresses__westeurope__EUR.jsonl` (reason: category='network.public_ip' -> serviceName='Public IP Addresses' via normalize_service_name; region='westeurope', currency='EUR')
+    - Catalog search results: 0 candidates
+    - Conclusion: Correct meter is not in catalog (catalog incomplete or mapping wrong).
+  - Resource: id=bastion-hp | category=network.bastion | region=westeurope | requested_sku=Basic | billing_model=payg
+    - Catalog used: `catalog/azure_bastion__westeurope__USD.jsonl` (reason: category='network.bastion' -> serviceName='Azure Bastion' via normalize_service_name; region='westeurope', currency='USD')
+    - Catalog search results: 8 candidates
+    - score=1 | productName=Azure Bastion | skuName=Basic | meterName=Basic Gateway | armSkuName= | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.19
+    - score=1 | productName=Azure Bastion | skuName=Basic | meterName=Basic Data Transfer Out | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.0
+    - score=0 | productName=Azure Bastion | skuName=Standard | meterName=Standard Additional Gateway | armSkuName= | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.14
+    - score=0 | productName=Azure Bastion | skuName=Premium | meterName=Premium Data Transfer Out | armSkuName=Premium | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.0
+    - score=0 | productName=Azure Bastion | skuName=Premium | meterName=Premium Gateway | armSkuName=Premium | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.45
+    - score=0 | productName=Azure Bastion | skuName=Premium | meterName=Premium Additional Gateway | armSkuName=Premium | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.22
+    - score=0 | productName=Azure Bastion | skuName=Standard | meterName=Standard Gateway | armSkuName= | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.29
+    - score=0 | productName=Azure Bastion | skuName=Standard | meterName=Standard Data Transfer Out | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.0
+    - Conclusion: Ambiguous: multiple meters, need capacity-first / stricter filters.
+
+### Run: run7_appgw_pe_payg
+- Scenario: unknown
+  - Resource: id=vnet-main | category=network.vnet | region=westeurope | requested_sku=Virtual Network | billing_model=payg
+    - Catalog used: `catalog/virtual_network__westeurope__EUR.jsonl` (reason: category='network.vnet' -> serviceName='Virtual Network' via normalize_service_name; region='westeurope', currency='EUR')
+    - Catalog search results: 12 candidates
+    - score=2 | productName=Global Virtual Network Peering | skuName=Inter-Region | meterName=Inter-Region Egress | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.0303
+    - score=2 | productName=Global Virtual Network Peering | skuName=Inter-Region | meterName=Inter-Region Ingress | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.0303
+    - score=0 | productName=IP Addresses | skuName=Standard | meterName=Standard IPv4 Static Public IP | armSkuName= | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.0043
+    - score=0 | productName=IP Addresses | skuName=Standard | meterName=Standard IPv4 Static Public IP | armSkuName= | unitOfMeasure=1 Hour | type=DevTestConsumption | priceType=DevTestConsumption | unitPrice=0.0043
+    - score=0 | productName=IP Addresses | skuName=Basic | meterName=Basic IPv4 Dynamic Public IP | armSkuName= | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.0035
+    - score=0 | productName=IP Addresses | skuName=Basic | meterName=Basic IPv4 Dynamic Public IP | armSkuName= | unitOfMeasure=1 Hour | type=DevTestConsumption | priceType=DevTestConsumption | unitPrice=0.0035
+    - score=0 | productName=Public IP Prefix | skuName=Standard | meterName=Standard Static IP Addresses | armSkuName= | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.0052
+    - score=0 | productName=Public IP Prefix | skuName=Global | meterName=Global Static Public IP | armSkuName=Global | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.0104
+    - score=0 | productName=IP Addresses | skuName=Basic | meterName=Basic IPv4 Static Public IP | armSkuName= | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.0031
+    - score=0 | productName=IP Addresses | skuName=Basic | meterName=Basic IPv4 Static Public IP | armSkuName= | unitOfMeasure=1 Hour | type=DevTestConsumption | priceType=DevTestConsumption | unitPrice=0.0031
+    - Conclusion: Ambiguous: multiple meters, need capacity-first / stricter filters.
+  - Resource: id=appgw-waf-v2 | category=network.appgw | region=westeurope | requested_sku=WAF_v2 | billing_model=payg
+    - Catalog used: `catalog/application_gateway__westeurope__EUR.jsonl` (reason: category='network.appgw' -> serviceName='Application Gateway' via normalize_service_name; region='westeurope', currency='EUR')
+    - Catalog search results: 27 candidates
+    - score=0 | productName=Application Gateway WAF v2 - Discounted | skuName=Standard | meterName=Standard Fixed Cost | armSkuName=Standard | unitOfMeasure=1/Hour | type=Consumption | priceType=Consumption | unitPrice=0.2249
+    - score=0 | productName=Application Gateway Basic v2 | skuName=Basic | meterName=Basic Fixed Cost | armSkuName=Basic | unitOfMeasure=1/Hour | type=Consumption | priceType=Consumption | unitPrice=0.0234
+    - score=0 | productName=Application Gateway for Containers | skuName=Standard | meterName=Standard Association | armSkuName= | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.1349
+    - score=0 | productName=WAF Application Gateway | skuName=Large | meterName=Large Gateway | armSkuName= | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.434
+    - score=0 | productName=Application Gateway WAF v2 - Discounted | skuName=Standard | meterName=Standard Capacity Units | armSkuName=Standard | unitOfMeasure=1/Hour | type=Consumption | priceType=Consumption | unitPrice=0.0069
+    - score=0 | productName=Application Gateway for Containers WAF | skuName=Standard | meterName=Standard AGC | armSkuName=Standard | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.0346
+    - score=0 | productName=Application Gateway Standard v2 | skuName=Standard | meterName=Standard Capacity Units | armSkuName= | unitOfMeasure=1/Hour | type=Consumption | priceType=Consumption | unitPrice=0.0069
+    - score=0 | productName=Application Gateway WAF v2 | skuName=Standard | meterName=Standard Captcha Sessions | armSkuName= | unitOfMeasure=1K | type=Consumption | priceType=Consumption | unitPrice=0.3459
+    - score=0 | productName=Application Gateway for Containers WAF | skuName=Standard | meterName=Standard Capacity Units | armSkuName=Standard | unitOfMeasure=1/Hour | type=Consumption | priceType=Consumption | unitPrice=0.0164
+    - score=0 | productName=Application Gateway WAF v2 | skuName=Standard | meterName=Standard Fixed Cost | armSkuName= | unitOfMeasure=1/Hour | type=Consumption | priceType=Consumption | unitPrice=0.4048
+    - Conclusion: Ambiguous: multiple meters, need capacity-first / stricter filters.
+  - Resource: id=appgw-public-ip | category=network.public_ip | region=westeurope | requested_sku=Standard | billing_model=payg
+    - Catalog used: `catalog/public_ip_addresses__westeurope__EUR.jsonl` (reason: category='network.public_ip' -> serviceName='Public IP Addresses' via normalize_service_name; region='westeurope', currency='EUR')
+    - Catalog search results: 0 candidates
+    - Conclusion: Correct meter is not in catalog (catalog incomplete or mapping wrong).
+  - Resource: id=appservice-plan-prod | category=appservice | region=westeurope | requested_sku=P1v3 | billing_model=payg
+    - Catalog used: `catalog/azure_app_service__westeurope__EUR.jsonl` (reason: category='appservice' -> serviceName='Azure App Service' via normalize_service_name; region='westeurope', currency='EUR')
+    - Catalog search results: 210 candidates
+    - score=0 | productName=Azure App Service Isolated v2 Plan | skuName=I5mv2 | meterName=I5mv2 App | armSkuName=App_Service_I5_mv2_windows | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=9.6112
+    - score=0 | productName=Azure App Service Isolated v2 Plan | skuName=I5mv2 | meterName=I5mv2 App | armSkuName=App_Service_I5_mv2_windows | unitOfMeasure=1 Hour | type=Reservation | priceType=Reservation | unitPrice=58672.4324
+    - score=0 | productName=Azure App Service Isolated v2 Plan | skuName=I3 v2 | meterName=I3 v2 App | armSkuName=App_Service_I3_v2_windows | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=1.9719
+    - score=0 | productName=Azure App Service Isolated v2 Plan | skuName=I3 v2 | meterName=I3 v2 App | armSkuName=App_Service_I3_v2_windows | unitOfMeasure=1 Hour | type=Reservation | priceType=Reservation | unitPrice=12211.8919
+    - score=0 | productName=Azure App Service Standard Plan | skuName=S1 | meterName=S1 App | armSkuName= | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.0865
+    - score=0 | productName=Azure App Service Standard Plan | skuName=S1 | meterName=S1 App | armSkuName= | unitOfMeasure=1 Hour | type=DevTestConsumption | priceType=DevTestConsumption | unitPrice=0.0519
+    - score=0 | productName=Azure App Service Isolated v2 Plan | skuName=I3mv2 | meterName=I3mv2 App | armSkuName=App_Service_I3_mv2_windows | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=2.4026
+    - score=0 | productName=Azure App Service Isolated v2 Plan | skuName=I3mv2 | meterName=I3mv2 App | armSkuName=App_Service_I3_mv2_windows | unitOfMeasure=1 Hour | type=Reservation | priceType=Reservation | unitPrice=14668.1081
+    - score=0 | productName=Azure App Service Isolated v2 Plan | skuName=I5 v2 | meterName=I5 v2 App | armSkuName=App_Service_I5_v2_windows | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=7.8876
+    - score=0 | productName=Azure App Service Isolated v2 Plan | skuName=I5 v2 | meterName=I5 v2 App | armSkuName=App_Service_I5_v2_windows | unitOfMeasure=1 Hour | type=Reservation | priceType=Reservation | unitPrice=49138.1622
+    - Conclusion: Ambiguous: multiple meters, need capacity-first / stricter filters.
+  - Resource: id=appservice-webapp | category=appservice | region=westeurope | requested_sku= | billing_model=payg
+    - Catalog used: `catalog/azure_app_service__westeurope__EUR.jsonl` (reason: category='appservice' -> serviceName='Azure App Service' via normalize_service_name; region='westeurope', currency='EUR')
+    - Catalog search results: 210 candidates
+    - score=0 | productName=Azure App Service Isolated v2 Plan | skuName=I5mv2 | meterName=I5mv2 App | armSkuName=App_Service_I5_mv2_windows | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=9.6112
+    - score=0 | productName=Azure App Service Isolated v2 Plan | skuName=I5mv2 | meterName=I5mv2 App | armSkuName=App_Service_I5_mv2_windows | unitOfMeasure=1 Hour | type=Reservation | priceType=Reservation | unitPrice=58672.4324
+    - score=0 | productName=Azure App Service Isolated v2 Plan | skuName=I3 v2 | meterName=I3 v2 App | armSkuName=App_Service_I3_v2_windows | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=1.9719
+    - score=0 | productName=Azure App Service Isolated v2 Plan | skuName=I3 v2 | meterName=I3 v2 App | armSkuName=App_Service_I3_v2_windows | unitOfMeasure=1 Hour | type=Reservation | priceType=Reservation | unitPrice=12211.8919
+    - score=0 | productName=Azure App Service Standard Plan | skuName=S1 | meterName=S1 App | armSkuName= | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.0865
+    - score=0 | productName=Azure App Service Standard Plan | skuName=S1 | meterName=S1 App | armSkuName= | unitOfMeasure=1 Hour | type=DevTestConsumption | priceType=DevTestConsumption | unitPrice=0.0519
+    - score=0 | productName=Azure App Service Isolated v2 Plan | skuName=I3mv2 | meterName=I3mv2 App | armSkuName=App_Service_I3_mv2_windows | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=2.4026
+    - score=0 | productName=Azure App Service Isolated v2 Plan | skuName=I3mv2 | meterName=I3mv2 App | armSkuName=App_Service_I3_mv2_windows | unitOfMeasure=1 Hour | type=Reservation | priceType=Reservation | unitPrice=14668.1081
+    - score=0 | productName=Azure App Service Isolated v2 Plan | skuName=I5 v2 | meterName=I5 v2 App | armSkuName=App_Service_I5_v2_windows | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=7.8876
+    - score=0 | productName=Azure App Service Isolated v2 Plan | skuName=I5 v2 | meterName=I5 v2 App | armSkuName=App_Service_I5_v2_windows | unitOfMeasure=1 Hour | type=Reservation | priceType=Reservation | unitPrice=49138.1622
+    - Conclusion: Ambiguous: multiple meters, need capacity-first / stricter filters.
+  - Resource: id=redis-cache-prod | category=cache.redis | region=westeurope | requested_sku=Standard_C1 | billing_model=payg
+    - Catalog used: `catalog/azure_cache_for_redis__westeurope__EUR.jsonl` (reason: category='cache.redis' -> serviceName='Azure Cache for Redis' via normalize_service_name; region='westeurope', currency='EUR')
+    - Catalog search results: 0 candidates
+    - Conclusion: Correct meter is not in catalog (catalog incomplete or mapping wrong).
+  - Resource: id=sql-db-ecommerce | category=db.sql | region=westeurope | requested_sku=GP_Gen5_2 | billing_model=payg
+    - Catalog used: `catalog/sql_database__westeurope__EUR.jsonl` (reason: category='db.sql' -> serviceName='SQL Database' via normalize_service_name; region='westeurope', currency='EUR')
+    - Catalog search results: 256 candidates
+    - score=0 | productName=SQL Database Elastic Pool - Premium | skuName=2000 DTU Pack | meterName=eDTUs | armSkuName= | unitOfMeasure=1/Day | type=Consumption | priceType=Consumption | unitPrice=311.3514
+    - score=0 | productName=SQL Database Single/Elastic Pool General Purpose - Compute Gen5 | skuName=80 vCore | meterName=vCore | armSkuName=SQLDB_GP_Compute_Gen5_80 | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=11.585
+    - score=0 | productName=SQL Database Single/Elastic Pool General Purpose - Compute FSv2 Series | skuName=72 vCore | meterName=vCore | armSkuName= | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=9.1499
+    - score=0 | productName=SQL Database SingleDB/Elastic Pool Hyperscale - Compute Gen5 | skuName=1 vCore | meterName=vCore | armSkuName=SQLDB_HS_Compute_Gen5_1 | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.1738
+    - score=0 | productName=SQL Database Single/Elastic Pool PITR Backup Storage | skuName=Backup RA-GRS | meterName=RA-GRS Data Stored | armSkuName= | unitOfMeasure=1 GB/Month | type=Consumption | priceType=Consumption | unitPrice=0.2058
+    - score=0 | productName=SQL Database Single/Elastic Pool General Purpose - Compute DC-Series | skuName=1 vCore | meterName=vCore | armSkuName= | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.3425
+    - score=0 | productName=SQL Database Single/Elastic Pool General Purpose - Compute DC-Series | skuName=12 vCore | meterName=vCore | armSkuName=12 vCore | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=4.1098
+    - score=0 | productName=SQL Database Elastic Pool - Premium RS | skuName=3500 DTU Pack | meterName=eDTUs | armSkuName= | unitOfMeasure=1/Day | type=Consumption | priceType=Consumption | unitPrice=136.2162
+    - score=0 | productName=SQL Database Single/Elastic Pool General Purpose - Compute DC-Series | skuName=6 vCore | meterName=vCore | armSkuName= | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=2.0541
+    - score=0 | productName=SQL Database Single/Elastic Pool General Purpose - Compute DC-Series | skuName=2 vCore | meterName=vCore | armSkuName= | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.685
+    - Conclusion: Ambiguous: multiple meters, need capacity-first / stricter filters.
+  - Resource: id=sql-db-private-endpoint | category=network.gateway | region=westeurope | requested_sku=PrivateEndpoint | billing_model=payg
+    - Catalog used: `catalog/azure_front_door__westeurope__EUR.jsonl` (reason: category='network.gateway' -> serviceName='Azure Front Door' via normalize_service_name; region='westeurope', currency='EUR')
+    - Catalog search results: 0 candidates
+    - Conclusion: Correct meter is not in catalog (catalog incomplete or mapping wrong).
+  - Resource: id=redis-private-endpoint | category=network.gateway | region=westeurope | requested_sku=PrivateEndpoint | billing_model=payg
+    - Catalog used: `catalog/azure_front_door__westeurope__EUR.jsonl` (reason: category='network.gateway' -> serviceName='Azure Front Door' via normalize_service_name; region='westeurope', currency='EUR')
+    - Catalog search results: 0 candidates
+    - Conclusion: Correct meter is not in catalog (catalog incomplete or mapping wrong).
+  - Resource: id=storage-blob-content | category=storage.blob | region=westeurope | requested_sku=Standard_GRS | billing_model=payg
+    - Catalog used: `catalog/storage__westeurope__EUR.jsonl` (reason: category='storage.blob' -> serviceName='Storage' via normalize_service_name; region='westeurope', currency='EUR')
+    - Catalog search results: 1478 candidates
+    - score=0 | productName=General Block Blob v2 Hierarchical Namespace | skuName=Cool GRS | meterName=Cool GRS Write Operations | armSkuName= | unitOfMeasure=10K | type=Consumption | priceType=Consumption | unitPrice=0.2249
+    - score=0 | productName=Tables | skuName=Standard ZRS | meterName=Read Operations | armSkuName= | unitOfMeasure=10K | type=Consumption | priceType=Consumption | unitPrice=0.0003
+    - score=0 | productName=Blob Storage | skuName=Hot RA-GRS | meterName=GRS List and Create Container Operations | armSkuName= | unitOfMeasure=10K | type=Consumption | priceType=Consumption | unitPrice=0.0934
+    - score=0 | productName=Azure Data Lake Storage Gen2 Flat Namespace | skuName=Cool RA-GRS | meterName=Cool GRS Write Operations | armSkuName= | unitOfMeasure=10K | type=Consumption | priceType=Consumption | unitPrice=0.173
+    - score=0 | productName=Standard SSD Managed Disks | skuName=Disk Transactions LRS | meterName=Disk Transactions LRS Disk Operations | armSkuName=Disk Transactions | unitOfMeasure=10K | type=Consumption | priceType=Consumption | unitPrice=0.0022
+    - score=0 | productName=Azure Data Lake Storage Gen2 Hierarchical Namespace | skuName=Hot ZRS | meterName=Hot ZRS Index | armSkuName= | unitOfMeasure=1 GB/Month | type=Consumption | priceType=Consumption | unitPrice=0.0303
+    - score=0 | productName=Standard Page Blob v2 | skuName=Standard RA-GZRS | meterName=Disk Data Stored | armSkuName= | unitOfMeasure=1 GB/Month | type=Consumption | priceType=Consumption | unitPrice=0.3284
+    - score=0 | productName=Tables | skuName=Standard ZRS | meterName=List Operations | armSkuName= | unitOfMeasure=10K | type=Consumption | priceType=Consumption | unitPrice=0.0003
+    - score=0 | productName=Premium Block Blob | skuName=Premium LRS | meterName=LRS Early Premium To Cool Tier Down | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.16
+    - score=0 | productName=Files v2 | skuName=Cool GRS | meterName=Cool Data Retrieval | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.0086
+    - Conclusion: Ambiguous: multiple meters, need capacity-first / stricter filters.
+  - Resource: id=log-analytics-workspace | category=monitoring.loganalytics | region=westeurope | requested_sku=PerGB2018 | billing_model=payg
+    - Catalog used: `catalog/log_analytics__westeurope__EUR.jsonl` (reason: category='monitoring.loganalytics' -> serviceName='Log Analytics' via normalize_service_name; region='westeurope', currency='EUR')
+    - Catalog search results: 6 candidates
+    - score=0 | productName=Log Analytics | skuName=Analytics Logs | meterName=Analytics Logs Data Retention | armSkuName= | unitOfMeasure=1 GB/Month | type=Consumption | priceType=Consumption | unitPrice=0.1124
+    - score=0 | productName=Log Analytics | skuName=Premium | meterName=Premium Data Analyzed | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=3.027
+    - score=0 | productName=Log Analytics | skuName=Free | meterName=Free Data Analyzed | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.0
+    - score=0 | productName=Log Analytics | skuName=Standard | meterName=Standard Data Analyzed | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=1.9892
+    - score=0 | productName=Log Analytics | skuName=Analytics Logs | meterName=Analytics Logs Data Ingestion | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.0
+    - score=0 | productName=Log Analytics | skuName=Analytics Logs | meterName=Analytics Logs Data Analyzed | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=1.9892
+    - Conclusion: Ambiguous: multiple meters, need capacity-first / stricter filters.
+  - Resource: id=keyvault-main | category=security.keyvault | region=westeurope | requested_sku=standard | billing_model=payg
+    - Catalog used: `catalog/key_vault__westeurope__EUR.jsonl` (reason: category='security.keyvault' -> serviceName='Key Vault' via normalize_service_name; region='westeurope', currency='EUR')
+    - Catalog search results: 14 candidates
+    - score=1 | productName=Key Vault | skuName=Standard | meterName=Advanced Key Operations | armSkuName= | unitOfMeasure=10K | type=Consumption | priceType=Consumption | unitPrice=0.1297
+    - score=1 | productName=Key Vault | skuName=Standard | meterName=Automated Key Rotation | armSkuName= | unitOfMeasure=1 Rotation | type=Consumption | priceType=Consumption | unitPrice=0.8649
+    - score=1 | productName=Key Vault | skuName=Standard | meterName=Secret Renewal | armSkuName= | unitOfMeasure=1 | type=Consumption | priceType=Consumption | unitPrice=0.8649
+    - score=1 | productName=Azure Dedicated HSM | skuName=Standard | meterName=Standard Instance | armSkuName= | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=4.1946
+    - score=1 | productName=Key Vault HSM Pool | skuName=Standard B1 | meterName=Standard B1 Instance | armSkuName= | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=2.7676
+    - score=1 | productName=Key Vault | skuName=Standard | meterName=Operations | armSkuName= | unitOfMeasure=10K | type=Consumption | priceType=Consumption | unitPrice=0.0259
+    - score=1 | productName=Key Vault | skuName=Standard | meterName=Certificate Renewal Request | armSkuName= | unitOfMeasure=1 | type=Consumption | priceType=Consumption | unitPrice=2.5946
+    - score=0 | productName=Key Vault | skuName=Premium | meterName=Automated Key Rotation | armSkuName= | unitOfMeasure=1 Rotation | type=Consumption | priceType=Consumption | unitPrice=0.8649
+    - score=0 | productName=Key Vault | skuName=Premium | meterName=Operations | armSkuName= | unitOfMeasure=10K | type=Consumption | priceType=Consumption | unitPrice=0.0259
+    - score=0 | productName=Key Vault | skuName=Premium | meterName=Premium HSM-protected RSA 2048-bit key | armSkuName= | unitOfMeasure=1 | type=Consumption | priceType=Consumption | unitPrice=0.8649
+    - Conclusion: Ambiguous: multiple meters, need capacity-first / stricter filters.
+  - Resource: id=backup-vault-main | category=backup.vault | region=westeurope | requested_sku=Standard | billing_model=payg
+    - Catalog used: `catalog/backup__westeurope__EUR.jsonl` (reason: category='backup.vault' -> serviceName='Backup' via normalize_service_name; region='westeurope', currency='EUR')
+    - Catalog search results: 41 candidates
+    - score=1 | productName=Backup Reserved Capacity | skuName=Standard - 100 TB ZRS | meterName=ZRS Data Stored | armSkuName=backup_standard_zrs_data_stored_100tb | unitOfMeasure=1 GB/Month | type=Reservation | priceType=Reservation | unitPrice=26186.3784
+    - score=1 | productName=Backup | skuName=Standard | meterName=LRS Data Stored | armSkuName= | unitOfMeasure=1 GB/Month | type=Consumption | priceType=Consumption | unitPrice=0.0194
+    - score=1 | productName=Backup Reserved Capacity | skuName=Standard - 100 TB LRS | meterName=LRS Data Stored | armSkuName=backup_standard_lrs_data_stored_100tb | unitOfMeasure=1 GB/Month | type=Reservation | priceType=Reservation | unitPrice=20948.7568
+    - score=1 | productName=Backup Reserved Capacity | skuName=Standard - 100 TB RA-GRS | meterName=RA-GRS Data Stored | armSkuName=backup_standard_ra-grs_data_stored_100tb | unitOfMeasure=1 GB/Month | type=Reservation | priceType=Reservation | unitPrice=53213.4054
+    - score=1 | productName=Backup Reserved Capacity | skuName=Standard - 1 PB GRS | meterName=GRS Data Stored | armSkuName=backup_standard_grs_data_stored_1pb | unitOfMeasure=1 GB/Month | type=Reservation | priceType=Reservation | unitPrice=409530.8108
+    - score=1 | productName=Backup Reserved Capacity | skuName=Standard - 1 PB ZRS | meterName=ZRS Data Stored | armSkuName=backup_standard_zrs_data_stored_1pb | unitOfMeasure=1 GB/Month | type=Reservation | priceType=Reservation | unitPrice=255956.7568
+    - score=1 | productName=Backup Reserved Capacity | skuName=Standard - 1 PB LRS | meterName=LRS Data Stored | armSkuName=backup_standard_lrs_data_stored_1pb | unitOfMeasure=1 GB/Month | type=Reservation | priceType=Reservation | unitPrice=204765.4054
+    - score=1 | productName=Backup Reserved Capacity | skuName=Standard - 1 PB RA-GRS | meterName=RA-GRS Data Stored | armSkuName=backup_standard_ra-grs_data_stored_1pb | unitOfMeasure=1 GB/Month | type=Reservation | priceType=Reservation | unitPrice=520140.973
+    - score=1 | productName=Backup | skuName=Standard | meterName=ZRS Data Stored | armSkuName= | unitOfMeasure=1 GB/Month | type=Consumption | priceType=Consumption | unitPrice=0.0242
+    - score=1 | productName=Backup Reserved Capacity | skuName=Standard - 100 TB GRS | meterName=GRS Data Stored | armSkuName=backup_standard_grs_data_stored_100tb | unitOfMeasure=1 GB/Month | type=Reservation | priceType=Reservation | unitPrice=41897.5135
+    - Conclusion: Ambiguous: multiple meters, need capacity-first / stricter filters.
+  - Resource: id=asr-dr-config | category=dr.asr | region=westeurope | requested_sku=System Center | billing_model=payg
+    - Catalog used: `catalog/azure_site_recovery__westeurope__EUR.jsonl` (reason: category='dr.asr' -> serviceName='Azure Site Recovery' via normalize_service_name; region='westeurope', currency='EUR')
+    - Catalog search results: 2 candidates
+    - score=2 | productName=Azure Site Recovery | skuName=System Center | meterName=VM Replicated to System Center | armSkuName= | unitOfMeasure=1/Month | type=Consumption | priceType=Consumption | unitPrice=13.8378
+    - score=0 | productName=Azure Site Recovery | skuName=Azure | meterName=VM Replicated to Azure | armSkuName= | unitOfMeasure=1/Month | type=Consumption | priceType=Consumption | unitPrice=21.6216
+    - Conclusion: Ambiguous: multiple meters, need capacity-first / stricter filters.
+  - Resource: id=nat-egress | category=network.nat | region=westeurope | requested_sku=Standard | billing_model=payg
+    - Catalog used: `catalog/bandwidth__westeurope__EUR.jsonl` (reason: category='network.nat' -> serviceName='Bandwidth' via normalize_service_name; region='westeurope', currency='EUR')
+    - Catalog search results: 14 candidates
+    - score=1 | productName=Bandwidth - Routing Preference: Internet | skuName=Standard | meterName=Standard Data Transfer Out | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.0
+    - score=1 | productName=Rtn Preference: MGN | skuName=Standard | meterName=Standard Data Transfer Out | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.0
+    - score=1 | productName=Rtn Preference: MGN | skuName=Standard | meterName=Standard Inter-Availability Zone Data Transfer Out | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.0086
+    - score=1 | productName=Rtn Preference: MGN | skuName=Standard | meterName=Standard Data Transfer Out - to China | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.0
+    - score=1 | productName=Rtn Preference: MGN | skuName=Standard | meterName=Standard Data Transfer In | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.0
+    - score=1 | productName=Rtn Preference: MGN | skuName=Standard | meterName=Standard Data Transfer In - from China | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.0778
+    - score=1 | productName=Rtn Preference: MGN | skuName=Standard | meterName=Standard Inter-Availability Zone Data Transfer In | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.0086
+    - score=1 | productName=Rtn Preference: MGN | skuName=Standard | meterName=Standard Inter-Region Data Transfer | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.0173
+    - score=0 | productName=Rtn Preference: MGN | skuName=China | meterName=China Data Transfer - 1 to 5 Mbps | armSkuName= | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.0
+    - score=0 | productName=Rtn Preference: MGN | skuName=China | meterName=China Data Transfer - 1 Mbps | armSkuName= | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.0
+    - Conclusion: Ambiguous: multiple meters, need capacity-first / stricter filters.
+  - Resource: id=network-egress-general | category=network.egress | region=westeurope | requested_sku=Standard | billing_model=payg
+    - Catalog used: `catalog/bandwidth__westeurope__EUR.jsonl` (reason: category='network.egress' -> serviceName='Bandwidth' via normalize_service_name; region='westeurope', currency='EUR')
+    - Catalog search results: 14 candidates
+    - score=1 | productName=Bandwidth - Routing Preference: Internet | skuName=Standard | meterName=Standard Data Transfer Out | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.0
+    - score=1 | productName=Rtn Preference: MGN | skuName=Standard | meterName=Standard Data Transfer Out | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.0
+    - score=1 | productName=Rtn Preference: MGN | skuName=Standard | meterName=Standard Inter-Availability Zone Data Transfer Out | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.0086
+    - score=1 | productName=Rtn Preference: MGN | skuName=Standard | meterName=Standard Data Transfer Out - to China | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.0
+    - score=1 | productName=Rtn Preference: MGN | skuName=Standard | meterName=Standard Data Transfer In | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.0
+    - score=1 | productName=Rtn Preference: MGN | skuName=Standard | meterName=Standard Data Transfer In - from China | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.0778
+    - score=1 | productName=Rtn Preference: MGN | skuName=Standard | meterName=Standard Inter-Availability Zone Data Transfer In | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.0086
+    - score=1 | productName=Rtn Preference: MGN | skuName=Standard | meterName=Standard Inter-Region Data Transfer | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.0173
+    - score=0 | productName=Rtn Preference: MGN | skuName=China | meterName=China Data Transfer - 1 to 5 Mbps | armSkuName= | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.0
+    - score=0 | productName=Rtn Preference: MGN | skuName=China | meterName=China Data Transfer - 1 Mbps | armSkuName= | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.0
+    - Conclusion: Ambiguous: multiple meters, need capacity-first / stricter filters.
+
+- Scenario: unknown
+  - Resource: id=vnet-main-co | category=network.vnet | region=westeurope | requested_sku=Virtual Network | billing_model=payg
+    - Catalog used: `catalog/virtual_network__westeurope__EUR.jsonl` (reason: category='network.vnet' -> serviceName='Virtual Network' via normalize_service_name; region='westeurope', currency='EUR')
+    - Catalog search results: 12 candidates
+    - score=2 | productName=Global Virtual Network Peering | skuName=Inter-Region | meterName=Inter-Region Egress | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.0303
+    - score=2 | productName=Global Virtual Network Peering | skuName=Inter-Region | meterName=Inter-Region Ingress | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.0303
+    - score=0 | productName=IP Addresses | skuName=Standard | meterName=Standard IPv4 Static Public IP | armSkuName= | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.0043
+    - score=0 | productName=IP Addresses | skuName=Standard | meterName=Standard IPv4 Static Public IP | armSkuName= | unitOfMeasure=1 Hour | type=DevTestConsumption | priceType=DevTestConsumption | unitPrice=0.0043
+    - score=0 | productName=IP Addresses | skuName=Basic | meterName=Basic IPv4 Dynamic Public IP | armSkuName= | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.0035
+    - score=0 | productName=IP Addresses | skuName=Basic | meterName=Basic IPv4 Dynamic Public IP | armSkuName= | unitOfMeasure=1 Hour | type=DevTestConsumption | priceType=DevTestConsumption | unitPrice=0.0035
+    - score=0 | productName=Public IP Prefix | skuName=Standard | meterName=Standard Static IP Addresses | armSkuName= | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.0052
+    - score=0 | productName=Public IP Prefix | skuName=Global | meterName=Global Static Public IP | armSkuName=Global | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.0104
+    - score=0 | productName=IP Addresses | skuName=Basic | meterName=Basic IPv4 Static Public IP | armSkuName= | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.0031
+    - score=0 | productName=IP Addresses | skuName=Basic | meterName=Basic IPv4 Static Public IP | armSkuName= | unitOfMeasure=1 Hour | type=DevTestConsumption | priceType=DevTestConsumption | unitPrice=0.0031
+    - Conclusion: Ambiguous: multiple meters, need capacity-first / stricter filters.
+  - Resource: id=appgw-waf-v2-co | category=network.appgw | region=westeurope | requested_sku=WAF_v2 | billing_model=payg
+    - Catalog used: `catalog/application_gateway__westeurope__EUR.jsonl` (reason: category='network.appgw' -> serviceName='Application Gateway' via normalize_service_name; region='westeurope', currency='EUR')
+    - Catalog search results: 27 candidates
+    - score=0 | productName=Application Gateway WAF v2 - Discounted | skuName=Standard | meterName=Standard Fixed Cost | armSkuName=Standard | unitOfMeasure=1/Hour | type=Consumption | priceType=Consumption | unitPrice=0.2249
+    - score=0 | productName=Application Gateway Basic v2 | skuName=Basic | meterName=Basic Fixed Cost | armSkuName=Basic | unitOfMeasure=1/Hour | type=Consumption | priceType=Consumption | unitPrice=0.0234
+    - score=0 | productName=Application Gateway for Containers | skuName=Standard | meterName=Standard Association | armSkuName= | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.1349
+    - score=0 | productName=WAF Application Gateway | skuName=Large | meterName=Large Gateway | armSkuName= | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.434
+    - score=0 | productName=Application Gateway WAF v2 - Discounted | skuName=Standard | meterName=Standard Capacity Units | armSkuName=Standard | unitOfMeasure=1/Hour | type=Consumption | priceType=Consumption | unitPrice=0.0069
+    - score=0 | productName=Application Gateway for Containers WAF | skuName=Standard | meterName=Standard AGC | armSkuName=Standard | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.0346
+    - score=0 | productName=Application Gateway Standard v2 | skuName=Standard | meterName=Standard Capacity Units | armSkuName= | unitOfMeasure=1/Hour | type=Consumption | priceType=Consumption | unitPrice=0.0069
+    - score=0 | productName=Application Gateway WAF v2 | skuName=Standard | meterName=Standard Captcha Sessions | armSkuName= | unitOfMeasure=1K | type=Consumption | priceType=Consumption | unitPrice=0.3459
+    - score=0 | productName=Application Gateway for Containers WAF | skuName=Standard | meterName=Standard Capacity Units | armSkuName=Standard | unitOfMeasure=1/Hour | type=Consumption | priceType=Consumption | unitPrice=0.0164
+    - score=0 | productName=Application Gateway WAF v2 | skuName=Standard | meterName=Standard Fixed Cost | armSkuName= | unitOfMeasure=1/Hour | type=Consumption | priceType=Consumption | unitPrice=0.4048
+    - Conclusion: Ambiguous: multiple meters, need capacity-first / stricter filters.
+  - Resource: id=appgw-public-ip-co | category=network.public_ip | region=westeurope | requested_sku=Standard | billing_model=payg
+    - Catalog used: `catalog/public_ip_addresses__westeurope__EUR.jsonl` (reason: category='network.public_ip' -> serviceName='Public IP Addresses' via normalize_service_name; region='westeurope', currency='EUR')
+    - Catalog search results: 0 candidates
+    - Conclusion: Correct meter is not in catalog (catalog incomplete or mapping wrong).
+  - Resource: id=appservice-plan-co | category=appservice | region=westeurope | requested_sku=S1 | billing_model=payg
+    - Catalog used: `catalog/azure_app_service__westeurope__EUR.jsonl` (reason: category='appservice' -> serviceName='Azure App Service' via normalize_service_name; region='westeurope', currency='EUR')
+    - Catalog search results: 210 candidates
+    - score=1 | productName=Azure App Service Standard Plan | skuName=S1 | meterName=S1 App | armSkuName= | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.0865
+    - score=1 | productName=Azure App Service Standard Plan | skuName=S1 | meterName=S1 App | armSkuName= | unitOfMeasure=1 Hour | type=DevTestConsumption | priceType=DevTestConsumption | unitPrice=0.0519
+    - score=1 | productName=Azure App Service Standard Plan - Linux | skuName=S1 | meterName=S1 App | armSkuName= | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.0822
+    - score=0 | productName=Azure App Service Isolated v2 Plan | skuName=I5mv2 | meterName=I5mv2 App | armSkuName=App_Service_I5_mv2_windows | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=9.6112
+    - score=0 | productName=Azure App Service Isolated v2 Plan | skuName=I5mv2 | meterName=I5mv2 App | armSkuName=App_Service_I5_mv2_windows | unitOfMeasure=1 Hour | type=Reservation | priceType=Reservation | unitPrice=58672.4324
+    - score=0 | productName=Azure App Service Isolated v2 Plan | skuName=I3 v2 | meterName=I3 v2 App | armSkuName=App_Service_I3_v2_windows | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=1.9719
+    - score=0 | productName=Azure App Service Isolated v2 Plan | skuName=I3 v2 | meterName=I3 v2 App | armSkuName=App_Service_I3_v2_windows | unitOfMeasure=1 Hour | type=Reservation | priceType=Reservation | unitPrice=12211.8919
+    - score=0 | productName=Azure App Service Isolated v2 Plan | skuName=I3mv2 | meterName=I3mv2 App | armSkuName=App_Service_I3_mv2_windows | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=2.4026
+    - score=0 | productName=Azure App Service Isolated v2 Plan | skuName=I3mv2 | meterName=I3mv2 App | armSkuName=App_Service_I3_mv2_windows | unitOfMeasure=1 Hour | type=Reservation | priceType=Reservation | unitPrice=14668.1081
+    - score=0 | productName=Azure App Service Isolated v2 Plan | skuName=I5 v2 | meterName=I5 v2 App | armSkuName=App_Service_I5_v2_windows | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=7.8876
+    - Conclusion: Ambiguous: multiple meters, need capacity-first / stricter filters.
+  - Resource: id=appservice-webapp-co | category=appservice | region=westeurope | requested_sku= | billing_model=payg
+    - Catalog used: `catalog/azure_app_service__westeurope__EUR.jsonl` (reason: category='appservice' -> serviceName='Azure App Service' via normalize_service_name; region='westeurope', currency='EUR')
+    - Catalog search results: 210 candidates
+    - score=0 | productName=Azure App Service Isolated v2 Plan | skuName=I5mv2 | meterName=I5mv2 App | armSkuName=App_Service_I5_mv2_windows | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=9.6112
+    - score=0 | productName=Azure App Service Isolated v2 Plan | skuName=I5mv2 | meterName=I5mv2 App | armSkuName=App_Service_I5_mv2_windows | unitOfMeasure=1 Hour | type=Reservation | priceType=Reservation | unitPrice=58672.4324
+    - score=0 | productName=Azure App Service Isolated v2 Plan | skuName=I3 v2 | meterName=I3 v2 App | armSkuName=App_Service_I3_v2_windows | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=1.9719
+    - score=0 | productName=Azure App Service Isolated v2 Plan | skuName=I3 v2 | meterName=I3 v2 App | armSkuName=App_Service_I3_v2_windows | unitOfMeasure=1 Hour | type=Reservation | priceType=Reservation | unitPrice=12211.8919
+    - score=0 | productName=Azure App Service Standard Plan | skuName=S1 | meterName=S1 App | armSkuName= | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.0865
+    - score=0 | productName=Azure App Service Standard Plan | skuName=S1 | meterName=S1 App | armSkuName= | unitOfMeasure=1 Hour | type=DevTestConsumption | priceType=DevTestConsumption | unitPrice=0.0519
+    - score=0 | productName=Azure App Service Isolated v2 Plan | skuName=I3mv2 | meterName=I3mv2 App | armSkuName=App_Service_I3_mv2_windows | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=2.4026
+    - score=0 | productName=Azure App Service Isolated v2 Plan | skuName=I3mv2 | meterName=I3mv2 App | armSkuName=App_Service_I3_mv2_windows | unitOfMeasure=1 Hour | type=Reservation | priceType=Reservation | unitPrice=14668.1081
+    - score=0 | productName=Azure App Service Isolated v2 Plan | skuName=I5 v2 | meterName=I5 v2 App | armSkuName=App_Service_I5_v2_windows | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=7.8876
+    - score=0 | productName=Azure App Service Isolated v2 Plan | skuName=I5 v2 | meterName=I5 v2 App | armSkuName=App_Service_I5_v2_windows | unitOfMeasure=1 Hour | type=Reservation | priceType=Reservation | unitPrice=49138.1622
+    - Conclusion: Ambiguous: multiple meters, need capacity-first / stricter filters.
+  - Resource: id=redis-cache-co | category=cache.redis | region=westeurope | requested_sku=Basic_C0 | billing_model=payg
+    - Catalog used: `catalog/azure_cache_for_redis__westeurope__EUR.jsonl` (reason: category='cache.redis' -> serviceName='Azure Cache for Redis' via normalize_service_name; region='westeurope', currency='EUR')
+    - Catalog search results: 0 candidates
+    - Conclusion: Correct meter is not in catalog (catalog incomplete or mapping wrong).
+  - Resource: id=sql-db-ecommerce-co | category=db.sql | region=westeurope | requested_sku=GP_Gen5_2 | billing_model=payg
+    - Catalog used: `catalog/sql_database__westeurope__EUR.jsonl` (reason: category='db.sql' -> serviceName='SQL Database' via normalize_service_name; region='westeurope', currency='EUR')
+    - Catalog search results: 256 candidates
+    - score=0 | productName=SQL Database Elastic Pool - Premium | skuName=2000 DTU Pack | meterName=eDTUs | armSkuName= | unitOfMeasure=1/Day | type=Consumption | priceType=Consumption | unitPrice=311.3514
+    - score=0 | productName=SQL Database Single/Elastic Pool General Purpose - Compute Gen5 | skuName=80 vCore | meterName=vCore | armSkuName=SQLDB_GP_Compute_Gen5_80 | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=11.585
+    - score=0 | productName=SQL Database Single/Elastic Pool General Purpose - Compute FSv2 Series | skuName=72 vCore | meterName=vCore | armSkuName= | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=9.1499
+    - score=0 | productName=SQL Database SingleDB/Elastic Pool Hyperscale - Compute Gen5 | skuName=1 vCore | meterName=vCore | armSkuName=SQLDB_HS_Compute_Gen5_1 | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.1738
+    - score=0 | productName=SQL Database Single/Elastic Pool PITR Backup Storage | skuName=Backup RA-GRS | meterName=RA-GRS Data Stored | armSkuName= | unitOfMeasure=1 GB/Month | type=Consumption | priceType=Consumption | unitPrice=0.2058
+    - score=0 | productName=SQL Database Single/Elastic Pool General Purpose - Compute DC-Series | skuName=1 vCore | meterName=vCore | armSkuName= | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.3425
+    - score=0 | productName=SQL Database Single/Elastic Pool General Purpose - Compute DC-Series | skuName=12 vCore | meterName=vCore | armSkuName=12 vCore | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=4.1098
+    - score=0 | productName=SQL Database Elastic Pool - Premium RS | skuName=3500 DTU Pack | meterName=eDTUs | armSkuName= | unitOfMeasure=1/Day | type=Consumption | priceType=Consumption | unitPrice=136.2162
+    - score=0 | productName=SQL Database Single/Elastic Pool General Purpose - Compute DC-Series | skuName=6 vCore | meterName=vCore | armSkuName= | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=2.0541
+    - score=0 | productName=SQL Database Single/Elastic Pool General Purpose - Compute DC-Series | skuName=2 vCore | meterName=vCore | armSkuName= | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.685
+    - Conclusion: Ambiguous: multiple meters, need capacity-first / stricter filters.
+  - Resource: id=sql-db-private-endpoint-co | category=network.gateway | region=westeurope | requested_sku=PrivateEndpoint | billing_model=payg
+    - Catalog used: `catalog/azure_front_door__westeurope__EUR.jsonl` (reason: category='network.gateway' -> serviceName='Azure Front Door' via normalize_service_name; region='westeurope', currency='EUR')
+    - Catalog search results: 0 candidates
+    - Conclusion: Correct meter is not in catalog (catalog incomplete or mapping wrong).
+  - Resource: id=redis-private-endpoint-co | category=network.gateway | region=westeurope | requested_sku=PrivateEndpoint | billing_model=payg
+    - Catalog used: `catalog/azure_front_door__westeurope__EUR.jsonl` (reason: category='network.gateway' -> serviceName='Azure Front Door' via normalize_service_name; region='westeurope', currency='EUR')
+    - Catalog search results: 0 candidates
+    - Conclusion: Correct meter is not in catalog (catalog incomplete or mapping wrong).
+  - Resource: id=storage-blob-content-co | category=storage.blob | region=westeurope | requested_sku=Standard_LRS | billing_model=payg
+    - Catalog used: `catalog/storage__westeurope__EUR.jsonl` (reason: category='storage.blob' -> serviceName='Storage' via normalize_service_name; region='westeurope', currency='EUR')
+    - Catalog search results: 1478 candidates
+    - score=0 | productName=General Block Blob v2 Hierarchical Namespace | skuName=Cool GRS | meterName=Cool GRS Write Operations | armSkuName= | unitOfMeasure=10K | type=Consumption | priceType=Consumption | unitPrice=0.2249
+    - score=0 | productName=Tables | skuName=Standard ZRS | meterName=Read Operations | armSkuName= | unitOfMeasure=10K | type=Consumption | priceType=Consumption | unitPrice=0.0003
+    - score=0 | productName=Blob Storage | skuName=Hot RA-GRS | meterName=GRS List and Create Container Operations | armSkuName= | unitOfMeasure=10K | type=Consumption | priceType=Consumption | unitPrice=0.0934
+    - score=0 | productName=Azure Data Lake Storage Gen2 Flat Namespace | skuName=Cool RA-GRS | meterName=Cool GRS Write Operations | armSkuName= | unitOfMeasure=10K | type=Consumption | priceType=Consumption | unitPrice=0.173
+    - score=0 | productName=Standard SSD Managed Disks | skuName=Disk Transactions LRS | meterName=Disk Transactions LRS Disk Operations | armSkuName=Disk Transactions | unitOfMeasure=10K | type=Consumption | priceType=Consumption | unitPrice=0.0022
+    - score=0 | productName=Azure Data Lake Storage Gen2 Hierarchical Namespace | skuName=Hot ZRS | meterName=Hot ZRS Index | armSkuName= | unitOfMeasure=1 GB/Month | type=Consumption | priceType=Consumption | unitPrice=0.0303
+    - score=0 | productName=Standard Page Blob v2 | skuName=Standard RA-GZRS | meterName=Disk Data Stored | armSkuName= | unitOfMeasure=1 GB/Month | type=Consumption | priceType=Consumption | unitPrice=0.3284
+    - score=0 | productName=Tables | skuName=Standard ZRS | meterName=List Operations | armSkuName= | unitOfMeasure=10K | type=Consumption | priceType=Consumption | unitPrice=0.0003
+    - score=0 | productName=Premium Block Blob | skuName=Premium LRS | meterName=LRS Early Premium To Cool Tier Down | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.16
+    - score=0 | productName=Files v2 | skuName=Cool GRS | meterName=Cool Data Retrieval | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.0086
+    - Conclusion: Ambiguous: multiple meters, need capacity-first / stricter filters.
+  - Resource: id=log-analytics-co | category=monitoring.loganalytics | region=westeurope | requested_sku=PerGB2018 | billing_model=payg
+    - Catalog used: `catalog/log_analytics__westeurope__EUR.jsonl` (reason: category='monitoring.loganalytics' -> serviceName='Log Analytics' via normalize_service_name; region='westeurope', currency='EUR')
+    - Catalog search results: 6 candidates
+    - score=0 | productName=Log Analytics | skuName=Analytics Logs | meterName=Analytics Logs Data Retention | armSkuName= | unitOfMeasure=1 GB/Month | type=Consumption | priceType=Consumption | unitPrice=0.1124
+    - score=0 | productName=Log Analytics | skuName=Premium | meterName=Premium Data Analyzed | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=3.027
+    - score=0 | productName=Log Analytics | skuName=Free | meterName=Free Data Analyzed | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.0
+    - score=0 | productName=Log Analytics | skuName=Standard | meterName=Standard Data Analyzed | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=1.9892
+    - score=0 | productName=Log Analytics | skuName=Analytics Logs | meterName=Analytics Logs Data Ingestion | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.0
+    - score=0 | productName=Log Analytics | skuName=Analytics Logs | meterName=Analytics Logs Data Analyzed | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=1.9892
+    - Conclusion: Ambiguous: multiple meters, need capacity-first / stricter filters.
+  - Resource: id=keyvault-co | category=security.keyvault | region=westeurope | requested_sku=standard | billing_model=payg
+    - Catalog used: `catalog/key_vault__westeurope__EUR.jsonl` (reason: category='security.keyvault' -> serviceName='Key Vault' via normalize_service_name; region='westeurope', currency='EUR')
+    - Catalog search results: 14 candidates
+    - score=1 | productName=Key Vault | skuName=Standard | meterName=Advanced Key Operations | armSkuName= | unitOfMeasure=10K | type=Consumption | priceType=Consumption | unitPrice=0.1297
+    - score=1 | productName=Key Vault | skuName=Standard | meterName=Automated Key Rotation | armSkuName= | unitOfMeasure=1 Rotation | type=Consumption | priceType=Consumption | unitPrice=0.8649
+    - score=1 | productName=Key Vault | skuName=Standard | meterName=Secret Renewal | armSkuName= | unitOfMeasure=1 | type=Consumption | priceType=Consumption | unitPrice=0.8649
+    - score=1 | productName=Azure Dedicated HSM | skuName=Standard | meterName=Standard Instance | armSkuName= | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=4.1946
+    - score=1 | productName=Key Vault HSM Pool | skuName=Standard B1 | meterName=Standard B1 Instance | armSkuName= | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=2.7676
+    - score=1 | productName=Key Vault | skuName=Standard | meterName=Operations | armSkuName= | unitOfMeasure=10K | type=Consumption | priceType=Consumption | unitPrice=0.0259
+    - score=1 | productName=Key Vault | skuName=Standard | meterName=Certificate Renewal Request | armSkuName= | unitOfMeasure=1 | type=Consumption | priceType=Consumption | unitPrice=2.5946
+    - score=0 | productName=Key Vault | skuName=Premium | meterName=Automated Key Rotation | armSkuName= | unitOfMeasure=1 Rotation | type=Consumption | priceType=Consumption | unitPrice=0.8649
+    - score=0 | productName=Key Vault | skuName=Premium | meterName=Operations | armSkuName= | unitOfMeasure=10K | type=Consumption | priceType=Consumption | unitPrice=0.0259
+    - score=0 | productName=Key Vault | skuName=Premium | meterName=Premium HSM-protected RSA 2048-bit key | armSkuName= | unitOfMeasure=1 | type=Consumption | priceType=Consumption | unitPrice=0.8649
+    - Conclusion: Ambiguous: multiple meters, need capacity-first / stricter filters.
+  - Resource: id=backup-vault-co | category=backup.vault | region=westeurope | requested_sku=Standard | billing_model=payg
+    - Catalog used: `catalog/backup__westeurope__EUR.jsonl` (reason: category='backup.vault' -> serviceName='Backup' via normalize_service_name; region='westeurope', currency='EUR')
+    - Catalog search results: 41 candidates
+    - score=1 | productName=Backup Reserved Capacity | skuName=Standard - 100 TB ZRS | meterName=ZRS Data Stored | armSkuName=backup_standard_zrs_data_stored_100tb | unitOfMeasure=1 GB/Month | type=Reservation | priceType=Reservation | unitPrice=26186.3784
+    - score=1 | productName=Backup | skuName=Standard | meterName=LRS Data Stored | armSkuName= | unitOfMeasure=1 GB/Month | type=Consumption | priceType=Consumption | unitPrice=0.0194
+    - score=1 | productName=Backup Reserved Capacity | skuName=Standard - 100 TB LRS | meterName=LRS Data Stored | armSkuName=backup_standard_lrs_data_stored_100tb | unitOfMeasure=1 GB/Month | type=Reservation | priceType=Reservation | unitPrice=20948.7568
+    - score=1 | productName=Backup Reserved Capacity | skuName=Standard - 100 TB RA-GRS | meterName=RA-GRS Data Stored | armSkuName=backup_standard_ra-grs_data_stored_100tb | unitOfMeasure=1 GB/Month | type=Reservation | priceType=Reservation | unitPrice=53213.4054
+    - score=1 | productName=Backup Reserved Capacity | skuName=Standard - 1 PB GRS | meterName=GRS Data Stored | armSkuName=backup_standard_grs_data_stored_1pb | unitOfMeasure=1 GB/Month | type=Reservation | priceType=Reservation | unitPrice=409530.8108
+    - score=1 | productName=Backup Reserved Capacity | skuName=Standard - 1 PB ZRS | meterName=ZRS Data Stored | armSkuName=backup_standard_zrs_data_stored_1pb | unitOfMeasure=1 GB/Month | type=Reservation | priceType=Reservation | unitPrice=255956.7568
+    - score=1 | productName=Backup Reserved Capacity | skuName=Standard - 1 PB LRS | meterName=LRS Data Stored | armSkuName=backup_standard_lrs_data_stored_1pb | unitOfMeasure=1 GB/Month | type=Reservation | priceType=Reservation | unitPrice=204765.4054
+    - score=1 | productName=Backup Reserved Capacity | skuName=Standard - 1 PB RA-GRS | meterName=RA-GRS Data Stored | armSkuName=backup_standard_ra-grs_data_stored_1pb | unitOfMeasure=1 GB/Month | type=Reservation | priceType=Reservation | unitPrice=520140.973
+    - score=1 | productName=Backup | skuName=Standard | meterName=ZRS Data Stored | armSkuName= | unitOfMeasure=1 GB/Month | type=Consumption | priceType=Consumption | unitPrice=0.0242
+    - score=1 | productName=Backup Reserved Capacity | skuName=Standard - 100 TB GRS | meterName=GRS Data Stored | armSkuName=backup_standard_grs_data_stored_100tb | unitOfMeasure=1 GB/Month | type=Reservation | priceType=Reservation | unitPrice=41897.5135
+    - Conclusion: Ambiguous: multiple meters, need capacity-first / stricter filters.
+  - Resource: id=nat-egress-co | category=network.nat | region=westeurope | requested_sku=Standard | billing_model=payg
+    - Catalog used: `catalog/bandwidth__westeurope__EUR.jsonl` (reason: category='network.nat' -> serviceName='Bandwidth' via normalize_service_name; region='westeurope', currency='EUR')
+    - Catalog search results: 14 candidates
+    - score=1 | productName=Bandwidth - Routing Preference: Internet | skuName=Standard | meterName=Standard Data Transfer Out | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.0
+    - score=1 | productName=Rtn Preference: MGN | skuName=Standard | meterName=Standard Data Transfer Out | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.0
+    - score=1 | productName=Rtn Preference: MGN | skuName=Standard | meterName=Standard Inter-Availability Zone Data Transfer Out | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.0086
+    - score=1 | productName=Rtn Preference: MGN | skuName=Standard | meterName=Standard Data Transfer Out - to China | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.0
+    - score=1 | productName=Rtn Preference: MGN | skuName=Standard | meterName=Standard Data Transfer In | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.0
+    - score=1 | productName=Rtn Preference: MGN | skuName=Standard | meterName=Standard Data Transfer In - from China | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.0778
+    - score=1 | productName=Rtn Preference: MGN | skuName=Standard | meterName=Standard Inter-Availability Zone Data Transfer In | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.0086
+    - score=1 | productName=Rtn Preference: MGN | skuName=Standard | meterName=Standard Inter-Region Data Transfer | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.0173
+    - score=0 | productName=Rtn Preference: MGN | skuName=China | meterName=China Data Transfer - 1 to 5 Mbps | armSkuName= | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.0
+    - score=0 | productName=Rtn Preference: MGN | skuName=China | meterName=China Data Transfer - 1 Mbps | armSkuName= | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.0
+    - Conclusion: Ambiguous: multiple meters, need capacity-first / stricter filters.
+  - Resource: id=network-egress-co | category=network.egress | region=westeurope | requested_sku=Standard | billing_model=payg
+    - Catalog used: `catalog/bandwidth__westeurope__EUR.jsonl` (reason: category='network.egress' -> serviceName='Bandwidth' via normalize_service_name; region='westeurope', currency='EUR')
+    - Catalog search results: 14 candidates
+    - score=1 | productName=Bandwidth - Routing Preference: Internet | skuName=Standard | meterName=Standard Data Transfer Out | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.0
+    - score=1 | productName=Rtn Preference: MGN | skuName=Standard | meterName=Standard Data Transfer Out | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.0
+    - score=1 | productName=Rtn Preference: MGN | skuName=Standard | meterName=Standard Inter-Availability Zone Data Transfer Out | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.0086
+    - score=1 | productName=Rtn Preference: MGN | skuName=Standard | meterName=Standard Data Transfer Out - to China | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.0
+    - score=1 | productName=Rtn Preference: MGN | skuName=Standard | meterName=Standard Data Transfer In | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.0
+    - score=1 | productName=Rtn Preference: MGN | skuName=Standard | meterName=Standard Data Transfer In - from China | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.0778
+    - score=1 | productName=Rtn Preference: MGN | skuName=Standard | meterName=Standard Inter-Availability Zone Data Transfer In | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.0086
+    - score=1 | productName=Rtn Preference: MGN | skuName=Standard | meterName=Standard Inter-Region Data Transfer | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.0173
+    - score=0 | productName=Rtn Preference: MGN | skuName=China | meterName=China Data Transfer - 1 to 5 Mbps | armSkuName= | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.0
+    - score=0 | productName=Rtn Preference: MGN | skuName=China | meterName=China Data Transfer - 1 Mbps | armSkuName= | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.0
+    - Conclusion: Ambiguous: multiple meters, need capacity-first / stricter filters.
+
+- Scenario: unknown
+  - Resource: id=vnet-main-hp | category=network.vnet | region=westeurope | requested_sku=Virtual Network | billing_model=payg
+    - Catalog used: `catalog/virtual_network__westeurope__EUR.jsonl` (reason: category='network.vnet' -> serviceName='Virtual Network' via normalize_service_name; region='westeurope', currency='EUR')
+    - Catalog search results: 12 candidates
+    - score=2 | productName=Global Virtual Network Peering | skuName=Inter-Region | meterName=Inter-Region Egress | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.0303
+    - score=2 | productName=Global Virtual Network Peering | skuName=Inter-Region | meterName=Inter-Region Ingress | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.0303
+    - score=0 | productName=IP Addresses | skuName=Standard | meterName=Standard IPv4 Static Public IP | armSkuName= | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.0043
+    - score=0 | productName=IP Addresses | skuName=Standard | meterName=Standard IPv4 Static Public IP | armSkuName= | unitOfMeasure=1 Hour | type=DevTestConsumption | priceType=DevTestConsumption | unitPrice=0.0043
+    - score=0 | productName=IP Addresses | skuName=Basic | meterName=Basic IPv4 Dynamic Public IP | armSkuName= | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.0035
+    - score=0 | productName=IP Addresses | skuName=Basic | meterName=Basic IPv4 Dynamic Public IP | armSkuName= | unitOfMeasure=1 Hour | type=DevTestConsumption | priceType=DevTestConsumption | unitPrice=0.0035
+    - score=0 | productName=Public IP Prefix | skuName=Standard | meterName=Standard Static IP Addresses | armSkuName= | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.0052
+    - score=0 | productName=Public IP Prefix | skuName=Global | meterName=Global Static Public IP | armSkuName=Global | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.0104
+    - score=0 | productName=IP Addresses | skuName=Basic | meterName=Basic IPv4 Static Public IP | armSkuName= | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.0031
+    - score=0 | productName=IP Addresses | skuName=Basic | meterName=Basic IPv4 Static Public IP | armSkuName= | unitOfMeasure=1 Hour | type=DevTestConsumption | priceType=DevTestConsumption | unitPrice=0.0031
+    - Conclusion: Ambiguous: multiple meters, need capacity-first / stricter filters.
+  - Resource: id=appgw-waf-v2-hp | category=network.appgw | region=westeurope | requested_sku=WAF_v2 | billing_model=payg
+    - Catalog used: `catalog/application_gateway__westeurope__EUR.jsonl` (reason: category='network.appgw' -> serviceName='Application Gateway' via normalize_service_name; region='westeurope', currency='EUR')
+    - Catalog search results: 27 candidates
+    - score=0 | productName=Application Gateway WAF v2 - Discounted | skuName=Standard | meterName=Standard Fixed Cost | armSkuName=Standard | unitOfMeasure=1/Hour | type=Consumption | priceType=Consumption | unitPrice=0.2249
+    - score=0 | productName=Application Gateway Basic v2 | skuName=Basic | meterName=Basic Fixed Cost | armSkuName=Basic | unitOfMeasure=1/Hour | type=Consumption | priceType=Consumption | unitPrice=0.0234
+    - score=0 | productName=Application Gateway for Containers | skuName=Standard | meterName=Standard Association | armSkuName= | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.1349
+    - score=0 | productName=WAF Application Gateway | skuName=Large | meterName=Large Gateway | armSkuName= | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.434
+    - score=0 | productName=Application Gateway WAF v2 - Discounted | skuName=Standard | meterName=Standard Capacity Units | armSkuName=Standard | unitOfMeasure=1/Hour | type=Consumption | priceType=Consumption | unitPrice=0.0069
+    - score=0 | productName=Application Gateway for Containers WAF | skuName=Standard | meterName=Standard AGC | armSkuName=Standard | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.0346
+    - score=0 | productName=Application Gateway Standard v2 | skuName=Standard | meterName=Standard Capacity Units | armSkuName= | unitOfMeasure=1/Hour | type=Consumption | priceType=Consumption | unitPrice=0.0069
+    - score=0 | productName=Application Gateway WAF v2 | skuName=Standard | meterName=Standard Captcha Sessions | armSkuName= | unitOfMeasure=1K | type=Consumption | priceType=Consumption | unitPrice=0.3459
+    - score=0 | productName=Application Gateway for Containers WAF | skuName=Standard | meterName=Standard Capacity Units | armSkuName=Standard | unitOfMeasure=1/Hour | type=Consumption | priceType=Consumption | unitPrice=0.0164
+    - score=0 | productName=Application Gateway WAF v2 | skuName=Standard | meterName=Standard Fixed Cost | armSkuName= | unitOfMeasure=1/Hour | type=Consumption | priceType=Consumption | unitPrice=0.4048
+    - Conclusion: Ambiguous: multiple meters, need capacity-first / stricter filters.
+  - Resource: id=appgw-public-ip-hp | category=network.public_ip | region=westeurope | requested_sku=Standard | billing_model=payg
+    - Catalog used: `catalog/public_ip_addresses__westeurope__EUR.jsonl` (reason: category='network.public_ip' -> serviceName='Public IP Addresses' via normalize_service_name; region='westeurope', currency='EUR')
+    - Catalog search results: 0 candidates
+    - Conclusion: Correct meter is not in catalog (catalog incomplete or mapping wrong).
+  - Resource: id=appservice-plan-hp | category=appservice | region=westeurope | requested_sku=P2v3 | billing_model=payg
+    - Catalog used: `catalog/azure_app_service__westeurope__EUR.jsonl` (reason: category='appservice' -> serviceName='Azure App Service' via normalize_service_name; region='westeurope', currency='EUR')
+    - Catalog search results: 210 candidates
+    - score=0 | productName=Azure App Service Isolated v2 Plan | skuName=I5mv2 | meterName=I5mv2 App | armSkuName=App_Service_I5_mv2_windows | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=9.6112
+    - score=0 | productName=Azure App Service Isolated v2 Plan | skuName=I5mv2 | meterName=I5mv2 App | armSkuName=App_Service_I5_mv2_windows | unitOfMeasure=1 Hour | type=Reservation | priceType=Reservation | unitPrice=58672.4324
+    - score=0 | productName=Azure App Service Isolated v2 Plan | skuName=I3 v2 | meterName=I3 v2 App | armSkuName=App_Service_I3_v2_windows | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=1.9719
+    - score=0 | productName=Azure App Service Isolated v2 Plan | skuName=I3 v2 | meterName=I3 v2 App | armSkuName=App_Service_I3_v2_windows | unitOfMeasure=1 Hour | type=Reservation | priceType=Reservation | unitPrice=12211.8919
+    - score=0 | productName=Azure App Service Standard Plan | skuName=S1 | meterName=S1 App | armSkuName= | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.0865
+    - score=0 | productName=Azure App Service Standard Plan | skuName=S1 | meterName=S1 App | armSkuName= | unitOfMeasure=1 Hour | type=DevTestConsumption | priceType=DevTestConsumption | unitPrice=0.0519
+    - score=0 | productName=Azure App Service Isolated v2 Plan | skuName=I3mv2 | meterName=I3mv2 App | armSkuName=App_Service_I3_mv2_windows | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=2.4026
+    - score=0 | productName=Azure App Service Isolated v2 Plan | skuName=I3mv2 | meterName=I3mv2 App | armSkuName=App_Service_I3_mv2_windows | unitOfMeasure=1 Hour | type=Reservation | priceType=Reservation | unitPrice=14668.1081
+    - score=0 | productName=Azure App Service Isolated v2 Plan | skuName=I5 v2 | meterName=I5 v2 App | armSkuName=App_Service_I5_v2_windows | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=7.8876
+    - score=0 | productName=Azure App Service Isolated v2 Plan | skuName=I5 v2 | meterName=I5 v2 App | armSkuName=App_Service_I5_v2_windows | unitOfMeasure=1 Hour | type=Reservation | priceType=Reservation | unitPrice=49138.1622
+    - Conclusion: Ambiguous: multiple meters, need capacity-first / stricter filters.
+  - Resource: id=appservice-webapp-hp | category=appservice | region=westeurope | requested_sku= | billing_model=payg
+    - Catalog used: `catalog/azure_app_service__westeurope__EUR.jsonl` (reason: category='appservice' -> serviceName='Azure App Service' via normalize_service_name; region='westeurope', currency='EUR')
+    - Catalog search results: 210 candidates
+    - score=0 | productName=Azure App Service Isolated v2 Plan | skuName=I5mv2 | meterName=I5mv2 App | armSkuName=App_Service_I5_mv2_windows | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=9.6112
+    - score=0 | productName=Azure App Service Isolated v2 Plan | skuName=I5mv2 | meterName=I5mv2 App | armSkuName=App_Service_I5_mv2_windows | unitOfMeasure=1 Hour | type=Reservation | priceType=Reservation | unitPrice=58672.4324
+    - score=0 | productName=Azure App Service Isolated v2 Plan | skuName=I3 v2 | meterName=I3 v2 App | armSkuName=App_Service_I3_v2_windows | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=1.9719
+    - score=0 | productName=Azure App Service Isolated v2 Plan | skuName=I3 v2 | meterName=I3 v2 App | armSkuName=App_Service_I3_v2_windows | unitOfMeasure=1 Hour | type=Reservation | priceType=Reservation | unitPrice=12211.8919
+    - score=0 | productName=Azure App Service Standard Plan | skuName=S1 | meterName=S1 App | armSkuName= | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.0865
+    - score=0 | productName=Azure App Service Standard Plan | skuName=S1 | meterName=S1 App | armSkuName= | unitOfMeasure=1 Hour | type=DevTestConsumption | priceType=DevTestConsumption | unitPrice=0.0519
+    - score=0 | productName=Azure App Service Isolated v2 Plan | skuName=I3mv2 | meterName=I3mv2 App | armSkuName=App_Service_I3_mv2_windows | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=2.4026
+    - score=0 | productName=Azure App Service Isolated v2 Plan | skuName=I3mv2 | meterName=I3mv2 App | armSkuName=App_Service_I3_mv2_windows | unitOfMeasure=1 Hour | type=Reservation | priceType=Reservation | unitPrice=14668.1081
+    - score=0 | productName=Azure App Service Isolated v2 Plan | skuName=I5 v2 | meterName=I5 v2 App | armSkuName=App_Service_I5_v2_windows | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=7.8876
+    - score=0 | productName=Azure App Service Isolated v2 Plan | skuName=I5 v2 | meterName=I5 v2 App | armSkuName=App_Service_I5_v2_windows | unitOfMeasure=1 Hour | type=Reservation | priceType=Reservation | unitPrice=49138.1622
+    - Conclusion: Ambiguous: multiple meters, need capacity-first / stricter filters.
+  - Resource: id=redis-cache-hp | category=cache.redis | region=westeurope | requested_sku=Premium_P1 | billing_model=payg
+    - Catalog used: `catalog/azure_cache_for_redis__westeurope__EUR.jsonl` (reason: category='cache.redis' -> serviceName='Azure Cache for Redis' via normalize_service_name; region='westeurope', currency='EUR')
+    - Catalog search results: 0 candidates
+    - Conclusion: Correct meter is not in catalog (catalog incomplete or mapping wrong).
+  - Resource: id=sql-db-ecommerce-hp | category=db.sql | region=westeurope | requested_sku=GP_Gen5_2 | billing_model=payg
+    - Catalog used: `catalog/sql_database__westeurope__EUR.jsonl` (reason: category='db.sql' -> serviceName='SQL Database' via normalize_service_name; region='westeurope', currency='EUR')
+    - Catalog search results: 256 candidates
+    - score=0 | productName=SQL Database Elastic Pool - Premium | skuName=2000 DTU Pack | meterName=eDTUs | armSkuName= | unitOfMeasure=1/Day | type=Consumption | priceType=Consumption | unitPrice=311.3514
+    - score=0 | productName=SQL Database Single/Elastic Pool General Purpose - Compute Gen5 | skuName=80 vCore | meterName=vCore | armSkuName=SQLDB_GP_Compute_Gen5_80 | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=11.585
+    - score=0 | productName=SQL Database Single/Elastic Pool General Purpose - Compute FSv2 Series | skuName=72 vCore | meterName=vCore | armSkuName= | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=9.1499
+    - score=0 | productName=SQL Database SingleDB/Elastic Pool Hyperscale - Compute Gen5 | skuName=1 vCore | meterName=vCore | armSkuName=SQLDB_HS_Compute_Gen5_1 | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.1738
+    - score=0 | productName=SQL Database Single/Elastic Pool PITR Backup Storage | skuName=Backup RA-GRS | meterName=RA-GRS Data Stored | armSkuName= | unitOfMeasure=1 GB/Month | type=Consumption | priceType=Consumption | unitPrice=0.2058
+    - score=0 | productName=SQL Database Single/Elastic Pool General Purpose - Compute DC-Series | skuName=1 vCore | meterName=vCore | armSkuName= | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.3425
+    - score=0 | productName=SQL Database Single/Elastic Pool General Purpose - Compute DC-Series | skuName=12 vCore | meterName=vCore | armSkuName=12 vCore | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=4.1098
+    - score=0 | productName=SQL Database Elastic Pool - Premium RS | skuName=3500 DTU Pack | meterName=eDTUs | armSkuName= | unitOfMeasure=1/Day | type=Consumption | priceType=Consumption | unitPrice=136.2162
+    - score=0 | productName=SQL Database Single/Elastic Pool General Purpose - Compute DC-Series | skuName=6 vCore | meterName=vCore | armSkuName= | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=2.0541
+    - score=0 | productName=SQL Database Single/Elastic Pool General Purpose - Compute DC-Series | skuName=2 vCore | meterName=vCore | armSkuName= | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.685
+    - Conclusion: Ambiguous: multiple meters, need capacity-first / stricter filters.
+  - Resource: id=sql-db-private-endpoint-hp | category=network.gateway | region=westeurope | requested_sku=PrivateEndpoint | billing_model=payg
+    - Catalog used: `catalog/azure_front_door__westeurope__EUR.jsonl` (reason: category='network.gateway' -> serviceName='Azure Front Door' via normalize_service_name; region='westeurope', currency='EUR')
+    - Catalog search results: 0 candidates
+    - Conclusion: Correct meter is not in catalog (catalog incomplete or mapping wrong).
+  - Resource: id=redis-private-endpoint-hp | category=network.gateway | region=westeurope | requested_sku=PrivateEndpoint | billing_model=payg
+    - Catalog used: `catalog/azure_front_door__westeurope__EUR.jsonl` (reason: category='network.gateway' -> serviceName='Azure Front Door' via normalize_service_name; region='westeurope', currency='EUR')
+    - Catalog search results: 0 candidates
+    - Conclusion: Correct meter is not in catalog (catalog incomplete or mapping wrong).
+  - Resource: id=storage-blob-content-hp | category=storage.blob | region=westeurope | requested_sku=Standard_GZRS | billing_model=payg
+    - Catalog used: `catalog/storage__westeurope__EUR.jsonl` (reason: category='storage.blob' -> serviceName='Storage' via normalize_service_name; region='westeurope', currency='EUR')
+    - Catalog search results: 1478 candidates
+    - score=0 | productName=General Block Blob v2 Hierarchical Namespace | skuName=Cool GRS | meterName=Cool GRS Write Operations | armSkuName= | unitOfMeasure=10K | type=Consumption | priceType=Consumption | unitPrice=0.2249
+    - score=0 | productName=Tables | skuName=Standard ZRS | meterName=Read Operations | armSkuName= | unitOfMeasure=10K | type=Consumption | priceType=Consumption | unitPrice=0.0003
+    - score=0 | productName=Blob Storage | skuName=Hot RA-GRS | meterName=GRS List and Create Container Operations | armSkuName= | unitOfMeasure=10K | type=Consumption | priceType=Consumption | unitPrice=0.0934
+    - score=0 | productName=Azure Data Lake Storage Gen2 Flat Namespace | skuName=Cool RA-GRS | meterName=Cool GRS Write Operations | armSkuName= | unitOfMeasure=10K | type=Consumption | priceType=Consumption | unitPrice=0.173
+    - score=0 | productName=Standard SSD Managed Disks | skuName=Disk Transactions LRS | meterName=Disk Transactions LRS Disk Operations | armSkuName=Disk Transactions | unitOfMeasure=10K | type=Consumption | priceType=Consumption | unitPrice=0.0022
+    - score=0 | productName=Azure Data Lake Storage Gen2 Hierarchical Namespace | skuName=Hot ZRS | meterName=Hot ZRS Index | armSkuName= | unitOfMeasure=1 GB/Month | type=Consumption | priceType=Consumption | unitPrice=0.0303
+    - score=0 | productName=Standard Page Blob v2 | skuName=Standard RA-GZRS | meterName=Disk Data Stored | armSkuName= | unitOfMeasure=1 GB/Month | type=Consumption | priceType=Consumption | unitPrice=0.3284
+    - score=0 | productName=Tables | skuName=Standard ZRS | meterName=List Operations | armSkuName= | unitOfMeasure=10K | type=Consumption | priceType=Consumption | unitPrice=0.0003
+    - score=0 | productName=Premium Block Blob | skuName=Premium LRS | meterName=LRS Early Premium To Cool Tier Down | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.16
+    - score=0 | productName=Files v2 | skuName=Cool GRS | meterName=Cool Data Retrieval | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.0086
+    - Conclusion: Ambiguous: multiple meters, need capacity-first / stricter filters.
+  - Resource: id=log-analytics-hp | category=monitoring.loganalytics | region=westeurope | requested_sku=PerGB2018 | billing_model=payg
+    - Catalog used: `catalog/log_analytics__westeurope__EUR.jsonl` (reason: category='monitoring.loganalytics' -> serviceName='Log Analytics' via normalize_service_name; region='westeurope', currency='EUR')
+    - Catalog search results: 6 candidates
+    - score=0 | productName=Log Analytics | skuName=Analytics Logs | meterName=Analytics Logs Data Retention | armSkuName= | unitOfMeasure=1 GB/Month | type=Consumption | priceType=Consumption | unitPrice=0.1124
+    - score=0 | productName=Log Analytics | skuName=Premium | meterName=Premium Data Analyzed | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=3.027
+    - score=0 | productName=Log Analytics | skuName=Free | meterName=Free Data Analyzed | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.0
+    - score=0 | productName=Log Analytics | skuName=Standard | meterName=Standard Data Analyzed | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=1.9892
+    - score=0 | productName=Log Analytics | skuName=Analytics Logs | meterName=Analytics Logs Data Ingestion | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.0
+    - score=0 | productName=Log Analytics | skuName=Analytics Logs | meterName=Analytics Logs Data Analyzed | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=1.9892
+    - Conclusion: Ambiguous: multiple meters, need capacity-first / stricter filters.
+  - Resource: id=keyvault-hp | category=security.keyvault | region=westeurope | requested_sku=premium | billing_model=payg
+    - Catalog used: `catalog/key_vault__westeurope__EUR.jsonl` (reason: category='security.keyvault' -> serviceName='Key Vault' via normalize_service_name; region='westeurope', currency='EUR')
+    - Catalog search results: 14 candidates
+    - score=1 | productName=Key Vault | skuName=Premium | meterName=Automated Key Rotation | armSkuName= | unitOfMeasure=1 Rotation | type=Consumption | priceType=Consumption | unitPrice=0.8649
+    - score=1 | productName=Key Vault | skuName=Premium | meterName=Operations | armSkuName= | unitOfMeasure=10K | type=Consumption | priceType=Consumption | unitPrice=0.0259
+    - score=1 | productName=Key Vault | skuName=Premium | meterName=Premium HSM-protected RSA 2048-bit key | armSkuName= | unitOfMeasure=1 | type=Consumption | priceType=Consumption | unitPrice=0.8649
+    - score=1 | productName=Key Vault | skuName=Premium | meterName=Advanced Key Operations | armSkuName= | unitOfMeasure=10K | type=Consumption | priceType=Consumption | unitPrice=0.1297
+    - score=1 | productName=Key Vault | skuName=Premium | meterName=Premium HSM-protected Advanced Key | armSkuName= | unitOfMeasure=1 | type=Consumption | priceType=Consumption | unitPrice=4.3243
+    - score=1 | productName=Key Vault | skuName=Premium | meterName=Certificate Renewal Request | armSkuName= | unitOfMeasure=1 | type=Consumption | priceType=Consumption | unitPrice=2.5946
+    - score=1 | productName=Key Vault | skuName=Premium | meterName=Secret Renewal | armSkuName= | unitOfMeasure=1 | type=Consumption | priceType=Consumption | unitPrice=0.8649
+    - score=0 | productName=Key Vault | skuName=Standard | meterName=Advanced Key Operations | armSkuName= | unitOfMeasure=10K | type=Consumption | priceType=Consumption | unitPrice=0.1297
+    - score=0 | productName=Key Vault | skuName=Standard | meterName=Automated Key Rotation | armSkuName= | unitOfMeasure=1 Rotation | type=Consumption | priceType=Consumption | unitPrice=0.8649
+    - score=0 | productName=Key Vault | skuName=Standard | meterName=Secret Renewal | armSkuName= | unitOfMeasure=1 | type=Consumption | priceType=Consumption | unitPrice=0.8649
+    - Conclusion: Ambiguous: multiple meters, need capacity-first / stricter filters.
+  - Resource: id=backup-vault-hp | category=backup.vault | region=westeurope | requested_sku=Standard | billing_model=payg
+    - Catalog used: `catalog/backup__westeurope__EUR.jsonl` (reason: category='backup.vault' -> serviceName='Backup' via normalize_service_name; region='westeurope', currency='EUR')
+    - Catalog search results: 41 candidates
+    - score=1 | productName=Backup Reserved Capacity | skuName=Standard - 100 TB ZRS | meterName=ZRS Data Stored | armSkuName=backup_standard_zrs_data_stored_100tb | unitOfMeasure=1 GB/Month | type=Reservation | priceType=Reservation | unitPrice=26186.3784
+    - score=1 | productName=Backup | skuName=Standard | meterName=LRS Data Stored | armSkuName= | unitOfMeasure=1 GB/Month | type=Consumption | priceType=Consumption | unitPrice=0.0194
+    - score=1 | productName=Backup Reserved Capacity | skuName=Standard - 100 TB LRS | meterName=LRS Data Stored | armSkuName=backup_standard_lrs_data_stored_100tb | unitOfMeasure=1 GB/Month | type=Reservation | priceType=Reservation | unitPrice=20948.7568
+    - score=1 | productName=Backup Reserved Capacity | skuName=Standard - 100 TB RA-GRS | meterName=RA-GRS Data Stored | armSkuName=backup_standard_ra-grs_data_stored_100tb | unitOfMeasure=1 GB/Month | type=Reservation | priceType=Reservation | unitPrice=53213.4054
+    - score=1 | productName=Backup Reserved Capacity | skuName=Standard - 1 PB GRS | meterName=GRS Data Stored | armSkuName=backup_standard_grs_data_stored_1pb | unitOfMeasure=1 GB/Month | type=Reservation | priceType=Reservation | unitPrice=409530.8108
+    - score=1 | productName=Backup Reserved Capacity | skuName=Standard - 1 PB ZRS | meterName=ZRS Data Stored | armSkuName=backup_standard_zrs_data_stored_1pb | unitOfMeasure=1 GB/Month | type=Reservation | priceType=Reservation | unitPrice=255956.7568
+    - score=1 | productName=Backup Reserved Capacity | skuName=Standard - 1 PB LRS | meterName=LRS Data Stored | armSkuName=backup_standard_lrs_data_stored_1pb | unitOfMeasure=1 GB/Month | type=Reservation | priceType=Reservation | unitPrice=204765.4054
+    - score=1 | productName=Backup Reserved Capacity | skuName=Standard - 1 PB RA-GRS | meterName=RA-GRS Data Stored | armSkuName=backup_standard_ra-grs_data_stored_1pb | unitOfMeasure=1 GB/Month | type=Reservation | priceType=Reservation | unitPrice=520140.973
+    - score=1 | productName=Backup | skuName=Standard | meterName=ZRS Data Stored | armSkuName= | unitOfMeasure=1 GB/Month | type=Consumption | priceType=Consumption | unitPrice=0.0242
+    - score=1 | productName=Backup Reserved Capacity | skuName=Standard - 100 TB GRS | meterName=GRS Data Stored | armSkuName=backup_standard_grs_data_stored_100tb | unitOfMeasure=1 GB/Month | type=Reservation | priceType=Reservation | unitPrice=41897.5135
+    - Conclusion: Ambiguous: multiple meters, need capacity-first / stricter filters.
+  - Resource: id=nat-egress-hp | category=network.nat | region=westeurope | requested_sku=Standard | billing_model=payg
+    - Catalog used: `catalog/bandwidth__westeurope__EUR.jsonl` (reason: category='network.nat' -> serviceName='Bandwidth' via normalize_service_name; region='westeurope', currency='EUR')
+    - Catalog search results: 14 candidates
+    - score=1 | productName=Bandwidth - Routing Preference: Internet | skuName=Standard | meterName=Standard Data Transfer Out | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.0
+    - score=1 | productName=Rtn Preference: MGN | skuName=Standard | meterName=Standard Data Transfer Out | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.0
+    - score=1 | productName=Rtn Preference: MGN | skuName=Standard | meterName=Standard Inter-Availability Zone Data Transfer Out | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.0086
+    - score=1 | productName=Rtn Preference: MGN | skuName=Standard | meterName=Standard Data Transfer Out - to China | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.0
+    - score=1 | productName=Rtn Preference: MGN | skuName=Standard | meterName=Standard Data Transfer In | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.0
+    - score=1 | productName=Rtn Preference: MGN | skuName=Standard | meterName=Standard Data Transfer In - from China | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.0778
+    - score=1 | productName=Rtn Preference: MGN | skuName=Standard | meterName=Standard Inter-Availability Zone Data Transfer In | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.0086
+    - score=1 | productName=Rtn Preference: MGN | skuName=Standard | meterName=Standard Inter-Region Data Transfer | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.0173
+    - score=0 | productName=Rtn Preference: MGN | skuName=China | meterName=China Data Transfer - 1 to 5 Mbps | armSkuName= | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.0
+    - score=0 | productName=Rtn Preference: MGN | skuName=China | meterName=China Data Transfer - 1 Mbps | armSkuName= | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.0
+    - Conclusion: Ambiguous: multiple meters, need capacity-first / stricter filters.
+  - Resource: id=network-egress-hp | category=network.egress | region=westeurope | requested_sku=Standard | billing_model=payg
+    - Catalog used: `catalog/bandwidth__westeurope__EUR.jsonl` (reason: category='network.egress' -> serviceName='Bandwidth' via normalize_service_name; region='westeurope', currency='EUR')
+    - Catalog search results: 14 candidates
+    - score=1 | productName=Bandwidth - Routing Preference: Internet | skuName=Standard | meterName=Standard Data Transfer Out | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.0
+    - score=1 | productName=Rtn Preference: MGN | skuName=Standard | meterName=Standard Data Transfer Out | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.0
+    - score=1 | productName=Rtn Preference: MGN | skuName=Standard | meterName=Standard Inter-Availability Zone Data Transfer Out | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.0086
+    - score=1 | productName=Rtn Preference: MGN | skuName=Standard | meterName=Standard Data Transfer Out - to China | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.0
+    - score=1 | productName=Rtn Preference: MGN | skuName=Standard | meterName=Standard Data Transfer In | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.0
+    - score=1 | productName=Rtn Preference: MGN | skuName=Standard | meterName=Standard Data Transfer In - from China | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.0778
+    - score=1 | productName=Rtn Preference: MGN | skuName=Standard | meterName=Standard Inter-Availability Zone Data Transfer In | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.0086
+    - score=1 | productName=Rtn Preference: MGN | skuName=Standard | meterName=Standard Inter-Region Data Transfer | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.0173
+    - score=0 | productName=Rtn Preference: MGN | skuName=China | meterName=China Data Transfer - 1 to 5 Mbps | armSkuName= | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.0
+    - score=0 | productName=Rtn Preference: MGN | skuName=China | meterName=China Data Transfer - 1 Mbps | armSkuName= | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.0
+    - Conclusion: Ambiguous: multiple meters, need capacity-first / stricter filters.
+
+### Run: run8_databricks
+- Scenario: unknown
+  - Resource: id=vnet-analytics | category=network.vnet | region=westeurope | requested_sku=Virtual Network | billing_model=payg
+    - Catalog used: `catalog/virtual_network__westeurope__USD.jsonl` (reason: category='network.vnet' -> serviceName='Virtual Network' via normalize_service_name; region='westeurope', currency='USD')
+    - Catalog search results: 12 candidates
+    - score=2 | productName=Global Virtual Network Peering | skuName=Inter-Region | meterName=Inter-Region Egress | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.035
+    - score=2 | productName=Global Virtual Network Peering | skuName=Inter-Region | meterName=Inter-Region Ingress | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.035
+    - score=0 | productName=IP Addresses | skuName=Standard | meterName=Standard IPv4 Static Public IP | armSkuName= | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.005
+    - score=0 | productName=IP Addresses | skuName=Standard | meterName=Standard IPv4 Static Public IP | armSkuName= | unitOfMeasure=1 Hour | type=DevTestConsumption | priceType=DevTestConsumption | unitPrice=0.005
+    - score=0 | productName=IP Addresses | skuName=Basic | meterName=Basic IPv4 Dynamic Public IP | armSkuName= | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.004
+    - score=0 | productName=IP Addresses | skuName=Basic | meterName=Basic IPv4 Dynamic Public IP | armSkuName= | unitOfMeasure=1 Hour | type=DevTestConsumption | priceType=DevTestConsumption | unitPrice=0.004
+    - score=0 | productName=Public IP Prefix | skuName=Standard | meterName=Standard Static IP Addresses | armSkuName= | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.006
+    - score=0 | productName=Public IP Prefix | skuName=Global | meterName=Global Static Public IP | armSkuName=Global | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.012
+    - score=0 | productName=IP Addresses | skuName=Basic | meterName=Basic IPv4 Static Public IP | armSkuName= | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.0036
+    - score=0 | productName=IP Addresses | skuName=Basic | meterName=Basic IPv4 Static Public IP | armSkuName= | unitOfMeasure=1 Hour | type=DevTestConsumption | priceType=DevTestConsumption | unitPrice=0.0036
+    - Conclusion: Ambiguous: multiple meters, need capacity-first / stricter filters.
+  - Resource: id=databricks-ws-premium | category=analytics.databricks | region=westeurope | requested_sku=premium | billing_model=payg
+    - Catalog used: `catalog/azure_databricks__westeurope__USD.jsonl` (reason: category='analytics.databricks' -> serviceName='Azure Databricks' via normalize_service_name; region='westeurope', currency='USD')
+    - Catalog search results: 41 candidates
+    - score=1 | productName=Azure Databricks | skuName=Premium Advanced Compute Photon Delta Live Tables | meterName=Premium Advanced Compute Photon Delta Live Tables DBU | armSkuName= | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.54
+    - score=1 | productName=Azure Databricks | skuName=Premium Jobs Light Compute | meterName=Premium Jobs Light Compute DBU | armSkuName= | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.22
+    - score=1 | productName=Azure Databricks Regional | skuName=Premium Automated Serverless Compute | meterName=Premium Automated Serverless Compute DBU | armSkuName=Premium | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.5
+    - score=1 | productName=Azure Databricks | skuName=Premium Core Compute Delta Live Tables | meterName=Premium Core Compute Delta Live Tables DBU | armSkuName= | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.3
+    - score=1 | productName=Azure Databricks | skuName=Premium Enhanced Security and Compliance | meterName=Premium Enhanced Security and Compliance DBU | armSkuName= | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.1
+    - score=1 | productName=Azure Databricks Regional | skuName=Premium Serverless SQL | meterName=Premium Serverless SQL DBU | armSkuName=Premium | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.91
+    - score=1 | productName=Azure Databricks | skuName=Premium SQL Analytics | meterName=Premium SQL Analytics DBU | armSkuName= | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.22
+    - score=1 | productName=Azure Databricks Regional | skuName=Premium Database Serverless Compute | meterName=Premium Database Serverless Compute DBU | armSkuName=Premium | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.32
+    - score=1 | productName=Azure Databricks | skuName=Premium - Free Trial Jobs Compute | meterName=Premium - Free Trial Jobs Compute DBU | armSkuName= | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.0
+    - score=1 | productName=Azure Databricks | skuName=Premium Jobs Compute | meterName=Premium Jobs Compute DBU | armSkuName= | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.3
+    - Conclusion: Ambiguous: multiple meters, need capacity-first / stricter filters.
+  - Resource: id=dbx-jobs-cluster-d3v2 | category=compute.vmss | region=westeurope | requested_sku=Standard_D3_v2 | billing_model=payg
+    - Catalog used: `catalog/virtual_machines__westeurope__USD.jsonl` (reason: category='compute.vmss' -> serviceName='Virtual Machines' via normalize_service_name; region='westeurope', currency='USD')
+    - Catalog search results: 11279 candidates
+    - score=0 | productName=Virtual Machines Lsv3 Series Windows | skuName=Standard_L48s_v3 | meterName=L48s v3 | armSkuName=Standard_L48s_v3 | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=7.2
+    - score=0 | productName=Virtual Machines Lsv3 Series Windows | skuName=Standard_L48s_v3 | meterName=L48s v3 | armSkuName=Standard_L48s_v3 | unitOfMeasure=1 Hour | type=DevTestConsumption | priceType=DevTestConsumption | unitPrice=4.992
+    - score=0 | productName=Virtual Machines Dlsv5 Series Windows | skuName=D2ls v5 Spot | meterName=D2ls v5 Spot | armSkuName=Standard_D2ls_v5 | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.034927
+    - score=0 | productName=Virtual Machines Dlsv5 Series Windows | skuName=D2ls v5 Spot | meterName=D2ls v5 Spot | armSkuName=Standard_D2ls_v5 | unitOfMeasure=1 Hour | type=DevTestConsumption | priceType=DevTestConsumption | unitPrice=0.017926
+    - score=0 | productName=Virtual Machines MSv2 Series Windows | skuName=M416-208s_v2 Low Priority | meterName=M416-208s_v2 Low Priority | armSkuName=Standard_M416-208s_v2 | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=31.452
+    - score=0 | productName=Virtual Machines MSv2 Series Windows | skuName=M416-208s_v2 Low Priority | meterName=M416-208s_v2 Low Priority | armSkuName=Standard_M416-208s_v2 | unitOfMeasure=1 Hour | type=DevTestConsumption | priceType=DevTestConsumption | unitPrice=11.899
+    - score=0 | productName=Virtual Machines Ddsv5 Series | skuName=Standard_D4ds_v5 Spot | meterName=D4ds v5 Spot | armSkuName=Standard_D4ds_v5 | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.050266
+    - score=0 | productName=Virtual Machines Basv2 Series Windows | skuName=B8as v2 | meterName=B8as v2 | armSkuName=Standard_B8as_v2 | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.382
+    - score=0 | productName=Virtual Machines Basv2 Series Windows | skuName=B8as v2 | meterName=B8as v2 | armSkuName=Standard_B8as_v2 | unitOfMeasure=1 Hour | type=DevTestConsumption | priceType=DevTestConsumption | unitPrice=0.346
+    - score=0 | productName=Virtual Machines Easv5 Series | skuName=E16-4as v5 Low Priority | meterName=E16-4as v5 Low Priority | armSkuName=Standard_E16-4as_v5 | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.219
+    - Conclusion: Ambiguous: multiple meters, need capacity-first / stricter filters.
+  - Resource: id=dbx-driver-node-d3v2 | category=compute.vm | region=westeurope | requested_sku=Standard_D3_v2 | billing_model=payg
+    - Catalog used: `catalog/virtual_machines__westeurope__USD.jsonl` (reason: category='compute.vm' -> serviceName='Virtual Machines' via normalize_service_name; region='westeurope', currency='USD')
+    - Catalog search results: 11279 candidates
+    - score=0 | productName=Virtual Machines Lsv3 Series Windows | skuName=Standard_L48s_v3 | meterName=L48s v3 | armSkuName=Standard_L48s_v3 | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=7.2
+    - score=0 | productName=Virtual Machines Lsv3 Series Windows | skuName=Standard_L48s_v3 | meterName=L48s v3 | armSkuName=Standard_L48s_v3 | unitOfMeasure=1 Hour | type=DevTestConsumption | priceType=DevTestConsumption | unitPrice=4.992
+    - score=0 | productName=Virtual Machines Dlsv5 Series Windows | skuName=D2ls v5 Spot | meterName=D2ls v5 Spot | armSkuName=Standard_D2ls_v5 | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.034927
+    - score=0 | productName=Virtual Machines Dlsv5 Series Windows | skuName=D2ls v5 Spot | meterName=D2ls v5 Spot | armSkuName=Standard_D2ls_v5 | unitOfMeasure=1 Hour | type=DevTestConsumption | priceType=DevTestConsumption | unitPrice=0.017926
+    - score=0 | productName=Virtual Machines MSv2 Series Windows | skuName=M416-208s_v2 Low Priority | meterName=M416-208s_v2 Low Priority | armSkuName=Standard_M416-208s_v2 | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=31.452
+    - score=0 | productName=Virtual Machines MSv2 Series Windows | skuName=M416-208s_v2 Low Priority | meterName=M416-208s_v2 Low Priority | armSkuName=Standard_M416-208s_v2 | unitOfMeasure=1 Hour | type=DevTestConsumption | priceType=DevTestConsumption | unitPrice=11.899
+    - score=0 | productName=Virtual Machines Ddsv5 Series | skuName=Standard_D4ds_v5 Spot | meterName=D4ds v5 Spot | armSkuName=Standard_D4ds_v5 | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.050266
+    - score=0 | productName=Virtual Machines Basv2 Series Windows | skuName=B8as v2 | meterName=B8as v2 | armSkuName=Standard_B8as_v2 | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.382
+    - score=0 | productName=Virtual Machines Basv2 Series Windows | skuName=B8as v2 | meterName=B8as v2 | armSkuName=Standard_B8as_v2 | unitOfMeasure=1 Hour | type=DevTestConsumption | priceType=DevTestConsumption | unitPrice=0.346
+    - score=0 | productName=Virtual Machines Easv5 Series | skuName=E16-4as v5 Low Priority | meterName=E16-4as v5 Low Priority | armSkuName=Standard_E16-4as_v5 | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.219
+    - Conclusion: Ambiguous: multiple meters, need capacity-first / stricter filters.
+  - Resource: id=datalake-blob | category=storage.blob | region=westeurope | requested_sku=Standard_GRS | billing_model=payg
+    - Catalog used: `catalog/storage__westeurope__USD.jsonl` (reason: category='storage.blob' -> serviceName='Storage' via normalize_service_name; region='westeurope', currency='USD')
+    - Catalog search results: 1478 candidates
+    - score=0 | productName=General Block Blob v2 Hierarchical Namespace | skuName=Cool GRS | meterName=Cool GRS Write Operations | armSkuName= | unitOfMeasure=10K | type=Consumption | priceType=Consumption | unitPrice=0.26
+    - score=0 | productName=Tables | skuName=Standard ZRS | meterName=Read Operations | armSkuName= | unitOfMeasure=10K | type=Consumption | priceType=Consumption | unitPrice=0.00036
+    - score=0 | productName=Blob Storage | skuName=Hot RA-GRS | meterName=GRS List and Create Container Operations | armSkuName= | unitOfMeasure=10K | type=Consumption | priceType=Consumption | unitPrice=0.108
+    - score=0 | productName=Azure Data Lake Storage Gen2 Flat Namespace | skuName=Cool RA-GRS | meterName=Cool GRS Write Operations | armSkuName= | unitOfMeasure=10K | type=Consumption | priceType=Consumption | unitPrice=0.2
+    - score=0 | productName=Standard SSD Managed Disks | skuName=Disk Transactions LRS | meterName=Disk Transactions LRS Disk Operations | armSkuName=Disk Transactions | unitOfMeasure=10K | type=Consumption | priceType=Consumption | unitPrice=0.0026
+    - score=0 | productName=Azure Data Lake Storage Gen2 Hierarchical Namespace | skuName=Hot ZRS | meterName=Hot ZRS Index | armSkuName= | unitOfMeasure=1 GB/Month | type=Consumption | priceType=Consumption | unitPrice=0.035
+    - score=0 | productName=Standard Page Blob v2 | skuName=Standard RA-GZRS | meterName=Disk Data Stored | armSkuName= | unitOfMeasure=1 GB/Month | type=Consumption | priceType=Consumption | unitPrice=0.379686
+    - score=0 | productName=Tables | skuName=Standard ZRS | meterName=List Operations | armSkuName= | unitOfMeasure=10K | type=Consumption | priceType=Consumption | unitPrice=0.00036
+    - score=0 | productName=Premium Block Blob | skuName=Premium LRS | meterName=LRS Early Premium To Cool Tier Down | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.185
+    - score=0 | productName=Files v2 | skuName=Cool GRS | meterName=Cool Data Retrieval | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.01
+    - Conclusion: Ambiguous: multiple meters, need capacity-first / stricter filters.
+  - Resource: id=dbx-vnet-pe | category=network.gateway | region=westeurope | requested_sku= | billing_model=payg
+    - Catalog used: `catalog/azure_front_door__westeurope__EUR.jsonl` (reason: category='network.gateway' -> serviceName='Azure Front Door' via normalize_service_name; region='westeurope', currency='EUR')
+    - Catalog search results: 0 candidates
+    - Conclusion: Correct meter is not in catalog (catalog incomplete or mapping wrong).
+  - Resource: id=nat-egress | category=network.nat | region=westeurope | requested_sku=Standard | billing_model=payg
+    - Catalog used: `catalog/bandwidth__westeurope__USD.jsonl` (reason: category='network.nat' -> serviceName='Bandwidth' via normalize_service_name; region='westeurope', currency='USD')
+    - Catalog search results: 14 candidates
+    - score=1 | productName=Bandwidth - Routing Preference: Internet | skuName=Standard | meterName=Standard Data Transfer Out | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.0
+    - score=1 | productName=Rtn Preference: MGN | skuName=Standard | meterName=Standard Data Transfer Out | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.0
+    - score=1 | productName=Rtn Preference: MGN | skuName=Standard | meterName=Standard Inter-Availability Zone Data Transfer Out | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.01
+    - score=1 | productName=Rtn Preference: MGN | skuName=Standard | meterName=Standard Data Transfer Out - to China | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.0
+    - score=1 | productName=Rtn Preference: MGN | skuName=Standard | meterName=Standard Data Transfer In | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.0
+    - score=1 | productName=Rtn Preference: MGN | skuName=Standard | meterName=Standard Data Transfer In - from China | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.09
+    - score=1 | productName=Rtn Preference: MGN | skuName=Standard | meterName=Standard Inter-Availability Zone Data Transfer In | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.01
+    - score=1 | productName=Rtn Preference: MGN | skuName=Standard | meterName=Standard Inter-Region Data Transfer | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.02
+    - score=0 | productName=Rtn Preference: MGN | skuName=China | meterName=China Data Transfer - 1 to 5 Mbps | armSkuName= | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.0
+    - score=0 | productName=Rtn Preference: MGN | skuName=China | meterName=China Data Transfer - 1 Mbps | armSkuName= | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.0
+    - Conclusion: Ambiguous: multiple meters, need capacity-first / stricter filters.
+  - Resource: id=public-ip-nat | category=network.public_ip | region=westeurope | requested_sku=Standard | billing_model=payg
+    - Catalog used: `catalog/public_ip_addresses__westeurope__EUR.jsonl` (reason: category='network.public_ip' -> serviceName='Public IP Addresses' via normalize_service_name; region='westeurope', currency='EUR')
+    - Catalog search results: 0 candidates
+    - Conclusion: Correct meter is not in catalog (catalog incomplete or mapping wrong).
+  - Resource: id=log-analytics | category=monitoring.loganalytics | region=westeurope | requested_sku=PerGB2018 | billing_model=payg
+    - Catalog used: `catalog/log_analytics__westeurope__USD.jsonl` (reason: category='monitoring.loganalytics' -> serviceName='Log Analytics' via normalize_service_name; region='westeurope', currency='USD')
+    - Catalog search results: 6 candidates
+    - score=0 | productName=Log Analytics | skuName=Analytics Logs | meterName=Analytics Logs Data Retention | armSkuName= | unitOfMeasure=1 GB/Month | type=Consumption | priceType=Consumption | unitPrice=0.13
+    - score=0 | productName=Log Analytics | skuName=Premium | meterName=Premium Data Analyzed | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=3.5
+    - score=0 | productName=Log Analytics | skuName=Free | meterName=Free Data Analyzed | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.0
+    - score=0 | productName=Log Analytics | skuName=Standard | meterName=Standard Data Analyzed | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=2.3
+    - score=0 | productName=Log Analytics | skuName=Analytics Logs | meterName=Analytics Logs Data Ingestion | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.0
+    - score=0 | productName=Log Analytics | skuName=Analytics Logs | meterName=Analytics Logs Data Analyzed | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=2.3
+    - Conclusion: Ambiguous: multiple meters, need capacity-first / stricter filters.
+  - Resource: id=keyvault-main | category=security.keyvault | region=westeurope | requested_sku=standard | billing_model=payg
+    - Catalog used: `catalog/key_vault__westeurope__USD.jsonl` (reason: category='security.keyvault' -> serviceName='Key Vault' via normalize_service_name; region='westeurope', currency='USD')
+    - Catalog search results: 14 candidates
+    - score=1 | productName=Key Vault | skuName=Standard | meterName=Advanced Key Operations | armSkuName= | unitOfMeasure=10K | type=Consumption | priceType=Consumption | unitPrice=0.15
+    - score=1 | productName=Key Vault | skuName=Standard | meterName=Automated Key Rotation | armSkuName= | unitOfMeasure=1 Rotation | type=Consumption | priceType=Consumption | unitPrice=1.0
+    - score=1 | productName=Key Vault | skuName=Standard | meterName=Secret Renewal | armSkuName= | unitOfMeasure=1 | type=Consumption | priceType=Consumption | unitPrice=1.0
+    - score=1 | productName=Azure Dedicated HSM | skuName=Standard | meterName=Standard Instance | armSkuName= | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=4.85
+    - score=1 | productName=Key Vault HSM Pool | skuName=Standard B1 | meterName=Standard B1 Instance | armSkuName= | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=3.2
+    - score=1 | productName=Key Vault | skuName=Standard | meterName=Operations | armSkuName= | unitOfMeasure=10K | type=Consumption | priceType=Consumption | unitPrice=0.03
+    - score=1 | productName=Key Vault | skuName=Standard | meterName=Certificate Renewal Request | armSkuName= | unitOfMeasure=1 | type=Consumption | priceType=Consumption | unitPrice=3.0
+    - score=0 | productName=Key Vault | skuName=Premium | meterName=Automated Key Rotation | armSkuName= | unitOfMeasure=1 Rotation | type=Consumption | priceType=Consumption | unitPrice=1.0
+    - score=0 | productName=Key Vault | skuName=Premium | meterName=Operations | armSkuName= | unitOfMeasure=10K | type=Consumption | priceType=Consumption | unitPrice=0.03
+    - score=0 | productName=Key Vault | skuName=Premium | meterName=Premium HSM-protected RSA 2048-bit key | armSkuName= | unitOfMeasure=1 | type=Consumption | priceType=Consumption | unitPrice=1.0
+    - Conclusion: Ambiguous: multiple meters, need capacity-first / stricter filters.
+  - Resource: id=backup-vault | category=backup.vault | region=westeurope | requested_sku=Standard | billing_model=payg
+    - Catalog used: `catalog/backup__westeurope__USD.jsonl` (reason: category='backup.vault' -> serviceName='Backup' via normalize_service_name; region='westeurope', currency='USD')
+    - Catalog search results: 41 candidates
+    - score=1 | productName=Backup Reserved Capacity | skuName=Standard - 100 TB ZRS | meterName=ZRS Data Stored | armSkuName=backup_standard_zrs_data_stored_100tb | unitOfMeasure=1 GB/Month | type=Reservation | priceType=Reservation | unitPrice=30278.0
+    - score=1 | productName=Backup | skuName=Standard | meterName=LRS Data Stored | armSkuName= | unitOfMeasure=1 GB/Month | type=Consumption | priceType=Consumption | unitPrice=0.0224
+    - score=1 | productName=Backup Reserved Capacity | skuName=Standard - 100 TB LRS | meterName=LRS Data Stored | armSkuName=backup_standard_lrs_data_stored_100tb | unitOfMeasure=1 GB/Month | type=Reservation | priceType=Reservation | unitPrice=24222.0
+    - score=1 | productName=Backup Reserved Capacity | skuName=Standard - 100 TB RA-GRS | meterName=RA-GRS Data Stored | armSkuName=backup_standard_ra-grs_data_stored_100tb | unitOfMeasure=1 GB/Month | type=Reservation | priceType=Reservation | unitPrice=61528.0
+    - score=1 | productName=Backup Reserved Capacity | skuName=Standard - 1 PB GRS | meterName=GRS Data Stored | armSkuName=backup_standard_grs_data_stored_1pb | unitOfMeasure=1 GB/Month | type=Reservation | priceType=Reservation | unitPrice=473520.0
+    - score=1 | productName=Backup Reserved Capacity | skuName=Standard - 1 PB ZRS | meterName=ZRS Data Stored | armSkuName=backup_standard_zrs_data_stored_1pb | unitOfMeasure=1 GB/Month | type=Reservation | priceType=Reservation | unitPrice=295950.0
+    - score=1 | productName=Backup Reserved Capacity | skuName=Standard - 1 PB LRS | meterName=LRS Data Stored | armSkuName=backup_standard_lrs_data_stored_1pb | unitOfMeasure=1 GB/Month | type=Reservation | priceType=Reservation | unitPrice=236760.0
+    - score=1 | productName=Backup Reserved Capacity | skuName=Standard - 1 PB RA-GRS | meterName=RA-GRS Data Stored | armSkuName=backup_standard_ra-grs_data_stored_1pb | unitOfMeasure=1 GB/Month | type=Reservation | priceType=Reservation | unitPrice=601413.0
+    - score=1 | productName=Backup | skuName=Standard | meterName=ZRS Data Stored | armSkuName= | unitOfMeasure=1 GB/Month | type=Consumption | priceType=Consumption | unitPrice=0.028
+    - score=1 | productName=Backup Reserved Capacity | skuName=Standard - 100 TB GRS | meterName=GRS Data Stored | armSkuName=backup_standard_grs_data_stored_100tb | unitOfMeasure=1 GB/Month | type=Reservation | priceType=Reservation | unitPrice=48444.0
+    - Conclusion: Ambiguous: multiple meters, need capacity-first / stricter filters.
+  - Resource: id=asr-dr | category=dr.asr | region=westeurope | requested_sku=System Center | billing_model=payg
+    - Catalog used: `catalog/azure_site_recovery__westeurope__USD.jsonl` (reason: category='dr.asr' -> serviceName='Azure Site Recovery' via normalize_service_name; region='westeurope', currency='USD')
+    - Catalog search results: 2 candidates
+    - score=2 | productName=Azure Site Recovery | skuName=System Center | meterName=VM Replicated to System Center | armSkuName= | unitOfMeasure=1/Month | type=Consumption | priceType=Consumption | unitPrice=16.0
+    - score=0 | productName=Azure Site Recovery | skuName=Azure | meterName=VM Replicated to Azure | armSkuName= | unitOfMeasure=1/Month | type=Consumption | priceType=Consumption | unitPrice=25.0
+    - Conclusion: Ambiguous: multiple meters, need capacity-first / stricter filters.
+
+- Scenario: unknown
+  - Resource: id=vnet-analytics-co | category=network.vnet | region=westeurope | requested_sku=Virtual Network | billing_model=payg
+    - Catalog used: `catalog/virtual_network__westeurope__USD.jsonl` (reason: category='network.vnet' -> serviceName='Virtual Network' via normalize_service_name; region='westeurope', currency='USD')
+    - Catalog search results: 12 candidates
+    - score=2 | productName=Global Virtual Network Peering | skuName=Inter-Region | meterName=Inter-Region Egress | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.035
+    - score=2 | productName=Global Virtual Network Peering | skuName=Inter-Region | meterName=Inter-Region Ingress | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.035
+    - score=0 | productName=IP Addresses | skuName=Standard | meterName=Standard IPv4 Static Public IP | armSkuName= | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.005
+    - score=0 | productName=IP Addresses | skuName=Standard | meterName=Standard IPv4 Static Public IP | armSkuName= | unitOfMeasure=1 Hour | type=DevTestConsumption | priceType=DevTestConsumption | unitPrice=0.005
+    - score=0 | productName=IP Addresses | skuName=Basic | meterName=Basic IPv4 Dynamic Public IP | armSkuName= | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.004
+    - score=0 | productName=IP Addresses | skuName=Basic | meterName=Basic IPv4 Dynamic Public IP | armSkuName= | unitOfMeasure=1 Hour | type=DevTestConsumption | priceType=DevTestConsumption | unitPrice=0.004
+    - score=0 | productName=Public IP Prefix | skuName=Standard | meterName=Standard Static IP Addresses | armSkuName= | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.006
+    - score=0 | productName=Public IP Prefix | skuName=Global | meterName=Global Static Public IP | armSkuName=Global | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.012
+    - score=0 | productName=IP Addresses | skuName=Basic | meterName=Basic IPv4 Static Public IP | armSkuName= | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.0036
+    - score=0 | productName=IP Addresses | skuName=Basic | meterName=Basic IPv4 Static Public IP | armSkuName= | unitOfMeasure=1 Hour | type=DevTestConsumption | priceType=DevTestConsumption | unitPrice=0.0036
+    - Conclusion: Ambiguous: multiple meters, need capacity-first / stricter filters.
+  - Resource: id=databricks-ws-premium-co | category=analytics.databricks | region=westeurope | requested_sku=premium | billing_model=payg
+    - Catalog used: `catalog/azure_databricks__westeurope__USD.jsonl` (reason: category='analytics.databricks' -> serviceName='Azure Databricks' via normalize_service_name; region='westeurope', currency='USD')
+    - Catalog search results: 41 candidates
+    - score=1 | productName=Azure Databricks | skuName=Premium Advanced Compute Photon Delta Live Tables | meterName=Premium Advanced Compute Photon Delta Live Tables DBU | armSkuName= | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.54
+    - score=1 | productName=Azure Databricks | skuName=Premium Jobs Light Compute | meterName=Premium Jobs Light Compute DBU | armSkuName= | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.22
+    - score=1 | productName=Azure Databricks Regional | skuName=Premium Automated Serverless Compute | meterName=Premium Automated Serverless Compute DBU | armSkuName=Premium | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.5
+    - score=1 | productName=Azure Databricks | skuName=Premium Core Compute Delta Live Tables | meterName=Premium Core Compute Delta Live Tables DBU | armSkuName= | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.3
+    - score=1 | productName=Azure Databricks | skuName=Premium Enhanced Security and Compliance | meterName=Premium Enhanced Security and Compliance DBU | armSkuName= | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.1
+    - score=1 | productName=Azure Databricks Regional | skuName=Premium Serverless SQL | meterName=Premium Serverless SQL DBU | armSkuName=Premium | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.91
+    - score=1 | productName=Azure Databricks | skuName=Premium SQL Analytics | meterName=Premium SQL Analytics DBU | armSkuName= | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.22
+    - score=1 | productName=Azure Databricks Regional | skuName=Premium Database Serverless Compute | meterName=Premium Database Serverless Compute DBU | armSkuName=Premium | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.32
+    - score=1 | productName=Azure Databricks | skuName=Premium - Free Trial Jobs Compute | meterName=Premium - Free Trial Jobs Compute DBU | armSkuName= | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.0
+    - score=1 | productName=Azure Databricks | skuName=Premium Jobs Compute | meterName=Premium Jobs Compute DBU | armSkuName= | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.3
+    - Conclusion: Ambiguous: multiple meters, need capacity-first / stricter filters.
+  - Resource: id=dbx-jobs-cluster-d2s-co | category=compute.vmss | region=westeurope | requested_sku=Standard_D2s_v3 | billing_model=payg
+    - Catalog used: `catalog/virtual_machines__westeurope__USD.jsonl` (reason: category='compute.vmss' -> serviceName='Virtual Machines' via normalize_service_name; region='westeurope', currency='USD')
+    - Catalog search results: 11279 candidates
+    - score=1 | productName=Virtual Machines DSv3 Series Windows | skuName=D2s v3 | meterName=D2s v3 | armSkuName=Standard_D2s_v3 | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.212
+    - score=1 | productName=Virtual Machines DSv3 Series Windows | skuName=D2s v3 | meterName=D2s v3 | armSkuName=Standard_D2s_v3 | unitOfMeasure=1 Hour | type=DevTestConsumption | priceType=DevTestConsumption | unitPrice=0.12
+    - score=1 | productName=Virtual Machines DSv3 Series Windows | skuName=D2s v3 Low Priority | meterName=D2s v3 Low Priority | armSkuName=Standard_D2s_v3 | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.0848
+    - score=1 | productName=Virtual Machines DSv3 Series Windows | skuName=D2s v3 Low Priority | meterName=D2s v3 Low Priority | armSkuName=Standard_D2s_v3 | unitOfMeasure=1 Hour | type=DevTestConsumption | priceType=DevTestConsumption | unitPrice=0.024
+    - score=1 | productName=Virtual Machines DSv3 Series Windows | skuName=D2s v3 Spot | meterName=D2s v3 Spot | armSkuName=Standard_D2s_v3 | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.039178
+    - score=1 | productName=Virtual Machines DSv3 Series Windows | skuName=D2s v3 Spot | meterName=D2s v3 Spot | armSkuName=Standard_D2s_v3 | unitOfMeasure=1 Hour | type=DevTestConsumption | priceType=DevTestConsumption | unitPrice=0.022176
+    - score=1 | productName=Virtual Machines DSv3 Series | skuName=D2s v3 | meterName=D2s v3 | armSkuName=Standard_D2s_v3 | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.12
+    - score=1 | productName=Virtual Machines DSv3 Series | skuName=D2s v3 | meterName=D2s v3 | armSkuName=Standard_D2s_v3 | unitOfMeasure=1 Hour | type=Reservation | priceType=Reservation | unitPrice=670.0
+    - score=1 | productName=Virtual Machines DSv3 Series | skuName=D2s v3 Low Priority | meterName=D2s v3 Low Priority | armSkuName=Standard_D2s_v3 | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.024
+    - score=1 | productName=Virtual Machines DSv3 Series | skuName=D2s v3 Spot | meterName=D2s v3 Spot | armSkuName=Standard_D2s_v3 | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.022176
+    - Conclusion: Ambiguous: multiple meters, need capacity-first / stricter filters.
+  - Resource: id=dbx-driver-node-d2s-co | category=compute.vm | region=westeurope | requested_sku=Standard_D2s_v3 | billing_model=payg
+    - Catalog used: `catalog/virtual_machines__westeurope__USD.jsonl` (reason: category='compute.vm' -> serviceName='Virtual Machines' via normalize_service_name; region='westeurope', currency='USD')
+    - Catalog search results: 11279 candidates
+    - score=1 | productName=Virtual Machines DSv3 Series Windows | skuName=D2s v3 | meterName=D2s v3 | armSkuName=Standard_D2s_v3 | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.212
+    - score=1 | productName=Virtual Machines DSv3 Series Windows | skuName=D2s v3 | meterName=D2s v3 | armSkuName=Standard_D2s_v3 | unitOfMeasure=1 Hour | type=DevTestConsumption | priceType=DevTestConsumption | unitPrice=0.12
+    - score=1 | productName=Virtual Machines DSv3 Series Windows | skuName=D2s v3 Low Priority | meterName=D2s v3 Low Priority | armSkuName=Standard_D2s_v3 | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.0848
+    - score=1 | productName=Virtual Machines DSv3 Series Windows | skuName=D2s v3 Low Priority | meterName=D2s v3 Low Priority | armSkuName=Standard_D2s_v3 | unitOfMeasure=1 Hour | type=DevTestConsumption | priceType=DevTestConsumption | unitPrice=0.024
+    - score=1 | productName=Virtual Machines DSv3 Series Windows | skuName=D2s v3 Spot | meterName=D2s v3 Spot | armSkuName=Standard_D2s_v3 | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.039178
+    - score=1 | productName=Virtual Machines DSv3 Series Windows | skuName=D2s v3 Spot | meterName=D2s v3 Spot | armSkuName=Standard_D2s_v3 | unitOfMeasure=1 Hour | type=DevTestConsumption | priceType=DevTestConsumption | unitPrice=0.022176
+    - score=1 | productName=Virtual Machines DSv3 Series | skuName=D2s v3 | meterName=D2s v3 | armSkuName=Standard_D2s_v3 | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.12
+    - score=1 | productName=Virtual Machines DSv3 Series | skuName=D2s v3 | meterName=D2s v3 | armSkuName=Standard_D2s_v3 | unitOfMeasure=1 Hour | type=Reservation | priceType=Reservation | unitPrice=670.0
+    - score=1 | productName=Virtual Machines DSv3 Series | skuName=D2s v3 Low Priority | meterName=D2s v3 Low Priority | armSkuName=Standard_D2s_v3 | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.024
+    - score=1 | productName=Virtual Machines DSv3 Series | skuName=D2s v3 Spot | meterName=D2s v3 Spot | armSkuName=Standard_D2s_v3 | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.022176
+    - Conclusion: Ambiguous: multiple meters, need capacity-first / stricter filters.
+  - Resource: id=datalake-blob-co | category=storage.blob | region=westeurope | requested_sku=Standard_LRS | billing_model=payg
+    - Catalog used: `catalog/storage__westeurope__USD.jsonl` (reason: category='storage.blob' -> serviceName='Storage' via normalize_service_name; region='westeurope', currency='USD')
+    - Catalog search results: 1478 candidates
+    - score=0 | productName=General Block Blob v2 Hierarchical Namespace | skuName=Cool GRS | meterName=Cool GRS Write Operations | armSkuName= | unitOfMeasure=10K | type=Consumption | priceType=Consumption | unitPrice=0.26
+    - score=0 | productName=Tables | skuName=Standard ZRS | meterName=Read Operations | armSkuName= | unitOfMeasure=10K | type=Consumption | priceType=Consumption | unitPrice=0.00036
+    - score=0 | productName=Blob Storage | skuName=Hot RA-GRS | meterName=GRS List and Create Container Operations | armSkuName= | unitOfMeasure=10K | type=Consumption | priceType=Consumption | unitPrice=0.108
+    - score=0 | productName=Azure Data Lake Storage Gen2 Flat Namespace | skuName=Cool RA-GRS | meterName=Cool GRS Write Operations | armSkuName= | unitOfMeasure=10K | type=Consumption | priceType=Consumption | unitPrice=0.2
+    - score=0 | productName=Standard SSD Managed Disks | skuName=Disk Transactions LRS | meterName=Disk Transactions LRS Disk Operations | armSkuName=Disk Transactions | unitOfMeasure=10K | type=Consumption | priceType=Consumption | unitPrice=0.0026
+    - score=0 | productName=Azure Data Lake Storage Gen2 Hierarchical Namespace | skuName=Hot ZRS | meterName=Hot ZRS Index | armSkuName= | unitOfMeasure=1 GB/Month | type=Consumption | priceType=Consumption | unitPrice=0.035
+    - score=0 | productName=Standard Page Blob v2 | skuName=Standard RA-GZRS | meterName=Disk Data Stored | armSkuName= | unitOfMeasure=1 GB/Month | type=Consumption | priceType=Consumption | unitPrice=0.379686
+    - score=0 | productName=Tables | skuName=Standard ZRS | meterName=List Operations | armSkuName= | unitOfMeasure=10K | type=Consumption | priceType=Consumption | unitPrice=0.00036
+    - score=0 | productName=Premium Block Blob | skuName=Premium LRS | meterName=LRS Early Premium To Cool Tier Down | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.185
+    - score=0 | productName=Files v2 | skuName=Cool GRS | meterName=Cool Data Retrieval | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.01
+    - Conclusion: Ambiguous: multiple meters, need capacity-first / stricter filters.
+  - Resource: id=nat-egress-co | category=network.nat | region=westeurope | requested_sku=Standard | billing_model=payg
+    - Catalog used: `catalog/bandwidth__westeurope__USD.jsonl` (reason: category='network.nat' -> serviceName='Bandwidth' via normalize_service_name; region='westeurope', currency='USD')
+    - Catalog search results: 14 candidates
+    - score=1 | productName=Bandwidth - Routing Preference: Internet | skuName=Standard | meterName=Standard Data Transfer Out | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.0
+    - score=1 | productName=Rtn Preference: MGN | skuName=Standard | meterName=Standard Data Transfer Out | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.0
+    - score=1 | productName=Rtn Preference: MGN | skuName=Standard | meterName=Standard Inter-Availability Zone Data Transfer Out | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.01
+    - score=1 | productName=Rtn Preference: MGN | skuName=Standard | meterName=Standard Data Transfer Out - to China | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.0
+    - score=1 | productName=Rtn Preference: MGN | skuName=Standard | meterName=Standard Data Transfer In | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.0
+    - score=1 | productName=Rtn Preference: MGN | skuName=Standard | meterName=Standard Data Transfer In - from China | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.09
+    - score=1 | productName=Rtn Preference: MGN | skuName=Standard | meterName=Standard Inter-Availability Zone Data Transfer In | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.01
+    - score=1 | productName=Rtn Preference: MGN | skuName=Standard | meterName=Standard Inter-Region Data Transfer | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.02
+    - score=0 | productName=Rtn Preference: MGN | skuName=China | meterName=China Data Transfer - 1 to 5 Mbps | armSkuName= | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.0
+    - score=0 | productName=Rtn Preference: MGN | skuName=China | meterName=China Data Transfer - 1 Mbps | armSkuName= | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.0
+    - Conclusion: Ambiguous: multiple meters, need capacity-first / stricter filters.
+  - Resource: id=public-ip-nat-co | category=network.public_ip | region=westeurope | requested_sku=Standard | billing_model=payg
+    - Catalog used: `catalog/public_ip_addresses__westeurope__EUR.jsonl` (reason: category='network.public_ip' -> serviceName='Public IP Addresses' via normalize_service_name; region='westeurope', currency='EUR')
+    - Catalog search results: 0 candidates
+    - Conclusion: Correct meter is not in catalog (catalog incomplete or mapping wrong).
+  - Resource: id=log-analytics-co | category=monitoring.loganalytics | region=westeurope | requested_sku=PerGB2018 | billing_model=payg
+    - Catalog used: `catalog/log_analytics__westeurope__USD.jsonl` (reason: category='monitoring.loganalytics' -> serviceName='Log Analytics' via normalize_service_name; region='westeurope', currency='USD')
+    - Catalog search results: 6 candidates
+    - score=0 | productName=Log Analytics | skuName=Analytics Logs | meterName=Analytics Logs Data Retention | armSkuName= | unitOfMeasure=1 GB/Month | type=Consumption | priceType=Consumption | unitPrice=0.13
+    - score=0 | productName=Log Analytics | skuName=Premium | meterName=Premium Data Analyzed | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=3.5
+    - score=0 | productName=Log Analytics | skuName=Free | meterName=Free Data Analyzed | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.0
+    - score=0 | productName=Log Analytics | skuName=Standard | meterName=Standard Data Analyzed | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=2.3
+    - score=0 | productName=Log Analytics | skuName=Analytics Logs | meterName=Analytics Logs Data Ingestion | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.0
+    - score=0 | productName=Log Analytics | skuName=Analytics Logs | meterName=Analytics Logs Data Analyzed | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=2.3
+    - Conclusion: Ambiguous: multiple meters, need capacity-first / stricter filters.
+  - Resource: id=keyvault-main-co | category=security.keyvault | region=westeurope | requested_sku=standard | billing_model=payg
+    - Catalog used: `catalog/key_vault__westeurope__USD.jsonl` (reason: category='security.keyvault' -> serviceName='Key Vault' via normalize_service_name; region='westeurope', currency='USD')
+    - Catalog search results: 14 candidates
+    - score=1 | productName=Key Vault | skuName=Standard | meterName=Advanced Key Operations | armSkuName= | unitOfMeasure=10K | type=Consumption | priceType=Consumption | unitPrice=0.15
+    - score=1 | productName=Key Vault | skuName=Standard | meterName=Automated Key Rotation | armSkuName= | unitOfMeasure=1 Rotation | type=Consumption | priceType=Consumption | unitPrice=1.0
+    - score=1 | productName=Key Vault | skuName=Standard | meterName=Secret Renewal | armSkuName= | unitOfMeasure=1 | type=Consumption | priceType=Consumption | unitPrice=1.0
+    - score=1 | productName=Azure Dedicated HSM | skuName=Standard | meterName=Standard Instance | armSkuName= | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=4.85
+    - score=1 | productName=Key Vault HSM Pool | skuName=Standard B1 | meterName=Standard B1 Instance | armSkuName= | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=3.2
+    - score=1 | productName=Key Vault | skuName=Standard | meterName=Operations | armSkuName= | unitOfMeasure=10K | type=Consumption | priceType=Consumption | unitPrice=0.03
+    - score=1 | productName=Key Vault | skuName=Standard | meterName=Certificate Renewal Request | armSkuName= | unitOfMeasure=1 | type=Consumption | priceType=Consumption | unitPrice=3.0
+    - score=0 | productName=Key Vault | skuName=Premium | meterName=Automated Key Rotation | armSkuName= | unitOfMeasure=1 Rotation | type=Consumption | priceType=Consumption | unitPrice=1.0
+    - score=0 | productName=Key Vault | skuName=Premium | meterName=Operations | armSkuName= | unitOfMeasure=10K | type=Consumption | priceType=Consumption | unitPrice=0.03
+    - score=0 | productName=Key Vault | skuName=Premium | meterName=Premium HSM-protected RSA 2048-bit key | armSkuName= | unitOfMeasure=1 | type=Consumption | priceType=Consumption | unitPrice=1.0
+    - Conclusion: Ambiguous: multiple meters, need capacity-first / stricter filters.
+  - Resource: id=backup-vault-co | category=backup.vault | region=westeurope | requested_sku=Standard | billing_model=payg
+    - Catalog used: `catalog/backup__westeurope__USD.jsonl` (reason: category='backup.vault' -> serviceName='Backup' via normalize_service_name; region='westeurope', currency='USD')
+    - Catalog search results: 41 candidates
+    - score=1 | productName=Backup Reserved Capacity | skuName=Standard - 100 TB ZRS | meterName=ZRS Data Stored | armSkuName=backup_standard_zrs_data_stored_100tb | unitOfMeasure=1 GB/Month | type=Reservation | priceType=Reservation | unitPrice=30278.0
+    - score=1 | productName=Backup | skuName=Standard | meterName=LRS Data Stored | armSkuName= | unitOfMeasure=1 GB/Month | type=Consumption | priceType=Consumption | unitPrice=0.0224
+    - score=1 | productName=Backup Reserved Capacity | skuName=Standard - 100 TB LRS | meterName=LRS Data Stored | armSkuName=backup_standard_lrs_data_stored_100tb | unitOfMeasure=1 GB/Month | type=Reservation | priceType=Reservation | unitPrice=24222.0
+    - score=1 | productName=Backup Reserved Capacity | skuName=Standard - 100 TB RA-GRS | meterName=RA-GRS Data Stored | armSkuName=backup_standard_ra-grs_data_stored_100tb | unitOfMeasure=1 GB/Month | type=Reservation | priceType=Reservation | unitPrice=61528.0
+    - score=1 | productName=Backup Reserved Capacity | skuName=Standard - 1 PB GRS | meterName=GRS Data Stored | armSkuName=backup_standard_grs_data_stored_1pb | unitOfMeasure=1 GB/Month | type=Reservation | priceType=Reservation | unitPrice=473520.0
+    - score=1 | productName=Backup Reserved Capacity | skuName=Standard - 1 PB ZRS | meterName=ZRS Data Stored | armSkuName=backup_standard_zrs_data_stored_1pb | unitOfMeasure=1 GB/Month | type=Reservation | priceType=Reservation | unitPrice=295950.0
+    - score=1 | productName=Backup Reserved Capacity | skuName=Standard - 1 PB LRS | meterName=LRS Data Stored | armSkuName=backup_standard_lrs_data_stored_1pb | unitOfMeasure=1 GB/Month | type=Reservation | priceType=Reservation | unitPrice=236760.0
+    - score=1 | productName=Backup Reserved Capacity | skuName=Standard - 1 PB RA-GRS | meterName=RA-GRS Data Stored | armSkuName=backup_standard_ra-grs_data_stored_1pb | unitOfMeasure=1 GB/Month | type=Reservation | priceType=Reservation | unitPrice=601413.0
+    - score=1 | productName=Backup | skuName=Standard | meterName=ZRS Data Stored | armSkuName= | unitOfMeasure=1 GB/Month | type=Consumption | priceType=Consumption | unitPrice=0.028
+    - score=1 | productName=Backup Reserved Capacity | skuName=Standard - 100 TB GRS | meterName=GRS Data Stored | armSkuName=backup_standard_grs_data_stored_100tb | unitOfMeasure=1 GB/Month | type=Reservation | priceType=Reservation | unitPrice=48444.0
+    - Conclusion: Ambiguous: multiple meters, need capacity-first / stricter filters.
+
+- Scenario: unknown
+  - Resource: id=vnet-analytics-hp | category=network.vnet | region=westeurope | requested_sku=Virtual Network | billing_model=payg
+    - Catalog used: `catalog/virtual_network__westeurope__USD.jsonl` (reason: category='network.vnet' -> serviceName='Virtual Network' via normalize_service_name; region='westeurope', currency='USD')
+    - Catalog search results: 12 candidates
+    - score=2 | productName=Global Virtual Network Peering | skuName=Inter-Region | meterName=Inter-Region Egress | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.035
+    - score=2 | productName=Global Virtual Network Peering | skuName=Inter-Region | meterName=Inter-Region Ingress | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.035
+    - score=0 | productName=IP Addresses | skuName=Standard | meterName=Standard IPv4 Static Public IP | armSkuName= | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.005
+    - score=0 | productName=IP Addresses | skuName=Standard | meterName=Standard IPv4 Static Public IP | armSkuName= | unitOfMeasure=1 Hour | type=DevTestConsumption | priceType=DevTestConsumption | unitPrice=0.005
+    - score=0 | productName=IP Addresses | skuName=Basic | meterName=Basic IPv4 Dynamic Public IP | armSkuName= | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.004
+    - score=0 | productName=IP Addresses | skuName=Basic | meterName=Basic IPv4 Dynamic Public IP | armSkuName= | unitOfMeasure=1 Hour | type=DevTestConsumption | priceType=DevTestConsumption | unitPrice=0.004
+    - score=0 | productName=Public IP Prefix | skuName=Standard | meterName=Standard Static IP Addresses | armSkuName= | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.006
+    - score=0 | productName=Public IP Prefix | skuName=Global | meterName=Global Static Public IP | armSkuName=Global | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.012
+    - score=0 | productName=IP Addresses | skuName=Basic | meterName=Basic IPv4 Static Public IP | armSkuName= | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.0036
+    - score=0 | productName=IP Addresses | skuName=Basic | meterName=Basic IPv4 Static Public IP | armSkuName= | unitOfMeasure=1 Hour | type=DevTestConsumption | priceType=DevTestConsumption | unitPrice=0.0036
+    - Conclusion: Ambiguous: multiple meters, need capacity-first / stricter filters.
+  - Resource: id=databricks-ws-premium-hp | category=analytics.databricks | region=westeurope | requested_sku=premium | billing_model=payg
+    - Catalog used: `catalog/azure_databricks__westeurope__USD.jsonl` (reason: category='analytics.databricks' -> serviceName='Azure Databricks' via normalize_service_name; region='westeurope', currency='USD')
+    - Catalog search results: 41 candidates
+    - score=1 | productName=Azure Databricks | skuName=Premium Advanced Compute Photon Delta Live Tables | meterName=Premium Advanced Compute Photon Delta Live Tables DBU | armSkuName= | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.54
+    - score=1 | productName=Azure Databricks | skuName=Premium Jobs Light Compute | meterName=Premium Jobs Light Compute DBU | armSkuName= | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.22
+    - score=1 | productName=Azure Databricks Regional | skuName=Premium Automated Serverless Compute | meterName=Premium Automated Serverless Compute DBU | armSkuName=Premium | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.5
+    - score=1 | productName=Azure Databricks | skuName=Premium Core Compute Delta Live Tables | meterName=Premium Core Compute Delta Live Tables DBU | armSkuName= | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.3
+    - score=1 | productName=Azure Databricks | skuName=Premium Enhanced Security and Compliance | meterName=Premium Enhanced Security and Compliance DBU | armSkuName= | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.1
+    - score=1 | productName=Azure Databricks Regional | skuName=Premium Serverless SQL | meterName=Premium Serverless SQL DBU | armSkuName=Premium | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.91
+    - score=1 | productName=Azure Databricks | skuName=Premium SQL Analytics | meterName=Premium SQL Analytics DBU | armSkuName= | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.22
+    - score=1 | productName=Azure Databricks Regional | skuName=Premium Database Serverless Compute | meterName=Premium Database Serverless Compute DBU | armSkuName=Premium | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.32
+    - score=1 | productName=Azure Databricks | skuName=Premium - Free Trial Jobs Compute | meterName=Premium - Free Trial Jobs Compute DBU | armSkuName= | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.0
+    - score=1 | productName=Azure Databricks | skuName=Premium Jobs Compute | meterName=Premium Jobs Compute DBU | armSkuName= | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.3
+    - Conclusion: Ambiguous: multiple meters, need capacity-first / stricter filters.
+  - Resource: id=dbx-jobs-cluster-d4s-hp | category=compute.vmss | region=westeurope | requested_sku=Standard_D4s_v3 | billing_model=payg
+    - Catalog used: `catalog/virtual_machines__westeurope__USD.jsonl` (reason: category='compute.vmss' -> serviceName='Virtual Machines' via normalize_service_name; region='westeurope', currency='USD')
+    - Catalog search results: 11279 candidates
+    - score=1 | productName=Virtual Machines DSv3 Series Windows | skuName=D4s v3 Low Priority | meterName=D4s v3 Low Priority | armSkuName=Standard_D4s_v3 | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.17
+    - score=1 | productName=Virtual Machines DSv3 Series Windows | skuName=D4s v3 Low Priority | meterName=D4s v3 Low Priority | armSkuName=Standard_D4s_v3 | unitOfMeasure=1 Hour | type=DevTestConsumption | priceType=DevTestConsumption | unitPrice=0.048
+    - score=1 | productName=Virtual Machines DSv3 Series | skuName=D4s v3 Low Priority | meterName=D4s v3 Low Priority | armSkuName=Standard_D4s_v3 | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.048
+    - score=1 | productName=Virtual Machines DSv3 Series | skuName=D4s v3 Spot | meterName=D4s v3 Spot | armSkuName=Standard_D4s_v3 | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.044352
+    - score=1 | productName=Virtual Machines DSv3 Series | skuName=D4s v3 | meterName=D4s v3 | armSkuName=Standard_D4s_v3 | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.24
+    - score=1 | productName=Virtual Machines DSv3 Series | skuName=D4s v3 | meterName=D4s v3 | armSkuName=Standard_D4s_v3 | unitOfMeasure=1 Hour | type=Reservation | priceType=Reservation | unitPrice=1339.0
+    - score=1 | productName=Virtual Machines DSv3 Series Windows | skuName=D4s v3 Spot | meterName=D4s v3 Spot | armSkuName=Standard_D4s_v3 | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.078355
+    - score=1 | productName=Virtual Machines DSv3 Series Windows | skuName=D4s v3 Spot | meterName=D4s v3 Spot | armSkuName=Standard_D4s_v3 | unitOfMeasure=1 Hour | type=DevTestConsumption | priceType=DevTestConsumption | unitPrice=0.044352
+    - score=1 | productName=Virtual Machines DSv3 Series Windows | skuName=D4s v3 | meterName=D4s v3 | armSkuName=Standard_D4s_v3 | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.424
+    - score=1 | productName=Virtual Machines DSv3 Series Windows | skuName=D4s v3 | meterName=D4s v3 | armSkuName=Standard_D4s_v3 | unitOfMeasure=1 Hour | type=DevTestConsumption | priceType=DevTestConsumption | unitPrice=0.24
+    - Conclusion: Ambiguous: multiple meters, need capacity-first / stricter filters.
+  - Resource: id=dbx-driver-node-d4s-hp | category=compute.vm | region=westeurope | requested_sku=Standard_D4s_v3 | billing_model=payg
+    - Catalog used: `catalog/virtual_machines__westeurope__USD.jsonl` (reason: category='compute.vm' -> serviceName='Virtual Machines' via normalize_service_name; region='westeurope', currency='USD')
+    - Catalog search results: 11279 candidates
+    - score=1 | productName=Virtual Machines DSv3 Series Windows | skuName=D4s v3 Low Priority | meterName=D4s v3 Low Priority | armSkuName=Standard_D4s_v3 | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.17
+    - score=1 | productName=Virtual Machines DSv3 Series Windows | skuName=D4s v3 Low Priority | meterName=D4s v3 Low Priority | armSkuName=Standard_D4s_v3 | unitOfMeasure=1 Hour | type=DevTestConsumption | priceType=DevTestConsumption | unitPrice=0.048
+    - score=1 | productName=Virtual Machines DSv3 Series | skuName=D4s v3 Low Priority | meterName=D4s v3 Low Priority | armSkuName=Standard_D4s_v3 | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.048
+    - score=1 | productName=Virtual Machines DSv3 Series | skuName=D4s v3 Spot | meterName=D4s v3 Spot | armSkuName=Standard_D4s_v3 | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.044352
+    - score=1 | productName=Virtual Machines DSv3 Series | skuName=D4s v3 | meterName=D4s v3 | armSkuName=Standard_D4s_v3 | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.24
+    - score=1 | productName=Virtual Machines DSv3 Series | skuName=D4s v3 | meterName=D4s v3 | armSkuName=Standard_D4s_v3 | unitOfMeasure=1 Hour | type=Reservation | priceType=Reservation | unitPrice=1339.0
+    - score=1 | productName=Virtual Machines DSv3 Series Windows | skuName=D4s v3 Spot | meterName=D4s v3 Spot | armSkuName=Standard_D4s_v3 | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.078355
+    - score=1 | productName=Virtual Machines DSv3 Series Windows | skuName=D4s v3 Spot | meterName=D4s v3 Spot | armSkuName=Standard_D4s_v3 | unitOfMeasure=1 Hour | type=DevTestConsumption | priceType=DevTestConsumption | unitPrice=0.044352
+    - score=1 | productName=Virtual Machines DSv3 Series Windows | skuName=D4s v3 | meterName=D4s v3 | armSkuName=Standard_D4s_v3 | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.424
+    - score=1 | productName=Virtual Machines DSv3 Series Windows | skuName=D4s v3 | meterName=D4s v3 | armSkuName=Standard_D4s_v3 | unitOfMeasure=1 Hour | type=DevTestConsumption | priceType=DevTestConsumption | unitPrice=0.24
+    - Conclusion: Ambiguous: multiple meters, need capacity-first / stricter filters.
+  - Resource: id=datalake-blob-hp | category=storage.blob | region=westeurope | requested_sku=Standard_GRS | billing_model=payg
+    - Catalog used: `catalog/storage__westeurope__USD.jsonl` (reason: category='storage.blob' -> serviceName='Storage' via normalize_service_name; region='westeurope', currency='USD')
+    - Catalog search results: 1478 candidates
+    - score=0 | productName=General Block Blob v2 Hierarchical Namespace | skuName=Cool GRS | meterName=Cool GRS Write Operations | armSkuName= | unitOfMeasure=10K | type=Consumption | priceType=Consumption | unitPrice=0.26
+    - score=0 | productName=Tables | skuName=Standard ZRS | meterName=Read Operations | armSkuName= | unitOfMeasure=10K | type=Consumption | priceType=Consumption | unitPrice=0.00036
+    - score=0 | productName=Blob Storage | skuName=Hot RA-GRS | meterName=GRS List and Create Container Operations | armSkuName= | unitOfMeasure=10K | type=Consumption | priceType=Consumption | unitPrice=0.108
+    - score=0 | productName=Azure Data Lake Storage Gen2 Flat Namespace | skuName=Cool RA-GRS | meterName=Cool GRS Write Operations | armSkuName= | unitOfMeasure=10K | type=Consumption | priceType=Consumption | unitPrice=0.2
+    - score=0 | productName=Standard SSD Managed Disks | skuName=Disk Transactions LRS | meterName=Disk Transactions LRS Disk Operations | armSkuName=Disk Transactions | unitOfMeasure=10K | type=Consumption | priceType=Consumption | unitPrice=0.0026
+    - score=0 | productName=Azure Data Lake Storage Gen2 Hierarchical Namespace | skuName=Hot ZRS | meterName=Hot ZRS Index | armSkuName= | unitOfMeasure=1 GB/Month | type=Consumption | priceType=Consumption | unitPrice=0.035
+    - score=0 | productName=Standard Page Blob v2 | skuName=Standard RA-GZRS | meterName=Disk Data Stored | armSkuName= | unitOfMeasure=1 GB/Month | type=Consumption | priceType=Consumption | unitPrice=0.379686
+    - score=0 | productName=Tables | skuName=Standard ZRS | meterName=List Operations | armSkuName= | unitOfMeasure=10K | type=Consumption | priceType=Consumption | unitPrice=0.00036
+    - score=0 | productName=Premium Block Blob | skuName=Premium LRS | meterName=LRS Early Premium To Cool Tier Down | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.185
+    - score=0 | productName=Files v2 | skuName=Cool GRS | meterName=Cool Data Retrieval | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.01
+    - Conclusion: Ambiguous: multiple meters, need capacity-first / stricter filters.
+  - Resource: id=nat-egress-hp | category=network.nat | region=westeurope | requested_sku=Standard | billing_model=payg
+    - Catalog used: `catalog/bandwidth__westeurope__USD.jsonl` (reason: category='network.nat' -> serviceName='Bandwidth' via normalize_service_name; region='westeurope', currency='USD')
+    - Catalog search results: 14 candidates
+    - score=1 | productName=Bandwidth - Routing Preference: Internet | skuName=Standard | meterName=Standard Data Transfer Out | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.0
+    - score=1 | productName=Rtn Preference: MGN | skuName=Standard | meterName=Standard Data Transfer Out | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.0
+    - score=1 | productName=Rtn Preference: MGN | skuName=Standard | meterName=Standard Inter-Availability Zone Data Transfer Out | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.01
+    - score=1 | productName=Rtn Preference: MGN | skuName=Standard | meterName=Standard Data Transfer Out - to China | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.0
+    - score=1 | productName=Rtn Preference: MGN | skuName=Standard | meterName=Standard Data Transfer In | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.0
+    - score=1 | productName=Rtn Preference: MGN | skuName=Standard | meterName=Standard Data Transfer In - from China | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.09
+    - score=1 | productName=Rtn Preference: MGN | skuName=Standard | meterName=Standard Inter-Availability Zone Data Transfer In | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.01
+    - score=1 | productName=Rtn Preference: MGN | skuName=Standard | meterName=Standard Inter-Region Data Transfer | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.02
+    - score=0 | productName=Rtn Preference: MGN | skuName=China | meterName=China Data Transfer - 1 to 5 Mbps | armSkuName= | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.0
+    - score=0 | productName=Rtn Preference: MGN | skuName=China | meterName=China Data Transfer - 1 Mbps | armSkuName= | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.0
+    - Conclusion: Ambiguous: multiple meters, need capacity-first / stricter filters.
+  - Resource: id=public-ip-nat-hp | category=network.public_ip | region=westeurope | requested_sku=Standard | billing_model=payg
+    - Catalog used: `catalog/public_ip_addresses__westeurope__EUR.jsonl` (reason: category='network.public_ip' -> serviceName='Public IP Addresses' via normalize_service_name; region='westeurope', currency='EUR')
+    - Catalog search results: 0 candidates
+    - Conclusion: Correct meter is not in catalog (catalog incomplete or mapping wrong).
+  - Resource: id=log-analytics-hp | category=monitoring.loganalytics | region=westeurope | requested_sku=PerGB2018 | billing_model=payg
+    - Catalog used: `catalog/log_analytics__westeurope__USD.jsonl` (reason: category='monitoring.loganalytics' -> serviceName='Log Analytics' via normalize_service_name; region='westeurope', currency='USD')
+    - Catalog search results: 6 candidates
+    - score=0 | productName=Log Analytics | skuName=Analytics Logs | meterName=Analytics Logs Data Retention | armSkuName= | unitOfMeasure=1 GB/Month | type=Consumption | priceType=Consumption | unitPrice=0.13
+    - score=0 | productName=Log Analytics | skuName=Premium | meterName=Premium Data Analyzed | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=3.5
+    - score=0 | productName=Log Analytics | skuName=Free | meterName=Free Data Analyzed | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.0
+    - score=0 | productName=Log Analytics | skuName=Standard | meterName=Standard Data Analyzed | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=2.3
+    - score=0 | productName=Log Analytics | skuName=Analytics Logs | meterName=Analytics Logs Data Ingestion | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.0
+    - score=0 | productName=Log Analytics | skuName=Analytics Logs | meterName=Analytics Logs Data Analyzed | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=2.3
+    - Conclusion: Ambiguous: multiple meters, need capacity-first / stricter filters.
+  - Resource: id=keyvault-main-hp | category=security.keyvault | region=westeurope | requested_sku=standard | billing_model=payg
+    - Catalog used: `catalog/key_vault__westeurope__USD.jsonl` (reason: category='security.keyvault' -> serviceName='Key Vault' via normalize_service_name; region='westeurope', currency='USD')
+    - Catalog search results: 14 candidates
+    - score=1 | productName=Key Vault | skuName=Standard | meterName=Advanced Key Operations | armSkuName= | unitOfMeasure=10K | type=Consumption | priceType=Consumption | unitPrice=0.15
+    - score=1 | productName=Key Vault | skuName=Standard | meterName=Automated Key Rotation | armSkuName= | unitOfMeasure=1 Rotation | type=Consumption | priceType=Consumption | unitPrice=1.0
+    - score=1 | productName=Key Vault | skuName=Standard | meterName=Secret Renewal | armSkuName= | unitOfMeasure=1 | type=Consumption | priceType=Consumption | unitPrice=1.0
+    - score=1 | productName=Azure Dedicated HSM | skuName=Standard | meterName=Standard Instance | armSkuName= | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=4.85
+    - score=1 | productName=Key Vault HSM Pool | skuName=Standard B1 | meterName=Standard B1 Instance | armSkuName= | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=3.2
+    - score=1 | productName=Key Vault | skuName=Standard | meterName=Operations | armSkuName= | unitOfMeasure=10K | type=Consumption | priceType=Consumption | unitPrice=0.03
+    - score=1 | productName=Key Vault | skuName=Standard | meterName=Certificate Renewal Request | armSkuName= | unitOfMeasure=1 | type=Consumption | priceType=Consumption | unitPrice=3.0
+    - score=0 | productName=Key Vault | skuName=Premium | meterName=Automated Key Rotation | armSkuName= | unitOfMeasure=1 Rotation | type=Consumption | priceType=Consumption | unitPrice=1.0
+    - score=0 | productName=Key Vault | skuName=Premium | meterName=Operations | armSkuName= | unitOfMeasure=10K | type=Consumption | priceType=Consumption | unitPrice=0.03
+    - score=0 | productName=Key Vault | skuName=Premium | meterName=Premium HSM-protected RSA 2048-bit key | armSkuName= | unitOfMeasure=1 | type=Consumption | priceType=Consumption | unitPrice=1.0
+    - Conclusion: Ambiguous: multiple meters, need capacity-first / stricter filters.
+  - Resource: id=backup-vault-hp | category=backup.vault | region=westeurope | requested_sku=Standard | billing_model=payg
+    - Catalog used: `catalog/backup__westeurope__USD.jsonl` (reason: category='backup.vault' -> serviceName='Backup' via normalize_service_name; region='westeurope', currency='USD')
+    - Catalog search results: 41 candidates
+    - score=1 | productName=Backup Reserved Capacity | skuName=Standard - 100 TB ZRS | meterName=ZRS Data Stored | armSkuName=backup_standard_zrs_data_stored_100tb | unitOfMeasure=1 GB/Month | type=Reservation | priceType=Reservation | unitPrice=30278.0
+    - score=1 | productName=Backup | skuName=Standard | meterName=LRS Data Stored | armSkuName= | unitOfMeasure=1 GB/Month | type=Consumption | priceType=Consumption | unitPrice=0.0224
+    - score=1 | productName=Backup Reserved Capacity | skuName=Standard - 100 TB LRS | meterName=LRS Data Stored | armSkuName=backup_standard_lrs_data_stored_100tb | unitOfMeasure=1 GB/Month | type=Reservation | priceType=Reservation | unitPrice=24222.0
+    - score=1 | productName=Backup Reserved Capacity | skuName=Standard - 100 TB RA-GRS | meterName=RA-GRS Data Stored | armSkuName=backup_standard_ra-grs_data_stored_100tb | unitOfMeasure=1 GB/Month | type=Reservation | priceType=Reservation | unitPrice=61528.0
+    - score=1 | productName=Backup Reserved Capacity | skuName=Standard - 1 PB GRS | meterName=GRS Data Stored | armSkuName=backup_standard_grs_data_stored_1pb | unitOfMeasure=1 GB/Month | type=Reservation | priceType=Reservation | unitPrice=473520.0
+    - score=1 | productName=Backup Reserved Capacity | skuName=Standard - 1 PB ZRS | meterName=ZRS Data Stored | armSkuName=backup_standard_zrs_data_stored_1pb | unitOfMeasure=1 GB/Month | type=Reservation | priceType=Reservation | unitPrice=295950.0
+    - score=1 | productName=Backup Reserved Capacity | skuName=Standard - 1 PB LRS | meterName=LRS Data Stored | armSkuName=backup_standard_lrs_data_stored_1pb | unitOfMeasure=1 GB/Month | type=Reservation | priceType=Reservation | unitPrice=236760.0
+    - score=1 | productName=Backup Reserved Capacity | skuName=Standard - 1 PB RA-GRS | meterName=RA-GRS Data Stored | armSkuName=backup_standard_ra-grs_data_stored_1pb | unitOfMeasure=1 GB/Month | type=Reservation | priceType=Reservation | unitPrice=601413.0
+    - score=1 | productName=Backup | skuName=Standard | meterName=ZRS Data Stored | armSkuName= | unitOfMeasure=1 GB/Month | type=Consumption | priceType=Consumption | unitPrice=0.028
+    - score=1 | productName=Backup Reserved Capacity | skuName=Standard - 100 TB GRS | meterName=GRS Data Stored | armSkuName=backup_standard_grs_data_stored_100tb | unitOfMeasure=1 GB/Month | type=Reservation | priceType=Reservation | unitPrice=48444.0
+    - Conclusion: Ambiguous: multiple meters, need capacity-first / stricter filters.
+  - Resource: id=asr-dr-hp | category=dr.asr | region=westeurope | requested_sku=System Center | billing_model=payg
+    - Catalog used: `catalog/azure_site_recovery__westeurope__USD.jsonl` (reason: category='dr.asr' -> serviceName='Azure Site Recovery' via normalize_service_name; region='westeurope', currency='USD')
+    - Catalog search results: 2 candidates
+    - score=2 | productName=Azure Site Recovery | skuName=System Center | meterName=VM Replicated to System Center | armSkuName= | unitOfMeasure=1/Month | type=Consumption | priceType=Consumption | unitPrice=16.0
+    - score=0 | productName=Azure Site Recovery | skuName=Azure | meterName=VM Replicated to Azure | armSkuName= | unitOfMeasure=1/Month | type=Consumption | priceType=Consumption | unitPrice=25.0
+    - Conclusion: Ambiguous: multiple meters, need capacity-first / stricter filters.
+
+### Run: run9_fabric
+- Scenario: unknown
+  - Resource: id=fabric-capacity-f64 | category=analytics.fabric | region=westeurope | requested_sku=F64 | billing_model=payg
+    - Catalog used: `catalog/microsoft_fabric__westeurope__USD.jsonl` (reason: category='analytics.fabric' -> serviceName='Microsoft Fabric' via normalize_service_name; region='westeurope', currency='USD')
+    - Catalog search results: 73 candidates
+    - score=0 | productName=Fabric Capacity | skuName=Capacity Overage Capacity Usage | meterName=Capacity Overage Capacity Usage CU | armSkuName=Fabric Meter 23 | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.66
+    - score=0 | productName=OneLake | skuName=Cosmos DB Storage | meterName=Cosmos DB Storage Data Stored | armSkuName=Cosmos DB storage | unitOfMeasure=1 GB/Month | type=Consumption | priceType=Consumption | unitPrice=0.25
+    - score=0 | productName=Fabric Capacity | skuName=Operations Agents Compute Capacity Usage | meterName=Operations Agents Compute Capacity Usage CU | armSkuName=Fabric Meter 36 | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.22
+    - score=0 | productName=Fabric Capacity | skuName=Anomaly Detector Queries Capacity Usage | meterName=Anomaly Detector Queries Capacity Usage CU | armSkuName=Fabric Meter 38 | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.22
+    - score=0 | productName=Fabric Capacity | skuName=Eventstream Data Traffic Capacity Usage | meterName=Eventstream Data Traffic Capacity Usage CU | armSkuName=Eventstream Data Traffic | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.22
+    - score=0 | productName=Fabric Capacity | skuName=OneLake BCDR Other Operations via proxy Capacity Usage | meterName=OneLake BCDR Other Operations via proxy Capacity Usage CU | armSkuName=OneLake BCDR Other Operations via proxy | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.22
+    - score=0 | productName=Fabric Capacity | skuName=Dataflows Standard Compute Capacity Usage | meterName=Dataflows Standard Compute Capacity Usage CU | armSkuName=Fabric_Capacity_CU_Hour | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.22
+    - score=0 | productName=Fabric Capacity | skuName=OneLake Iterative Write Operations via proxy Capacity Usage | meterName=OneLake Iterative Write Operations via proxy Capacity Usage CU | armSkuName=OneLake Iterative Write Operations via proxy | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.22
+    - score=0 | productName=Fabric Capacity | skuName=OneLake Other Operations Capacity Usage | meterName=OneLake Other Operations Capacity Usage CU | armSkuName=OneLake Other Operations | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.22
+    - score=0 | productName=Fabric Capacity | skuName=Apache Airflow job Capacity Usage | meterName=Apache Airflow job Capacity Usage CU | armSkuName=Apache Airflow job | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.22
+    - Conclusion: Ambiguous: multiple meters, need capacity-first / stricter filters.
+  - Resource: id=onelake-storage | category=storage.blob | region=westeurope | requested_sku=Standard_GRS | billing_model=payg
+    - Catalog used: `catalog/storage__westeurope__USD.jsonl` (reason: category='storage.blob' -> serviceName='Storage' via normalize_service_name; region='westeurope', currency='USD')
+    - Catalog search results: 1478 candidates
+    - score=0 | productName=General Block Blob v2 Hierarchical Namespace | skuName=Cool GRS | meterName=Cool GRS Write Operations | armSkuName= | unitOfMeasure=10K | type=Consumption | priceType=Consumption | unitPrice=0.26
+    - score=0 | productName=Tables | skuName=Standard ZRS | meterName=Read Operations | armSkuName= | unitOfMeasure=10K | type=Consumption | priceType=Consumption | unitPrice=0.00036
+    - score=0 | productName=Blob Storage | skuName=Hot RA-GRS | meterName=GRS List and Create Container Operations | armSkuName= | unitOfMeasure=10K | type=Consumption | priceType=Consumption | unitPrice=0.108
+    - score=0 | productName=Azure Data Lake Storage Gen2 Flat Namespace | skuName=Cool RA-GRS | meterName=Cool GRS Write Operations | armSkuName= | unitOfMeasure=10K | type=Consumption | priceType=Consumption | unitPrice=0.2
+    - score=0 | productName=Standard SSD Managed Disks | skuName=Disk Transactions LRS | meterName=Disk Transactions LRS Disk Operations | armSkuName=Disk Transactions | unitOfMeasure=10K | type=Consumption | priceType=Consumption | unitPrice=0.0026
+    - score=0 | productName=Azure Data Lake Storage Gen2 Hierarchical Namespace | skuName=Hot ZRS | meterName=Hot ZRS Index | armSkuName= | unitOfMeasure=1 GB/Month | type=Consumption | priceType=Consumption | unitPrice=0.035
+    - score=0 | productName=Standard Page Blob v2 | skuName=Standard RA-GZRS | meterName=Disk Data Stored | armSkuName= | unitOfMeasure=1 GB/Month | type=Consumption | priceType=Consumption | unitPrice=0.379686
+    - score=0 | productName=Tables | skuName=Standard ZRS | meterName=List Operations | armSkuName= | unitOfMeasure=10K | type=Consumption | priceType=Consumption | unitPrice=0.00036
+    - score=0 | productName=Premium Block Blob | skuName=Premium LRS | meterName=LRS Early Premium To Cool Tier Down | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.185
+    - score=0 | productName=Files v2 | skuName=Cool GRS | meterName=Cool Data Retrieval | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.01
+    - Conclusion: Ambiguous: multiple meters, need capacity-first / stricter filters.
+  - Resource: id=datafactory-orchestration | category=analytics.datafactory | region=westeurope | requested_sku=On Premises | billing_model=payg
+    - Catalog used: `catalog/azure_data_factory__westeurope__USD.jsonl` (reason: category='analytics.datafactory' -> serviceName='Azure Data Factory' via normalize_service_name; region='westeurope', currency='USD')
+    - Catalog search results: 8 candidates
+    - score=2 | productName=Azure Data Factory | skuName=On Premises | meterName=On Premises Low Frequency Activity | armSkuName= | unitOfMeasure=1/Month | type=Consumption | priceType=Consumption | unitPrice=0.0
+    - score=2 | productName=Azure Data Factory | skuName=On Premises | meterName=On Premises Data Movement | armSkuName= | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.1
+    - score=2 | productName=Azure Data Factory | skuName=On Premises | meterName=On Premises High Frequency Activity | armSkuName= | unitOfMeasure=1/Month | type=Consumption | priceType=Consumption | unitPrice=2.5
+    - score=2 | productName=Azure Data Factory | skuName=On Premises | meterName=Inactive Pipeline | armSkuName= | unitOfMeasure=1/Month | type=Consumption | priceType=Consumption | unitPrice=0.8
+    - score=0 | productName=Azure Data Factory | skuName=Cloud | meterName=Cloud Low Frequency Activity | armSkuName= | unitOfMeasure=1/Month | type=Consumption | priceType=Consumption | unitPrice=0.0
+    - score=0 | productName=Azure Data Factory | skuName=Cloud | meterName=Cloud High Frequency Activity | armSkuName= | unitOfMeasure=1/Month | type=Consumption | priceType=Consumption | unitPrice=1.0
+    - score=0 | productName=Azure Data Factory | skuName=Cloud | meterName=Inactive Pipeline | armSkuName= | unitOfMeasure=1/Month | type=Consumption | priceType=Consumption | unitPrice=0.8
+    - score=0 | productName=Azure Data Factory | skuName=Cloud | meterName=Cloud Data Movement | armSkuName= | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.25
+    - Conclusion: Ambiguous: multiple meters, need capacity-first / stricter filters.
+  - Resource: id=sql-source-db | category=db.sql | region=westeurope | requested_sku=GP_Gen5_8 | billing_model=payg
+    - Catalog used: `catalog/sql_database__westeurope__USD.jsonl` (reason: category='db.sql' -> serviceName='SQL Database' via normalize_service_name; region='westeurope', currency='USD')
+    - Catalog search results: 256 candidates
+    - score=0 | productName=SQL Database Elastic Pool - Premium | skuName=2000 DTU Pack | meterName=eDTUs | armSkuName= | unitOfMeasure=1/Day | type=Consumption | priceType=Consumption | unitPrice=360.0
+    - score=0 | productName=SQL Database Single/Elastic Pool General Purpose - Compute Gen5 | skuName=80 vCore | meterName=vCore | armSkuName=SQLDB_GP_Compute_Gen5_80 | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=13.39512
+    - score=0 | productName=SQL Database Single/Elastic Pool General Purpose - Compute FSv2 Series | skuName=72 vCore | meterName=vCore | armSkuName= | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=10.579536
+    - score=0 | productName=SQL Database SingleDB/Elastic Pool Hyperscale - Compute Gen5 | skuName=1 vCore | meterName=vCore | armSkuName=SQLDB_HS_Compute_Gen5_1 | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.200926
+    - score=0 | productName=SQL Database Single/Elastic Pool PITR Backup Storage | skuName=Backup RA-GRS | meterName=RA-GRS Data Stored | armSkuName= | unitOfMeasure=1 GB/Month | type=Consumption | priceType=Consumption | unitPrice=0.238
+    - score=0 | productName=SQL Database Single/Elastic Pool General Purpose - Compute DC-Series | skuName=1 vCore | meterName=vCore | armSkuName= | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.396
+    - score=0 | productName=SQL Database Single/Elastic Pool General Purpose - Compute DC-Series | skuName=12 vCore | meterName=vCore | armSkuName=12 vCore | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=4.752
+    - score=0 | productName=SQL Database Elastic Pool - Premium RS | skuName=3500 DTU Pack | meterName=eDTUs | armSkuName= | unitOfMeasure=1/Day | type=Consumption | priceType=Consumption | unitPrice=157.5
+    - score=0 | productName=SQL Database Single/Elastic Pool General Purpose - Compute DC-Series | skuName=6 vCore | meterName=vCore | armSkuName= | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=2.375
+    - score=0 | productName=SQL Database Single/Elastic Pool General Purpose - Compute DC-Series | skuName=2 vCore | meterName=vCore | armSkuName= | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.792
+    - Conclusion: Ambiguous: multiple meters, need capacity-first / stricter filters.
+  - Resource: id=vnet-bi-platform | category=network.vnet | region=westeurope | requested_sku=Virtual Network | billing_model=payg
+    - Catalog used: `catalog/virtual_network__westeurope__USD.jsonl` (reason: category='network.vnet' -> serviceName='Virtual Network' via normalize_service_name; region='westeurope', currency='USD')
+    - Catalog search results: 12 candidates
+    - score=2 | productName=Global Virtual Network Peering | skuName=Inter-Region | meterName=Inter-Region Egress | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.035
+    - score=2 | productName=Global Virtual Network Peering | skuName=Inter-Region | meterName=Inter-Region Ingress | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.035
+    - score=0 | productName=IP Addresses | skuName=Standard | meterName=Standard IPv4 Static Public IP | armSkuName= | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.005
+    - score=0 | productName=IP Addresses | skuName=Standard | meterName=Standard IPv4 Static Public IP | armSkuName= | unitOfMeasure=1 Hour | type=DevTestConsumption | priceType=DevTestConsumption | unitPrice=0.005
+    - score=0 | productName=IP Addresses | skuName=Basic | meterName=Basic IPv4 Dynamic Public IP | armSkuName= | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.004
+    - score=0 | productName=IP Addresses | skuName=Basic | meterName=Basic IPv4 Dynamic Public IP | armSkuName= | unitOfMeasure=1 Hour | type=DevTestConsumption | priceType=DevTestConsumption | unitPrice=0.004
+    - score=0 | productName=Public IP Prefix | skuName=Standard | meterName=Standard Static IP Addresses | armSkuName= | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.006
+    - score=0 | productName=Public IP Prefix | skuName=Global | meterName=Global Static Public IP | armSkuName=Global | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.012
+    - score=0 | productName=IP Addresses | skuName=Basic | meterName=Basic IPv4 Static Public IP | armSkuName= | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.0036
+    - score=0 | productName=IP Addresses | skuName=Basic | meterName=Basic IPv4 Static Public IP | armSkuName= | unitOfMeasure=1 Hour | type=DevTestConsumption | priceType=DevTestConsumption | unitPrice=0.0036
+    - Conclusion: Ambiguous: multiple meters, need capacity-first / stricter filters.
+  - Resource: id=nat-egress | category=network.nat | region=westeurope | requested_sku=Standard | billing_model=payg
+    - Catalog used: `catalog/bandwidth__westeurope__USD.jsonl` (reason: category='network.nat' -> serviceName='Bandwidth' via normalize_service_name; region='westeurope', currency='USD')
+    - Catalog search results: 14 candidates
+    - score=1 | productName=Bandwidth - Routing Preference: Internet | skuName=Standard | meterName=Standard Data Transfer Out | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.0
+    - score=1 | productName=Rtn Preference: MGN | skuName=Standard | meterName=Standard Data Transfer Out | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.0
+    - score=1 | productName=Rtn Preference: MGN | skuName=Standard | meterName=Standard Inter-Availability Zone Data Transfer Out | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.01
+    - score=1 | productName=Rtn Preference: MGN | skuName=Standard | meterName=Standard Data Transfer Out - to China | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.0
+    - score=1 | productName=Rtn Preference: MGN | skuName=Standard | meterName=Standard Data Transfer In | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.0
+    - score=1 | productName=Rtn Preference: MGN | skuName=Standard | meterName=Standard Data Transfer In - from China | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.09
+    - score=1 | productName=Rtn Preference: MGN | skuName=Standard | meterName=Standard Inter-Availability Zone Data Transfer In | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.01
+    - score=1 | productName=Rtn Preference: MGN | skuName=Standard | meterName=Standard Inter-Region Data Transfer | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.02
+    - score=0 | productName=Rtn Preference: MGN | skuName=China | meterName=China Data Transfer - 1 to 5 Mbps | armSkuName= | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.0
+    - score=0 | productName=Rtn Preference: MGN | skuName=China | meterName=China Data Transfer - 1 Mbps | armSkuName= | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.0
+    - Conclusion: Ambiguous: multiple meters, need capacity-first / stricter filters.
+  - Resource: id=public-ip-nat | category=network.public_ip | region=westeurope | requested_sku=Standard | billing_model=payg
+    - Catalog used: `catalog/public_ip_addresses__westeurope__EUR.jsonl` (reason: category='network.public_ip' -> serviceName='Public IP Addresses' via normalize_service_name; region='westeurope', currency='EUR')
+    - Catalog search results: 0 candidates
+    - Conclusion: Correct meter is not in catalog (catalog incomplete or mapping wrong).
+  - Resource: id=keyvault-bi | category=security.keyvault | region=westeurope | requested_sku=standard | billing_model=payg
+    - Catalog used: `catalog/key_vault__westeurope__USD.jsonl` (reason: category='security.keyvault' -> serviceName='Key Vault' via normalize_service_name; region='westeurope', currency='USD')
+    - Catalog search results: 14 candidates
+    - score=1 | productName=Key Vault | skuName=Standard | meterName=Advanced Key Operations | armSkuName= | unitOfMeasure=10K | type=Consumption | priceType=Consumption | unitPrice=0.15
+    - score=1 | productName=Key Vault | skuName=Standard | meterName=Automated Key Rotation | armSkuName= | unitOfMeasure=1 Rotation | type=Consumption | priceType=Consumption | unitPrice=1.0
+    - score=1 | productName=Key Vault | skuName=Standard | meterName=Secret Renewal | armSkuName= | unitOfMeasure=1 | type=Consumption | priceType=Consumption | unitPrice=1.0
+    - score=1 | productName=Azure Dedicated HSM | skuName=Standard | meterName=Standard Instance | armSkuName= | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=4.85
+    - score=1 | productName=Key Vault HSM Pool | skuName=Standard B1 | meterName=Standard B1 Instance | armSkuName= | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=3.2
+    - score=1 | productName=Key Vault | skuName=Standard | meterName=Operations | armSkuName= | unitOfMeasure=10K | type=Consumption | priceType=Consumption | unitPrice=0.03
+    - score=1 | productName=Key Vault | skuName=Standard | meterName=Certificate Renewal Request | armSkuName= | unitOfMeasure=1 | type=Consumption | priceType=Consumption | unitPrice=3.0
+    - score=0 | productName=Key Vault | skuName=Premium | meterName=Automated Key Rotation | armSkuName= | unitOfMeasure=1 Rotation | type=Consumption | priceType=Consumption | unitPrice=1.0
+    - score=0 | productName=Key Vault | skuName=Premium | meterName=Operations | armSkuName= | unitOfMeasure=10K | type=Consumption | priceType=Consumption | unitPrice=0.03
+    - score=0 | productName=Key Vault | skuName=Premium | meterName=Premium HSM-protected RSA 2048-bit key | armSkuName= | unitOfMeasure=1 | type=Consumption | priceType=Consumption | unitPrice=1.0
+    - Conclusion: Ambiguous: multiple meters, need capacity-first / stricter filters.
+  - Resource: id=loganalytics-bi | category=monitoring.loganalytics | region=westeurope | requested_sku=PerGB2018 | billing_model=payg
+    - Catalog used: `catalog/log_analytics__westeurope__USD.jsonl` (reason: category='monitoring.loganalytics' -> serviceName='Log Analytics' via normalize_service_name; region='westeurope', currency='USD')
+    - Catalog search results: 6 candidates
+    - score=0 | productName=Log Analytics | skuName=Analytics Logs | meterName=Analytics Logs Data Retention | armSkuName= | unitOfMeasure=1 GB/Month | type=Consumption | priceType=Consumption | unitPrice=0.13
+    - score=0 | productName=Log Analytics | skuName=Premium | meterName=Premium Data Analyzed | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=3.5
+    - score=0 | productName=Log Analytics | skuName=Free | meterName=Free Data Analyzed | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.0
+    - score=0 | productName=Log Analytics | skuName=Standard | meterName=Standard Data Analyzed | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=2.3
+    - score=0 | productName=Log Analytics | skuName=Analytics Logs | meterName=Analytics Logs Data Ingestion | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.0
+    - score=0 | productName=Log Analytics | skuName=Analytics Logs | meterName=Analytics Logs Data Analyzed | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=2.3
+    - Conclusion: Ambiguous: multiple meters, need capacity-first / stricter filters.
+  - Resource: id=backup-vault-bi | category=backup.vault | region=westeurope | requested_sku=Standard | billing_model=payg
+    - Catalog used: `catalog/backup__westeurope__USD.jsonl` (reason: category='backup.vault' -> serviceName='Backup' via normalize_service_name; region='westeurope', currency='USD')
+    - Catalog search results: 41 candidates
+    - score=1 | productName=Backup Reserved Capacity | skuName=Standard - 100 TB ZRS | meterName=ZRS Data Stored | armSkuName=backup_standard_zrs_data_stored_100tb | unitOfMeasure=1 GB/Month | type=Reservation | priceType=Reservation | unitPrice=30278.0
+    - score=1 | productName=Backup | skuName=Standard | meterName=LRS Data Stored | armSkuName= | unitOfMeasure=1 GB/Month | type=Consumption | priceType=Consumption | unitPrice=0.0224
+    - score=1 | productName=Backup Reserved Capacity | skuName=Standard - 100 TB LRS | meterName=LRS Data Stored | armSkuName=backup_standard_lrs_data_stored_100tb | unitOfMeasure=1 GB/Month | type=Reservation | priceType=Reservation | unitPrice=24222.0
+    - score=1 | productName=Backup Reserved Capacity | skuName=Standard - 100 TB RA-GRS | meterName=RA-GRS Data Stored | armSkuName=backup_standard_ra-grs_data_stored_100tb | unitOfMeasure=1 GB/Month | type=Reservation | priceType=Reservation | unitPrice=61528.0
+    - score=1 | productName=Backup Reserved Capacity | skuName=Standard - 1 PB GRS | meterName=GRS Data Stored | armSkuName=backup_standard_grs_data_stored_1pb | unitOfMeasure=1 GB/Month | type=Reservation | priceType=Reservation | unitPrice=473520.0
+    - score=1 | productName=Backup Reserved Capacity | skuName=Standard - 1 PB ZRS | meterName=ZRS Data Stored | armSkuName=backup_standard_zrs_data_stored_1pb | unitOfMeasure=1 GB/Month | type=Reservation | priceType=Reservation | unitPrice=295950.0
+    - score=1 | productName=Backup Reserved Capacity | skuName=Standard - 1 PB LRS | meterName=LRS Data Stored | armSkuName=backup_standard_lrs_data_stored_1pb | unitOfMeasure=1 GB/Month | type=Reservation | priceType=Reservation | unitPrice=236760.0
+    - score=1 | productName=Backup Reserved Capacity | skuName=Standard - 1 PB RA-GRS | meterName=RA-GRS Data Stored | armSkuName=backup_standard_ra-grs_data_stored_1pb | unitOfMeasure=1 GB/Month | type=Reservation | priceType=Reservation | unitPrice=601413.0
+    - score=1 | productName=Backup | skuName=Standard | meterName=ZRS Data Stored | armSkuName= | unitOfMeasure=1 GB/Month | type=Consumption | priceType=Consumption | unitPrice=0.028
+    - score=1 | productName=Backup Reserved Capacity | skuName=Standard - 100 TB GRS | meterName=GRS Data Stored | armSkuName=backup_standard_grs_data_stored_100tb | unitOfMeasure=1 GB/Month | type=Reservation | priceType=Reservation | unitPrice=48444.0
+    - Conclusion: Ambiguous: multiple meters, need capacity-first / stricter filters.
+  - Resource: id=asr-dr-bi | category=dr.asr | region=westeurope | requested_sku=System Center | billing_model=payg
+    - Catalog used: `catalog/azure_site_recovery__westeurope__USD.jsonl` (reason: category='dr.asr' -> serviceName='Azure Site Recovery' via normalize_service_name; region='westeurope', currency='USD')
+    - Catalog search results: 2 candidates
+    - score=2 | productName=Azure Site Recovery | skuName=System Center | meterName=VM Replicated to System Center | armSkuName= | unitOfMeasure=1/Month | type=Consumption | priceType=Consumption | unitPrice=16.0
+    - score=0 | productName=Azure Site Recovery | skuName=Azure | meterName=VM Replicated to Azure | armSkuName= | unitOfMeasure=1/Month | type=Consumption | priceType=Consumption | unitPrice=25.0
+    - Conclusion: Ambiguous: multiple meters, need capacity-first / stricter filters.
+
+- Scenario: unknown
+  - Resource: id=fabric-capacity-f64-co | category=analytics.fabric | region=westeurope | requested_sku=F64 | billing_model=payg
+    - Catalog used: `catalog/microsoft_fabric__westeurope__USD.jsonl` (reason: category='analytics.fabric' -> serviceName='Microsoft Fabric' via normalize_service_name; region='westeurope', currency='USD')
+    - Catalog search results: 73 candidates
+    - score=0 | productName=Fabric Capacity | skuName=Capacity Overage Capacity Usage | meterName=Capacity Overage Capacity Usage CU | armSkuName=Fabric Meter 23 | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.66
+    - score=0 | productName=OneLake | skuName=Cosmos DB Storage | meterName=Cosmos DB Storage Data Stored | armSkuName=Cosmos DB storage | unitOfMeasure=1 GB/Month | type=Consumption | priceType=Consumption | unitPrice=0.25
+    - score=0 | productName=Fabric Capacity | skuName=Operations Agents Compute Capacity Usage | meterName=Operations Agents Compute Capacity Usage CU | armSkuName=Fabric Meter 36 | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.22
+    - score=0 | productName=Fabric Capacity | skuName=Anomaly Detector Queries Capacity Usage | meterName=Anomaly Detector Queries Capacity Usage CU | armSkuName=Fabric Meter 38 | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.22
+    - score=0 | productName=Fabric Capacity | skuName=Eventstream Data Traffic Capacity Usage | meterName=Eventstream Data Traffic Capacity Usage CU | armSkuName=Eventstream Data Traffic | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.22
+    - score=0 | productName=Fabric Capacity | skuName=OneLake BCDR Other Operations via proxy Capacity Usage | meterName=OneLake BCDR Other Operations via proxy Capacity Usage CU | armSkuName=OneLake BCDR Other Operations via proxy | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.22
+    - score=0 | productName=Fabric Capacity | skuName=Dataflows Standard Compute Capacity Usage | meterName=Dataflows Standard Compute Capacity Usage CU | armSkuName=Fabric_Capacity_CU_Hour | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.22
+    - score=0 | productName=Fabric Capacity | skuName=OneLake Iterative Write Operations via proxy Capacity Usage | meterName=OneLake Iterative Write Operations via proxy Capacity Usage CU | armSkuName=OneLake Iterative Write Operations via proxy | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.22
+    - score=0 | productName=Fabric Capacity | skuName=OneLake Other Operations Capacity Usage | meterName=OneLake Other Operations Capacity Usage CU | armSkuName=OneLake Other Operations | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.22
+    - score=0 | productName=Fabric Capacity | skuName=Apache Airflow job Capacity Usage | meterName=Apache Airflow job Capacity Usage CU | armSkuName=Apache Airflow job | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.22
+    - Conclusion: Ambiguous: multiple meters, need capacity-first / stricter filters.
+  - Resource: id=onelake-storage-co | category=storage.blob | region=westeurope | requested_sku=Standard_LRS | billing_model=payg
+    - Catalog used: `catalog/storage__westeurope__USD.jsonl` (reason: category='storage.blob' -> serviceName='Storage' via normalize_service_name; region='westeurope', currency='USD')
+    - Catalog search results: 1478 candidates
+    - score=0 | productName=General Block Blob v2 Hierarchical Namespace | skuName=Cool GRS | meterName=Cool GRS Write Operations | armSkuName= | unitOfMeasure=10K | type=Consumption | priceType=Consumption | unitPrice=0.26
+    - score=0 | productName=Tables | skuName=Standard ZRS | meterName=Read Operations | armSkuName= | unitOfMeasure=10K | type=Consumption | priceType=Consumption | unitPrice=0.00036
+    - score=0 | productName=Blob Storage | skuName=Hot RA-GRS | meterName=GRS List and Create Container Operations | armSkuName= | unitOfMeasure=10K | type=Consumption | priceType=Consumption | unitPrice=0.108
+    - score=0 | productName=Azure Data Lake Storage Gen2 Flat Namespace | skuName=Cool RA-GRS | meterName=Cool GRS Write Operations | armSkuName= | unitOfMeasure=10K | type=Consumption | priceType=Consumption | unitPrice=0.2
+    - score=0 | productName=Standard SSD Managed Disks | skuName=Disk Transactions LRS | meterName=Disk Transactions LRS Disk Operations | armSkuName=Disk Transactions | unitOfMeasure=10K | type=Consumption | priceType=Consumption | unitPrice=0.0026
+    - score=0 | productName=Azure Data Lake Storage Gen2 Hierarchical Namespace | skuName=Hot ZRS | meterName=Hot ZRS Index | armSkuName= | unitOfMeasure=1 GB/Month | type=Consumption | priceType=Consumption | unitPrice=0.035
+    - score=0 | productName=Standard Page Blob v2 | skuName=Standard RA-GZRS | meterName=Disk Data Stored | armSkuName= | unitOfMeasure=1 GB/Month | type=Consumption | priceType=Consumption | unitPrice=0.379686
+    - score=0 | productName=Tables | skuName=Standard ZRS | meterName=List Operations | armSkuName= | unitOfMeasure=10K | type=Consumption | priceType=Consumption | unitPrice=0.00036
+    - score=0 | productName=Premium Block Blob | skuName=Premium LRS | meterName=LRS Early Premium To Cool Tier Down | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.185
+    - score=0 | productName=Files v2 | skuName=Cool GRS | meterName=Cool Data Retrieval | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.01
+    - Conclusion: Ambiguous: multiple meters, need capacity-first / stricter filters.
+  - Resource: id=datafactory-orchestration-co | category=analytics.datafactory | region=westeurope | requested_sku=On Premises | billing_model=payg
+    - Catalog used: `catalog/azure_data_factory__westeurope__USD.jsonl` (reason: category='analytics.datafactory' -> serviceName='Azure Data Factory' via normalize_service_name; region='westeurope', currency='USD')
+    - Catalog search results: 8 candidates
+    - score=2 | productName=Azure Data Factory | skuName=On Premises | meterName=On Premises Low Frequency Activity | armSkuName= | unitOfMeasure=1/Month | type=Consumption | priceType=Consumption | unitPrice=0.0
+    - score=2 | productName=Azure Data Factory | skuName=On Premises | meterName=On Premises Data Movement | armSkuName= | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.1
+    - score=2 | productName=Azure Data Factory | skuName=On Premises | meterName=On Premises High Frequency Activity | armSkuName= | unitOfMeasure=1/Month | type=Consumption | priceType=Consumption | unitPrice=2.5
+    - score=2 | productName=Azure Data Factory | skuName=On Premises | meterName=Inactive Pipeline | armSkuName= | unitOfMeasure=1/Month | type=Consumption | priceType=Consumption | unitPrice=0.8
+    - score=0 | productName=Azure Data Factory | skuName=Cloud | meterName=Cloud Low Frequency Activity | armSkuName= | unitOfMeasure=1/Month | type=Consumption | priceType=Consumption | unitPrice=0.0
+    - score=0 | productName=Azure Data Factory | skuName=Cloud | meterName=Cloud High Frequency Activity | armSkuName= | unitOfMeasure=1/Month | type=Consumption | priceType=Consumption | unitPrice=1.0
+    - score=0 | productName=Azure Data Factory | skuName=Cloud | meterName=Inactive Pipeline | armSkuName= | unitOfMeasure=1/Month | type=Consumption | priceType=Consumption | unitPrice=0.8
+    - score=0 | productName=Azure Data Factory | skuName=Cloud | meterName=Cloud Data Movement | armSkuName= | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.25
+    - Conclusion: Ambiguous: multiple meters, need capacity-first / stricter filters.
+  - Resource: id=sql-source-db-co | category=db.sql | region=westeurope | requested_sku=GP_Gen5_4 | billing_model=payg
+    - Catalog used: `catalog/sql_database__westeurope__USD.jsonl` (reason: category='db.sql' -> serviceName='SQL Database' via normalize_service_name; region='westeurope', currency='USD')
+    - Catalog search results: 256 candidates
+    - score=0 | productName=SQL Database Elastic Pool - Premium | skuName=2000 DTU Pack | meterName=eDTUs | armSkuName= | unitOfMeasure=1/Day | type=Consumption | priceType=Consumption | unitPrice=360.0
+    - score=0 | productName=SQL Database Single/Elastic Pool General Purpose - Compute Gen5 | skuName=80 vCore | meterName=vCore | armSkuName=SQLDB_GP_Compute_Gen5_80 | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=13.39512
+    - score=0 | productName=SQL Database Single/Elastic Pool General Purpose - Compute FSv2 Series | skuName=72 vCore | meterName=vCore | armSkuName= | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=10.579536
+    - score=0 | productName=SQL Database SingleDB/Elastic Pool Hyperscale - Compute Gen5 | skuName=1 vCore | meterName=vCore | armSkuName=SQLDB_HS_Compute_Gen5_1 | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.200926
+    - score=0 | productName=SQL Database Single/Elastic Pool PITR Backup Storage | skuName=Backup RA-GRS | meterName=RA-GRS Data Stored | armSkuName= | unitOfMeasure=1 GB/Month | type=Consumption | priceType=Consumption | unitPrice=0.238
+    - score=0 | productName=SQL Database Single/Elastic Pool General Purpose - Compute DC-Series | skuName=1 vCore | meterName=vCore | armSkuName= | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.396
+    - score=0 | productName=SQL Database Single/Elastic Pool General Purpose - Compute DC-Series | skuName=12 vCore | meterName=vCore | armSkuName=12 vCore | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=4.752
+    - score=0 | productName=SQL Database Elastic Pool - Premium RS | skuName=3500 DTU Pack | meterName=eDTUs | armSkuName= | unitOfMeasure=1/Day | type=Consumption | priceType=Consumption | unitPrice=157.5
+    - score=0 | productName=SQL Database Single/Elastic Pool General Purpose - Compute DC-Series | skuName=6 vCore | meterName=vCore | armSkuName= | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=2.375
+    - score=0 | productName=SQL Database Single/Elastic Pool General Purpose - Compute DC-Series | skuName=2 vCore | meterName=vCore | armSkuName= | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.792
+    - Conclusion: Ambiguous: multiple meters, need capacity-first / stricter filters.
+  - Resource: id=vnet-bi-platform-co | category=network.vnet | region=westeurope | requested_sku=Virtual Network | billing_model=payg
+    - Catalog used: `catalog/virtual_network__westeurope__USD.jsonl` (reason: category='network.vnet' -> serviceName='Virtual Network' via normalize_service_name; region='westeurope', currency='USD')
+    - Catalog search results: 12 candidates
+    - score=2 | productName=Global Virtual Network Peering | skuName=Inter-Region | meterName=Inter-Region Egress | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.035
+    - score=2 | productName=Global Virtual Network Peering | skuName=Inter-Region | meterName=Inter-Region Ingress | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.035
+    - score=0 | productName=IP Addresses | skuName=Standard | meterName=Standard IPv4 Static Public IP | armSkuName= | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.005
+    - score=0 | productName=IP Addresses | skuName=Standard | meterName=Standard IPv4 Static Public IP | armSkuName= | unitOfMeasure=1 Hour | type=DevTestConsumption | priceType=DevTestConsumption | unitPrice=0.005
+    - score=0 | productName=IP Addresses | skuName=Basic | meterName=Basic IPv4 Dynamic Public IP | armSkuName= | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.004
+    - score=0 | productName=IP Addresses | skuName=Basic | meterName=Basic IPv4 Dynamic Public IP | armSkuName= | unitOfMeasure=1 Hour | type=DevTestConsumption | priceType=DevTestConsumption | unitPrice=0.004
+    - score=0 | productName=Public IP Prefix | skuName=Standard | meterName=Standard Static IP Addresses | armSkuName= | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.006
+    - score=0 | productName=Public IP Prefix | skuName=Global | meterName=Global Static Public IP | armSkuName=Global | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.012
+    - score=0 | productName=IP Addresses | skuName=Basic | meterName=Basic IPv4 Static Public IP | armSkuName= | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.0036
+    - score=0 | productName=IP Addresses | skuName=Basic | meterName=Basic IPv4 Static Public IP | armSkuName= | unitOfMeasure=1 Hour | type=DevTestConsumption | priceType=DevTestConsumption | unitPrice=0.0036
+    - Conclusion: Ambiguous: multiple meters, need capacity-first / stricter filters.
+  - Resource: id=nat-egress-co | category=network.nat | region=westeurope | requested_sku=Standard | billing_model=payg
+    - Catalog used: `catalog/bandwidth__westeurope__USD.jsonl` (reason: category='network.nat' -> serviceName='Bandwidth' via normalize_service_name; region='westeurope', currency='USD')
+    - Catalog search results: 14 candidates
+    - score=1 | productName=Bandwidth - Routing Preference: Internet | skuName=Standard | meterName=Standard Data Transfer Out | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.0
+    - score=1 | productName=Rtn Preference: MGN | skuName=Standard | meterName=Standard Data Transfer Out | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.0
+    - score=1 | productName=Rtn Preference: MGN | skuName=Standard | meterName=Standard Inter-Availability Zone Data Transfer Out | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.01
+    - score=1 | productName=Rtn Preference: MGN | skuName=Standard | meterName=Standard Data Transfer Out - to China | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.0
+    - score=1 | productName=Rtn Preference: MGN | skuName=Standard | meterName=Standard Data Transfer In | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.0
+    - score=1 | productName=Rtn Preference: MGN | skuName=Standard | meterName=Standard Data Transfer In - from China | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.09
+    - score=1 | productName=Rtn Preference: MGN | skuName=Standard | meterName=Standard Inter-Availability Zone Data Transfer In | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.01
+    - score=1 | productName=Rtn Preference: MGN | skuName=Standard | meterName=Standard Inter-Region Data Transfer | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.02
+    - score=0 | productName=Rtn Preference: MGN | skuName=China | meterName=China Data Transfer - 1 to 5 Mbps | armSkuName= | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.0
+    - score=0 | productName=Rtn Preference: MGN | skuName=China | meterName=China Data Transfer - 1 Mbps | armSkuName= | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.0
+    - Conclusion: Ambiguous: multiple meters, need capacity-first / stricter filters.
+  - Resource: id=public-ip-nat-co | category=network.public_ip | region=westeurope | requested_sku=Standard | billing_model=payg
+    - Catalog used: `catalog/public_ip_addresses__westeurope__EUR.jsonl` (reason: category='network.public_ip' -> serviceName='Public IP Addresses' via normalize_service_name; region='westeurope', currency='EUR')
+    - Catalog search results: 0 candidates
+    - Conclusion: Correct meter is not in catalog (catalog incomplete or mapping wrong).
+  - Resource: id=keyvault-bi-co | category=security.keyvault | region=westeurope | requested_sku=standard | billing_model=payg
+    - Catalog used: `catalog/key_vault__westeurope__USD.jsonl` (reason: category='security.keyvault' -> serviceName='Key Vault' via normalize_service_name; region='westeurope', currency='USD')
+    - Catalog search results: 14 candidates
+    - score=1 | productName=Key Vault | skuName=Standard | meterName=Advanced Key Operations | armSkuName= | unitOfMeasure=10K | type=Consumption | priceType=Consumption | unitPrice=0.15
+    - score=1 | productName=Key Vault | skuName=Standard | meterName=Automated Key Rotation | armSkuName= | unitOfMeasure=1 Rotation | type=Consumption | priceType=Consumption | unitPrice=1.0
+    - score=1 | productName=Key Vault | skuName=Standard | meterName=Secret Renewal | armSkuName= | unitOfMeasure=1 | type=Consumption | priceType=Consumption | unitPrice=1.0
+    - score=1 | productName=Azure Dedicated HSM | skuName=Standard | meterName=Standard Instance | armSkuName= | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=4.85
+    - score=1 | productName=Key Vault HSM Pool | skuName=Standard B1 | meterName=Standard B1 Instance | armSkuName= | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=3.2
+    - score=1 | productName=Key Vault | skuName=Standard | meterName=Operations | armSkuName= | unitOfMeasure=10K | type=Consumption | priceType=Consumption | unitPrice=0.03
+    - score=1 | productName=Key Vault | skuName=Standard | meterName=Certificate Renewal Request | armSkuName= | unitOfMeasure=1 | type=Consumption | priceType=Consumption | unitPrice=3.0
+    - score=0 | productName=Key Vault | skuName=Premium | meterName=Automated Key Rotation | armSkuName= | unitOfMeasure=1 Rotation | type=Consumption | priceType=Consumption | unitPrice=1.0
+    - score=0 | productName=Key Vault | skuName=Premium | meterName=Operations | armSkuName= | unitOfMeasure=10K | type=Consumption | priceType=Consumption | unitPrice=0.03
+    - score=0 | productName=Key Vault | skuName=Premium | meterName=Premium HSM-protected RSA 2048-bit key | armSkuName= | unitOfMeasure=1 | type=Consumption | priceType=Consumption | unitPrice=1.0
+    - Conclusion: Ambiguous: multiple meters, need capacity-first / stricter filters.
+  - Resource: id=loganalytics-bi-co | category=monitoring.loganalytics | region=westeurope | requested_sku=PerGB2018 | billing_model=payg
+    - Catalog used: `catalog/log_analytics__westeurope__USD.jsonl` (reason: category='monitoring.loganalytics' -> serviceName='Log Analytics' via normalize_service_name; region='westeurope', currency='USD')
+    - Catalog search results: 6 candidates
+    - score=0 | productName=Log Analytics | skuName=Analytics Logs | meterName=Analytics Logs Data Retention | armSkuName= | unitOfMeasure=1 GB/Month | type=Consumption | priceType=Consumption | unitPrice=0.13
+    - score=0 | productName=Log Analytics | skuName=Premium | meterName=Premium Data Analyzed | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=3.5
+    - score=0 | productName=Log Analytics | skuName=Free | meterName=Free Data Analyzed | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.0
+    - score=0 | productName=Log Analytics | skuName=Standard | meterName=Standard Data Analyzed | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=2.3
+    - score=0 | productName=Log Analytics | skuName=Analytics Logs | meterName=Analytics Logs Data Ingestion | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.0
+    - score=0 | productName=Log Analytics | skuName=Analytics Logs | meterName=Analytics Logs Data Analyzed | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=2.3
+    - Conclusion: Ambiguous: multiple meters, need capacity-first / stricter filters.
+  - Resource: id=backup-vault-bi-co | category=backup.vault | region=westeurope | requested_sku=Standard | billing_model=payg
+    - Catalog used: `catalog/backup__westeurope__USD.jsonl` (reason: category='backup.vault' -> serviceName='Backup' via normalize_service_name; region='westeurope', currency='USD')
+    - Catalog search results: 41 candidates
+    - score=1 | productName=Backup Reserved Capacity | skuName=Standard - 100 TB ZRS | meterName=ZRS Data Stored | armSkuName=backup_standard_zrs_data_stored_100tb | unitOfMeasure=1 GB/Month | type=Reservation | priceType=Reservation | unitPrice=30278.0
+    - score=1 | productName=Backup | skuName=Standard | meterName=LRS Data Stored | armSkuName= | unitOfMeasure=1 GB/Month | type=Consumption | priceType=Consumption | unitPrice=0.0224
+    - score=1 | productName=Backup Reserved Capacity | skuName=Standard - 100 TB LRS | meterName=LRS Data Stored | armSkuName=backup_standard_lrs_data_stored_100tb | unitOfMeasure=1 GB/Month | type=Reservation | priceType=Reservation | unitPrice=24222.0
+    - score=1 | productName=Backup Reserved Capacity | skuName=Standard - 100 TB RA-GRS | meterName=RA-GRS Data Stored | armSkuName=backup_standard_ra-grs_data_stored_100tb | unitOfMeasure=1 GB/Month | type=Reservation | priceType=Reservation | unitPrice=61528.0
+    - score=1 | productName=Backup Reserved Capacity | skuName=Standard - 1 PB GRS | meterName=GRS Data Stored | armSkuName=backup_standard_grs_data_stored_1pb | unitOfMeasure=1 GB/Month | type=Reservation | priceType=Reservation | unitPrice=473520.0
+    - score=1 | productName=Backup Reserved Capacity | skuName=Standard - 1 PB ZRS | meterName=ZRS Data Stored | armSkuName=backup_standard_zrs_data_stored_1pb | unitOfMeasure=1 GB/Month | type=Reservation | priceType=Reservation | unitPrice=295950.0
+    - score=1 | productName=Backup Reserved Capacity | skuName=Standard - 1 PB LRS | meterName=LRS Data Stored | armSkuName=backup_standard_lrs_data_stored_1pb | unitOfMeasure=1 GB/Month | type=Reservation | priceType=Reservation | unitPrice=236760.0
+    - score=1 | productName=Backup Reserved Capacity | skuName=Standard - 1 PB RA-GRS | meterName=RA-GRS Data Stored | armSkuName=backup_standard_ra-grs_data_stored_1pb | unitOfMeasure=1 GB/Month | type=Reservation | priceType=Reservation | unitPrice=601413.0
+    - score=1 | productName=Backup | skuName=Standard | meterName=ZRS Data Stored | armSkuName= | unitOfMeasure=1 GB/Month | type=Consumption | priceType=Consumption | unitPrice=0.028
+    - score=1 | productName=Backup Reserved Capacity | skuName=Standard - 100 TB GRS | meterName=GRS Data Stored | armSkuName=backup_standard_grs_data_stored_100tb | unitOfMeasure=1 GB/Month | type=Reservation | priceType=Reservation | unitPrice=48444.0
+    - Conclusion: Ambiguous: multiple meters, need capacity-first / stricter filters.
+
+- Scenario: unknown
+  - Resource: id=fabric-capacity-f64-hp | category=analytics.fabric | region=westeurope | requested_sku=F64 | billing_model=1 Year
+    - Catalog used: `catalog/microsoft_fabric__westeurope__USD.jsonl` (reason: category='analytics.fabric' -> serviceName='Microsoft Fabric' via normalize_service_name; region='westeurope', currency='USD')
+    - Catalog search results: 73 candidates
+    - score=0 | productName=Fabric Capacity | skuName=Capacity Overage Capacity Usage | meterName=Capacity Overage Capacity Usage CU | armSkuName=Fabric Meter 23 | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.66
+    - score=0 | productName=OneLake | skuName=Cosmos DB Storage | meterName=Cosmos DB Storage Data Stored | armSkuName=Cosmos DB storage | unitOfMeasure=1 GB/Month | type=Consumption | priceType=Consumption | unitPrice=0.25
+    - score=0 | productName=Fabric Capacity | skuName=Operations Agents Compute Capacity Usage | meterName=Operations Agents Compute Capacity Usage CU | armSkuName=Fabric Meter 36 | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.22
+    - score=0 | productName=Fabric Capacity | skuName=Anomaly Detector Queries Capacity Usage | meterName=Anomaly Detector Queries Capacity Usage CU | armSkuName=Fabric Meter 38 | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.22
+    - score=0 | productName=Fabric Capacity | skuName=Eventstream Data Traffic Capacity Usage | meterName=Eventstream Data Traffic Capacity Usage CU | armSkuName=Eventstream Data Traffic | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.22
+    - score=0 | productName=Fabric Capacity | skuName=OneLake BCDR Other Operations via proxy Capacity Usage | meterName=OneLake BCDR Other Operations via proxy Capacity Usage CU | armSkuName=OneLake BCDR Other Operations via proxy | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.22
+    - score=0 | productName=Fabric Capacity | skuName=Dataflows Standard Compute Capacity Usage | meterName=Dataflows Standard Compute Capacity Usage CU | armSkuName=Fabric_Capacity_CU_Hour | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.22
+    - score=0 | productName=Fabric Capacity | skuName=OneLake Iterative Write Operations via proxy Capacity Usage | meterName=OneLake Iterative Write Operations via proxy Capacity Usage CU | armSkuName=OneLake Iterative Write Operations via proxy | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.22
+    - score=0 | productName=Fabric Capacity | skuName=OneLake Other Operations Capacity Usage | meterName=OneLake Other Operations Capacity Usage CU | armSkuName=OneLake Other Operations | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.22
+    - score=0 | productName=Fabric Capacity | skuName=Apache Airflow job Capacity Usage | meterName=Apache Airflow job Capacity Usage CU | armSkuName=Apache Airflow job | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.22
+    - Conclusion: Ambiguous: multiple meters, need capacity-first / stricter filters.
+  - Resource: id=onelake-storage-hp | category=storage.blob | region=westeurope | requested_sku=Premium_ZRS | billing_model=payg
+    - Catalog used: `catalog/storage__westeurope__USD.jsonl` (reason: category='storage.blob' -> serviceName='Storage' via normalize_service_name; region='westeurope', currency='USD')
+    - Catalog search results: 1478 candidates
+    - score=1 | productName=Premium Files Reserved Capacity | skuName=Premium ZRS - 100 TB | meterName=Provisioned | armSkuName=Premium_ZRS_Provisioned_100 TB | unitOfMeasure=1 GB/Month | type=Reservation | priceType=Reservation | unitPrice=230031.0
+    - score=1 | productName=Premium Files Reserved Capacity | skuName=Premium ZRS - 10 TB | meterName=Provisioned | armSkuName=Premium_ZRS_Provisioned_10 TB | unitOfMeasure=1 GB/Month | type=Reservation | priceType=Reservation | unitPrice=24183.0
+    - score=0 | productName=General Block Blob v2 Hierarchical Namespace | skuName=Cool GRS | meterName=Cool GRS Write Operations | armSkuName= | unitOfMeasure=10K | type=Consumption | priceType=Consumption | unitPrice=0.26
+    - score=0 | productName=Tables | skuName=Standard ZRS | meterName=Read Operations | armSkuName= | unitOfMeasure=10K | type=Consumption | priceType=Consumption | unitPrice=0.00036
+    - score=0 | productName=Blob Storage | skuName=Hot RA-GRS | meterName=GRS List and Create Container Operations | armSkuName= | unitOfMeasure=10K | type=Consumption | priceType=Consumption | unitPrice=0.108
+    - score=0 | productName=Azure Data Lake Storage Gen2 Flat Namespace | skuName=Cool RA-GRS | meterName=Cool GRS Write Operations | armSkuName= | unitOfMeasure=10K | type=Consumption | priceType=Consumption | unitPrice=0.2
+    - score=0 | productName=Standard SSD Managed Disks | skuName=Disk Transactions LRS | meterName=Disk Transactions LRS Disk Operations | armSkuName=Disk Transactions | unitOfMeasure=10K | type=Consumption | priceType=Consumption | unitPrice=0.0026
+    - score=0 | productName=Azure Data Lake Storage Gen2 Hierarchical Namespace | skuName=Hot ZRS | meterName=Hot ZRS Index | armSkuName= | unitOfMeasure=1 GB/Month | type=Consumption | priceType=Consumption | unitPrice=0.035
+    - score=0 | productName=Standard Page Blob v2 | skuName=Standard RA-GZRS | meterName=Disk Data Stored | armSkuName= | unitOfMeasure=1 GB/Month | type=Consumption | priceType=Consumption | unitPrice=0.379686
+    - score=0 | productName=Tables | skuName=Standard ZRS | meterName=List Operations | armSkuName= | unitOfMeasure=10K | type=Consumption | priceType=Consumption | unitPrice=0.00036
+    - Conclusion: Ambiguous: multiple meters, need capacity-first / stricter filters.
+  - Resource: id=datafactory-orchestration-hp | category=analytics.datafactory | region=westeurope | requested_sku=On Premises | billing_model=payg
+    - Catalog used: `catalog/azure_data_factory__westeurope__USD.jsonl` (reason: category='analytics.datafactory' -> serviceName='Azure Data Factory' via normalize_service_name; region='westeurope', currency='USD')
+    - Catalog search results: 8 candidates
+    - score=2 | productName=Azure Data Factory | skuName=On Premises | meterName=On Premises Low Frequency Activity | armSkuName= | unitOfMeasure=1/Month | type=Consumption | priceType=Consumption | unitPrice=0.0
+    - score=2 | productName=Azure Data Factory | skuName=On Premises | meterName=On Premises Data Movement | armSkuName= | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.1
+    - score=2 | productName=Azure Data Factory | skuName=On Premises | meterName=On Premises High Frequency Activity | armSkuName= | unitOfMeasure=1/Month | type=Consumption | priceType=Consumption | unitPrice=2.5
+    - score=2 | productName=Azure Data Factory | skuName=On Premises | meterName=Inactive Pipeline | armSkuName= | unitOfMeasure=1/Month | type=Consumption | priceType=Consumption | unitPrice=0.8
+    - score=0 | productName=Azure Data Factory | skuName=Cloud | meterName=Cloud Low Frequency Activity | armSkuName= | unitOfMeasure=1/Month | type=Consumption | priceType=Consumption | unitPrice=0.0
+    - score=0 | productName=Azure Data Factory | skuName=Cloud | meterName=Cloud High Frequency Activity | armSkuName= | unitOfMeasure=1/Month | type=Consumption | priceType=Consumption | unitPrice=1.0
+    - score=0 | productName=Azure Data Factory | skuName=Cloud | meterName=Inactive Pipeline | armSkuName= | unitOfMeasure=1/Month | type=Consumption | priceType=Consumption | unitPrice=0.8
+    - score=0 | productName=Azure Data Factory | skuName=Cloud | meterName=Cloud Data Movement | armSkuName= | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.25
+    - Conclusion: Ambiguous: multiple meters, need capacity-first / stricter filters.
+  - Resource: id=sql-source-db-hp | category=db.sql | region=westeurope | requested_sku=GP_Gen5_16 | billing_model=1 Year
+    - Catalog used: `catalog/sql_database__westeurope__USD.jsonl` (reason: category='db.sql' -> serviceName='SQL Database' via normalize_service_name; region='westeurope', currency='USD')
+    - Catalog search results: 256 candidates
+    - score=1 | productName=SQL Database SingleDB/Elastic Pool Hyperscale - Compute Gen5 | skuName=1 vCore | meterName=vCore | armSkuName=SQLDB_HS_Compute_Gen5_1 | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.200926
+    - score=1 | productName=SQL Database Single/Elastic Pool General Purpose - Compute DC-Series | skuName=1 vCore | meterName=vCore | armSkuName= | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.396
+    - score=1 | productName=SQL Database Single/Elastic Pool General Purpose - Compute DC-Series | skuName=12 vCore | meterName=vCore | armSkuName=12 vCore | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=4.752
+    - score=1 | productName=SQL Database Single/Elastic Pool General Purpose - Compute FSv2 Series | skuName=12 vCore | meterName=vCore | armSkuName=12 vCore | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=1.763256
+    - score=1 | productName=SQL Database Single/Elastic Pool Business Critical - Compute Gen5 | skuName=18 vCore | meterName=vCore | armSkuName= | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=6.027822
+    - score=1 | productName=SQL Database Single/Elastic Pool General Purpose - Compute FSv2 Series | skuName=10 vCore | meterName=vCore | armSkuName=10 vCore | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=1.46938
+    - score=1 | productName=SQL Database Single Premium | skuName=P1 Secondary Active | meterName=P1 Secondary Active DTU | armSkuName= | unitOfMeasure=1/Day | type=Consumption | priceType=Consumption | unitPrice=15.0
+    - score=1 | productName=SQL Database Single/Elastic Pool Business Critical - Compute Gen5 | skuName=14 vCore | meterName=vCore | armSkuName= | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=4.688306
+    - score=1 | productName=SQL Database Single/Elastic Pool General Purpose - Compute Gen5 | skuName=18 vCore | meterName=vCore | armSkuName=SQLDB_GP_Compute_Gen5_18 | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=3.013902
+    - score=1 | productName=SQL Database Single/Elastic Pool General Purpose - Compute Gen5 | skuName=14 vCore | meterName=vCore | armSkuName=SQLDB_GP_Compute_Gen5_14 | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=2.344146
+    - Conclusion: Ambiguous: multiple meters, need capacity-first / stricter filters.
+  - Resource: id=vnet-bi-platform-hp | category=network.vnet | region=westeurope | requested_sku=Virtual Network | billing_model=payg
+    - Catalog used: `catalog/virtual_network__westeurope__USD.jsonl` (reason: category='network.vnet' -> serviceName='Virtual Network' via normalize_service_name; region='westeurope', currency='USD')
+    - Catalog search results: 12 candidates
+    - score=2 | productName=Global Virtual Network Peering | skuName=Inter-Region | meterName=Inter-Region Egress | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.035
+    - score=2 | productName=Global Virtual Network Peering | skuName=Inter-Region | meterName=Inter-Region Ingress | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.035
+    - score=0 | productName=IP Addresses | skuName=Standard | meterName=Standard IPv4 Static Public IP | armSkuName= | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.005
+    - score=0 | productName=IP Addresses | skuName=Standard | meterName=Standard IPv4 Static Public IP | armSkuName= | unitOfMeasure=1 Hour | type=DevTestConsumption | priceType=DevTestConsumption | unitPrice=0.005
+    - score=0 | productName=IP Addresses | skuName=Basic | meterName=Basic IPv4 Dynamic Public IP | armSkuName= | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.004
+    - score=0 | productName=IP Addresses | skuName=Basic | meterName=Basic IPv4 Dynamic Public IP | armSkuName= | unitOfMeasure=1 Hour | type=DevTestConsumption | priceType=DevTestConsumption | unitPrice=0.004
+    - score=0 | productName=Public IP Prefix | skuName=Standard | meterName=Standard Static IP Addresses | armSkuName= | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.006
+    - score=0 | productName=Public IP Prefix | skuName=Global | meterName=Global Static Public IP | armSkuName=Global | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.012
+    - score=0 | productName=IP Addresses | skuName=Basic | meterName=Basic IPv4 Static Public IP | armSkuName= | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.0036
+    - score=0 | productName=IP Addresses | skuName=Basic | meterName=Basic IPv4 Static Public IP | armSkuName= | unitOfMeasure=1 Hour | type=DevTestConsumption | priceType=DevTestConsumption | unitPrice=0.0036
+    - Conclusion: Ambiguous: multiple meters, need capacity-first / stricter filters.
+  - Resource: id=nat-egress-hp | category=network.nat | region=westeurope | requested_sku=Standard | billing_model=payg
+    - Catalog used: `catalog/bandwidth__westeurope__USD.jsonl` (reason: category='network.nat' -> serviceName='Bandwidth' via normalize_service_name; region='westeurope', currency='USD')
+    - Catalog search results: 14 candidates
+    - score=1 | productName=Bandwidth - Routing Preference: Internet | skuName=Standard | meterName=Standard Data Transfer Out | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.0
+    - score=1 | productName=Rtn Preference: MGN | skuName=Standard | meterName=Standard Data Transfer Out | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.0
+    - score=1 | productName=Rtn Preference: MGN | skuName=Standard | meterName=Standard Inter-Availability Zone Data Transfer Out | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.01
+    - score=1 | productName=Rtn Preference: MGN | skuName=Standard | meterName=Standard Data Transfer Out - to China | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.0
+    - score=1 | productName=Rtn Preference: MGN | skuName=Standard | meterName=Standard Data Transfer In | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.0
+    - score=1 | productName=Rtn Preference: MGN | skuName=Standard | meterName=Standard Data Transfer In - from China | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.09
+    - score=1 | productName=Rtn Preference: MGN | skuName=Standard | meterName=Standard Inter-Availability Zone Data Transfer In | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.01
+    - score=1 | productName=Rtn Preference: MGN | skuName=Standard | meterName=Standard Inter-Region Data Transfer | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.02
+    - score=0 | productName=Rtn Preference: MGN | skuName=China | meterName=China Data Transfer - 1 to 5 Mbps | armSkuName= | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.0
+    - score=0 | productName=Rtn Preference: MGN | skuName=China | meterName=China Data Transfer - 1 Mbps | armSkuName= | unitOfMeasure=1 Hour | type=Consumption | priceType=Consumption | unitPrice=0.0
+    - Conclusion: Ambiguous: multiple meters, need capacity-first / stricter filters.
+  - Resource: id=public-ip-nat-hp | category=network.public_ip | region=westeurope | requested_sku=Standard | billing_model=payg
+    - Catalog used: `catalog/public_ip_addresses__westeurope__EUR.jsonl` (reason: category='network.public_ip' -> serviceName='Public IP Addresses' via normalize_service_name; region='westeurope', currency='EUR')
+    - Catalog search results: 0 candidates
+    - Conclusion: Correct meter is not in catalog (catalog incomplete or mapping wrong).
+  - Resource: id=keyvault-bi-hp | category=security.keyvault | region=westeurope | requested_sku=premium | billing_model=payg
+    - Catalog used: `catalog/key_vault__westeurope__USD.jsonl` (reason: category='security.keyvault' -> serviceName='Key Vault' via normalize_service_name; region='westeurope', currency='USD')
+    - Catalog search results: 14 candidates
+    - score=1 | productName=Key Vault | skuName=Premium | meterName=Automated Key Rotation | armSkuName= | unitOfMeasure=1 Rotation | type=Consumption | priceType=Consumption | unitPrice=1.0
+    - score=1 | productName=Key Vault | skuName=Premium | meterName=Operations | armSkuName= | unitOfMeasure=10K | type=Consumption | priceType=Consumption | unitPrice=0.03
+    - score=1 | productName=Key Vault | skuName=Premium | meterName=Premium HSM-protected RSA 2048-bit key | armSkuName= | unitOfMeasure=1 | type=Consumption | priceType=Consumption | unitPrice=1.0
+    - score=1 | productName=Key Vault | skuName=Premium | meterName=Advanced Key Operations | armSkuName= | unitOfMeasure=10K | type=Consumption | priceType=Consumption | unitPrice=0.15
+    - score=1 | productName=Key Vault | skuName=Premium | meterName=Premium HSM-protected Advanced Key | armSkuName= | unitOfMeasure=1 | type=Consumption | priceType=Consumption | unitPrice=5.0
+    - score=1 | productName=Key Vault | skuName=Premium | meterName=Certificate Renewal Request | armSkuName= | unitOfMeasure=1 | type=Consumption | priceType=Consumption | unitPrice=3.0
+    - score=1 | productName=Key Vault | skuName=Premium | meterName=Secret Renewal | armSkuName= | unitOfMeasure=1 | type=Consumption | priceType=Consumption | unitPrice=1.0
+    - score=0 | productName=Key Vault | skuName=Standard | meterName=Advanced Key Operations | armSkuName= | unitOfMeasure=10K | type=Consumption | priceType=Consumption | unitPrice=0.15
+    - score=0 | productName=Key Vault | skuName=Standard | meterName=Automated Key Rotation | armSkuName= | unitOfMeasure=1 Rotation | type=Consumption | priceType=Consumption | unitPrice=1.0
+    - score=0 | productName=Key Vault | skuName=Standard | meterName=Secret Renewal | armSkuName= | unitOfMeasure=1 | type=Consumption | priceType=Consumption | unitPrice=1.0
+    - Conclusion: Ambiguous: multiple meters, need capacity-first / stricter filters.
+  - Resource: id=loganalytics-bi-hp | category=monitoring.loganalytics | region=westeurope | requested_sku=PerGB2018 | billing_model=payg
+    - Catalog used: `catalog/log_analytics__westeurope__USD.jsonl` (reason: category='monitoring.loganalytics' -> serviceName='Log Analytics' via normalize_service_name; region='westeurope', currency='USD')
+    - Catalog search results: 6 candidates
+    - score=0 | productName=Log Analytics | skuName=Analytics Logs | meterName=Analytics Logs Data Retention | armSkuName= | unitOfMeasure=1 GB/Month | type=Consumption | priceType=Consumption | unitPrice=0.13
+    - score=0 | productName=Log Analytics | skuName=Premium | meterName=Premium Data Analyzed | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=3.5
+    - score=0 | productName=Log Analytics | skuName=Free | meterName=Free Data Analyzed | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.0
+    - score=0 | productName=Log Analytics | skuName=Standard | meterName=Standard Data Analyzed | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=2.3
+    - score=0 | productName=Log Analytics | skuName=Analytics Logs | meterName=Analytics Logs Data Ingestion | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=0.0
+    - score=0 | productName=Log Analytics | skuName=Analytics Logs | meterName=Analytics Logs Data Analyzed | armSkuName= | unitOfMeasure=1 GB | type=Consumption | priceType=Consumption | unitPrice=2.3
+    - Conclusion: Ambiguous: multiple meters, need capacity-first / stricter filters.
+  - Resource: id=backup-vault-bi-hp | category=backup.vault | region=westeurope | requested_sku=Standard | billing_model=payg
+    - Catalog used: `catalog/backup__westeurope__USD.jsonl` (reason: category='backup.vault' -> serviceName='Backup' via normalize_service_name; region='westeurope', currency='USD')
+    - Catalog search results: 41 candidates
+    - score=1 | productName=Backup Reserved Capacity | skuName=Standard - 100 TB ZRS | meterName=ZRS Data Stored | armSkuName=backup_standard_zrs_data_stored_100tb | unitOfMeasure=1 GB/Month | type=Reservation | priceType=Reservation | unitPrice=30278.0
+    - score=1 | productName=Backup | skuName=Standard | meterName=LRS Data Stored | armSkuName= | unitOfMeasure=1 GB/Month | type=Consumption | priceType=Consumption | unitPrice=0.0224
+    - score=1 | productName=Backup Reserved Capacity | skuName=Standard - 100 TB LRS | meterName=LRS Data Stored | armSkuName=backup_standard_lrs_data_stored_100tb | unitOfMeasure=1 GB/Month | type=Reservation | priceType=Reservation | unitPrice=24222.0
+    - score=1 | productName=Backup Reserved Capacity | skuName=Standard - 100 TB RA-GRS | meterName=RA-GRS Data Stored | armSkuName=backup_standard_ra-grs_data_stored_100tb | unitOfMeasure=1 GB/Month | type=Reservation | priceType=Reservation | unitPrice=61528.0
+    - score=1 | productName=Backup Reserved Capacity | skuName=Standard - 1 PB GRS | meterName=GRS Data Stored | armSkuName=backup_standard_grs_data_stored_1pb | unitOfMeasure=1 GB/Month | type=Reservation | priceType=Reservation | unitPrice=473520.0
+    - score=1 | productName=Backup Reserved Capacity | skuName=Standard - 1 PB ZRS | meterName=ZRS Data Stored | armSkuName=backup_standard_zrs_data_stored_1pb | unitOfMeasure=1 GB/Month | type=Reservation | priceType=Reservation | unitPrice=295950.0
+    - score=1 | productName=Backup Reserved Capacity | skuName=Standard - 1 PB LRS | meterName=LRS Data Stored | armSkuName=backup_standard_lrs_data_stored_1pb | unitOfMeasure=1 GB/Month | type=Reservation | priceType=Reservation | unitPrice=236760.0
+    - score=1 | productName=Backup Reserved Capacity | skuName=Standard - 1 PB RA-GRS | meterName=RA-GRS Data Stored | armSkuName=backup_standard_ra-grs_data_stored_1pb | unitOfMeasure=1 GB/Month | type=Reservation | priceType=Reservation | unitPrice=601413.0
+    - score=1 | productName=Backup | skuName=Standard | meterName=ZRS Data Stored | armSkuName= | unitOfMeasure=1 GB/Month | type=Consumption | priceType=Consumption | unitPrice=0.028
+    - score=1 | productName=Backup Reserved Capacity | skuName=Standard - 100 TB GRS | meterName=GRS Data Stored | armSkuName=backup_standard_grs_data_stored_100tb | unitOfMeasure=1 GB/Month | type=Reservation | priceType=Reservation | unitPrice=48444.0
+    - Conclusion: Ambiguous: multiple meters, need capacity-first / stricter filters.
+  - Resource: id=asr-dr-bi-hp | category=dr.asr | region=westeurope | requested_sku=System Center | billing_model=payg
+    - Catalog used: `catalog/azure_site_recovery__westeurope__USD.jsonl` (reason: category='dr.asr' -> serviceName='Azure Site Recovery' via normalize_service_name; region='westeurope', currency='USD')
+    - Catalog search results: 2 candidates
+    - score=2 | productName=Azure Site Recovery | skuName=System Center | meterName=VM Replicated to System Center | armSkuName= | unitOfMeasure=1/Month | type=Consumption | priceType=Consumption | unitPrice=16.0
+    - score=0 | productName=Azure Site Recovery | skuName=Azure | meterName=VM Replicated to Azure | armSkuName= | unitOfMeasure=1/Month | type=Consumption | priceType=Consumption | unitPrice=25.0
+    - Conclusion: Ambiguous: multiple meters, need capacity-first / stricter filters.
