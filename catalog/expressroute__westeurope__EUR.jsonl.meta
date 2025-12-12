@@ -1,0 +1,10 @@
+{
+  "serviceName": "ExpressRoute",
+  "category": "network.er",
+  "region": "westeurope",
+  "currency": "EUR",
+  "item_count": 7,
+  "fetched_at": "2025-12-12T15:04:01.160165+00:00",
+  "source": "azure-retail-prices-api",
+  "file": "expressroute__westeurope__EUR.jsonl"
+}

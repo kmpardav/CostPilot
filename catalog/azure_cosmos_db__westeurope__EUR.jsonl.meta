@@ -1,0 +1,10 @@
+{
+  "serviceName": "Azure Cosmos DB",
+  "category": "db.cosmos",
+  "region": "westeurope",
+  "currency": "EUR",
+  "item_count": 99,
+  "fetched_at": "2025-12-12T15:03:52.765117+00:00",
+  "source": "azure-retail-prices-api",
+  "file": "azure_cosmos_db__westeurope__EUR.jsonl"
+}

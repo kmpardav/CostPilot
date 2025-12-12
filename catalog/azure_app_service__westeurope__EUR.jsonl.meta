@@ -1,0 +1,10 @@
+{
+  "serviceName": "Azure App Service",
+  "category": "appservice",
+  "region": "westeurope",
+  "currency": "EUR",
+  "item_count": 210,
+  "fetched_at": "2025-12-12T22:29:27.022697+00:00",
+  "source": "azure-retail-prices-api",
+  "file": "azure_app_service__westeurope__EUR.jsonl"
+}

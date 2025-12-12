@@ -1,0 +1,10 @@
+{
+  "serviceName": "Virtual Network",
+  "category": "network.vnet",
+  "region": "westeurope",
+  "currency": "EUR",
+  "item_count": 12,
+  "fetched_at": "2025-12-12T22:29:33.510707+00:00",
+  "source": "azure-retail-prices-api",
+  "file": "virtual_network__westeurope__EUR.jsonl"
+}

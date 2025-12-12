@@ -1,0 +1,10 @@
+{
+  "serviceName": "Bandwidth",
+  "category": "network.egress",
+  "region": "eastus",
+  "currency": "USD",
+  "item_count": 14,
+  "fetched_at": "2025-12-12T14:57:07.414351+00:00",
+  "source": "azure-retail-prices-api",
+  "file": "bandwidth__eastus__USD.jsonl"
+}

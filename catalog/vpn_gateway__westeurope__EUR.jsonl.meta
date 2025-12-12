@@ -1,0 +1,10 @@
+{
+  "serviceName": "VPN Gateway",
+  "category": "network.vpngw",
+  "region": "westeurope",
+  "currency": "EUR",
+  "item_count": 24,
+  "fetched_at": "2025-12-12T15:04:08.251510+00:00",
+  "source": "azure-retail-prices-api",
+  "file": "vpn_gateway__westeurope__EUR.jsonl"
+}

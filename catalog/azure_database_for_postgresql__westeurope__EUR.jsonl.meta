@@ -1,0 +1,10 @@
+{
+  "serviceName": "Azure Database for PostgreSQL",
+  "category": "db.postgres",
+  "region": "westeurope",
+  "currency": "EUR",
+  "item_count": 146,
+  "fetched_at": "2025-12-12T15:03:54.437906+00:00",
+  "source": "azure-retail-prices-api",
+  "file": "azure_database_for_postgresql__westeurope__EUR.jsonl"
+}

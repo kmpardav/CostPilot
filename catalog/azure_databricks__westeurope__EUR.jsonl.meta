@@ -1,0 +1,10 @@
+{
+  "serviceName": "Azure Databricks",
+  "category": "analytics.databricks",
+  "region": "westeurope",
+  "currency": "EUR",
+  "item_count": 41,
+  "fetched_at": "2025-12-12T15:03:38.749890+00:00",
+  "source": "azure-retail-prices-api",
+  "file": "azure_databricks__westeurope__EUR.jsonl"
+}

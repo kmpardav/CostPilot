@@ -1,0 +1,10 @@
+{
+  "serviceName": "Application Gateway",
+  "category": "network.appgw",
+  "region": "westeurope",
+  "currency": "EUR",
+  "item_count": 27,
+  "fetched_at": "2025-12-12T22:29:31.475517+00:00",
+  "source": "azure-retail-prices-api",
+  "file": "application_gateway__westeurope__EUR.jsonl"
+}

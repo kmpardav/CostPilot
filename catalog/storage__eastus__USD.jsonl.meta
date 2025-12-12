@@ -1,0 +1,10 @@
+{
+  "serviceName": "Storage",
+  "category": "storage.disk",
+  "region": "eastus",
+  "currency": "USD",
+  "item_count": 1476,
+  "fetched_at": "2025-12-12T14:57:10.624054+00:00",
+  "source": "azure-retail-prices-api",
+  "file": "storage__eastus__USD.jsonl"
+}

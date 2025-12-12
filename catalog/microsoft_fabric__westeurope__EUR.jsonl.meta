@@ -1,0 +1,10 @@
+{
+  "serviceName": "Microsoft Fabric",
+  "category": "analytics.fabric",
+  "region": "westeurope",
+  "currency": "EUR",
+  "item_count": 73,
+  "fetched_at": "2025-12-12T15:03:45.028601+00:00",
+  "source": "azure-retail-prices-api",
+  "file": "microsoft_fabric__westeurope__EUR.jsonl"
+}

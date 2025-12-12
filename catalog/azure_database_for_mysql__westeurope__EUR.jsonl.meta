@@ -1,0 +1,10 @@
+{
+  "serviceName": "Azure Database for MySQL",
+  "category": "db.mysql",
+  "region": "westeurope",
+  "currency": "EUR",
+  "item_count": 82,
+  "fetched_at": "2025-12-12T15:03:53.587619+00:00",
+  "source": "azure-retail-prices-api",
+  "file": "azure_database_for_mysql__westeurope__EUR.jsonl"
+}

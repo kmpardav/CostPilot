@@ -1,0 +1,10 @@
+{
+  "serviceName": "Azure Data Factory",
+  "category": "analytics.datafactory",
+  "region": "westeurope",
+  "currency": "USD",
+  "item_count": 8,
+  "fetched_at": "2025-12-12T14:53:05.183116+00:00",
+  "source": "azure-retail-prices-api",
+  "file": "azure_data_factory__westeurope__USD.jsonl"
+}

@@ -1,0 +1,10 @@
+{
+  "serviceName": "Azure Bastion",
+  "category": "network.bastion",
+  "region": "westeurope",
+  "currency": "USD",
+  "item_count": 8,
+  "fetched_at": "2025-12-12T14:36:54.465636+00:00",
+  "source": "azure-retail-prices-api",
+  "file": "azure_bastion__westeurope__USD.jsonl"
+}

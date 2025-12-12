@@ -1,0 +1,10 @@
+{
+  "serviceName": "Storage",
+  "category": "storage.blob",
+  "region": "westeurope",
+  "currency": "EUR",
+  "item_count": 1478,
+  "fetched_at": "2025-12-12T22:29:35.394479+00:00",
+  "source": "azure-retail-prices-api",
+  "file": "storage__westeurope__EUR.jsonl"
+}

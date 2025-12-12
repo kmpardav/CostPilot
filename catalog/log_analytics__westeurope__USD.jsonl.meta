@@ -1,0 +1,10 @@
+{
+  "serviceName": "Log Analytics",
+  "category": "monitoring.loganalytics",
+  "region": "westeurope",
+  "currency": "USD",
+  "item_count": 6,
+  "fetched_at": "2025-12-12T14:28:14.338591+00:00",
+  "source": "azure-retail-prices-api",
+  "file": "log_analytics__westeurope__USD.jsonl"
+}

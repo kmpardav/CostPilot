@@ -1,0 +1,10 @@
+{
+  "serviceName": "Azure Site Recovery",
+  "category": "dr.asr",
+  "region": "westeurope",
+  "currency": "EUR",
+  "item_count": 2,
+  "fetched_at": "2025-12-12T22:29:29.934397+00:00",
+  "source": "azure-retail-prices-api",
+  "file": "azure_site_recovery__westeurope__EUR.jsonl"
+}

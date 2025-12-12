@@ -1,0 +1,10 @@
+{
+  "serviceName": "Virtual Machines",
+  "category": "compute.vm",
+  "region": "westeurope",
+  "currency": "EUR",
+  "item_count": 11279,
+  "fetched_at": "2025-12-12T15:03:51.786239+00:00",
+  "source": "azure-retail-prices-api",
+  "file": "virtual_machines__westeurope__EUR.jsonl"
+}
