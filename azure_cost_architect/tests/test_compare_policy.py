@@ -147,3 +147,90 @@ def test_appservice_is_treated_as_compute_required():
 
     assert totals["required_missing_count"] == 1
     assert totals["comparable"] is False
+
+
+def test_required_estimated_blocks_comparability():
+    scenario = {
+        "id": "baseline",
+        "resources": [
+            {
+                "id": "vm1",
+                "category": "compute.vm",
+                "monthly_cost": 10.0,
+                "yearly_cost": 120.0,
+                "pricing_status": "estimated",
+            }
+        ],
+    }
+
+    totals = aggregate_scenario_costs(
+        scenario, currency="USD", required_categories=["compute", "db"]
+    )
+
+    assert totals["required"]["comparable"] is False
+    assert totals["compare_skip_reason"] == "estimated_required"
+    assert totals["required"]["blockers"][0]["resource_id"] == "vm1"
+
+
+def test_adjudicator_unresolved_counts_as_blocker():
+    scenario = {
+        "id": "baseline",
+        "resources": [
+            {
+                "id": "storage1",
+                "category": "storage.blob",
+                "monthly_cost": None,
+                "yearly_cost": None,
+                "pricing_status": "adjudicator_unresolved",
+                "arm_sku_name": "Standard_GRS",
+                "meter_name": None,
+            }
+        ],
+    }
+
+    totals = aggregate_scenario_costs(
+        scenario, currency="USD", required_categories=["storage"]
+    )
+
+    assert totals["required"]["comparable"] is False
+    assert totals["compare_skip_reason"] == "adjudicator_unresolved"
+    assert any(blk["reason"] == "adjudicator_unresolved" for blk in totals["required"]["blockers"])
+
+
+def test_collect_blocker_details_returns_required_blockers():
+    totals = aggregate_scenario_costs(
+        {
+            "id": "baseline",
+            "resources": [
+                {
+                    "id": "vm1",
+                    "category": "compute.vm",
+                    "monthly_cost": None,
+                    "yearly_cost": None,
+                    "pricing_status": "missing",
+                    "arm_sku_name": "Standard_D4s_v3",
+                }
+            ],
+        },
+        currency="USD",
+        required_categories=["compute"],
+    )
+
+    plan = {"scenarios": [{"id": "baseline", "totals": totals}]}
+    details = _collect_blocker_details(plan)
+
+    assert details
+    assert details[0]["resource_id"] == "vm1"
+    assert details[0]["reason"] == "missing_pricing"
+import pytest
+
+from azure_cost_architect.cli import (
+    _apply_compare_policy,
+    _collect_compare_blockers,
+    _collect_blocker_details,
+)
+from azure_cost_architect.pricing.enrich import (
+    aggregate_scenario_costs,
+    attach_baseline_deltas,
+)
+

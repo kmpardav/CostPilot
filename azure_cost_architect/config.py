@@ -21,6 +21,7 @@ DEBUG_SCORING_FILE = os.getenv("AZCOST_DEBUG_FILE", "").strip()
 # LLM models (chat)
 MODEL_PLANNER = os.getenv("AZURECOST_PLANNER_MODEL", "gpt-5.1")
 MODEL_REPORTER = os.getenv("AZURECOST_REPORTER_MODEL", "gpt-5.1")
+MODEL_ADJUDICATOR = os.getenv("AZURECOST_ADJUDICATOR_MODEL", MODEL_PLANNER)
 
 # LLM models (responses)
 MODEL_PLANNER_RESPONSES = os.getenv("AZURECOST_PLANNER_RESP_MODEL", MODEL_PLANNER)
@@ -38,6 +39,8 @@ DEFAULT_REQUIRED_CATEGORIES = [
     "network",
     "storage",
 ]
+
+DEFAULT_ADJUDICATE_TOPN = int(os.getenv("AZURECOST_ADJUDICATE_TOPN", "5"))
 
 # Local catalog directory (full Azure Retail dumps per service/region/currency)
 # Συνήθως είναι ο φάκελος "catalog" στο root του project.

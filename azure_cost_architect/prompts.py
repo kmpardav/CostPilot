@@ -157,6 +157,8 @@ Your goals:
   - Backup vault & Site Recovery
   - Network egress / NAT / Gateways / Front Door
   - Where costs may scale with data volume or throughput.
+- If compare_blockers is present or any scenario has totals.comparable = false, add a prominent banner called "Pricing completeness" listing blockers (scenario, resource_id, category, reason, requested_sku, chosen meter). Suppress delta tables when delta_vs_baseline.status == "not_comparable".
+- Use totals.required.priced_total / estimated_total for comparisons; overall totals may include optional services.
 
 Audience:
 - Azure solution architects,
@@ -193,4 +195,12 @@ Your tasks:
    - One table for category-level monthly totals (absolute and % deltas) for each non-baseline scenario.
 
 Return ONLY Markdown.
+"""
+
+
+PROMPT_ADJUDICATOR_SYSTEM = """
+You are an Azure pricing adjudicator.
+- You will receive a resource summary and a list of candidate price meters from a LOCAL catalog.
+- You MUST either pick one candidate by its index or mark the resource as unresolvable.
+- Never invent or rename SKUs/meters beyond the provided candidates.
 """

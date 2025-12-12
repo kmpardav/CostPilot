@@ -5,6 +5,7 @@ import os
 import json
 import logging
 import re
+import hashlib
 
 from ..config import (
     DEFAULT_CURRENCY,
@@ -12,6 +13,7 @@ from ..config import (
     HOURS_PROD,
     CATALOG_DIR,
     DEFAULT_REQUIRED_CATEGORIES,
+    DEFAULT_ADJUDICATE_TOPN,
 )
 from ..utils.categories import (
     canonical_required_category,
@@ -22,6 +24,7 @@ from .normalize import normalize_service_name, sku_keyword_match
 from .catalog import load_catalog
 from .scoring import score_price_item
 from .units import compute_units
+from ..llm.adjudicator import adjudicate_candidates
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -186,6 +189,7 @@ def aggregate_scenario_costs(
     - Missing (explicitly counted so incompleteness is visible).
     """
     by_category: Dict[str, Dict[str, float]] = {}
+    required_by_category: Dict[str, Dict[str, float]] = {}
     monthly_priced = 0.0
     yearly_priced = 0.0
     monthly_estimated = 0.0
@@ -194,11 +198,21 @@ def aggregate_scenario_costs(
     yearly_with_est = 0.0
     monthly_missing = 0.0
     yearly_missing = 0.0
+    required_monthly_priced = 0.0
+    required_yearly_priced = 0.0
+    required_monthly_estimated = 0.0
+    required_yearly_estimated = 0.0
+    required_monthly_missing = 0.0
+    required_yearly_missing = 0.0
     missing_count = 0
     mismatch_count = 0
     reservation_ambiguous_count = 0
     priced_count = 0
     estimated_count = 0
+    required_missing_count = 0
+    required_mismatch_count = 0
+    required_reservation_ambiguous_count = 0
+    required_estimated_count = 0
     total_resources = len(scenario.get("resources", []))
     compare_skip_reason: Optional[str] = None
     required_categories = normalize_required_categories(
@@ -207,10 +221,7 @@ def aggregate_scenario_costs(
         else DEFAULT_REQUIRED_CATEGORIES
     )
     use_required_filter = bool(required_categories)
-
-    required_missing_count = 0
-    required_mismatch_count = 0
-    required_reservation_ambiguous_count = 0
+    required_blockers: List[Dict[str, Any]] = []
 
     def _is_required(cat: str) -> bool:
         if not use_required_filter:
@@ -226,16 +237,21 @@ def aggregate_scenario_costs(
 
         is_required = _is_required(cat)
 
-        if res.get("sku_mismatch") or status == "sku_mismatch":
-            mismatch_count += 1
-            if is_required:
-                required_mismatch_count += 1
-        if status == "reservation_uom_ambiguous":
-            reservation_ambiguous_count += 1
-            if is_required:
-                required_reservation_ambiguous_count += 1
-
         entry = by_category.setdefault(
+            cat,
+            {
+                "monthly_priced": 0.0,
+                "yearly_priced": 0.0,
+                "monthly_estimated": 0.0,
+                "yearly_estimated": 0.0,
+                "monthly_missing": 0.0,
+                "yearly_missing": 0.0,
+                "monthly_with_estimates": 0.0,
+                "yearly_with_estimates": 0.0,
+            },
+        )
+
+        req_entry = required_by_category.setdefault(
             cat,
             {
                 "monthly_priced": 0.0,
@@ -253,20 +269,13 @@ def aggregate_scenario_costs(
             "missing",
             "sku_mismatch",
             "reservation_uom_ambiguous",
+            "adjudicator_unresolved",
         }
         missing_reason = missing_like_status or monthly is None or yearly is None
+        blocker_reason: Optional[str] = None
 
         if missing_reason:
             missing_count += 1
-            if is_required and (status == "missing" or monthly is None or yearly is None):
-                required_missing_count += 1
-            if compare_skip_reason is None and (not use_required_filter or is_required):
-                if status == "reservation_uom_ambiguous":
-                    compare_skip_reason = "reservation_ambiguous"
-                elif status == "sku_mismatch":
-                    compare_skip_reason = "sku_mismatch"
-                else:
-                    compare_skip_reason = "missing_pricing"
             monthly_missing_contrib = max(
                 float(monthly) if monthly is not None else 0.0,
                 DEFAULT_MISSING_MONTHLY_PENALTY,
@@ -283,6 +292,44 @@ def aggregate_scenario_costs(
             entry["yearly_missing"] += yearly_missing_contrib
             entry["monthly_with_estimates"] += monthly_missing_contrib
             entry["yearly_with_estimates"] += yearly_missing_contrib
+
+            blocker_reason = "missing_pricing"
+            if status == "reservation_uom_ambiguous":
+                reservation_ambiguous_count += 1
+                blocker_reason = "reservation_ambiguous"
+            elif status == "sku_mismatch":
+                mismatch_count += 1
+                blocker_reason = "sku_mismatch"
+            elif status == "adjudicator_unresolved":
+                blocker_reason = "adjudicator_unresolved"
+
+            if is_required:
+                if status == "reservation_uom_ambiguous":
+                    required_reservation_ambiguous_count += 1
+                elif status == "sku_mismatch":
+                    required_mismatch_count += 1
+                else:
+                    required_missing_count += 1
+                required_monthly_missing += monthly_missing_contrib
+                required_yearly_missing += yearly_missing_contrib
+                req_entry["monthly_missing"] += monthly_missing_contrib
+                req_entry["yearly_missing"] += yearly_missing_contrib
+                req_entry["monthly_with_estimates"] += monthly_missing_contrib
+                req_entry["yearly_with_estimates"] += yearly_missing_contrib
+                required_blockers.append(
+                    {
+                        "resource_id": res.get("id"),
+                        "category": cat,
+                        "reason": blocker_reason,
+                        "requested_sku": res.get("arm_sku_name")
+                        or res.get("armSkuName"),
+                        "meter": res.get("meter_name") or res.get("sku_name"),
+                    }
+                )
+                if compare_skip_reason is None:
+                    compare_skip_reason = blocker_reason
+            elif compare_skip_reason is None:
+                compare_skip_reason = blocker_reason
             continue
 
         # Συνολικά totals
@@ -296,6 +343,13 @@ def aggregate_scenario_costs(
             entry["yearly_priced"] += yearly
             entry["monthly_with_estimates"] += monthly
             entry["yearly_with_estimates"] += yearly
+            if is_required:
+                required_monthly_priced += monthly
+                required_yearly_priced += yearly
+                req_entry["monthly_priced"] += monthly
+                req_entry["yearly_priced"] += yearly
+                req_entry["monthly_with_estimates"] += monthly
+                req_entry["yearly_with_estimates"] += yearly
         elif status == "estimated":
             monthly_estimated += monthly
             yearly_estimated += yearly
@@ -306,13 +360,18 @@ def aggregate_scenario_costs(
             entry["yearly_estimated"] += yearly
             entry["monthly_with_estimates"] += monthly
             entry["yearly_with_estimates"] += yearly
+            if is_required:
+                required_estimated_count += 1
+                required_monthly_estimated += monthly
+                required_yearly_estimated += yearly
+                req_entry["monthly_estimated"] += monthly
+                req_entry["yearly_estimated"] += yearly
+                req_entry["monthly_with_estimates"] += monthly
+                req_entry["yearly_with_estimates"] += yearly
+                blocker_reason = "estimated_required"
         else:
             # Unknown status is treated as missing to avoid undercounting.
             missing_count += 1
-            if is_required:
-                required_missing_count += 1
-            if compare_skip_reason is None and (not use_required_filter or is_required):
-                compare_skip_reason = "missing_pricing"
             monthly_missing_contrib = max(
                 float(monthly) if monthly is not None else 0.0,
                 DEFAULT_MISSING_MONTHLY_PENALTY,
@@ -329,38 +388,83 @@ def aggregate_scenario_costs(
             entry["yearly_missing"] += yearly_missing_contrib
             entry["monthly_with_estimates"] += monthly_missing_contrib
             entry["yearly_with_estimates"] += yearly_missing_contrib
+            blocker_reason = "missing_pricing"
 
-        # By-category breakdown
+            if is_required:
+                required_missing_count += 1
+                required_monthly_missing += monthly_missing_contrib
+                required_yearly_missing += yearly_missing_contrib
+                req_entry["monthly_missing"] += monthly_missing_contrib
+                req_entry["yearly_missing"] += yearly_missing_contrib
+                req_entry["monthly_with_estimates"] += monthly_missing_contrib
+                req_entry["yearly_with_estimates"] += yearly_missing_contrib
+
+        if blocker_reason and is_required:
+            required_blockers.append(
+                {
+                    "resource_id": res.get("id"),
+                    "category": cat,
+                    "reason": blocker_reason,
+                    "requested_sku": res.get("arm_sku_name") or res.get("armSkuName"),
+                    "meter": res.get("meter_name") or res.get("sku_name"),
+                }
+            )
+            if compare_skip_reason is None:
+                compare_skip_reason = blocker_reason
+        elif blocker_reason and compare_skip_reason is None:
+            compare_skip_reason = blocker_reason
+
     modeled_total = monthly_priced + monthly_estimated
-
-    missing_blockers = required_missing_count if use_required_filter else missing_count
-    mismatch_blockers = required_mismatch_count if use_required_filter else mismatch_count
-    reservation_blockers = (
-        required_reservation_ambiguous_count
-        if use_required_filter
-        else reservation_ambiguous_count
-    )
-
-    is_complete = not (
-        missing_blockers or mismatch_blockers or reservation_blockers
-    )
-    if compare_skip_reason is None:
-        if mismatch_blockers:
-            compare_skip_reason = "sku_mismatch"
-        elif reservation_blockers:
-            compare_skip_reason = "reservation_ambiguous"
-        elif missing_blockers:
-            compare_skip_reason = "missing_pricing"
-
-    comparable = is_complete and not compare_skip_reason
 
     completeness_ratio = 0.0
     if total_resources:
         completeness_ratio = (priced_count + estimated_count) / float(total_resources)
         if completeness_ratio > 1:
             completeness_ratio = 1.0
-    if is_complete:
+    required_comparable = (
+        not required_blockers
+        and required_monthly_missing == 0
+        and required_monthly_estimated == 0
+        and required_estimated_count == 0
+    )
+    is_complete = required_comparable
+    comparable = required_comparable
+    if required_comparable:
         completeness_ratio = 1.0
+    if compare_skip_reason is None and required_blockers:
+        compare_skip_reason = required_blockers[0]["reason"]
+
+    required_totals = {
+        "priced_total": round(required_monthly_priced, 2),
+        "estimated_total": round(required_monthly_estimated, 2),
+        "missing_total": round(required_monthly_missing, 2),
+        "yearly_priced": round(required_yearly_priced, 2),
+        "yearly_estimated": round(required_yearly_estimated, 2),
+        "yearly_missing": round(required_yearly_missing, 2),
+        "blockers": required_blockers,
+        "comparable": required_comparable,
+        "compare_skip_reason": compare_skip_reason,
+        "by_category": {
+            k: {
+                "monthly_priced": round(v["monthly_priced"], 2),
+                "yearly_priced": round(v["yearly_priced"], 2),
+                "monthly_estimated": round(v["monthly_estimated"], 2),
+                "yearly_estimated": round(v["yearly_estimated"], 2),
+                "monthly_missing": round(v["monthly_missing"], 2),
+                "yearly_missing": round(v["yearly_missing"], 2),
+                "monthly_with_estimates": round(v["monthly_with_estimates"], 2),
+                "yearly_with_estimates": round(v["yearly_with_estimates"], 2),
+            }
+            for k, v in required_by_category.items()
+            if _is_required(k)
+        },
+    }
+
+    overall_totals = {
+        "priced_total": round(monthly_priced, 2),
+        "estimated_total": round(monthly_estimated, 2),
+        "missing_total": round(monthly_missing, 2),
+    }
 
     return {
         "currency": currency,
@@ -374,6 +478,7 @@ def aggregate_scenario_costs(
         "required_missing_count": required_missing_count,
         "required_mismatch_count": required_mismatch_count,
         "required_reservation_ambiguous_count": required_reservation_ambiguous_count,
+        "required_estimated_count": required_estimated_count,
         # Backwards compatible totals
         "total_monthly": round(monthly_with_est, 2),
         "total_yearly": round(yearly_with_est, 2),
@@ -390,6 +495,8 @@ def aggregate_scenario_costs(
         "modeled_total": round(modeled_total, 2),
         "monthly_with_estimates": round(monthly_with_est, 2),
         "yearly_with_estimates": round(yearly_with_est, 2),
+        "required": required_totals,
+        "overall": overall_totals,
         "by_category": {
             k: {
                 "monthly": round(v["monthly_with_estimates"], 2),
@@ -425,25 +532,9 @@ def attach_baseline_deltas(enriched_scenarios: List[Dict[str, Any]]) -> None:
     baseline_totals = baseline.get("totals") or {}
 
     def _comparison_blocker(totals: Dict[str, Any]) -> Optional[str]:
-        missing = totals.get("required_missing_count")
-        mismatch = totals.get("required_mismatch_count")
-        reservation = totals.get("required_reservation_ambiguous_count")
-
-        if missing is None:
-            missing = totals.get("missing_count")
-        if mismatch is None:
-            mismatch = totals.get("mismatch_count")
-        if reservation is None:
-            reservation = totals.get("reservation_ambiguous_count")
-
-        if mismatch:
-            return "sku_mismatch"
-        if reservation:
-            return "reservation_ambiguous"
-        if missing:
-            return "missing_pricing"
-        if totals.get("is_complete") is False:
-            return totals.get("compare_skip_reason") or "incomplete"
+        required = totals.get("required") or {}
+        if required and required.get("comparable") is False:
+            return required.get("compare_skip_reason") or "missing_pricing"
         return None
 
     baseline_blocker = _comparison_blocker(baseline_totals)
@@ -452,20 +543,50 @@ def attach_baseline_deltas(enriched_scenarios: List[Dict[str, Any]]) -> None:
         sc.setdefault("totals", {})
         scenario_blocker = _comparison_blocker(sc["totals"])
         blocker = baseline_blocker or scenario_blocker
+        sc_required = sc["totals"].get("required") or {}
+        base_required = baseline_totals.get("required") or {}
+
         sc["totals"]["comparable"] = blocker is None
         sc["totals"]["compare_skip_reason"] = blocker or sc["totals"].get(
             "compare_skip_reason"
         )
+        sc_required["comparable"] = sc["totals"]["comparable"]
+        sc_required["compare_skip_reason"] = sc["totals"]["compare_skip_reason"]
+        sc["totals"]["required"] = sc_required
+
         if blocker:
             sc["totals"]["delta_vs_baseline"] = {
                 "status": "not_comparable",
                 "reason": blocker,
                 "source": "baseline" if baseline_blocker else "scenario",
             }
-        else:
-            sc["totals"]["delta_vs_baseline"] = compute_delta_vs_baseline(
-                baseline_totals, sc["totals"]
-            )
+            continue
+
+        baseline_for_delta = {
+            "monthly_priced": base_required.get("priced_total", 0.0),
+            "monthly_estimated": base_required.get("estimated_total", 0.0),
+            "yearly_priced": base_required.get("yearly_priced", 0.0),
+            "yearly_estimated": base_required.get("yearly_estimated", 0.0),
+            "by_category": base_required.get("by_category", {}),
+        }
+        scenario_for_delta = {
+            "monthly_priced": sc_required.get("priced_total", 0.0),
+            "monthly_estimated": sc_required.get("estimated_total", 0.0),
+            "yearly_priced": sc_required.get("yearly_priced", 0.0),
+            "yearly_estimated": sc_required.get("yearly_estimated", 0.0),
+            "by_category": sc_required.get("by_category", {}),
+        }
+
+        baseline_for_delta["modeled_total"] = (
+            baseline_for_delta["monthly_priced"] + baseline_for_delta["monthly_estimated"]
+        )
+        scenario_for_delta["modeled_total"] = (
+            scenario_for_delta["monthly_priced"] + scenario_for_delta["monthly_estimated"]
+        )
+
+        sc["totals"]["delta_vs_baseline"] = compute_delta_vs_baseline(
+            baseline_for_delta, scenario_for_delta
+        )
 
 
 # ------------------------------------------------------------
@@ -630,6 +751,160 @@ def _select_cheapest_item(
     return sorted(candidates, key=lambda it: float(it.get("unitPrice") or 0.0))[0]
 
 
+def _score_candidates(
+    resource: Dict[str, Any], items: List[Dict[str, Any]]
+) -> List[Tuple[int, Dict[str, Any]]]:
+    """Return scored candidate items sorted by score then price."""
+
+    scored_items: List[Tuple[int, Dict[str, Any]]] = [
+        (score_price_item(resource, it, HOURS_PROD), it) for it in items
+    ]
+    scored_items.sort(key=lambda pair: (-pair[0], float(pair[1].get("unitPrice") or 0.0)))
+    return scored_items
+
+
+def _build_candidate_id(resource: Dict[str, Any], item: Dict[str, Any]) -> str:
+    parts = [
+        (resource.get("service_name") or item.get("serviceName") or "").strip(),
+        (item.get("productName") or item.get("ProductName") or "").strip(),
+        (item.get("skuName") or "").strip(),
+        (item.get("meterName") or "").strip(),
+        (item.get("armSkuName") or "").strip(),
+        (item.get("type") or "").strip(),
+        (item.get("reservationTerm") or "").strip(),
+        (item.get("unitOfMeasure") or "").strip(),
+    ]
+    return hashlib.sha1("|".join(parts).encode("utf-8")).hexdigest()
+
+
+def _build_candidate_entries(
+    resource: Dict[str, Any],
+    scored_items: List[Tuple[int, Dict[str, Any]]],
+    *,
+    top_n: int,
+) -> List[Dict[str, Any]]:
+    entries: List[Dict[str, Any]] = []
+    for idx, (score, it) in enumerate(scored_items[:top_n]):
+        candidate_id = _build_candidate_id(resource, it)
+        entries.append(
+            {
+                "index": idx,
+                "candidate_id": candidate_id,
+                "score": score,
+                "service_name": resource.get("service_name") or it.get("serviceName"),
+                "product_name": it.get("productName") or it.get("ProductName"),
+                "meter_name": it.get("meterName"),
+                "sku_name": it.get("skuName"),
+                "arm_sku_name": it.get("armSkuName"),
+                "unit_price": it.get("unitPrice"),
+                "unit_of_measure": it.get("unitOfMeasure"),
+                "currency_code": it.get("currencyCode"),
+                "type": it.get("type"),
+                "reservationTerm": it.get("reservationTerm"),
+            }
+        )
+    return entries
+
+
+def _validate_adjudicator_decision(
+    decision: Dict[str, Any],
+    candidates: List[Dict[str, Any]],
+    resource_id: str,
+) -> Tuple[str, Optional[int], str, Optional[str]]:
+    """Validate adjudicator payload.
+
+    Returns (status, index, rationale, candidate_id)
+    """
+
+    if not isinstance(decision, dict):
+        return "invalid", None, "Decision is not a JSON object", None
+
+    if decision.get("resource_id") and decision.get("resource_id") != resource_id:
+        return "invalid", None, "Resource id mismatch", None
+
+    dec = decision.get("decision")
+    if not isinstance(dec, dict):
+        return "invalid", None, "Missing decision object", None
+
+    status = dec.get("status")
+    if status not in {"selected", "unresolvable"}:
+        return "invalid", None, "Unknown status", None
+
+    if status == "unresolvable":
+        return "unresolvable", None, dec.get("reason") or "marked unresolvable", None
+
+    if "selected_index" not in dec:
+        return "invalid", None, "Missing selected_index", None
+
+    try:
+        idx = int(dec.get("selected_index"))
+    except (TypeError, ValueError):
+        return "invalid", None, "selected_index is not an integer", None
+
+    if idx < 0 or idx >= len(candidates):
+        return "invalid", None, "selected_index out of range", None
+
+    cand_id = dec.get("selected_candidate_id") or candidates[idx].get("candidate_id")
+    return "selected", idx, dec.get("reason") or "", cand_id
+
+
+async def _adjudicate_selection(
+    *,
+    client,
+    resource: Dict[str, Any],
+    category: str,
+    region: str,
+    currency: str,
+    candidates: List[Dict[str, Any]],
+    top_n: int,
+    retries: int = 1,
+) -> Tuple[str, Optional[int], str, Optional[str]]:
+    """Call adjudicator with one optional retry."""
+
+    if not candidates:
+        return "invalid", None, "No candidates to adjudicate", None
+
+    payload = {
+        "id": resource.get("id"),
+        "category": category,
+        "region": region,
+        "currency": currency,
+        "billing_model": resource.get("billing_model"),
+        "reservation_term": resource.get("reservation_term") or resource.get("reservationTerm"),
+        "requested_sku": resource.get("arm_sku_name") or resource.get("armSkuName"),
+        "service_name": resource.get("service_name"),
+        "notes": resource.get("notes"),
+        "metrics": resource.get("metrics"),
+    }
+
+    attempt = 0
+    last_status: Tuple[str, Optional[int], str, Optional[str]] = (
+        "invalid",
+        None,
+        "No response",
+        None,
+    )
+    while attempt <= retries:
+        attempt += 1
+        loop = asyncio.get_running_loop()
+        decision = await loop.run_in_executor(
+            None,
+            lambda: adjudicate_candidates(
+                client,
+                resource=payload,
+                candidates=candidates[:top_n],
+            ),
+        )
+        status, idx, rationale, cand_id = _validate_adjudicator_decision(
+            decision, candidates[:top_n], resource.get("id") or ""
+        )
+        if status != "invalid":
+            return status, idx, rationale, cand_id
+        last_status = (status, idx, rationale, cand_id)
+
+    return last_status
+
+
 def _detect_redundancy_hint(text: str) -> str:
     low = (text or "").lower()
     if "ragrs" in low or "ra-grs" in low:
@@ -693,6 +968,7 @@ def _price_blob_storage(
         return True
 
     metrics = resource.get("metrics") or {}
+    allow_query_accel = bool(metrics.get("explicit_query_accel"))
     tiers = [
         ("hot", float(metrics.get("hot_gb") or metrics.get("storage_hot_gb") or 0.0)),
         ("cool", float(metrics.get("cool_gb") or metrics.get("storage_cool_gb") or 0.0)),
@@ -729,15 +1005,38 @@ def _price_blob_storage(
 
         def _is_capacity_meter(it: Dict[str, Any]) -> bool:
             meter = (it.get("meterName") or "").lower()
+            product = (it.get("productName") or "").lower()
             uom = (it.get("unitOfMeasure") or "").lower()
-            if "data stored" in meter or "capacity" in meter:
-                return "gb" in uom or "tb" in uom
-            if "data returned" in meter or "data scanned" in meter:
+            text = f"{product} {meter}"
+            if "query acceleration" in text or "data returned" in text or "data scanned" in text:
                 return False
-            return "gb" in uom and "operation" not in meter
+            if "operation" in meter or "transactions" in meter or "write" in meter or "read" in meter:
+                return False
+            if "data stored" in meter or "storage" in meter or "capacity" in meter:
+                return "gb" in uom or "tb" in uom
+            return ("gb" in uom or "tb" in uom)
 
         capacity_first = [it for it in tier_items if _is_capacity_meter(it)]
-        tier_items = capacity_first or tier_items
+        if capacity_first:
+            tier_items = capacity_first
+        elif not allow_query_accel:
+            resource.update(
+                {
+                    "unit_price": None,
+                    "unit_of_measure": None,
+                    "currency_code": currency,
+                    "sku_name": resource.get("arm_sku_name"),
+                    "meter_name": None,
+                    "product_name": None,
+                    "units": None,
+                    "monthly_cost": None,
+                    "yearly_cost": None,
+                    "pricing_status": "missing",
+                    "error": f"Blob capacity meter not found for tier {tier}",
+                    "sku_candidates": [],
+                }
+            )
+            return True
         selected = _select_cheapest_item(resource, tier_items)
         if not selected:
             continue
@@ -797,6 +1096,7 @@ async def fetch_price_for_resource(
     default_region: str,
     currency: str,
     debug: bool = False,
+    adjudicator: Optional[Dict[str, Any]] = None,
 ) -> None:
     category = resource.get("category") or "other"
     service_name = normalize_service_name(category, resource.get("service_name"))
@@ -807,6 +1107,11 @@ async def fetch_price_for_resource(
     resource["region"] = region
 
     res_id = (resource.get("id") or "").lower()
+    adjudication_enabled = bool(adjudicator and adjudicator.get("enabled"))
+    adjudicate_topn = int(
+        adjudicator.get("top_n", DEFAULT_ADJUDICATE_TOPN)
+    ) if adjudicator else DEFAULT_ADJUDICATE_TOPN
+    adjudicator_client = adjudicator.get("client") if adjudicator else None
 
     if debug and _LOGGER.isEnabledFor(logging.DEBUG):
         _LOGGER.debug(
@@ -873,8 +1178,8 @@ async def fetch_price_for_resource(
             return
 
     # Cache key για price cache (json)
-    cache_key = build_cache_key(resource, region, currency)
-    price_info = get_cached_price(cache_key)
+    cache_key = None if adjudication_enabled else build_cache_key(resource, region, currency)
+    price_info = get_cached_price(cache_key) if cache_key else None
 
     if price_info and debug:
         _LOGGER.debug(
@@ -982,15 +1287,75 @@ async def fetch_price_for_resource(
         # ------------------------------------------------------------
         # 3) Scoring όλων των candidate items από τον κατάλογο
         # ------------------------------------------------------------
-        scored_items: List[Tuple[int, Dict[str, Any]]] = [
-            (score_price_item(resource, it, HOURS_PROD), it) for it in items
-        ]
-
-        # Θέλουμε: μεγαλύτερο score, αλλά σε ισοπαλία το ΦΘΗΝΟΤΕΡΟ unitPrice.
-        scored_items.sort(
-            key=lambda pair: (-pair[0], float(pair[1].get("unitPrice") or 0.0))
+        scored_items: List[Tuple[int, Dict[str, Any]]] = _score_candidates(
+            resource, items
         )
         best_item_score, best_item = scored_items[0]
+
+        candidates = _build_candidate_entries(
+            resource, scored_items, top_n=max(1, adjudicate_topn)
+        )
+        candidate_items = scored_items[: max(1, adjudicate_topn)]
+        selected_pair = candidate_items[0]
+        selected_candidate_id = candidates[0].get("candidate_id") if candidates else None
+        decision_status = "auto"
+        decision_rationale = ""
+
+        if adjudication_enabled:
+            if adjudicator_client:
+                status, idx, rationale, cand_id = await _adjudicate_selection(
+                    client=adjudicator_client,
+                    resource=resource,
+                    category=category,
+                    region=region,
+                    currency=currency,
+                    candidates=candidates,
+                    top_n=max(1, adjudicate_topn),
+                )
+                decision_rationale = rationale or ""
+                if status == "selected" and idx is not None and idx < len(candidate_items):
+                    selected_pair = candidate_items[idx]
+                    selected_candidate_id = cand_id or candidates[idx].get("candidate_id")
+                    decision_status = "accepted"
+                elif status == "unresolvable":
+                    decision_status = "unresolvable"
+                else:
+                    decision_status = "fallback"
+            else:
+                decision_status = "fallback"
+                decision_rationale = "Adjudicator client unavailable"
+
+            if decision_status == "unresolvable":
+                resource["adjudication"] = {
+                    "enabled": True,
+                    "top_n": adjudicate_topn,
+                    "candidates": candidates,
+                    "decision": {
+                        "status": "unresolvable",
+                        "selected_index": None,
+                        "selected_candidate_id": None,
+                        "rationale": decision_rationale or "Marked unresolvable",
+                    },
+                }
+                resource.update(
+                    {
+                        "unit_price": None,
+                        "unit_of_measure": None,
+                        "currency_code": None,
+                        "sku_name": None,
+                        "meter_name": None,
+                        "product_name": None,
+                        "units": None,
+                        "monthly_cost": None,
+                        "yearly_cost": None,
+                        "error": decision_rationale or "Adjudicator could not resolve resource",
+                        "sku_candidates": candidates,
+                        "pricing_status": "adjudicator_unresolved",
+                    }
+                )
+                return
+
+        best_item_score, best_item = selected_pair
 
         if debug and _LOGGER.isEnabledFor(logging.DEBUG):
             _LOGGER.debug(
@@ -1014,22 +1379,6 @@ async def fetch_price_for_resource(
             region=region,
         )
 
-        candidates = [
-            {
-                "score": score,
-                "arm_sku_name": it.get("armSkuName"),
-                "sku_name": it.get("skuName"),
-                "meter_name": it.get("meterName"),
-                "product_name": it.get("productName") or it.get("ProductName"),
-                "unit_price": it.get("unitPrice"),
-                "unit_of_measure": it.get("unitOfMeasure"),
-                "currency_code": it.get("currencyCode"),
-                "type": it.get("type"),
-                "reservationTerm": it.get("reservationTerm"),
-            }
-            for (score, it) in scored_items[:5]
-        ]
-
         price_info = {
             "unit_price": best_item.get("unitPrice"),
             "unit_of_measure": best_item.get("unitOfMeasure"),
@@ -1044,7 +1393,23 @@ async def fetch_price_for_resource(
         if best_item.get("type"):
             price_info["type"] = best_item.get("type")
 
-        set_cached_price(cache_key, price_info)
+        if adjudication_enabled:
+            resource["adjudication"] = {
+                "enabled": True,
+                "top_n": adjudicate_topn,
+                "candidates": candidates,
+                "decision": {
+                    "status": decision_status,
+                    "selected_index": candidate_items.index(selected_pair)
+                    if selected_pair in candidate_items
+                    else 0,
+                    "selected_candidate_id": selected_candidate_id,
+                    "rationale": decision_rationale,
+                },
+            }
+
+        if cache_key:
+            set_cached_price(cache_key, price_info)
 
     # end if not price_info
 
@@ -1098,7 +1463,12 @@ async def fetch_price_for_resource(
     ambiguous_reservation = False
     if price_type == "reservation":
         uom_low = unit_of_measure.lower()
-        if not uom_low or "year" not in uom_low:
+        term_low = reservation_term.lower()
+        if not uom_low or ("year" not in uom_low and "yr" not in uom_low):
+            ambiguous_reservation = True
+        elif "3" in term_low and "3" not in uom_low:
+            ambiguous_reservation = True
+        elif "1" in term_low and "1" not in uom_low:
             ambiguous_reservation = True
 
     if ambiguous_reservation:
@@ -1230,13 +1600,25 @@ def _log_scenario_consistency(enriched_scenarios: List[Dict[str, Any]]) -> None:
 # ------------------------------------------------------------
 
 
-async def enrich_plan_with_prices(plan: Dict[str, Any], debug: bool = False) -> Dict[str, Any]:
+async def enrich_plan_with_prices(
+    plan: Dict[str, Any],
+    debug: bool = False,
+    *,
+    adjudicate: bool = False,
+    adjudicate_topn: int = DEFAULT_ADJUDICATE_TOPN,
+    adjudicator_client=None,
+) -> Dict[str, Any]:
     metadata = plan.get("metadata") or {}
     default_region = metadata.get("default_region") or DEFAULT_REGION
     currency = metadata.get("currency") or DEFAULT_CURRENCY
     required_categories = normalize_required_categories(
         metadata.get("required_categories") or DEFAULT_REQUIRED_CATEGORIES
     )
+    adjudicator_cfg = {
+        "enabled": adjudicate,
+        "top_n": adjudicate_topn,
+        "client": adjudicator_client,
+    }
 
     scenarios = plan.get("scenarios") or []
     enriched_scenarios: List[Dict[str, Any]] = []
@@ -1247,6 +1629,11 @@ async def enrich_plan_with_prices(plan: Dict[str, Any], debug: bool = False) -> 
         currency,
         len(scenarios),
     )
+    if adjudicate:
+        _LOGGER.info(
+            "Adjudication enabled (top_n=%s). Candidates will be LLM-validated before pricing.",
+            adjudicate_topn,
+        )
 
     for scenario in scenarios:
         resources = scenario.get("resources") or []
@@ -1278,6 +1665,7 @@ async def enrich_plan_with_prices(plan: Dict[str, Any], debug: bool = False) -> 
                         default_region,
                         currency,
                         debug=debug,
+                        adjudicator=adjudicator_cfg,
                     )
                 except Exception as ex:
                     res.update(
@@ -1335,6 +1723,8 @@ async def enrich_plan_with_prices(plan: Dict[str, Any], debug: bool = False) -> 
             "default_region": default_region,
             "required_categories": required_categories,
             "compare_policy": metadata.get("compare_policy"),
+            "adjudication_enabled": adjudicate,
+            "adjudication_topn": adjudicate_topn,
         },
         "scenarios": enriched_scenarios,
     }

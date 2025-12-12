@@ -1,0 +1,1 @@
+App Service workload requiring Premium v3 P1v3 plan in West Europe with SQL backend.

@@ -41,6 +41,11 @@ cat demo_finops_report.md
 jq '.' demo_finops_plan.json
 ```
 
+## Key flags and guardrails
+- `--compare-policy soft_compare` (default) keeps generating reports even when pricing is incomplete but suppresses deltas and adds a blockers banner. `--compare-policy hard_stop` exits with code 2 before report generation when required categories are incomplete.
+- Required categories for comparability: compute, db, cache, network, storage. Any required resource marked `missing`, `sku_mismatch`, `reservation_uom_ambiguous`, `adjudicator_unresolved`, `estimated`, or with null costs will block comparisons.
+- `--adjudicate` (with `--adjudicate-topn N`) enables a catalog-grounded LLM pass that must pick one of the top-N local catalog meters per resource (or mark it unresolvable). Decisions and candidates are stored in `plan.json`.
+
 ## Sample outputs
 - **Markdown report**: scenario comparison tables with SKUs, unit prices, monthly estimates, and notes on assumptions.
 - **JSON plan**: LLM-produced architecture with pricing enrichment (services, SKUs, meters, quantities, monthly totals).
