@@ -21,6 +21,8 @@ import json
 import logging
 import os
 import sys
+from datetime import datetime, timezone
+from pathlib import Path
 
 from openai import OpenAI
 from rich.console import Console
@@ -258,9 +260,17 @@ def main() -> None:
     global DEBUG
     args = parse_args()
 
+    run_dir = Path("runs") / args.output_prefix
+    run_dir.mkdir(parents=True, exist_ok=True)
+
+    log_handlers: list[logging.Handler] = [logging.StreamHandler()]
+    console_log_path = run_dir / "console.log"
+    log_handlers.append(logging.FileHandler(console_log_path, encoding="utf-8"))
+
     logging.basicConfig(
         level=getattr(logging, args.log_level.upper(), logging.INFO),
         format="%(asctime)s [%(levelname)s] %(name)s - %(message)s",
+        handlers=log_handlers,
     )
     logger = logging.getLogger("azure_cost_architect")
 
@@ -268,8 +278,12 @@ def main() -> None:
     logger.debug("CLI arguments: %s", args)
 
     # Αν ο χρήστης θέλει JSONL scoring log, περνάμε το path στα env
-    if args.debug_file:
-        os.environ["AZCOST_DEBUG_FILE"] = args.debug_file
+    debug_file = args.debug_file
+    if not debug_file and DEBUG:
+        debug_file = str(run_dir / "debug_scoring.jsonl")
+
+    if debug_file:
+        os.environ["AZCOST_DEBUG_FILE"] = debug_file
 
     console.print("[bold]Azure Personal Cost Architect – Local Tool[/bold]\n")
 
@@ -278,6 +292,11 @@ def main() -> None:
     if not arch_text:
         console.print("[red]No architecture description provided. Exiting.[/red]")
         sys.exit(1)
+
+    input_path = run_dir / "input.txt"
+    with open(input_path, "w", encoding="utf-8") as f:
+        f.write(arch_text)
+    logger.info("Saved architecture input to %s", input_path)
 
     # ----- OpenAI client -----
     OPENAI_API_KEY = os.environ.get("OPENAI_API_KEY")
@@ -349,7 +368,7 @@ def main() -> None:
     enriched_plan = asyncio.run(enrich_plan_with_prices(plan, debug=DEBUG))
     save_price_cache()
 
-    json_filename = f"{args.output_prefix}_plan.json"
+    json_filename = run_dir / "plan.json"
     with open(json_filename, "w", encoding="utf-8") as f:
         json.dump(enriched_plan, f, indent=2, ensure_ascii=False)
     logger.info("Saved enriched plan JSON to %s", json_filename)
@@ -357,6 +376,7 @@ def main() -> None:
     # --------------------
     # 4) Report generation (Markdown)
     # --------------------
+    md_filename = run_dir / "report.md"
     if args.output_format in ("markdown", "both"):
         console.print(
             "[cyan]Generating final architecture + FinOps report (Markdown)…[/cyan]"
@@ -367,7 +387,6 @@ def main() -> None:
         else:
             report_md = generate_report_chat(client, arch_text, enriched_plan)
 
-        md_filename = f"{args.output_prefix}_report.md"
         with open(md_filename, "w", encoding="utf-8") as f:
             f.write(report_md)
 
@@ -380,6 +399,30 @@ def main() -> None:
             "--output-format is set to 'json'.[/yellow]"
         )
         logger.info("Markdown report skipped due to --output-format=json")
+
+    metadata_path = run_dir / "metadata.json"
+    metadata_payload = {
+        "timestamp_utc": datetime.now(timezone.utc).isoformat(),
+        "command": " ".join(sys.argv),
+        "working_directory": os.getcwd(),
+        "cli_args": vars(args),
+        "derived": {
+            "currency": currency,
+            "default_region": default_region,
+            "llm_backend": backend,
+        },
+        "output_files": {
+            "input": str(input_path),
+            "plan": str(json_filename),
+            "report": str(md_filename if args.output_format in ("markdown", "both") else ""),
+            "debug_scoring": debug_file or "",
+            "console_log": str(console_log_path),
+        },
+    }
+
+    with open(metadata_path, "w", encoding="utf-8") as f:
+        json.dump(metadata_payload, f, indent=2, ensure_ascii=False)
+    logger.info("Saved run metadata to %s", metadata_path)
 
 
 if __name__ == "__main__":
