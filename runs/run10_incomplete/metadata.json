@@ -1,0 +1,31 @@
+{
+  "timestamp_utc": "2025-12-12T14:58:32.240409+00:00",
+  "command": "C:\\Users\\BardavourasKonstanti\\OneDrive - QUENTO\\PRJs\\Personal\\AzurePriseAssistant\\CostPilot\\azure_cost_architect\\cli.py --mode exact --region southafricanorth --currency USD --output-prefix run10_incomplete --debug",
+  "working_directory": "C:\\Users\\BardavourasKonstanti\\OneDrive - QUENTO\\PRJs\\Personal\\AzurePriseAssistant\\CostPilot",
+  "cli_args": {
+    "mode": "exact",
+    "region": "southafricanorth",
+    "currency": "USD",
+    "llm_backend": "chat",
+    "output_format": "markdown",
+    "output_prefix": "run10_incomplete",
+    "log_level": "INFO",
+    "debug": true,
+    "debug_file": "",
+    "reset_cache": false,
+    "refresh_catalog": [],
+    "refresh_all_catalogs": false
+  },
+  "derived": {
+    "currency": "USD",
+    "default_region": "southafricanorth",
+    "llm_backend": "chat"
+  },
+  "output_files": {
+    "input": "runs\\run10_incomplete\\input.txt",
+    "plan": "runs\\run10_incomplete\\plan.json",
+    "report": "runs\\run10_incomplete\\report.md",
+    "debug_scoring": "runs\\run10_incomplete\\debug_scoring.jsonl",
+    "console_log": "runs\\run10_incomplete\\console.log"
+  }
+}

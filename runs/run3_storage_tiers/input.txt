@@ -1,0 +1,1 @@
+Centralized log archive: 20 TB/month hot tier ingest, lifecycle to cool after 30 days and archive after 180 days. Require GRS redundancy for compliance.

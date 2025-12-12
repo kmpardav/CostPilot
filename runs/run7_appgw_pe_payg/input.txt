@@ -1,0 +1,1 @@
+E-commerce site with App Gateway WAF v2, App Service, Redis cache, Azure SQL (General Purpose 2 vCores) using private endpoints. Expect pay-as-you-go only.

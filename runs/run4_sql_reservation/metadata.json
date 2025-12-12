@@ -1,0 +1,31 @@
+{
+  "timestamp_utc": "2025-12-12T14:30:03.622930+00:00",
+  "command": "C:\\Users\\BardavourasKonstanti\\OneDrive - QUENTO\\PRJs\\Personal\\AzurePriseAssistant\\CostPilot\\azure_cost_architect\\cli.py --mode exact --region eastus --currency USD --output-prefix run4_sql_reservation",
+  "working_directory": "C:\\Users\\BardavourasKonstanti\\OneDrive - QUENTO\\PRJs\\Personal\\AzurePriseAssistant\\CostPilot",
+  "cli_args": {
+    "mode": "exact",
+    "region": "eastus",
+    "currency": "USD",
+    "llm_backend": "chat",
+    "output_format": "markdown",
+    "output_prefix": "run4_sql_reservation",
+    "log_level": "INFO",
+    "debug": false,
+    "debug_file": "",
+    "reset_cache": false,
+    "refresh_catalog": [],
+    "refresh_all_catalogs": false
+  },
+  "derived": {
+    "currency": "USD",
+    "default_region": "eastus",
+    "llm_backend": "chat"
+  },
+  "output_files": {
+    "input": "runs\\run4_sql_reservation\\input.txt",
+    "plan": "runs\\run4_sql_reservation\\plan.json",
+    "report": "runs\\run4_sql_reservation\\report.md",
+    "debug_scoring": "",
+    "console_log": "runs\\run4_sql_reservation\\console.log"
+  }
+}

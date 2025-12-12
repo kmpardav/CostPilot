@@ -1,0 +1,1 @@
+Analytics platform on Azure Databricks (Premium), jobs cluster 4x DS3 v2, 1000 DBU/month, with Blob data lake and VNet injection.

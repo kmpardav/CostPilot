@@ -1,0 +1,1 @@
+Internet-facing web app behind Azure Front Door with WAF, App Service backend, SQL DB, Redis, Blob, and private endpoints for DB and storage.

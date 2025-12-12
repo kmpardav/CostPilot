@@ -1,0 +1,31 @@
+{
+  "timestamp_utc": "2025-12-12T14:10:13.603453+00:00",
+  "command": "C:\\Users\\BardavourasKonstanti\\OneDrive - QUENTO\\PRJs\\Personal\\AzurePriseAssistant\\CostPilot\\azure_cost_architect\\cli.py --mode recommend --region westeurope --currency EUR --output-prefix run1_websqlredisblob",
+  "working_directory": "C:\\Users\\BardavourasKonstanti\\OneDrive - QUENTO\\PRJs\\Personal\\AzurePriseAssistant\\CostPilot",
+  "cli_args": {
+    "mode": "recommend",
+    "region": "westeurope",
+    "currency": "EUR",
+    "llm_backend": "chat",
+    "output_format": "markdown",
+    "output_prefix": "run1_websqlredisblob",
+    "log_level": "INFO",
+    "debug": false,
+    "debug_file": "",
+    "reset_cache": false,
+    "refresh_catalog": [],
+    "refresh_all_catalogs": false
+  },
+  "derived": {
+    "currency": "EUR",
+    "default_region": "westeurope",
+    "llm_backend": "chat"
+  },
+  "output_files": {
+    "input": "runs\\run1_websqlredisblob\\input.txt",
+    "plan": "runs\\run1_websqlredisblob\\plan.json",
+    "report": "runs\\run1_websqlredisblob\\report.md",
+    "debug_scoring": "",
+    "console_log": "runs\\run1_websqlredisblob\\console.log"
+  }
+}

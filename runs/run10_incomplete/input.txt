@@ -1,0 +1,1 @@
+Request legacy Azure Backup MARS agent for 500 servers plus uncommon SKU: specialized GPU VM (ND96asr_v4) in rare region.

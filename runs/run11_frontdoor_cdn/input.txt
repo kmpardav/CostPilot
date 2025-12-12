@@ -1,0 +1,1 @@
+Media delivery site using Front Door Standard/Premium with CDN, 50 TB/month egress globally, origin App Service and Blob storage.

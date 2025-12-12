@@ -1,0 +1,1 @@
+Simple VM workload for internal tool. Keep it minimal; rely on defaults for security/monitoring.

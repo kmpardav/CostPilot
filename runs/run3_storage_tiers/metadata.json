@@ -1,0 +1,31 @@
+{
+  "timestamp_utc": "2025-12-12T14:25:02.029294+00:00",
+  "command": "C:\\Users\\BardavourasKonstanti\\OneDrive - QUENTO\\PRJs\\Personal\\AzurePriseAssistant\\CostPilot\\azure_cost_architect\\cli.py --mode recommend --region uksouth --currency GBP --output-prefix run3_storage_tiers --debug-file logs_storage_scoring.jsonl",
+  "working_directory": "C:\\Users\\BardavourasKonstanti\\OneDrive - QUENTO\\PRJs\\Personal\\AzurePriseAssistant\\CostPilot",
+  "cli_args": {
+    "mode": "recommend",
+    "region": "uksouth",
+    "currency": "GBP",
+    "llm_backend": "chat",
+    "output_format": "markdown",
+    "output_prefix": "run3_storage_tiers",
+    "log_level": "INFO",
+    "debug": false,
+    "debug_file": "logs_storage_scoring.jsonl",
+    "reset_cache": false,
+    "refresh_catalog": [],
+    "refresh_all_catalogs": false
+  },
+  "derived": {
+    "currency": "GBP",
+    "default_region": "uksouth",
+    "llm_backend": "chat"
+  },
+  "output_files": {
+    "input": "runs\\run3_storage_tiers\\input.txt",
+    "plan": "runs\\run3_storage_tiers\\plan.json",
+    "report": "runs\\run3_storage_tiers\\report.md",
+    "debug_scoring": "logs_storage_scoring.jsonl",
+    "console_log": "runs\\run3_storage_tiers\\console.log"
+  }
+}

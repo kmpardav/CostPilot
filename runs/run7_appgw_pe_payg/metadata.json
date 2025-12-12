@@ -1,0 +1,34 @@
+{
+  "timestamp_utc": "2025-12-12T14:45:10.508838+00:00",
+  "command": "C:\\Users\\BardavourasKonstanti\\OneDrive - QUENTO\\PRJs\\Personal\\AzurePriseAssistant\\CostPilot\\azure_cost_architect\\cli.py --mode exact --region francecentral --currency EUR --output-prefix run7_appgw_pe_payg --refresh-catalog network.appgw --refresh-catalog network.private_endpoint",
+  "working_directory": "C:\\Users\\BardavourasKonstanti\\OneDrive - QUENTO\\PRJs\\Personal\\AzurePriseAssistant\\CostPilot",
+  "cli_args": {
+    "mode": "exact",
+    "region": "francecentral",
+    "currency": "EUR",
+    "llm_backend": "chat",
+    "output_format": "markdown",
+    "output_prefix": "run7_appgw_pe_payg",
+    "log_level": "INFO",
+    "debug": false,
+    "debug_file": "",
+    "reset_cache": false,
+    "refresh_catalog": [
+      "network.appgw",
+      "network.private_endpoint"
+    ],
+    "refresh_all_catalogs": false
+  },
+  "derived": {
+    "currency": "EUR",
+    "default_region": "francecentral",
+    "llm_backend": "chat"
+  },
+  "output_files": {
+    "input": "runs\\run7_appgw_pe_payg\\input.txt",
+    "plan": "runs\\run7_appgw_pe_payg\\plan.json",
+    "report": "runs\\run7_appgw_pe_payg\\report.md",
+    "debug_scoring": "",
+    "console_log": "runs\\run7_appgw_pe_payg\\console.log"
+  }
+}

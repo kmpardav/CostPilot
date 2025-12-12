@@ -1,0 +1,31 @@
+{
+  "timestamp_utc": "2025-12-12T14:51:00.029619+00:00",
+  "command": "C:\\Users\\BardavourasKonstanti\\OneDrive - QUENTO\\PRJs\\Personal\\AzurePriseAssistant\\CostPilot\\azure_cost_architect\\cli.py --mode recommend --region westus --currency USD --output-prefix run8_databricks",
+  "working_directory": "C:\\Users\\BardavourasKonstanti\\OneDrive - QUENTO\\PRJs\\Personal\\AzurePriseAssistant\\CostPilot",
+  "cli_args": {
+    "mode": "recommend",
+    "region": "westus",
+    "currency": "USD",
+    "llm_backend": "chat",
+    "output_format": "markdown",
+    "output_prefix": "run8_databricks",
+    "log_level": "INFO",
+    "debug": false,
+    "debug_file": "",
+    "reset_cache": false,
+    "refresh_catalog": [],
+    "refresh_all_catalogs": false
+  },
+  "derived": {
+    "currency": "USD",
+    "default_region": "westus",
+    "llm_backend": "chat"
+  },
+  "output_files": {
+    "input": "runs\\run8_databricks\\input.txt",
+    "plan": "runs\\run8_databricks\\plan.json",
+    "report": "runs\\run8_databricks\\report.md",
+    "debug_scoring": "",
+    "console_log": "runs\\run8_databricks\\console.log"
+  }
+}

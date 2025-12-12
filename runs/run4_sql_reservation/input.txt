@@ -1,0 +1,1 @@
+Two-tier app with Azure SQL Database (Business Critical, 4 vCores) and App Service. Compare reserved vs pay-as-you-go for DB (1-year vs PAYG).

@@ -1,0 +1,1 @@
+Web app with Azure App Service (B2), Azure SQL DB (S1), Redis cache for session state, and Blob storage for uploads.

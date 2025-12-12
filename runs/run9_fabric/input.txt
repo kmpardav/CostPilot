@@ -1,0 +1,1 @@
+BI platform using Microsoft Fabric capacity (F64) with OneLake storage 50 TB, daily refresh workloads.
