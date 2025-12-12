@@ -23,6 +23,28 @@ def _estimate_ratio(total: float, estimated: float) -> str:
     return f"{ratio:.2f}%"
 
 
+def _render_completeness(plan: Dict) -> str:
+    lines = ["## Completeness & comparison guardrails"]
+    required = plan.get("metadata", {}).get("required_categories")
+    if required:
+        lines.append(f"Required categories: {', '.join(required)}")
+    any_blocked = False
+    for scenario in plan.get("scenarios", []):
+        totals = scenario.get("totals", {})
+        label = scenario.get("label") or scenario.get("id") or "-"
+        comparable = totals.get("comparable")
+        reason = totals.get("compare_skip_reason") or "complete"
+        prefix = "✅" if comparable else "⚠️"
+        lines.append(f"- {label}: {prefix} {reason}")
+        if not comparable:
+            any_blocked = True
+    if any_blocked:
+        lines.append(
+            "Comparisons/deltas are suppressed unless both baseline and the target scenario are complete."
+        )
+    return "\n".join(lines)
+
+
 def render_totals_table(plan: Dict) -> str:
     currency = plan.get("metadata", {}).get("currency", "USD")
     rows = [
@@ -143,7 +165,15 @@ def render_report(plan: Dict) -> str:
         scenarios[0],
     )
 
-    sections: List[str] = ["## Scenario totals", render_totals_table(plan), "", "## Deltas vs baseline", render_deltas_table(plan)]
+    sections: List[str] = [
+        _render_completeness(plan),
+        "",
+        "## Scenario totals",
+        render_totals_table(plan),
+        "",
+        "## Deltas vs baseline",
+        render_deltas_table(plan),
+    ]
 
     sections.append("")
     sections.append("## Category rollups")
