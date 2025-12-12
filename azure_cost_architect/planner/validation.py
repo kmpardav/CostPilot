@@ -19,6 +19,7 @@ _CATEGORY_MAP: Dict[str, str] = {
     "mysql": "db.mysql",
     "cosmos": "db.cosmos",
     "redis": "cache.redis",
+    "cache": "cache.redis",
     "storage.blob": "storage.blob",
     "blob.storage": "storage.blob",
     "storage.files": "storage.files",
@@ -32,6 +33,11 @@ _CATEGORY_MAP: Dict[str, str] = {
     "network.nat": "network.nat",
     "nat": "network.nat",
     "network.gateway": "network.gateway",
+    "network.frontdoor": "network.frontdoor",
+    "frontdoor": "network.frontdoor",
+    "front.door": "network.frontdoor",
+    "trafficmanager": "network.traffic_manager",
+    "traffic.manager": "network.traffic_manager",
     "appgateway": "network.appgw",
     "app.gw": "network.appgw",
     "lb": "network.lb",
@@ -64,6 +70,8 @@ def _default_workload_type(category: str) -> str:
         return "db"
     if cat.startswith("cache.redis"):
         return "cache"
+    if cat.startswith("network.appgw") or cat.startswith("network.frontdoor"):
+        return "gateway"
     if cat.startswith("backup") or cat.startswith("dr"):
         return "dr"
     if cat.startswith("network"):
@@ -110,6 +118,10 @@ def validate_plan_schema(plan: dict) -> dict:
                 metrics["storage_gb"] = 100.0
             if res["category"].startswith("network") and "egress_gb" not in metrics:
                 metrics["egress_gb"] = 100.0
+            if res["category"].startswith("db.") and "vcores" not in metrics:
+                metrics["vcores"] = 2
+            if res["category"].startswith("cache.redis") and "throughput_mbps" not in metrics:
+                metrics["throughput_mbps"] = 20
             res.setdefault("notes", "")
             res.setdefault("source", "llm-inferred")
 
