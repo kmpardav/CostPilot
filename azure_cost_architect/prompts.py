@@ -100,6 +100,7 @@ RULES & BEST PRACTICES (VERY IMPORTANT):
   - Private Endpoints (network.private_endpoint) for PaaS services when privacy is needed; note hourly metering.
 - Bandwidth and egress:
   - Include network.nat or network.egress with metrics.egress_gb for any internet-bound workloads; add VPN/ExpressRoute SKUs for private connectivity with realistic bandwidth metrics.
+  - For web + DB stacks exposed to internet clients, prefer a front door (network.frontdoor) or Application Gateway (network.appgw) with WAF and note SSL/offload needs. If no cache is mentioned, propose cache.redis for session/state offloading.
 - Networking completeness examples:
   - Web app with internet users: network.nat + network.public_ip + network.appgw or network.gateway; set metrics.egress_gb and note WAF/SSL needs.
   - Hybrid connectivity: add network.vpngw or network.er with bandwidth assumptions (metrics.egress_gb) and hours_per_month for gateways.

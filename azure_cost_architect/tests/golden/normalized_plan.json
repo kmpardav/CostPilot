@@ -2,9 +2,6 @@
   "metadata": {},
   "scenarios": [
     {
-      "id": "baseline",
-      "label": "baseline",
-      "description": "",
       "resources": [
         {
           "id": "vm-main",
@@ -25,6 +22,9 @@
         {
           "id": "sql-mi",
           "category": "db.sqlmi",
+          "metrics": {
+            "vcores": 4
+          },
           "service_name": null,
           "arm_sku_name": null,
           "region": null,
@@ -34,9 +34,6 @@
           "workload_type": "db",
           "criticality": "prod",
           "os_type": "na",
-          "metrics": {
-            "vcores": 4
-          },
           "notes": "",
           "source": "llm-inferred"
         },
@@ -75,23 +72,80 @@
           },
           "notes": "",
           "source": "llm-inferred"
+        },
+        {
+          "id": "kv-secure",
+          "category": "security.keyvault",
+          "service_name": null,
+          "arm_sku_name": null,
+          "region": null,
+          "quantity": 1,
+          "hours_per_month": 730,
+          "billing_model": "payg",
+          "workload_type": "other",
+          "criticality": "prod",
+          "os_type": "na",
+          "metrics": {},
+          "notes": "Added by preset: secrets/keys for services",
+          "source": "preset"
+        },
+        {
+          "id": "log-analytics",
+          "category": "monitoring.loganalytics",
+          "service_name": null,
+          "arm_sku_name": null,
+          "region": null,
+          "quantity": 1,
+          "hours_per_month": 730,
+          "billing_model": "payg",
+          "workload_type": "other",
+          "criticality": "prod",
+          "os_type": "na",
+          "metrics": {
+            "storage_gb": 200.0
+          },
+          "notes": "Added by preset: centralized logs",
+          "source": "preset"
+        },
+        {
+          "id": "backup-vault",
+          "category": "backup.vault",
+          "service_name": null,
+          "arm_sku_name": null,
+          "region": null,
+          "quantity": 1,
+          "hours_per_month": 730,
+          "billing_model": "payg",
+          "workload_type": "dr",
+          "criticality": "prod",
+          "os_type": "na",
+          "metrics": {
+            "storage_gb": 200.0
+          },
+          "notes": "Added by preset: baseline backup vault",
+          "source": "preset"
         }
       ],
+      "id": "baseline",
+      "label": "baseline",
+      "description": "",
       "warnings": [
-        "ha_dr_missing: add backup.vault and/or dr.asr for resilience",
+        "cache_recommended: add cache.redis for session/offloading",
+        "waf_recommended: consider network.appgw or network.frontdoor",
         "sku_missing: sql-mi, vm-main"
       ]
     },
     {
       "id": "cost_optimized",
-      "label": "cost_optimized",
-      "description": "",
       "resources": [
         {
           "id": "db-lite",
           "category": "db.sql",
-          "service_name": null,
           "arm_sku_name": "GP_Gen5_2",
+          "metrics": {
+            "vcores": 2
+          },
+          "service_name": null,
           "region": null,
           "quantity": 1,
           "hours_per_month": 730,
@@ -99,22 +153,73 @@
           "workload_type": "db",
           "criticality": "prod",
           "os_type": "na",
-          "metrics": {
-            "vcores": 2
-          },
           "notes": "",
           "source": "llm-inferred"
+        },
+        {
+          "id": "kv-secure",
+          "category": "security.keyvault",
+          "service_name": null,
+          "arm_sku_name": null,
+          "region": null,
+          "quantity": 1,
+          "hours_per_month": 730,
+          "billing_model": "payg",
+          "workload_type": "other",
+          "criticality": "prod",
+          "os_type": "na",
+          "metrics": {},
+          "notes": "Added by preset: secrets/keys for services",
+          "source": "preset"
+        },
+        {
+          "id": "log-analytics",
+          "category": "monitoring.loganalytics",
+          "service_name": null,
+          "arm_sku_name": null,
+          "region": null,
+          "quantity": 1,
+          "hours_per_month": 730,
+          "billing_model": "payg",
+          "workload_type": "other",
+          "criticality": "prod",
+          "os_type": "na",
+          "metrics": {
+            "storage_gb": 200.0
+          },
+          "notes": "Added by preset: centralized logs",
+          "source": "preset"
+        },
+        {
+          "id": "backup-vault",
+          "category": "backup.vault",
+          "service_name": null,
+          "arm_sku_name": null,
+          "region": null,
+          "quantity": 1,
+          "hours_per_month": 730,
+          "billing_model": "payg",
+          "workload_type": "dr",
+          "criticality": "prod",
+          "os_type": "na",
+          "metrics": {
+            "storage_gb": 200.0
+          },
+          "notes": "Added by preset: baseline backup vault",
+          "source": "preset"
         }
       ],
+      "label": "cost_optimized",
+      "description": "",
       "warnings": [
-        "ha_dr_missing: add backup.vault and/or dr.asr for resilience",
         "bandwidth_missing: estimate outbound via network.nat or network.egress"
       ]
     }
   ],
   "warnings": [
     "bandwidth_missing: estimate outbound via network.nat or network.egress",
-    "ha_dr_missing: add backup.vault and/or dr.asr for resilience",
-    "sku_missing: sql-mi, vm-main"
+    "cache_recommended: add cache.redis for session/offloading",
+    "sku_missing: sql-mi, vm-main",
+    "waf_recommended: consider network.appgw or network.frontdoor"
   ]
 }
