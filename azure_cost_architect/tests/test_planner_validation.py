@@ -64,3 +64,26 @@ def test_storage_and_network_defaults():
 
     assert blob["metrics"].get("storage_gb") == 100.0
     assert egress["metrics"].get("egress_gb") == 100.0
+
+
+def test_presets_add_baseline_controls_and_bandwidth():
+    raw_plan = {
+        "scenarios": [
+            {
+                "resources": [
+                    {"id": "web", "category": "appservice"},
+                    {"id": "db", "category": "db.sql"},
+                ]
+            }
+        ]
+    }
+
+    normalized = apply_planner_rules(validate_plan_schema(raw_plan))
+    resources = normalized["scenarios"][0]["resources"]
+    cats = {r["category"] for r in resources}
+
+    assert "security.keyvault" in cats
+    assert "monitoring.loganalytics" in cats
+    assert "backup.vault" in cats
+    assert any(r for r in resources if r["category"] == "network.nat" and r["source"] == "preset")
+    assert any(w.startswith("waf_recommended") for w in normalized["scenarios"][0]["warnings"])

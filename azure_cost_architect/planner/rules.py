@@ -2,9 +2,13 @@
 
 This module adds lightweight sanity checks that help the pricing layer by
 surfacing missing HA/DR, bandwidth or SKU information early in the flow.
+It also applies workload presets (baseline controls, NAT/egress defaults)
+to keep scenarios opinionated before pricing.
 """
 
 from typing import Dict, Iterable
+
+from .presets import apply_workload_presets
 
 
 def _category_needs_sku(category: str) -> bool:
@@ -42,6 +46,10 @@ def apply_planner_rules(plan: dict) -> dict:
             continue
         scen_warnings = scen.setdefault("warnings", [])
         resources = [res for res in scen.get("resources", []) if isinstance(res, dict)]
+        scen["resources"] = resources
+
+        preset_warnings = apply_workload_presets(resources)
+        scen_warnings.extend(preset_warnings)
         cats = _collect_categories(resources)
 
         if not any(c.startswith("backup.vault") or c.startswith("dr.asr") for c in cats):
@@ -69,6 +77,15 @@ def apply_planner_rules(plan: dict) -> dict:
             scen_warnings.append(
                 "sku_missing: " + ", ".join(missing_skus)
             )
+
+        missing_db_sizing = sorted(
+            res.get("id", "res")
+            for res in resources
+            if (res.get("category") or "").startswith("db.")
+            and not (res.get("metrics") or {}).get("vcores")
+        )
+        if missing_db_sizing:
+            scen_warnings.append("db_sizing_missing: " + ", ".join(missing_db_sizing))
 
         plan_warnings.extend(w for w in scen_warnings if w)
 
