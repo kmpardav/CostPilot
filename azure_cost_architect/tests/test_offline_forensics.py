@@ -197,3 +197,13 @@ def test_fixture_report_mentions_placeholders():
     table = render_totals_table({"metadata": {"currency": "EUR"}, "scenarios": enriched["scenarios"]})
     assert "Monthly (modeled)" in table
     assert "Display totals include missing placeholders" in table
+
+
+def test_run10_incomplete_plan_marks_not_comparable():
+    plan_path = Path(__file__).resolve().parents[2] / "runs" / "run10_incomplete" / "plan.json"
+    plan = json.loads(plan_path.read_text())
+
+    assert any(not sc.get("totals", {}).get("comparable") for sc in plan.get("scenarios", []))
+    totals = plan["scenarios"][0]["totals"]
+    assert totals.get("missing_total", 0) > 0
+    assert totals.get("compare_skip_reason") in {"sku_mismatch", "missing_pricing"}

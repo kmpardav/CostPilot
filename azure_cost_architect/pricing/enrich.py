@@ -6,7 +6,17 @@ import json
 import logging
 import re
 
-from ..config import DEFAULT_CURRENCY, DEFAULT_REGION, HOURS_PROD, CATALOG_DIR
+from ..config import (
+    DEFAULT_CURRENCY,
+    DEFAULT_REGION,
+    HOURS_PROD,
+    CATALOG_DIR,
+    DEFAULT_REQUIRED_CATEGORIES,
+)
+from ..utils.categories import (
+    canonical_required_category,
+    normalize_required_categories,
+)
 from .cache import build_cache_key, get_cached_price, set_cached_price
 from .normalize import normalize_service_name, sku_keyword_match
 from .catalog import load_catalog
@@ -163,7 +173,12 @@ def _append_scoring_debug(
 # ------------------------------------------------------------
 
 
-def aggregate_scenario_costs(scenario: Dict[str, Any], currency: str) -> Dict[str, Any]:
+def aggregate_scenario_costs(
+    scenario: Dict[str, Any],
+    currency: str,
+    *,
+    required_categories: Optional[List[str]] = None,
+) -> Dict[str, Any]:
     """
     Υπολογίζει συνολικά κόστη ανά scenario, ξεχωρίζοντας:
     - Priced only (μόνο resources με πλήρη τιμή)
@@ -186,6 +201,22 @@ def aggregate_scenario_costs(scenario: Dict[str, Any], currency: str) -> Dict[st
     estimated_count = 0
     total_resources = len(scenario.get("resources", []))
     compare_skip_reason: Optional[str] = None
+    required_categories = normalize_required_categories(
+        required_categories
+        if required_categories is not None
+        else DEFAULT_REQUIRED_CATEGORIES
+    )
+    use_required_filter = bool(required_categories)
+
+    required_missing_count = 0
+    required_mismatch_count = 0
+    required_reservation_ambiguous_count = 0
+
+    def _is_required(cat: str) -> bool:
+        if not use_required_filter:
+            return True
+        cat_norm = canonical_required_category(cat)
+        return any(cat_norm.startswith(req) for req in required_categories)
 
     for res in scenario.get("resources", []):
         cat = res.get("category") or "other"
@@ -193,10 +224,16 @@ def aggregate_scenario_costs(scenario: Dict[str, Any], currency: str) -> Dict[st
         monthly = res.get("monthly_cost")
         yearly = res.get("yearly_cost")
 
+        is_required = _is_required(cat)
+
         if res.get("sku_mismatch") or status == "sku_mismatch":
             mismatch_count += 1
+            if is_required:
+                required_mismatch_count += 1
         if status == "reservation_uom_ambiguous":
             reservation_ambiguous_count += 1
+            if is_required:
+                required_reservation_ambiguous_count += 1
 
         entry = by_category.setdefault(
             cat,
@@ -221,15 +258,15 @@ def aggregate_scenario_costs(scenario: Dict[str, Any], currency: str) -> Dict[st
 
         if missing_reason:
             missing_count += 1
-            compare_skip_reason = compare_skip_reason or (
-                "reservation_ambiguous" if status == "reservation_uom_ambiguous" else None
-            )
-            compare_skip_reason = compare_skip_reason or (
-                "sku_mismatch" if status == "sku_mismatch" else None
-            )
-            compare_skip_reason = compare_skip_reason or (
-                "missing_pricing" if status == "missing" or monthly is None else None
-            )
+            if is_required and (status == "missing" or monthly is None or yearly is None):
+                required_missing_count += 1
+            if compare_skip_reason is None and (not use_required_filter or is_required):
+                if status == "reservation_uom_ambiguous":
+                    compare_skip_reason = "reservation_ambiguous"
+                elif status == "sku_mismatch":
+                    compare_skip_reason = "sku_mismatch"
+                else:
+                    compare_skip_reason = "missing_pricing"
             monthly_missing_contrib = max(
                 float(monthly) if monthly is not None else 0.0,
                 DEFAULT_MISSING_MONTHLY_PENALTY,
@@ -272,7 +309,10 @@ def aggregate_scenario_costs(scenario: Dict[str, Any], currency: str) -> Dict[st
         else:
             # Unknown status is treated as missing to avoid undercounting.
             missing_count += 1
-            compare_skip_reason = compare_skip_reason or "missing_pricing"
+            if is_required:
+                required_missing_count += 1
+            if compare_skip_reason is None and (not use_required_filter or is_required):
+                compare_skip_reason = "missing_pricing"
             monthly_missing_contrib = max(
                 float(monthly) if monthly is not None else 0.0,
                 DEFAULT_MISSING_MONTHLY_PENALTY,
@@ -292,11 +332,26 @@ def aggregate_scenario_costs(scenario: Dict[str, Any], currency: str) -> Dict[st
 
         # By-category breakdown
     modeled_total = monthly_priced + monthly_estimated
-    is_complete = (
-        missing_count == 0
-        and mismatch_count == 0
-        and reservation_ambiguous_count == 0
+
+    missing_blockers = required_missing_count if use_required_filter else missing_count
+    mismatch_blockers = required_mismatch_count if use_required_filter else mismatch_count
+    reservation_blockers = (
+        required_reservation_ambiguous_count
+        if use_required_filter
+        else reservation_ambiguous_count
     )
+
+    is_complete = not (
+        missing_blockers or mismatch_blockers or reservation_blockers
+    )
+    if compare_skip_reason is None:
+        if mismatch_blockers:
+            compare_skip_reason = "sku_mismatch"
+        elif reservation_blockers:
+            compare_skip_reason = "reservation_ambiguous"
+        elif missing_blockers:
+            compare_skip_reason = "missing_pricing"
+
     comparable = is_complete and not compare_skip_reason
 
     completeness_ratio = 0.0
@@ -307,16 +362,6 @@ def aggregate_scenario_costs(scenario: Dict[str, Any], currency: str) -> Dict[st
     if is_complete:
         completeness_ratio = 1.0
 
-    if not comparable and compare_skip_reason is None:
-        if mismatch_count:
-            compare_skip_reason = "sku_mismatch"
-        elif reservation_ambiguous_count:
-            compare_skip_reason = "reservation_ambiguous"
-        elif missing_count:
-            compare_skip_reason = "missing_pricing"
-        else:
-            compare_skip_reason = "incomplete"
-
     return {
         "currency": currency,
         "is_complete": is_complete,
@@ -326,6 +371,9 @@ def aggregate_scenario_costs(scenario: Dict[str, Any], currency: str) -> Dict[st
         "missing_count": missing_count,
         "mismatch_count": mismatch_count,
         "reservation_ambiguous_count": reservation_ambiguous_count,
+        "required_missing_count": required_missing_count,
+        "required_mismatch_count": required_mismatch_count,
+        "required_reservation_ambiguous_count": required_reservation_ambiguous_count,
         # Backwards compatible totals
         "total_monthly": round(monthly_with_est, 2),
         "total_yearly": round(yearly_with_est, 2),
@@ -377,11 +425,22 @@ def attach_baseline_deltas(enriched_scenarios: List[Dict[str, Any]]) -> None:
     baseline_totals = baseline.get("totals") or {}
 
     def _comparison_blocker(totals: Dict[str, Any]) -> Optional[str]:
-        if totals.get("mismatch_count"):
+        missing = totals.get("required_missing_count")
+        mismatch = totals.get("required_mismatch_count")
+        reservation = totals.get("required_reservation_ambiguous_count")
+
+        if missing is None:
+            missing = totals.get("missing_count")
+        if mismatch is None:
+            mismatch = totals.get("mismatch_count")
+        if reservation is None:
+            reservation = totals.get("reservation_ambiguous_count")
+
+        if mismatch:
             return "sku_mismatch"
-        if totals.get("reservation_ambiguous_count"):
+        if reservation:
             return "reservation_ambiguous"
-        if totals.get("missing_count"):
+        if missing:
             return "missing_pricing"
         if totals.get("is_complete") is False:
             return totals.get("compare_skip_reason") or "incomplete"
@@ -667,12 +726,17 @@ def _price_blob_storage(
 
         tier_items = [it for it in items if _tier_match(it)] or items
         tier_items = [it for it in tier_items if _matches_redundancy(it, requested_redundancy)] or tier_items
-        capacity_first = [
-            it
-            for it in tier_items
-            if "gb" in (it.get("unitOfMeasure") or "").lower()
-            and "operation" not in (it.get("meterName") or "").lower()
-        ]
+
+        def _is_capacity_meter(it: Dict[str, Any]) -> bool:
+            meter = (it.get("meterName") or "").lower()
+            uom = (it.get("unitOfMeasure") or "").lower()
+            if "data stored" in meter or "capacity" in meter:
+                return "gb" in uom or "tb" in uom
+            if "data returned" in meter or "data scanned" in meter:
+                return False
+            return "gb" in uom and "operation" not in meter
+
+        capacity_first = [it for it in tier_items if _is_capacity_meter(it)]
         tier_items = capacity_first or tier_items
         selected = _select_cheapest_item(resource, tier_items)
         if not selected:
@@ -1032,9 +1096,9 @@ async def fetch_price_for_resource(
         return
 
     ambiguous_reservation = False
-    if price_type == "reservation" and reservation_term:
+    if price_type == "reservation":
         uom_low = unit_of_measure.lower()
-        if "hour" in uom_low or "month" in uom_low:
+        if not uom_low or "year" not in uom_low:
             ambiguous_reservation = True
 
     if ambiguous_reservation:
@@ -1053,7 +1117,7 @@ async def fetch_price_for_resource(
     monthly_cost = units * float(unit_price)
     yearly_cost = monthly_cost * 12.0
 
-    if price_type == "reservation" and reservation_term:
+    if price_type == "reservation" and reservation_term and "year" in unit_of_measure.lower():
         # Εδώ θεωρούμε ότι unit_price είναι συνολικό κόστος για όλο το term
         if "3 year" in reservation_term:
             monthly_cost = float(unit_price) / 36.0
@@ -1170,6 +1234,9 @@ async def enrich_plan_with_prices(plan: Dict[str, Any], debug: bool = False) -> 
     metadata = plan.get("metadata") or {}
     default_region = metadata.get("default_region") or DEFAULT_REGION
     currency = metadata.get("currency") or DEFAULT_CURRENCY
+    required_categories = normalize_required_categories(
+        metadata.get("required_categories") or DEFAULT_REQUIRED_CATEGORIES
+    )
 
     scenarios = plan.get("scenarios") or []
     enriched_scenarios: List[Dict[str, Any]] = []
@@ -1243,7 +1310,11 @@ async def enrich_plan_with_prices(plan: Dict[str, Any], debug: bool = False) -> 
             "description": scenario.get("description"),
             "resources": resources,
         }
-        enriched_scenario["totals"] = aggregate_scenario_costs(enriched_scenario, currency=currency)
+        enriched_scenario["totals"] = aggregate_scenario_costs(
+            enriched_scenario,
+            currency=currency,
+            required_categories=required_categories,
+        )
         _LOGGER.info(
             "Scenario '%s' totals: monthly_priced=%.2f, monthly_with_estimates=%.2f %s.",
             enriched_scenario.get("label") or enriched_scenario.get("id"),
@@ -1262,6 +1333,8 @@ async def enrich_plan_with_prices(plan: Dict[str, Any], debug: bool = False) -> 
             "version": metadata.get("version", "1.0"),
             "currency": currency,
             "default_region": default_region,
+            "required_categories": required_categories,
+            "compare_policy": metadata.get("compare_policy"),
         },
         "scenarios": enriched_scenarios,
     }

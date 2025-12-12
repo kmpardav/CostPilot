@@ -29,6 +29,16 @@ MODEL_REPORTER_RESPONSES = os.getenv("AZURECOST_REPORTER_RESP_MODEL", MODEL_REPO
 # Backend default
 DEFAULT_LLM_BACKEND = os.getenv("AZURECOST_LLM_BACKEND", "chat")
 
+# Scenario comparison safeguards
+DEFAULT_COMPARE_POLICY = os.getenv("AZURECOST_COMPARE_POLICY", "soft_compare")
+DEFAULT_REQUIRED_CATEGORIES = [
+    "compute",
+    "db",
+    "cache",
+    "network",
+    "storage",
+]
+
 # Local catalog directory (full Azure Retail dumps per service/region/currency)
 # Συνήθως είναι ο φάκελος "catalog" στο root του project.
 CATALOG_DIR = os.getenv("AZURECOST_CATALOG_DIR", "catalog")

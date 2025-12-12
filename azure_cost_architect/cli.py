@@ -23,6 +23,7 @@ import os
 import sys
 from datetime import datetime, timezone
 from pathlib import Path
+from typing import Any, Dict, List, Tuple
 
 from openai import OpenAI
 from rich.console import Console
@@ -33,7 +34,10 @@ from .config import (
     DEFAULT_CURRENCY,
     CATALOG_DIR,
     CACHE_FILE,
+    DEFAULT_COMPARE_POLICY,
+    DEFAULT_REQUIRED_CATEGORIES,
 )
+from .utils.categories import normalize_required_categories
 from .pricing.cache import load_price_cache, save_price_cache
 from .pricing.enrich import enrich_plan_with_prices
 from .pricing.catalog import ensure_catalog
@@ -88,6 +92,29 @@ def parse_args() -> argparse.Namespace:
         default=None,
         help="Currency code για το Azure Retail Prices API (π.χ. EUR, USD, GBP).",
     )
+
+    parser.add_argument(
+        "--compare-policy",
+        choices=["hard_stop", "soft_compare"],
+        default=DEFAULT_COMPARE_POLICY,
+        help=(
+            "Πώς να συμπεριφέρεται το εργαλείο όταν το pricing είναι ελλιπές.\n"
+            "- hard_stop: σταματά με μη μηδενικό exit code αν κάποιο σενάριο είναι ατελές.\n"
+            "- soft_compare: συνεχίζει αλλά οι συγκρίσεις/δείκτες απενεργοποιούνται."
+        ),
+    )
+
+    parser.add_argument(
+        "--required-categories",
+        type=str,
+        default=",".join(DEFAULT_REQUIRED_CATEGORIES),
+        help=(
+            "CSV λίστα κατηγοριών που θεωρούνται απαραίτητες για συγκρίσεις "
+            "(π.χ. compute,db,cache,network,storage). Μόνο για αυτές οι ελλείψεις "
+            "μπλοκάρουν τις συγκρίσεις."
+        ),
+    )
+
 
     parser.add_argument(
         "--llm-backend",
@@ -253,12 +280,37 @@ def _warm_catalogs_for_plan(
             console.print(f" [red]FAILED[/red] ({ex})")
 
 
+def _collect_compare_blockers(plan: Dict[str, Any]) -> List[Tuple[str, str]]:
+    blockers: List[Tuple[str, str]] = []
+    for sc in plan.get("scenarios", []):
+        totals = sc.get("totals") or {}
+        comparable = totals.get("comparable")
+        reason = totals.get("compare_skip_reason") or "incomplete"
+        if comparable is False:
+            blockers.append(((sc.get("id") or sc.get("label") or "scenario"), reason))
+    return blockers
+
+
+def _apply_compare_policy(plan: Dict[str, Any], compare_policy: str) -> List[Tuple[str, str]]:
+    blockers = _collect_compare_blockers(plan)
+    if compare_policy == "hard_stop" and blockers:
+        raise SystemExit(2)
+    return blockers
+
+
 # --------------------------------------------------------------------
 # Main
 # --------------------------------------------------------------------
 def main() -> None:
     global DEBUG
     args = parse_args()
+
+    required_categories = [
+        c.strip() for c in (args.required_categories or "").split(",") if c.strip()
+    ]
+    if not required_categories:
+        required_categories = list(DEFAULT_REQUIRED_CATEGORIES)
+    args.required_categories = normalize_required_categories(required_categories)
 
     run_dir = Path("runs") / args.output_prefix
     run_dir.mkdir(parents=True, exist_ok=True)
@@ -345,6 +397,8 @@ def main() -> None:
 
     metadata["currency"] = currency
     metadata["default_region"] = default_region
+    metadata["compare_policy"] = args.compare_policy
+    metadata["required_categories"] = required_categories
 
     logger.debug("Plan after metadata normalization: %s", plan)
 
@@ -372,6 +426,24 @@ def main() -> None:
     with open(json_filename, "w", encoding="utf-8") as f:
         json.dump(enriched_plan, f, indent=2, ensure_ascii=False)
     logger.info("Saved enriched plan JSON to %s", json_filename)
+
+    blockers = _collect_compare_blockers(enriched_plan)
+    if blockers:
+        console.print(
+            "[yellow]Scenario comparisons are suppressed because pricing is incomplete for required categories.[/yellow]"
+        )
+        for sc_id, reason in blockers:
+            console.print(f"  - {sc_id}: {reason}")
+        if args.compare_policy == "hard_stop":
+            console.print(
+                "[red]--compare-policy=hard_stop is set; exiting before report generation.[/red]"
+            )
+            try:
+                _apply_compare_policy(enriched_plan, args.compare_policy)
+            except SystemExit as exc:
+                sys.exit(exc.code)
+    else:
+        _apply_compare_policy(enriched_plan, args.compare_policy)
 
     # --------------------
     # 4) Report generation (Markdown)
@@ -410,6 +482,8 @@ def main() -> None:
             "currency": currency,
             "default_region": default_region,
             "llm_backend": backend,
+            "compare_policy": args.compare_policy,
+            "required_categories": required_categories,
         },
         "output_files": {
             "input": str(input_path),

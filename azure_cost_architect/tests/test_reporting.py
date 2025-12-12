@@ -111,6 +111,10 @@ def test_render_report_with_deltas_snapshot():
 
     assert report == dedent(
         """
+        ## Completeness & comparison guardrails
+        - baseline: ✅ complete
+        - cost_optimized: ✅ complete
+
         ## Scenario totals
         | Scenario | Complete? | Missing/Mismatch/Res | Monthly (priced) | Monthly (est.) | Monthly (missing) | Monthly (modeled) | Monthly (display)* | Yearly (display)* | Est. Ratio |
         |---|---|---|---|---|---|---|---|---|---|
@@ -189,6 +193,7 @@ def test_render_report_marks_incomplete_deltas():
     assert "n/a (not comparable: missing_pricing)" in report
     assert "⚠️" in report
     assert "100.00 USD" in report
+    assert "Comparisons/deltas are suppressed" in report
     assert plan["scenarios"][1]["totals"].get("comparable") is False
     assert plan["scenarios"][1]["totals"].get("compare_skip_reason") == "missing_pricing"
 
