@@ -1,0 +1,26 @@
+{
+  "timestamp_utc": "2024-06-15T00:00:00Z",
+  "command": "azure_cost --region westeurope --currency EUR --mode recommend --adjudicate --adjudicate-topn 1",
+  "working_directory": "/workspace/CostPilot",
+  "cli_args": {
+    "region": "westeurope",
+    "currency": "EUR",
+    "mode": "recommend",
+    "adjudicate": true,
+    "adjudicate_topn": 1
+  },
+  "derived": {
+    "currency": "EUR",
+    "default_region": "westeurope",
+    "compare_policy": "soft_compare",
+    "adjudication_enabled": true,
+    "adjudication_topn": 1
+  },
+  "output_files": {
+    "input": "runs/run12_appservice_adjudication_fixed/input.txt",
+    "plan": "runs/run12_appservice_adjudication_fixed/plan.json",
+    "report": "runs/run12_appservice_adjudication_fixed/report.md",
+    "debug_scoring": "",
+    "console_log": ""
+  }
+}

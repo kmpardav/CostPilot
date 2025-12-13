@@ -14,7 +14,8 @@ from pathlib import Path
 from typing import Optional, Sequence, Tuple
 
 from .config import CATALOG_DIR, DEFAULT_CURRENCY, DEFAULT_REGION
-from .pricing.catalog import _catalog_path
+from .pricing.catalog import _catalog_path, _resolve_region
+from .pricing.catalog_sources import get_catalog_sources
 from .pricing.normalize import normalize_service_name
 
 
@@ -113,13 +114,20 @@ def _summarize_category(entries: list[CatalogEntry]) -> list[str]:
 def _catalog_for_resource(
     *, category: str, region: str, currency: str, catalog_dir: Path
 ) -> Tuple[Path, str]:
-    service = normalize_service_name(category, None)
+    sources = get_catalog_sources(category)
+    primary = sources[0] if sources else None
+    service = primary.service_name if primary else normalize_service_name(category, None)
+    _, resolved_region = _resolve_region(
+        primary.arm_region_mode if primary else "regional", region
+    )
     path = Path(
-        _catalog_path(str(catalog_dir), service_name=service, region=region, currency=currency)
+        _catalog_path(
+            str(catalog_dir), service_name=service, region=resolved_region, currency=currency
+        )
     )
     reason = (
-        f"category='{category}' -> serviceName='{service}' via normalize_service_name; "
-        f"region='{region}', currency='{currency}'"
+        f"category='{category}' -> serviceName='{service}' via catalog mapping; "
+        f"region='{resolved_region}', currency='{currency}'"
     )
     return path, reason
 
@@ -162,6 +170,70 @@ def _conclusion(match_count: int) -> str:
     return "Ambiguous: multiple meters, need capacity-first / stricter filters."
 
 
+def _entry_token_counter(entry: CatalogEntry) -> Counter:
+    values: list[str] = []
+    for item in entry.items:
+        values.extend(
+            [
+                item.get("productName", ""),
+                item.get("meterName", ""),
+                item.get("skuName", ""),
+                item.get("armSkuName", ""),
+            ]
+        )
+    return _tokenize(values)
+
+
+def _hint_tokens_for_category(category: str) -> set[str]:
+    base_tokens = _tokenize([category or ""]).keys()
+    mapped_tokens: set[str] = set(base_tokens)
+    for source in get_catalog_sources(category or ""):
+        for hint in (source.product_name_hint, source.sku_hint):
+            if hint:
+                mapped_tokens.update(_tokenize([hint]).keys())
+    return mapped_tokens
+
+
+def _suggest_mapping_changes(entries: list[CatalogEntry]) -> list[str]:
+    lines: list[str] = []
+    by_category: dict[str, list[CatalogEntry]] = defaultdict(list)
+    for entry in entries:
+        by_category[entry.category or "unknown"].append(entry)
+
+    empty_categories = [
+        cat for cat, cat_entries in by_category.items() if sum(len(e.items) for e in cat_entries) == 0
+    ]
+
+    if not empty_categories:
+        lines.append("- No empty or missing catalogs detected.")
+        return lines
+
+    token_cache: dict[Path, Counter] = {entry.path: _entry_token_counter(entry) for entry in entries}
+
+    for cat in sorted(empty_categories):
+        hint_tokens = _hint_tokens_for_category(cat)
+        suggestions: list[tuple[int, CatalogEntry]] = []
+        for entry in entries:
+            if entry.category == cat or not entry.items:
+                continue
+            counter = token_cache.get(entry.path) or Counter()
+            score = sum(counter.get(tok, 0) for tok in hint_tokens)
+            if score > 0:
+                suggestions.append((score, entry))
+
+        suggestions.sort(key=lambda t: (-t[0], t[1].path.name))
+        lines.append(f"- Category '{cat}' has empty catalogs; keyword hits in other catalogs:")
+        if suggestions:
+            for score, entry in suggestions[:3]:
+                lines.append(
+                    f"  - score={score} -> serviceName='{entry.service_name}' from {entry.path.name} (region={entry.region}, currency={entry.currency})"
+                )
+        else:
+            lines.append("  - No strong keyword matches found in existing catalogs.")
+
+    return lines
+
+
 def build_catalog_audit_report(runs_dir: Path, catalog_dir: Path) -> str:
     entries = _load_catalog_entries(catalog_dir)
     category_index: dict[str, list[CatalogEntry]] = defaultdict(list)
@@ -176,6 +248,10 @@ def build_catalog_audit_report(runs_dir: Path, catalog_dir: Path) -> str:
         lines.append(f"### Category: {category}")
         lines.extend(_summarize_category(category_index[category]))
         lines.append("")
+
+    lines.append("## Suggested mapping changes")
+    lines.extend(_suggest_mapping_changes(entries))
+    lines.append("")
 
     lines.append("## Run-by-run resource verification")
     for plan_file in sorted(runs_dir.glob("*/plan.json")):

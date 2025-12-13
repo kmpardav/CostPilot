@@ -372,3 +372,87 @@ async def test_blob_storage_defaults_to_hot_when_metrics_missing(monkeypatch, tm
 
     assert blob["pricing_status"] == "estimated"
     assert blob["monthly_cost"] == pytest.approx(100 * 0.02, rel=1e-3)
+
+
+@pytest.mark.anyio
+async def test_adjudicator_sees_exact_match(monkeypatch, tmp_path):
+    region = "westeurope"
+    currency = "EUR"
+    catalog_dir = tmp_path / "catalog"
+
+    _write_catalog(
+        catalog_dir,
+        "Azure App Service",
+        region,
+        currency,
+        [
+            {
+                "productName": "App Service Premium v3 P0v3",
+                "meterName": "P0v3 Windows App Service",
+                "skuName": "P0v3",
+                "armSkuName": "P0v3",
+                "unitPrice": 0.15,
+                "unitOfMeasure": "1 Hour",
+                "currencyCode": currency,
+            },
+            {
+                "productName": "App Service Premium v3 P1v3",
+                "meterName": "P1v3 Windows App Service",
+                "skuName": "P1v3",
+                "armSkuName": "P1v3",
+                "unitPrice": 0.30,
+                "unitOfMeasure": "1 Hour",
+                "currencyCode": currency,
+            },
+        ],
+    )
+
+    from azure_cost_architect.pricing import enrich as enrich_mod
+
+    monkeypatch.setattr(enrich_mod, "CATALOG_DIR", str(catalog_dir))
+    monkeypatch.setattr(enrich_mod, "score_price_item", lambda *args, **kwargs: 0)
+
+    def fake_adjudicate(client, resource, candidates, model=None):
+        target = next(
+            i
+            for i, cand in enumerate(candidates)
+            if "p1v3" in (cand.get("sku_name") or "").lower()
+        )
+        return {
+            "resource_id": resource.get("id"),
+            "decision": {
+                "status": "selected",
+                "selected_index": target,
+                "selected_candidate_id": candidates[target].get("candidate_id"),
+                "reason": "prefer requested tier",
+            },
+        }
+
+    monkeypatch.setattr(enrich_mod, "adjudicate_candidates", fake_adjudicate)
+
+    plan = {
+        "metadata": {"currency": currency, "default_region": region},
+        "scenarios": [
+            {
+                "id": "baseline",
+                "resources": [
+                    {
+                        "id": "appsvc-plan",
+                        "category": "appservice.plan",
+                        "arm_sku_name": "P1v3",
+                        "billing_model": "payg",
+                    }
+                ],
+            }
+        ],
+    }
+
+    enriched = await enrich_plan_with_prices(
+        plan, adjudicate=True, adjudicate_topn=1, adjudicator_client=object()
+    )
+    res = enriched["scenarios"][0]["resources"][0]
+
+    assert any("p1v3" in (cand.get("sku_name") or "").lower() for cand in res["sku_candidates"])
+    assert res.get("adjudication", {}).get("decision", {}).get("status") == "accepted"
+    assert res["pricing_status"] == "priced"
+    assert "p1v3" in (res.get("sku_name") or "").lower()
