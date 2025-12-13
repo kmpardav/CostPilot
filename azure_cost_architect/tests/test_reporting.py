@@ -40,11 +40,11 @@ def test_aggregate_scenario_costs_tracks_estimates_and_categories():
 
     assert totals["monthly_priced"] == 100.0
     assert totals["monthly_estimated"] == 25.0
-    assert totals["monthly_with_estimates"] == 225.0
+    assert totals["monthly_with_estimates"] == 125.0
     assert totals["yearly_estimated"] == 300.0
-    assert totals["missing_total"] == DEFAULT_MISSING_MONTHLY_PENALTY
+    assert totals["missing_total"] == 0.0
     assert totals["missing_count"] == 1
-    assert totals["monthly_missing"] == 100.0
+    assert totals["monthly_missing"] == 0.0
     assert totals["is_complete"] is False
     assert totals["by_category"]["compute"]["monthly_priced"] == 100.0
     assert totals["by_category"]["storage"]["monthly_estimated"] == 25.0
@@ -282,7 +282,8 @@ def test_missing_penalty_prevents_inversion_and_marks_incomparable():
     baseline_totals = plan["scenarios"][0]["totals"]
     high_perf_totals = plan["scenarios"][1]["totals"]
 
-    assert high_perf_totals["monthly_missing"] == DEFAULT_MISSING_MONTHLY_PENALTY
-    assert high_perf_totals["monthly_with_estimates"] > baseline_totals["monthly_priced"]
+    assert high_perf_totals["monthly_missing"] == 0.0
+    assert high_perf_totals["monthly_with_estimates"] == 10.0
+    assert high_perf_totals["comparable"] is False
     assert high_perf_totals["delta_vs_baseline"]["status"] == "not_comparable"
     assert high_perf_totals["compare_skip_reason"] == "missing_pricing"

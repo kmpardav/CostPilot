@@ -28,8 +28,9 @@ from ..llm.adjudicator import adjudicate_candidates
 
 _LOGGER = logging.getLogger(__name__)
 
-# Conservative placeholder to prevent undercounting when pricing is missing/ambiguous.
-DEFAULT_MISSING_MONTHLY_PENALTY = 100.0
+# Missing prices are left as explicit gaps; keep this constant for backwards
+# compatibility with older callers/tests that import it.
+DEFAULT_MISSING_MONTHLY_PENALTY = 0.0
 
 # ------------------------------------------------------------
 # Debug JSONL για scoring επιλογές
@@ -276,14 +277,8 @@ def aggregate_scenario_costs(
 
         if missing_reason:
             missing_count += 1
-            monthly_missing_contrib = max(
-                float(monthly) if monthly is not None else 0.0,
-                DEFAULT_MISSING_MONTHLY_PENALTY,
-            )
-            yearly_missing_contrib = max(
-                float(yearly) if yearly is not None else 0.0,
-                DEFAULT_MISSING_MONTHLY_PENALTY * 12,
-            )
+            monthly_missing_contrib = float(monthly) if monthly is not None else 0.0
+            yearly_missing_contrib = float(yearly) if yearly is not None else 0.0
             monthly_missing += monthly_missing_contrib
             yearly_missing += yearly_missing_contrib
             monthly_with_est += monthly_missing_contrib
@@ -372,14 +367,8 @@ def aggregate_scenario_costs(
         else:
             # Unknown status is treated as missing to avoid undercounting.
             missing_count += 1
-            monthly_missing_contrib = max(
-                float(monthly) if monthly is not None else 0.0,
-                DEFAULT_MISSING_MONTHLY_PENALTY,
-            )
-            yearly_missing_contrib = max(
-                float(yearly) if yearly is not None else 0.0,
-                DEFAULT_MISSING_MONTHLY_PENALTY * 12,
-            )
+            monthly_missing_contrib = float(monthly) if monthly is not None else 0.0
+            yearly_missing_contrib = float(yearly) if yearly is not None else 0.0
             monthly_missing += monthly_missing_contrib
             yearly_missing += yearly_missing_contrib
             monthly_with_est += monthly_missing_contrib
@@ -1258,6 +1247,7 @@ async def fetch_price_for_resource(
                 f"No pricing items found in local catalog for category='{category}', "
                 f"region='{region}', currency='{currency}'."
             )
+            units = compute_units(resource, "")
             resource.update(
                 {
                     "unit_price": None,
@@ -1266,7 +1256,7 @@ async def fetch_price_for_resource(
                     "sku_name": None,
                     "meter_name": None,
                     "product_name": None,
-                    "units": None,
+                    "units": units,
                     "monthly_cost": None,
                     "yearly_cost": None,
                     "error": "Price not found (empty local catalog)",
@@ -1549,8 +1539,8 @@ async def fetch_price_for_resource(
         resource.update(
             {
                 "units": 1.0,
-                "monthly_cost": DEFAULT_MISSING_MONTHLY_PENALTY,
-                "yearly_cost": DEFAULT_MISSING_MONTHLY_PENALTY * 12,
+                "monthly_cost": None,
+                "yearly_cost": None,
                 "pricing_status": "reservation_uom_ambiguous",
                 "error": "Reservation unit of measure looks hourly/monthly; treated as ambiguous",
             }

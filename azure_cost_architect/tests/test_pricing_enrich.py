@@ -312,18 +312,21 @@ async def test_enrich_with_small_catalog(monkeypatch, tmp_path):
 
     # Totals should include all components
     totals = scenario["totals"]
+    monthly_components = [
+        sql_res["monthly_cost"],
+        sql_payg["monthly_cost"],
+        hot_blob["monthly_cost"],
+        hot_blob_grs["monthly_cost"],
+        cool_blob["monthly_cost"],
+        redis_res["monthly_cost"],
+        public_ip["monthly_cost"],
+        private_link["monthly_cost"],
+        egress_res["monthly_cost"],
+        appgw_res["monthly_cost"],
+    ]
+    monthly_components = [v for v in monthly_components if v is not None]
     assert totals["monthly_with_estimates"] == pytest.approx(
-        sql_res["monthly_cost"]
-        + sql_payg["monthly_cost"]
-        + hot_blob["monthly_cost"]
-        + hot_blob_grs["monthly_cost"]
-        + cool_blob["monthly_cost"]
-        + redis_res["monthly_cost"]
-        + public_ip["monthly_cost"]
-        + private_link["monthly_cost"]
-        + egress_res["monthly_cost"]
-        + appgw_res["monthly_cost"],
-        rel=1e-4,
+        sum(monthly_components), rel=1e-4
     )
 
 
