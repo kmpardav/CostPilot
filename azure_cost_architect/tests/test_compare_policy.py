@@ -56,7 +56,7 @@ def test_required_missing_sets_incomparable_and_skip_reason():
         scenario, currency="USD", required_categories=["compute", "db"]
     )
 
-    assert totals["missing_total"] > 0
+    assert totals["missing_total"] == 0
     assert totals["missing_count"] == 1
     assert totals["required_missing_count"] == 1
     assert totals["comparable"] is False

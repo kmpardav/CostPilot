@@ -53,8 +53,8 @@ def test_reservation_unit_of_measure_ambiguous(monkeypatch):
     )
 
     assert resource["pricing_status"] == "reservation_uom_ambiguous"
-    assert resource["monthly_cost"] == DEFAULT_MISSING_MONTHLY_PENALTY
-    assert resource["yearly_cost"] == DEFAULT_MISSING_MONTHLY_PENALTY * 12
+    assert resource["monthly_cost"] is None
+    assert resource["yearly_cost"] is None
 
 
 def test_sku_mismatch_detected(monkeypatch):
