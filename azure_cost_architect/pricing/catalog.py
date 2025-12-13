@@ -5,10 +5,14 @@ import json
 import logging
 import os
 from datetime import datetime, timezone
-from typing import Any, Dict, List, Optional
+from typing import Any, Dict, List, Optional, Tuple
 
+import httpx
+
+from .catalog_sources import CatalogSource, get_catalog_sources
 from .retail_api import fetch_all_for_service
 from .normalize import normalize_service_name
+from ..config import RETAIL_API_URL
 
 META_SUFFIX = ".meta"
 _LOGGER = logging.getLogger(__name__)
@@ -44,6 +48,96 @@ def _meta_path(jsonl_path: str) -> str:
     π.χ. storage__westeurope__EUR.jsonl.meta
     """
     return jsonl_path + META_SUFFIX
+
+
+def _resolve_region(mode: str, requested_region: str) -> Tuple[str, str]:
+    mode = (mode or "regional").lower()
+    region = (requested_region or "").strip()
+
+    if mode == "global":
+        return "Global", "global"
+    if mode == "empty":
+        return "", "all"
+    return region, region or "global"
+
+
+def _existing_item_count(jsonl_path: str) -> Optional[int]:
+    meta_path = _meta_path(jsonl_path)
+    if os.path.exists(meta_path):
+        try:
+            with open(meta_path, "r", encoding="utf-8") as f:
+                meta = json.load(f)
+            if "item_count" in meta:
+                return int(meta.get("item_count") or 0)
+        except Exception:
+            pass
+
+    if not os.path.exists(jsonl_path):
+        return None
+
+    try:
+        with open(jsonl_path, "r", encoding="utf-8") as f:
+            return sum(1 for _ in f if _.strip())
+    except Exception:
+        return None
+
+
+def _discover_service_names_by_keyword(keyword: str, currency: str) -> List[str]:
+    """Lightweight discovery query to locate serviceNames for a keyword."""
+
+    if not keyword:
+        return []
+
+    filter_str = (
+        f"startswith(tolower(productName),'%s') or startswith(tolower(meterName),'%s')"
+        % (keyword.lower(), keyword.lower())
+    )
+
+    url = f"{RETAIL_API_URL}?$filter={filter_str}&$top=200"
+    if currency and "currencyCode=" not in url:
+        sep = "&" if "?" in url else "?"
+        url = f"{url}{sep}currencyCode={currency}"
+
+    client = httpx.Client(timeout=httpx.Timeout(30.0, connect=10.0))
+    try:
+        resp = client.get(url)
+        resp.raise_for_status()
+        data = resp.json()
+        items = data.get("Items") or data.get("items") or []
+        return sorted({it.get("serviceName") for it in items if it.get("serviceName")})
+    except Exception:
+        return []
+    finally:
+        client.close()
+
+
+def _discover_additional_sources(
+    category: str, currency: str, attempted: set[str]
+) -> List[CatalogSource]:
+    cat = (category or "").lower()
+    hints: List[str] = []
+    for src in get_catalog_sources(cat):
+        if src.product_name_hint:
+            hints.append(src.product_name_hint)
+
+    if cat.startswith("network.gateway") or cat.startswith("network.frontdoor"):
+        hints.append("front door")
+    if cat.startswith("cache.redis"):
+        hints.append("redis")
+    if cat.startswith("network.public_ip"):
+        hints.append("ip address")
+    if cat.startswith("network.private_endpoint"):
+        hints.append("private endpoint")
+
+    discovered: List[CatalogSource] = []
+    for hint in hints:
+        for svc in _discover_service_names_by_keyword(hint, currency):
+            if not svc or svc in attempted:
+                continue
+            mode = "global" if cat.startswith("network.") else "regional"
+            discovered.append(CatalogSource(svc, arm_region_mode=mode, product_name_hint=hint))
+            attempted.add(svc)
+    return discovered
 
 
 def ensure_dir(path: str) -> None:
@@ -107,81 +201,126 @@ def ensure_catalog(
     Επιστρέφει πάντοτε το path του JSONL αρχείου (μπορεί να είναι κενό αν
     αποτύχει το fetch, αλλά το path θα είναι συνεπές).
     """
-    service_name = normalize_service_name(category, None)
     ensure_dir(base_dir)
-    fp = _catalog_path(base_dir, service_name, region, currency)
 
-    if os.path.exists(fp) and not refresh:
-        # Ήδη υπάρχει και δεν θέλουμε refresh -> επιστροφή
-        return fp
+    sources = get_catalog_sources(category)
+    attempts: List[Tuple[str, str, int]] = []
+    attempted_services: set[str] = set()
 
-    _LOGGER.info(
-        "Fetching Azure Retail Prices for serviceName='%s', category='%s', region='%s', currency='%s'...",
-        service_name,
-        category,
-        region,
-        currency,
-    )
+    chosen_fp: Optional[str] = None
+    chosen_rows: Optional[List[Dict[str, Any]]] = None
+    chosen_source: Optional[CatalogSource] = None
+    chosen_region_label = region
+    chosen_warning: Optional[str] = None
+    existing_item_count: Optional[int] = None
 
-    rows: List[Dict[str, Any]] = []
-    warning: Optional[str] = None
+    def _try_sources(candidates: List[CatalogSource]) -> bool:
+        nonlocal chosen_fp, chosen_rows, chosen_source, chosen_region_label, chosen_warning, existing_item_count
+        for src in candidates:
+            attempted_services.add(src.service_name)
+            query_region, region_label = _resolve_region(src.arm_region_mode, region)
+            fp_local = _catalog_path(base_dir, src.service_name, region_label, currency)
+            current_count = _existing_item_count(fp_local)
+            if current_count and current_count > 0 and not refresh:
+                chosen_fp = fp_local
+                chosen_source = src
+                chosen_region_label = region_label
+                existing_item_count = current_count
+                return True
 
-    try:
-        rows = fetch_all_for_service(
-            service_name=service_name,
-            region=region,
-            currency=currency,
-        )
-    except Exception as ex:
-        warning = f"fetch_failed: {ex}"
-        _LOGGER.error(
-            "Failed to fetch Retail prices for serviceName='%s', region='%s', currency='%s': %s",
-            service_name,
-            region,
-            currency,
-            ex,
-        )
-        rows = []
+            rows: List[Dict[str, Any]] = []
+            warning: Optional[str] = None
+            try:
+                rows = fetch_all_for_service(
+                    service_name=src.service_name,
+                    region=query_region,
+                    currency=currency,
+                )
+            except Exception as ex:
+                warning = f"fetch_failed: {ex}"
+                _LOGGER.error(
+                    "Failed to fetch Retail prices for serviceName='%s', region='%s', currency='%s': %s",
+                    src.service_name,
+                    query_region,
+                    currency,
+                    ex,
+                )
+                rows = []
 
+            attempts.append((src.service_name, query_region, len(rows)))
+            if rows:
+                chosen_fp = fp_local
+                chosen_rows = rows
+                chosen_source = src
+                chosen_region_label = region_label
+                chosen_warning = warning
+                return True
+        return False
+
+    success = _try_sources(sources)
+    if not success:
+        discovered = _discover_additional_sources(category, currency, attempted_services)
+        if discovered:
+            success = _try_sources(discovered)
+
+    if not success:
+        # Fallback to first mapping for path consistency
+        fallback_source = sources[0] if sources else CatalogSource(normalize_service_name(category, None))
+        _, chosen_region_label = _resolve_region(fallback_source.arm_region_mode, region)
+        chosen_fp = _catalog_path(base_dir, fallback_source.service_name, chosen_region_label, currency)
+        chosen_source = fallback_source
+        chosen_rows = chosen_rows or []
+
+    if existing_item_count and chosen_fp:
+        return chosen_fp
+
+    rows_to_write = chosen_rows or []
     item_count = 0
-    with open(fp, "w", encoding="utf-8") as f:
-        for r in rows:
-            f.write(json.dumps(r, ensure_ascii=False) + "\n")
-            item_count += 1
+    if chosen_fp:
+        with open(chosen_fp, "w", encoding="utf-8") as f:
+            for r in rows_to_write:
+                f.write(json.dumps(r, ensure_ascii=False) + "\n")
+                item_count += 1
+
+    warning = chosen_warning
+    if attempts and item_count > 0 and any(cnt == 0 for _, _, cnt in attempts):
+        failed = ", ".join(f"{svc}@{reg}" for svc, reg, cnt in attempts if cnt == 0)
+        warning = (warning + "; " if warning else "") + f"fallback_used:{failed}"
 
     if item_count == 0 and warning is None:
         warning = "no_items_returned"
         _LOGGER.warning(
             "Retail API returned 0 items for serviceName='%s' (category='%s', region='%s', currency='%s'). "
-            "Check query / filters (e.g. serviceName eq '%s').",
-            service_name,
+            "Tried sources: %s",
+            chosen_source.service_name if chosen_source else normalize_service_name(category, None),
             category,
-            region,
+            chosen_region_label,
             currency,
-            service_name,
+            attempts,
         )
     else:
         _LOGGER.info(
             "Catalog built for serviceName='%s' (category='%s', region='%s', currency='%s') with %d items.",
-            service_name,
+            chosen_source.service_name if chosen_source else normalize_service_name(category, None),
             category,
-            region,
+            chosen_region_label,
             currency,
             item_count,
         )
 
-    # Γράφουμε/ενημερώνουμε το .meta αρχείο
-    _write_meta(
-        fp,
-        service_name=service_name,
-        category=category,
-        region=region,
-        currency=currency,
-        item_count=item_count,
-        warning=warning,
-    )
+    if chosen_fp:
+        _write_meta(
+            chosen_fp,
+            service_name=chosen_source.service_name if chosen_source else normalize_service_name(category, None),
+            category=category,
+            region=chosen_region_label,
+            currency=currency,
+            item_count=item_count,
+            warning=warning,
+        )
+        return chosen_fp
 
-    return fp
+    return _catalog_path(base_dir, normalize_service_name(category, None), region, currency)
 
 
 def load_catalog(base_dir: str, category: str, region: str, currency: str) -> List[Dict[str, Any]]:
@@ -191,12 +330,7 @@ def load_catalog(base_dir: str, category: str, region: str, currency: str) -> Li
     - Αν δεν υπάρχει JSONL αρχείο, θα προσπαθήσει να το δημιουργήσει με ensure_catalog().
     - Αν παρ' όλα αυτά δεν υπάρχει (π.χ. αποτυχία στο fetch), επιστρέφει empty list.
     """
-    service_name = normalize_service_name(category, None)
-    fp = _catalog_path(base_dir, service_name, region, currency)
-
-    if not os.path.exists(fp):
-        # best-effort: try to create
-        ensure_catalog(base_dir, category, region, currency, refresh=False)
+    fp = ensure_catalog(base_dir, category, region, currency, refresh=False)
 
     items: List[Dict[str, Any]] = []
     if os.path.exists(fp):

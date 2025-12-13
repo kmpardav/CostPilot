@@ -1,0 +1,191 @@
+{
+  "metadata": {
+    "version": "1.0",
+    "currency": "EUR",
+    "default_region": "westeurope",
+    "required_categories": [
+      "compute",
+      "db",
+      "cache",
+      "network",
+      "storage"
+    ],
+    "compare_policy": "soft_compare",
+    "adjudication_enabled": true,
+    "adjudication_topn": 1
+  },
+  "scenarios": [
+    {
+      "id": "baseline",
+      "label": "Baseline",
+      "description": "Premium v3 App Service with forced exact-match adjudication",
+      "resources": [
+        {
+          "id": "appsvc-plan-prod",
+          "category": "appservice.plan",
+          "service_name": "Azure App Service",
+          "arm_sku_name": "P1v3",
+          "region": "westeurope",
+          "quantity": 1,
+          "hours_per_month": 730,
+          "billing_model": "payg",
+          "workload_type": "web_app",
+          "criticality": "prod",
+          "os_type": "windows",
+          "metrics": {
+            "storage_gb": 0,
+            "hot_gb": 0,
+            "cool_gb": 0,
+            "archive_gb": 0,
+            "egress_gb": 0,
+            "operations_per_month": 0,
+            "messages_per_month": 0,
+            "throughput_ru": 0,
+            "throughput_mbps": 0,
+            "iops": 0,
+            "dtus": 0,
+            "vcores": 0
+          },
+          "notes": "Adjudication includes P1v3 exact match even when top_n=1.",
+          "source": "fixture",
+          "unit_price": 0.29,
+          "unit_of_measure": "1 Hour",
+          "currency_code": "EUR",
+          "sku_name": "P1v3",
+          "meter_name": "P1v3 Windows App Service",
+          "product_name": "App Service Premium v3 P1v3",
+          "sku_candidates": [
+            {
+              "index": 0,
+              "candidate_id": "cand-p0v3",
+              "group": "scored",
+              "score": 0,
+              "service_name": "Azure App Service",
+              "product_name": "App Service Premium v3 P0v3",
+              "meter_name": "P0v3 Windows App Service",
+              "sku_name": "P0v3",
+              "arm_sku_name": "P0v3",
+              "unit_price": 0.15,
+              "unit_of_measure": "1 Hour",
+              "currency_code": "EUR",
+              "type": "",
+              "reservationTerm": null
+            },
+            {
+              "index": 1,
+              "candidate_id": "cand-p1v3",
+              "group": "exact_match",
+              "score": 0,
+              "service_name": "Azure App Service",
+              "product_name": "App Service Premium v3 P1v3",
+              "meter_name": "P1v3 Windows App Service",
+              "sku_name": "P1v3",
+              "arm_sku_name": "P1v3",
+              "unit_price": 0.29,
+              "unit_of_measure": "1 Hour",
+              "currency_code": "EUR",
+              "type": "",
+              "reservationTerm": null
+            }
+          ],
+          "pricing_status": "priced",
+          "error": "",
+          "units": 730,
+          "monthly_cost": 211.7,
+          "yearly_cost": 2540.4,
+          "adjudication": {
+            "enabled": true,
+            "top_n": 2,
+            "candidates": [
+              {
+                "index": 0,
+                "candidate_id": "cand-p0v3",
+                "group": "scored",
+                "score": 0,
+                "service_name": "Azure App Service",
+                "product_name": "App Service Premium v3 P0v3",
+                "meter_name": "P0v3 Windows App Service",
+                "sku_name": "P0v3",
+                "arm_sku_name": "P0v3",
+                "unit_price": 0.15,
+                "unit_of_measure": "1 Hour",
+                "currency_code": "EUR",
+                "type": "",
+                "reservationTerm": null
+              },
+              {
+                "index": 1,
+                "candidate_id": "cand-p1v3",
+                "group": "exact_match",
+                "score": 0,
+                "service_name": "Azure App Service",
+                "product_name": "App Service Premium v3 P1v3",
+                "meter_name": "P1v3 Windows App Service",
+                "sku_name": "P1v3",
+                "arm_sku_name": "P1v3",
+                "unit_price": 0.29,
+                "unit_of_measure": "1 Hour",
+                "currency_code": "EUR",
+                "type": "",
+                "reservationTerm": null
+              }
+            ],
+            "decision": {
+              "status": "accepted",
+              "selected_index": 1,
+              "selected_candidate_id": "cand-p1v3",
+              "rationale": "Selected exact match tier"
+            }
+          }
+        }
+      ],
+      "totals": {
+        "currency": "EUR",
+        "is_complete": true,
+        "completeness": 1.0,
+        "comparable": true,
+        "compare_skip_reason": null,
+        "missing_count": 0,
+        "mismatch_count": 0,
+        "reservation_ambiguous_count": 0,
+        "required_missing_count": 0,
+        "required_mismatch_count": 0,
+        "required_reservation_ambiguous_count": 0,
+        "required_estimated_count": 0,
+        "total_monthly": 211.7,
+        "total_yearly": 2540.4,
+        "monthly_priced": 211.7,
+        "yearly_priced": 2540.4,
+        "monthly_estimated": 0.0,
+        "yearly_estimated": 0.0,
+        "monthly_missing": 0.0,
+        "yearly_missing": 0.0,
+        "priced_total": 211.7,
+        "estimated_total": 0.0,
+        "missing_total": 0.0,
+        "modeled_total": 211.7,
+        "monthly_with_estimates": 211.7,
+        "yearly_with_estimates": 2540.4,
+        "required": {
+          "priced_total": 211.7,
+          "estimated_total": 0.0,
+          "missing_total": 0.0,
+          "yearly_priced": 2540.4,
+          "yearly_estimated": 0.0,
+          "yearly_missing": 0.0,
+          "blockers": [],
+          "deltas": []
+        },
+        "all": {
+          "priced_total": 211.7,
+          "estimated_total": 0.0,
+          "missing_total": 0.0,
+          "yearly_priced": 2540.4,
+          "yearly_estimated": 0.0,
+          "yearly_missing": 0.0
+        },
+        "messages": []
+      }
+    }
+  ]
+}

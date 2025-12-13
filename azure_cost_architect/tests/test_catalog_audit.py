@@ -77,6 +77,8 @@ def test_build_catalog_audit_report(tmp_path: Path):
     report = build_catalog_audit_report(runs_dir, catalog_dir)
 
     assert "Catalog inventory by category" in report
+    assert "Suggested mapping changes" in report
+    assert "No empty or missing catalogs detected" in report
     assert "Run: run1" in report
     assert "Standard_D2s_v5" in report
     assert "Correct meter" in report

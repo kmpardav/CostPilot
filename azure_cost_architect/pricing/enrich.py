@@ -594,6 +594,13 @@ def attach_baseline_deltas(enriched_scenarios: List[Dict[str, Any]]) -> None:
 # ------------------------------------------------------------
 
 
+def _normalize_category_for_scoring(category: str) -> str:
+    cat = (category or "other").lower()
+    if cat.startswith("appservice.plan"):
+        return "appservice"
+    return cat
+
+
 def filter_items_by_sku_intent(
     category: str, requested_sku: str, items: List[Dict[str, Any]]
 ) -> Tuple[List[Dict[str, Any]], bool]:
@@ -763,6 +770,46 @@ def _score_candidates(
     return scored_items
 
 
+def _candidate_key(item: Dict[str, Any]) -> Tuple[str, str, str, str]:
+    return (
+        (item.get("skuName") or "").lower(),
+        (item.get("armSkuName") or "").lower(),
+        (item.get("meterName") or "").lower(),
+        (item.get("productName") or item.get("ProductName") or "").lower(),
+    )
+
+
+def _find_exact_match_candidates(
+    requested_sku: str,
+    scored_items: List[Tuple[int, Dict[str, Any]]],
+    existing: List[Tuple[int, Dict[str, Any]]],
+) -> List[Tuple[int, Dict[str, Any]]]:
+    tokens = [tok for tok in re.split(r"[^a-z0-9]+", (requested_sku or "").lower()) if tok]
+    if not tokens:
+        return []
+
+    existing_keys = {_candidate_key(it) for _, it in existing}
+    matches: List[Tuple[int, Dict[str, Any]]] = []
+    for pair in scored_items:
+        score, item = pair
+        key = _candidate_key(item)
+        if key in existing_keys:
+            continue
+        haystack = " ".join(
+            [
+                item.get("productName") or item.get("ProductName") or "",
+                item.get("meterName") or "",
+                item.get("skuName") or "",
+                item.get("armSkuName") or "",
+            ]
+        ).lower()
+        if all(tok in haystack for tok in tokens):
+            matches.append(pair)
+            existing_keys.add(key)
+
+    return matches
+
+
 def _build_candidate_id(resource: Dict[str, Any], item: Dict[str, Any]) -> str:
     parts = [
         (resource.get("service_name") or item.get("serviceName") or "").strip(),
@@ -781,16 +828,20 @@ def _build_candidate_entries(
     resource: Dict[str, Any],
     scored_items: List[Tuple[int, Dict[str, Any]]],
     *,
-    top_n: int,
+    start_index: int = 0,
+    limit: Optional[int] = None,
+    group: str = "scored",
 ) -> List[Dict[str, Any]]:
     entries: List[Dict[str, Any]] = []
-    for idx, (score, it) in enumerate(scored_items[:top_n]):
+    window = scored_items if limit is None else scored_items[:limit]
+    for idx, (score, it) in enumerate(window):
         candidate_id = _build_candidate_id(resource, it)
         entries.append(
             {
-                "index": idx,
+                "index": start_index + idx,
                 "candidate_id": candidate_id,
                 "score": score,
+                "group": group,
                 "service_name": resource.get("service_name") or it.get("serviceName"),
                 "product_name": it.get("productName") or it.get("ProductName"),
                 "meter_name": it.get("meterName"),
@@ -1098,8 +1149,9 @@ async def fetch_price_for_resource(
     debug: bool = False,
     adjudicator: Optional[Dict[str, Any]] = None,
 ) -> None:
-    category = resource.get("category") or "other"
-    service_name = normalize_service_name(category, resource.get("service_name"))
+    raw_category = resource.get("category") or "other"
+    category = _normalize_category_for_scoring(raw_category)
+    service_name = normalize_service_name(raw_category, resource.get("service_name"))
     arm_sku_name = resource.get("arm_sku_name") or resource.get("armSkuName") or None
     region = (resource.get("region") or default_region or DEFAULT_REGION).strip() or DEFAULT_REGION
 
@@ -1292,14 +1344,36 @@ async def fetch_price_for_resource(
         )
         best_item_score, best_item = scored_items[0]
 
-        candidates = _build_candidate_entries(
-            resource, scored_items, top_n=max(1, adjudicate_topn)
+        top_n_limit = max(1, adjudicate_topn)
+        candidate_items = scored_items[:top_n_limit]
+        exact_matches = _find_exact_match_candidates(
+            arm_sku_name or "", scored_items, candidate_items
         )
-        candidate_items = scored_items[: max(1, adjudicate_topn)]
+        if exact_matches:
+            candidate_items = candidate_items + exact_matches
+
+        candidates: List[Dict[str, Any]] = []
+        candidates.extend(
+            _build_candidate_entries(
+                resource, candidate_items[:top_n_limit], start_index=0, group="scored"
+            )
+        )
+        if len(candidate_items) > top_n_limit:
+            candidates.extend(
+                _build_candidate_entries(
+                    resource,
+                    candidate_items[top_n_limit:],
+                    start_index=top_n_limit,
+                    group="exact_match",
+                )
+            )
+
         selected_pair = candidate_items[0]
         selected_candidate_id = candidates[0].get("candidate_id") if candidates else None
         decision_status = "auto"
         decision_rationale = ""
+
+        top_n_for_adjudicator = len(candidate_items)
 
         if adjudication_enabled:
             if adjudicator_client:
@@ -1310,7 +1384,7 @@ async def fetch_price_for_resource(
                     region=region,
                     currency=currency,
                     candidates=candidates,
-                    top_n=max(1, adjudicate_topn),
+                    top_n=max(1, top_n_for_adjudicator),
                 )
                 decision_rationale = rationale or ""
                 if status == "selected" and idx is not None and idx < len(candidate_items):
@@ -1328,7 +1402,7 @@ async def fetch_price_for_resource(
             if decision_status == "unresolvable":
                 resource["adjudication"] = {
                     "enabled": True,
-                    "top_n": adjudicate_topn,
+                    "top_n": max(1, top_n_for_adjudicator),
                     "candidates": candidates,
                     "decision": {
                         "status": "unresolvable",
@@ -1394,12 +1468,12 @@ async def fetch_price_for_resource(
             price_info["type"] = best_item.get("type")
 
         if adjudication_enabled:
-            resource["adjudication"] = {
-                "enabled": True,
-                "top_n": adjudicate_topn,
-                "candidates": candidates,
-                "decision": {
-                    "status": decision_status,
+                resource["adjudication"] = {
+                    "enabled": True,
+                    "top_n": max(1, top_n_for_adjudicator),
+                    "candidates": candidates,
+                    "decision": {
+                        "status": decision_status,
                     "selected_index": candidate_items.index(selected_pair)
                     if selected_pair in candidate_items
                     else 0,
