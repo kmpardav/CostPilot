@@ -1,0 +1,3556 @@
+{
+  "Azure Database for MySQL": {
+    "serviceFamily": "Databases",
+    "item_count": 1149,
+    "sample_productNames": [
+      "Azure Database for MySQL Single Server Basic - Compute Gen5",
+      "Azure Database for MySQL Flexible Server Business Critical Ev3 Series Compute",
+      "Azure Database for MySQL Single Server Memory Optimized - Compute Gen5",
+      "Azure Database for MySQL Flexible Server Burstable BS Series Compute",
+      "Azure Database for MySQL Flexible Server General Purpose Dadsv6 Series Compute",
+      "Azure Database for MySQL Flexible Server General Purpose Dasv6 Series Compute",
+      "Azure Database for MySQL Single Server - Backup Storage",
+      "Azure Database for MySQL Flexible Server Memory Optimized Eadsv6 Series Compute"
+    ],
+    "sample_skuNames": [
+      "vCore",
+      "Standard_Eas",
+      "16 vCore",
+      "Basic",
+      "2 vCore",
+      "Backup GRS",
+      "PMD LRS",
+      "1 vCore"
+    ],
+    "sample_meterNames": [
+      "64 vCore",
+      "Standard Data Stored",
+      "Basic Data Stored",
+      "32 vCore",
+      "vCore",
+      "16 vCore",
+      "Paid IO LRS IO Rate Operations",
+      "Storage GP Accelerated Logs"
+    ]
+  },
+  "Virtual Machines": {
+    "serviceFamily": "Compute",
+    "item_count": 131026,
+    "sample_productNames": [
+      "Virtual Machines MS Series Windows",
+      "Virtual Machines Dsv4 Series",
+      "Virtual Machines Easv4 Series Windows",
+      "Virtual Machines ECasccv5 Series Windows",
+      "Virtual Machines Fadsv7 Series",
+      "Virtual Machines Falsv6 Series",
+      "Virtual Machines MS Series",
+      "Virtual Machines Eadsv5 Series"
+    ],
+    "sample_skuNames": [
+      "E48ads v5",
+      "D16s v4",
+      "E64-16ads v5 Low Priority",
+      "Standard_D96s_v5",
+      "D2ls v6",
+      "F32als v6",
+      "E8-2ds v5",
+      "F80amds v7"
+    ],
+    "sample_meterNames": [
+      "D96alds v6 Spot",
+      "D4d v4",
+      "EC20ads_v5",
+      "DC32adsv6",
+      "Standard_M96ds_2_v3",
+      "DC2ads v5 Low Priority",
+      "E16-8s v5 Low Priority",
+      "E4-2as v7"
+    ]
+  },
+  "Storage": {
+    "serviceFamily": "Storage",
+    "item_count": 17832,
+    "sample_productNames": [
+      "General Block Blob v2 Hierarchical Namespace",
+      "Storage Reserved Capacity",
+      "Premium SSD Managed Disks",
+      "Blob Features",
+      "General Block Blob",
+      "Azure Data Lake Storage Gen2 Hierarchical Namespace",
+      "Standard SSD Managed Disks",
+      "General Block Blob v2"
+    ],
+    "sample_skuNames": [
+      "Hot GRS",
+      "Archive - 1 PB RA-GRS",
+      "Standard GRS",
+      "Cold ZRS",
+      "Hot ZRS",
+      "Hot - 10 PB GZRS",
+      "Account Encrypted GRS",
+      "Cool GRS"
+    ],
+    "sample_meterNames": [
+      "LRS Write Operations",
+      "Premium ZRS Write Operations",
+      "GRS Class 1 Additional IO",
+      "E10 LRS Disk Mount",
+      "Hot LRS Data Stored",
+      "P60 LRS Disk",
+      "Cool LRS Write Operations",
+      "GRS Class 1 Operations"
+    ]
+  },
+  "SQL Database": {
+    "serviceFamily": "Databases",
+    "item_count": 4690,
+    "sample_productNames": [
+      "SQL Database Single/Elastic Pool Hyperscale - Premium Series Compute",
+      "SQL Database General Purpose - Serverless - Compute Gen5",
+      "SQL Database Single/Elastic Pool General Purpose - Compute Gen5",
+      "SQL Database Single/Elastic Pool General Purpose - Storage",
+      "SQL Database Single/Elastic Pool Hyperscale - Compute DC-Series",
+      "SQL Database Single/Elastic Pool Business Critical - Compute DC-Series",
+      "SQL Database Single Standard",
+      "SQL Database Single Premium"
+    ],
+    "sample_skuNames": [
+      "36 vCore",
+      "S0 Secondary",
+      "72 vCore",
+      "1 vCore",
+      "80 vCore Zone Redundancy",
+      "1000 DTU Pack",
+      "S9",
+      "1 DTU"
+    ],
+    "sample_meterNames": [
+      "Business Critical IO Rate Operations",
+      "eDTUs",
+      "General Purpose IO Rate Operations",
+      "Zone Redundancy vCore",
+      "JA800 Job Agent",
+      "Data Stored",
+      "vCore",
+      "Backup RA-GRS Data Stored"
+    ]
+  },
+  "Foundry Tools": {
+    "serviceFamily": "AI + Machine Learning",
+    "item_count": 3424,
+    "sample_productNames": [
+      "Azure Language",
+      "Azure Speech",
+      "Language Understanding",
+      "Azure Video Indexer",
+      "Azure Speech - Disconnected",
+      "Azure Document Intelligence - Disconnected",
+      "Azure Document Intelligence",
+      "Azure Vision"
+    ],
+    "sample_skuNames": [
+      "Standard Doc Content Extraction",
+      "S4",
+      "Free",
+      "S1",
+      "EDU Nonprofit",
+      "Commitment Tier Connected 16000K",
+      "Voice Live API Lite - Standard Speech Audio Cached",
+      "Custom Image Classification"
+    ],
+    "sample_meterNames": [
+      "Custom - Fast Transcription Speech To Text",
+      "S1 Conversation Transcription Multichannel Audio",
+      "Video Streaming Basic Egress Bytes",
+      "Commitment Tier Connected 25M Unit",
+      "Commitment Tier Read Connected 500K Unit",
+      "Commitment Tier Pre-Built Azure 1000K CT Overage Transactions",
+      "Commitment Tier Connected 16000K Unit",
+      "Commitment Tier Read Azure 500K CT Overage Transactions"
+    ]
+  },
+  "Time Series Insights": {
+    "serviceFamily": "Internet of Things",
+    "item_count": 31,
+    "sample_productNames": [
+      "Time Series Insights"
+    ],
+    "sample_skuNames": [
+      "S1",
+      "Data Processing",
+      "Pay as you go",
+      "S2"
+    ],
+    "sample_meterNames": [
+      "S1 Unit",
+      "Additional Data Processing",
+      "Pay as you go Cold Queries",
+      "Data Processing Unit",
+      "Pay as you go Warm Storage",
+      "S2 Unit",
+      "Pay as you go MetaData Storage"
+    ]
+  },
+  "Redis Cache": {
+    "serviceFamily": "Databases",
+    "item_count": 2096,
+    "sample_productNames": [
+      "Azure Redis Cache Standard",
+      "Azure Managed Redis - Balanced",
+      "Azure Managed Redis - Compute Optimized",
+      "Azure Redis Cache Premium",
+      "Azure Redis Cache Enterprise",
+      "Azure Managed Redis - Flash Optimized",
+      "Azure Redis Cache Isolated",
+      "Azure Redis Cache Enterprise Flash"
+    ],
+    "sample_skuNames": [
+      "M700",
+      "A500",
+      "F300",
+      "C4",
+      "B1000",
+      "X500",
+      "B700",
+      "E10"
+    ],
+    "sample_meterNames": [
+      "M20 Cache Instance",
+      "M2000 Cache Instance",
+      "X20 Cache Instance",
+      "P4 Cache Instance",
+      "E10 Cache",
+      "P1 Cache",
+      "A4500 Cache Instance",
+      "M250 Cache Instance"
+    ]
+  },
+  "Virtual WAN": {
+    "serviceFamily": "Networking",
+    "item_count": 248,
+    "sample_productNames": [
+      "Virtual WAN"
+    ],
+    "sample_skuNames": [
+      "VPN P2S Connection Unit",
+      "Standard Hub with Firewall policies for Third party security provider(s)",
+      "ExpressRoute Additional Scale Unit",
+      "ExpressRoute Scale Unit",
+      "ExpressRoute Connection Unit",
+      "VPN P2S Scale Unit",
+      "App Gateway Unit",
+      "Standard Hub"
+    ],
+    "sample_meterNames": [
+      "VPN P2S Connection Unit",
+      "NVA Infrastructure Unit",
+      "VPN S2S Connection Unit",
+      "VPN S2S Scale Unit",
+      "Standard Hub with Firewall policies for Third party security provider(s) Unit",
+      "VPN Policy Unit",
+      "ExpressRoute Scale Unit",
+      "Standard Hub with Firewall policies for Third party security provider(s) Data Processed"
+    ]
+  },
+  "Azure Kubernetes Service": {
+    "serviceFamily": "Compute",
+    "item_count": 136,
+    "sample_productNames": [
+      "Azure Kubernetes Service - Automatic",
+      "Azure Kubernetes Service"
+    ],
+    "sample_skuNames": [
+      "Automatic",
+      "Standard"
+    ],
+    "sample_meterNames": [
+      "Automatic Storage Optimized",
+      "Automatic GPU Accelerated",
+      "Automatic Confidential Compute",
+      "Automatic Compute Optimized",
+      "Standard Uptime SLA",
+      "Standard Long Term Support",
+      "Automatic Memory Optimized",
+      "Automatic Hosted Control Plane"
+    ]
+  },
+  "Azure Monitor": {
+    "serviceFamily": "Management and Governance",
+    "item_count": 2696,
+    "sample_productNames": [
+      "Azure Monitor"
+    ],
+    "sample_skuNames": [
+      "500 GB Commitment Tier",
+      "Notifications",
+      "Log Analytics data export",
+      "Voice Calls",
+      "Emails",
+      "SMS Country Code 372",
+      "SMS Country Code 506",
+      "Alerts"
+    ],
+    "sample_meterNames": [
+      "Basic Logs Data Ingestion",
+      "SMS Country Code 56 Notification",
+      "Voice Calls Voice Call Country Code 56",
+      "SMS Country Code 357 Notification",
+      "Notifications ITSM Connector Create/Update Event",
+      "Free Benefit - M365 Defender Data Ingestion",
+      "Voice Calls Voice Call Country Code 33",
+      "Free Benefit - Az Sentinel Trial Data Ingestion"
+    ]
+  },
+  "Azure Database for PostgreSQL": {
+    "serviceFamily": "Databases",
+    "item_count": 1926,
+    "sample_productNames": [
+      "Azure Database for PostgreSQL Flexible Server Memory Optimized Eadsv5 Series Compute",
+      "Azure Database for PostgreSQL OrionDB storage",
+      "Azure Database for PostgreSQL Flexible Server Burstable BS Series Compute",
+      "Azure Database for PostgreSQL Flexible Server General Purpose Dsv3 Series Compute",
+      "Azure Database for PostgreSQL Single Server General Purpose - Storage",
+      "Azure Database for PostgreSQL Flexible Server Memory Optimized Edsv4 Series Compute",
+      "Az DB for PGSQL Flexible Server Memory Optimized Esv3 Series Compute",
+      "Az DB for PostgreSQL Flexible Server Storage"
+    ],
+    "sample_skuNames": [
+      "B20ms",
+      "vCore",
+      "Free",
+      "96 vCore",
+      "2 vCore",
+      "B2ms",
+      "8 vCore",
+      "OrionDB storage"
+    ],
+    "sample_meterNames": [
+      "vCore",
+      "B2ms vCore",
+      "B8ms vCore",
+      "1 vCore",
+      "General Purpose Data Stored",
+      "IOPS Scaling Provisioned IOPS",
+      "Backup LRS Data Stored",
+      "Basic Data Stored"
+    ]
+  },
+  "Azure Container Apps": {
+    "serviceFamily": "Compute",
+    "item_count": 138,
+    "sample_productNames": [
+      "Azure Container Apps"
+    ],
+    "sample_skuNames": [
+      "Standard",
+      "Hybrid",
+      "Dedicated",
+      "Dynamic Sessions"
+    ],
+    "sample_meterNames": [
+      "Dedicated Plan Management",
+      "Hybrid vCPU Usage",
+      "Standard NC T4 v3 GPU Usage",
+      "Dedicated Memory Usage",
+      "Standard Memory Idle Usage",
+      "Dedicated vCPU Usage",
+      "Standard Memory Active Usage",
+      "Standard NC A100 v4 GPU Usage"
+    ]
+  },
+  "Azure Synapse Analytics": {
+    "serviceFamily": "Analytics",
+    "item_count": 1061,
+    "sample_productNames": [
+      "Azure Synapse SSIS Standard D-series v2 VM",
+      "Azure Synapse Analytics Data Flow - Standard",
+      "Azure Synapse Analytics Serverless Apache Spark Pool - Memory Optimized",
+      "Azure Synapse Analytics Pipelines",
+      "Azure Synapse SSIS Standard E-series v3 VM",
+      "Azure Synapse SSIS Standard D-series v3 VM",
+      "Azure Synapse Analytics Dedicated SQL Pool",
+      "Azure Synapse SSIS Enterprise D-series v2 VM"
+    ],
+    "sample_skuNames": [
+      "D4 v3",
+      "Azure Hosted IR",
+      "DW100c",
+      "D16 v3",
+      "A8 v2",
+      "DW15000c",
+      "DW500c",
+      "E32 v3"
+    ],
+    "sample_meterNames": [
+      "D4 v3 AHB",
+      "E64 v3 AHB",
+      "100 DWUs",
+      "E4 v3 License Included",
+      "D64 v3 AHB",
+      "E64i v3 License Included",
+      "vCore",
+      "E2 v3 AHB"
+    ]
+  },
+  "Log Analytics": {
+    "serviceFamily": "Management and Governance",
+    "item_count": 86,
+    "sample_productNames": [
+      "Log Analytics"
+    ],
+    "sample_skuNames": [
+      "Premium",
+      "Analytics Logs",
+      "Standard",
+      "Free"
+    ],
+    "sample_meterNames": [
+      "Premium Data Analyzed",
+      "Analytics Logs Data Ingestion",
+      "Analytics Logs Data Analyzed",
+      "Standard Data Analyzed",
+      "Free Data Analyzed",
+      "Analytics Logs Data Retention"
+    ]
+  },
+  "Azure Cosmos DB": {
+    "serviceFamily": "Databases",
+    "item_count": 1383,
+    "sample_productNames": [
+      "Azure Cosmos DB Materialized Views",
+      "Azure Cosmos DB Garnet Cache",
+      "Azure Cosmos DB serverless",
+      "Azure Cosmos DB Dedicated Gateway - General Purpose",
+      "Azure DocumentDB",
+      "Azure Cosmos DB autoscale",
+      "Azure Cosmos DB Analytics Storage",
+      "Azure Cosmos DB"
+    ],
+    "sample_skuNames": [
+      "B2S",
+      "E4s",
+      "MVBuilder D8s",
+      "Free",
+      "Coordinator Node 64 vCore",
+      "Free Tier",
+      "5 Million Multi-master RU/s",
+      "AP1"
+    ],
+    "sample_meterNames": [
+      "AP4 Entry Price",
+      "D4s",
+      "256 GiB Disk",
+      "100 Multi-master RU/s",
+      "vCore",
+      "E8s",
+      "MVBuilder D64s vCore",
+      "Periodic Backup - ZRS Data Stored"
+    ]
+  },
+  "Phone Numbers": {
+    "serviceFamily": "Azure Communication Services",
+    "item_count": 1395,
+    "sample_productNames": [
+      "Toll Free Numbers - I",
+      "Toll Free Numbers",
+      "Geographic Numbers",
+      "Geographic Numbers - I",
+      "Mobile",
+      "Local Numbers - Campaign Registration",
+      "Mobile - I",
+      "Local Numbers - Brand Registration"
+    ],
+    "sample_skuNames": [
+      "NL",
+      "PT",
+      "FI",
+      "BE",
+      "FR",
+      "ES",
+      "Trial",
+      "ID"
+    ],
+    "sample_meterNames": [
+      "ES Leased Number",
+      "DK Leased Number",
+      "TH Leased Number",
+      "IE Leased Number",
+      "NZ Leased Number",
+      "BE Leased Number",
+      "ID Leased Number",
+      "UK Leased Number"
+    ]
+  },
+  "SMS": {
+    "serviceFamily": "Azure Communication Services",
+    "item_count": 217,
+    "sample_productNames": [
+      "Short Codes - Inbound - I",
+      "Toll Free SMS - Inbound",
+      "Short Codes - Leasing - Vanity Number - I",
+      "Short Codes - Leasing - Standard Number - I",
+      "Toll Free SMS-OB-Surcharge-I",
+      "Toll Free SMS - Outbound - I",
+      "Toll Free SMS-OB-Surcharge",
+      "Toll Free SMS-IB-Surcharge-I"
+    ],
+    "sample_skuNames": [
+      "CA",
+      "Standard",
+      "Trial",
+      "UK",
+      "ROW",
+      "US"
+    ],
+    "sample_meterNames": [
+      "CA Provisioning Fee",
+      "US Consumption Unit - Inbound",
+      "Trial Consumption Unit",
+      "US Lease",
+      "UK Provisioning Fee",
+      "UK Lease",
+      "ROW Consumption Unit - Inbound",
+      "ROW Consumption Unit - Outbound"
+    ]
+  },
+  "Azure Databricks": {
+    "serviceFamily": "Analytics",
+    "item_count": 442,
+    "sample_productNames": [
+      "Azure Databricks",
+      "Azure Databricks Regional"
+    ],
+    "sample_skuNames": [
+      "Premium Advanced Compute Delta Live Tables",
+      "Standard All-Purpose Photon",
+      "Premium Serverless SQL",
+      "Premium Jobs Light Compute",
+      "Premium Jobs Compute",
+      "POC Non-Billable Model Training",
+      "Premium Pro Compute Photon Delta Live Tables",
+      "Premium Clean Rooms Collaborator"
+    ],
+    "sample_meterNames": [
+      "Premium SQL Compute Pro DBU",
+      "Premium Core Compute Delta Live Tables DBU",
+      "Premium Pro Compute Photon Delta Live Tables DBU",
+      "Premium All-purpose Compute DBU",
+      "Standard SQL Analytics DBU",
+      "4.5 Million DBCUs DBU",
+      "Premium Jobs Compute DBU",
+      "Premium Advanced Compute Delta Live Tables DBU"
+    ]
+  },
+  "Azure Spring Cloud": {
+    "serviceFamily": "Other",
+    "item_count": 205,
+    "sample_productNames": [
+      "Azure Spring Apps",
+      "Azure Spring Apps Enterprise"
+    ],
+    "sample_skuNames": [
+      "Basic",
+      "Standard",
+      "Standard Consumption",
+      "Enterprise"
+    ],
+    "sample_meterNames": [
+      "Standard Overage vCPU Duration",
+      "Basic Free App Instance",
+      "Enterprise Overage vCPU Duration",
+      "Enterprise Free App Instance",
+      "Standard Consumption Config Server Management",
+      "Enterprise App Instance",
+      "Basic Overage Memory Duration",
+      "Standard Consumption Requests"
+    ]
+  },
+  "Data Lake Store": {
+    "serviceFamily": "Analytics",
+    "item_count": 88,
+    "sample_productNames": [
+      "Data Lake Store"
+    ],
+    "sample_skuNames": [
+      "Pay-as-you-go",
+      "1 TB",
+      "10 TB",
+      "1 PB",
+      "5 PB",
+      "100 TB",
+      "500 TB"
+    ],
+    "sample_meterNames": [
+      "Pay-as-you-go Data at Rest",
+      "Read Transactions",
+      "10 TB Pre-pay Data at Rest",
+      "1 PB Pre-pay Data at Rest",
+      "Write Transactions",
+      "100 TB Pre-pay Data at Rest",
+      "500 TB Pre-pay Data at Rest",
+      "Overage Data at Rest"
+    ]
+  },
+  "SQL Server Stretch Database": {
+    "serviceFamily": "Databases",
+    "item_count": 189,
+    "sample_productNames": [
+      "SQL Server Stretch Database"
+    ],
+    "sample_skuNames": [
+      "DSU300",
+      "DSU1500",
+      "DSU1200",
+      "DSU1000",
+      "DSU500",
+      "DSU100",
+      "DSU200",
+      "DSU2000"
+    ],
+    "sample_meterNames": [
+      "Data Stored",
+      "100 DSUs"
+    ]
+  },
+  "Azure Purview": {
+    "serviceFamily": "Analytics",
+    "item_count": 54,
+    "sample_productNames": [
+      "Azure Purview Data Map",
+      "Azure Purview Scanning Ingestion and Classification",
+      "Azure Purview Data Policy"
+    ],
+    "sample_skuNames": [
+      "Standard",
+      "Resource Set",
+      "Catalog Insights",
+      "SQL Server",
+      "PowerBI",
+      "Data Map Enrichment - Insight Generation",
+      "DevOps"
+    ],
+    "sample_meterNames": [
+      "Standard Capacity Unit",
+      "Resource Set vCore",
+      "Data Insights Insights Report Consumption",
+      "SQL Server vCore",
+      "PowerBI vCore",
+      "Data Map Enrichment - Data Insights Generation vCore",
+      "Policy",
+      "Standard vCore"
+    ]
+  },
+  "Azure App Service": {
+    "serviceFamily": "Compute",
+    "item_count": 3395,
+    "sample_productNames": [
+      "Azure App Service Premium v4 Plan",
+      "Azure App Service Premium v3 Plan - Linux",
+      "Azure App Service Isolated Plan - Linux",
+      "Azure App Service Isolated Plan",
+      "Azure App Service Isolated v2 Plan",
+      "Azure App Service Premium Windows Container Plan",
+      "Azure App Service Premium v4 Plan - Linux",
+      "Azure App Service Premium v3 Plan"
+    ],
+    "sample_skuNames": [
+      "S1",
+      "P0v3",
+      "P3mv3",
+      "P1 v2",
+      "I6 v2",
+      "I4mv2",
+      "P1",
+      "P1mv3"
+    ],
+    "sample_meterNames": [
+      "IDH v2",
+      "I3 v2 App",
+      "P2 v3 App",
+      "S1 App",
+      "P3mv3 App",
+      "F1 App",
+      "B1",
+      "P0v3 App"
+    ]
+  },
+  "Azure NetApp Files": {
+    "serviceFamily": "Storage",
+    "item_count": 385,
+    "sample_productNames": [
+      "Azure NetApp Files",
+      "Azure NetApp Files Reserved Capacity",
+      "Azure NetApp Files Reservation"
+    ],
+    "sample_skuNames": [
+      "Cross Region Replication - US Gov VA to US Gov AZ",
+      "Premium - 100 TiB",
+      "Standard Storage with Cool Access",
+      "Cross Region Replication - US West 3 to US East",
+      "CRR - UK South to DE West Central",
+      "CRR - DE West Central to SE Central",
+      "Volume Restore",
+      "Ultra Double Encrypted"
+    ],
+    "sample_meterNames": [
+      "Premium - 1 PiB Capacity",
+      "Cross Region Replication Hours",
+      "Standard Storage with Cool Access Capacity",
+      "CRR - DE West Central to DE North Minutes",
+      "Standard Double Encrypted Capacity",
+      "Cross Region Replication - US Gov VA to US Gov AZ Hours",
+      "Cross Region Replication - NO West to NO East Minutes",
+      "Standard Capacity"
+    ]
+  },
+  "SQL Managed Instance": {
+    "serviceFamily": "Databases",
+    "item_count": 1933,
+    "sample_productNames": [
+      "SQL Managed Instance General Purpose - Premium Series Memory Optimized Compute",
+      "SQL Managed Instance General Purpose - Premium Series Compute",
+      "SQL Managed Instance General Purpose - Storage",
+      "SQL Managed Instance Business Critical - Premium Series Memory Optimized Compute",
+      "SQL Managed Instance - LTR Backup Storage",
+      "SQL Managed Instance General Purpose - Compute Gen5",
+      "SQL Managed Instance Business Critical - Premium Series Compute",
+      "SQL Managed Instance PITR Backup Storage"
+    ],
+    "sample_skuNames": [
+      "64 vCore Zone Redundancy",
+      "24 vCore",
+      "24 vCore Zone Redundancy",
+      "16 vCore",
+      "80 vCore",
+      "64 vCore",
+      "4 vCore Zone Redundancy",
+      "40 vCore"
+    ],
+    "sample_meterNames": [
+      "LTR Backup RA-GZRS Data Stored",
+      "LTR Backup ZRS Data Stored",
+      "Additional IOPS",
+      "vCore",
+      "Zone Redundancy vCore",
+      "Addl Memory Additional Memory",
+      "General Purpose Data Stored",
+      "LTR Backup RA-GRS Data Stored"
+    ]
+  },
+  "Network Watcher": {
+    "serviceFamily": "Networking",
+    "item_count": 245,
+    "sample_productNames": [
+      "Network Watcher"
+    ],
+    "sample_skuNames": [
+      "Standard"
+    ],
+    "sample_meterNames": [
+      "Standard Perf Monitor Connection Metric",
+      "Standard Network Logs Collected",
+      "Standard Connection Monitoring",
+      "Standard Diagnostic Tool API",
+      "Standard VNet Flow Logs Collected",
+      "Standard Traffic Analytics Processing at 10-Minute Interval",
+      "Standard Connection Monitor Test",
+      "Standard Traffic Analytics Processing"
+    ]
+  },
+  "Microsoft Fabric": {
+    "serviceFamily": "Data",
+    "item_count": 789,
+    "sample_productNames": [
+      "Fabric Capacity",
+      "OneLake",
+      "Fabric Capacity Reservation"
+    ],
+    "sample_skuNames": [
+      "Eventstream Processor Capacity Usage",
+      "Cosmos Database in Microsoft Fabric Capacity Usage",
+      "VNet Data Gateway Capacity Usage",
+      "Storage Mirroring Free",
+      "Real-Time Intelligence - Event Listener and Alert Capacity Usage",
+      "API for GraphQL Query Capacity Usage",
+      "OneLake BCDR Iterative Write Operations Capacity Usage",
+      "Fabric Capacity"
+    ],
+    "sample_meterNames": [
+      "OneLake Cache Data Stored",
+      "Copilot and AI Capacity Usage CU",
+      "Data Movement Capacity Usage CU",
+      "Graph data science Capacity Usage CU",
+      "OneLake Read Operations via proxy Capacity Usage CU",
+      "OneLake BCDR Read Operations via proxy Capacity Usage CU",
+      "OneLake Iterative Read Operations Capacity Usage CU",
+      "OneLake BCDR Iterative Read Operations Capacity Usage CU"
+    ]
+  },
+  "Azure Machine Learning": {
+    "serviceFamily": "AI + Machine Learning",
+    "item_count": 145,
+    "sample_productNames": [
+      "Managed Model Hosting Service",
+      "Machine Learning service",
+      "Azure Machine Learning Enterprise GPU NC2 Series Inferencing",
+      "Machine Learning Hardware Accelerated Models",
+      "Azure Machine Learning Enterprise General Compute Inferencing",
+      "Azure Machine Learning Enterprise GPU NC3 Series Inferencing",
+      "Azure Machine Learning Enterprise GPU NV Series Inferencing",
+      "Azure Machine Learning Enterprise GPU ND Series Inferencing"
+    ],
+    "sample_skuNames": [
+      "Llama-4-Scout-17B-16E-In",
+      "PB",
+      "Standard",
+      "NV36admsA10v5",
+      "NCadsA100v4",
+      "NCadisH100v5",
+      "NC4asT4 v3",
+      "NDasrA100v4"
+    ],
+    "sample_meterNames": [
+      "Standard Training GPU Surcharge",
+      "NV12adsA10v5 Capacity Unit",
+      "NDisrH100v5 Capacity Unit",
+      "vCPU Surcharge",
+      "Standard vCPU Surcharge",
+      "NCadsA100v4 Capacity Unit",
+      "NCadisH100v5 Capacity Unit",
+      "NV18adsA10v5 Capacity Unit"
+    ]
+  },
+  "Virtual Machines Licenses": {
+    "serviceFamily": "Compute",
+    "item_count": 946,
+    "sample_productNames": [
+      "SQL Server Standard SLES with HA",
+      "SQL Server Enterprise Red Hat Enterprise Linux",
+      "SQL Server Linux Standard",
+      "BizTalk Server Enterprise",
+      "SQL Server Web",
+      "Azure Hybrid Benefit - SQL Server Enterprise - Reporting Services",
+      "SQL Server Web SLES with HA",
+      "Windows Server Burst"
+    ],
+    "sample_skuNames": [
+      "48 vCPU VM",
+      "896 vCPU VM",
+      "192 vCPU VM",
+      "50 vCPU VM",
+      "88 vCPU VM",
+      "184 vCPU VM",
+      "176 vCPU VM",
+      "224 vCPU VM"
+    ],
+    "sample_meterNames": [
+      "96 vCPU VM License",
+      "20 vCPU VM License",
+      "25 vCPU VM License",
+      "352 vCPU VM License",
+      "80 vCPU VM License",
+      "120 vCPU VM License",
+      "88 vCPU VM License",
+      "80 vCPU VM Monthly Service Fee"
+    ]
+  },
+  "Cloud Services": {
+    "serviceFamily": "Compute",
+    "item_count": 1804,
+    "sample_productNames": [
+      "Cloud Services FSv2 Series",
+      "Cloud Services G Series",
+      "Cloud Services Av2 Series",
+      "Cloud Services H Series",
+      "Cloud Services Ev3 Series",
+      "Cloud Services Dv3 Series",
+      "Cloud Services Server",
+      "Cloud Services LSv2 Series"
+    ],
+    "sample_skuNames": [
+      "D64 v3",
+      "A4 v2 Low Priority",
+      "H8 Low Priority",
+      "D64 v3 Low Priority",
+      "E48 v3",
+      "E4 v3",
+      "A2 v2",
+      "D32 v3 Low Priority"
+    ],
+    "sample_meterNames": [
+      "F64s v2 Low Priority",
+      "D2 v3",
+      "D4 v3 Low Priority",
+      "D64 v3 Low Priority",
+      "F72s v2 Low Priority",
+      "A2m v2 Low Priority",
+      "E32 v3 Low Priority",
+      "A1 v2"
+    ]
+  },
+  "Application Gateway": {
+    "serviceFamily": "Networking",
+    "item_count": 342,
+    "sample_productNames": [
+      "Application Gateway WAF v2",
+      "Basic Application Gateway",
+      "WAF Application Gateway",
+      "Application Gateway Basic v2",
+      "Application Gateway Standard v2",
+      "Application Gateway for Containers WAF",
+      "Application Gateway for Containers",
+      "Application Gateway WAF v2 - Discounted"
+    ],
+    "sample_skuNames": [
+      "Standard",
+      "Large",
+      "Medium",
+      "Small",
+      "Basic"
+    ],
+    "sample_meterNames": [
+      "Standard AGC",
+      "Standard Captcha Sessions",
+      "Standard AGC WAF",
+      "Small Data Processed",
+      "Basic Fixed Cost",
+      "Standard Capacity Units",
+      "Large Gateway",
+      "Standard Association"
+    ]
+  },
+  "Voice": {
+    "serviceFamily": "Azure Communication Services",
+    "item_count": 264,
+    "sample_productNames": [
+      "Voice and Video Calling",
+      "Toll Free Calls - Outbound",
+      "Toll Free Calls - Outbound - I",
+      "Toll Free Calls - Inbound - I",
+      "Local Calls - Inbound",
+      "Local Calls - Inbound - I",
+      "Toll Free Calls - Inbound",
+      "Direct Routing"
+    ],
+    "sample_skuNames": [
+      "A2AGroupCalling",
+      "Trial",
+      "US",
+      "ROW",
+      "Standard",
+      "Mixed Audio and Video",
+      "Single Channel Mixed Audio",
+      "Unmixed Audio Insights Streaming"
+    ],
+    "sample_meterNames": [
+      "Standard Refer Unit",
+      "ROW Consumption Unit - Inbound",
+      "Single Channel Mixed Audio Recording",
+      "Trial Consumption Unit - Inbound",
+      "Standard Transfer Unit",
+      "Standard Inbound",
+      "US Consumption Unit - Outbound",
+      "Trial Consumption Unit - Outbound"
+    ]
+  },
+  "Microsoft Defender for Cloud": {
+    "serviceFamily": "Security",
+    "item_count": 582,
+    "sample_productNames": [
+      "Microsoft Defender for Servers",
+      "Microsoft Defender for Cloud Reservation",
+      "Defender for APIs",
+      "Microsoft Defender for Resource Manager",
+      "Microsoft Defender for Azure Cosmos DB",
+      "Microsoft Defender for SQL",
+      "Microsoft Defender for DNS",
+      "Microsoft Defender for PostgreSQL"
+    ],
+    "sample_skuNames": [
+      "Free Images",
+      "Standard P2",
+      "Standard",
+      "Standard P1 Trial",
+      "Standard P1",
+      "Standard Trial",
+      "Standard Trial v2",
+      "Standard P2 Trial"
+    ],
+    "sample_meterNames": [
+      "Defender EASM Standard Asset",
+      "Standard P2 Node - MDATP Benefit",
+      "Standard Trial Node",
+      "Standard Trial Instance",
+      "Standard Images",
+      "Standard Instance",
+      "Per Sub Billing P5 Subscription",
+      "Per node Std Node"
+    ]
+  },
+  "Event Grid": {
+    "serviceFamily": "Internet of Things",
+    "item_count": 99,
+    "sample_productNames": [
+      "Event Grid"
+    ],
+    "sample_skuNames": [
+      "Standard"
+    ],
+    "sample_meterNames": [
+      "Standard Throughput Unit",
+      "Standard Operations",
+      "Standard Event Operations",
+      "Standard MQTT Operations"
+    ]
+  },
+  "VPN Gateway": {
+    "serviceFamily": "Networking",
+    "item_count": 379,
+    "sample_productNames": [
+      "VPN Gateway",
+      "VPN Gateway Bandwidth",
+      "VPN High Performance Gateway"
+    ],
+    "sample_skuNames": [
+      "VpnGw3AZ",
+      "VpnGw1AZ",
+      "VpnGw3",
+      "VpnGw4",
+      "VpnGw5AZ",
+      "Basic",
+      "VpnGw2",
+      "VpnGw1"
+    ],
+    "sample_meterNames": [
+      "P2S Connection",
+      "S2S Connection",
+      "VpnGw4AZ",
+      "Basic Gateway",
+      "VpnGw5AZ",
+      "High Performance Gateway",
+      "VpnGw2AZ",
+      "Advanced Connectivity Add-On"
+    ]
+  },
+  "Foundry Models": {
+    "serviceFamily": "AI + Machine Learning",
+    "item_count": 3883,
+    "sample_productNames": [
+      "Azure Mistral Models",
+      "Azure OpenAI GPT5",
+      "Cohere Models",
+      "Azure Phi Models",
+      "Azure BFL Flux Models",
+      "Azure OpenAI",
+      "Azure OpenAI Media",
+      "Azure Grok Models"
+    ],
+    "sample_skuNames": [
+      "embedding-ada-regional",
+      "Rerank v4 Pro Glbl",
+      "Grok-3 Mini Inp glbl",
+      "gpt4omini-rt-aud1217 Inp DZone",
+      "o1-pro Outp Data Zone",
+      "Provisioned Managed Data Zone",
+      "Grok4 Fast Outp DZone",
+      "Code Fast 1 Outp glbl"
+    ],
+    "sample_meterNames": [
+      "Kontext Pro glbl Images",
+      "gpt-5-codex-inp-dzone Tokens",
+      "GPT 5 Nano Batch Inpt Glbl 1M Tokens",
+      "gpt rt txt 0828 Outp DZone Tokens",
+      "gpt-4o-transcribe-txt-out-dz Tokens",
+      "gpt 4o 0806 Inp Data Zone Tokens",
+      "o3 0416 Inp glbl Tokens",
+      "gpt-35-turbo-16K-1106 Input-regional Tokens"
+    ]
+  },
+  "Container Instances": {
+    "serviceFamily": "Containers",
+    "item_count": 202,
+    "sample_productNames": [
+      "Container Instances with GPU",
+      "Container Instances"
+    ],
+    "sample_skuNames": [
+      "V100",
+      "Confidential containers ACI",
+      "Standard Spot",
+      "P100",
+      "Standard",
+      "K80"
+    ],
+    "sample_meterNames": [
+      "K80 vGPU Duration",
+      "Standard Memory Duration",
+      "Standard Spot Memory Duration",
+      "Memory Duration",
+      "Standard Windows Software Duration",
+      "V100 vGPU Duration",
+      "vCPU Duration",
+      "Standard vCPU Duration"
+    ]
+  },
+  "Cognitive Services": {
+    "serviceFamily": "AI + Machine Learning",
+    "item_count": 29,
+    "sample_productNames": [
+      "Azure Kimi"
+    ],
+    "sample_skuNames": [
+      "K2 Thinking Inp DZ",
+      "K2 Thinking Inp glbl",
+      "K2 Thinking Outp glbl",
+      "K2 Thinking Outp DZ"
+    ],
+    "sample_meterNames": [
+      "K2 Thinking Inp DZ Tokens",
+      "K2 Thinking Inp glbl Tokens",
+      "K2 Thinking Outp glbl Tokens",
+      "K2 Thinking Outp DZ Tokens"
+    ]
+  },
+  "Service Bus": {
+    "serviceFamily": "Integration",
+    "item_count": 260,
+    "sample_productNames": [
+      "Service Bus"
+    ],
+    "sample_skuNames": [
+      "Basic",
+      "Hybrid Connections",
+      "Premium",
+      "Standard",
+      "WCF Relay",
+      "Geo Replication Zone 2",
+      "Geo Replication Zone 1",
+      "Geo Replication Zone 3"
+    ],
+    "sample_meterNames": [
+      "Standard Base Unit",
+      "Hybrid Connections Data Transfer",
+      "Premium Messaging Unit",
+      "Basic Messaging Operations",
+      "WCF Relay",
+      "Geo Replication Zone 2 Data Transfer",
+      "Standard Brokered Connection",
+      "Hybrid Connections Listener Unit"
+    ]
+  },
+  "Backup": {
+    "serviceFamily": "Storage",
+    "item_count": 636,
+    "sample_productNames": [
+      "Backup",
+      "Backup Reserved Capacity"
+    ],
+    "sample_skuNames": [
+      "Standard - 1 PB LRS",
+      "Archive",
+      "Azure Kubernetes",
+      "Standard - 100 TB LRS",
+      "Standard - 100 TB RA-GRS",
+      "PostgreSQL",
+      "Azure Files Vaulted",
+      "Standard - 1 PB RA-GRS"
+    ],
+    "sample_meterNames": [
+      "SAP HANA on Azure VM Snapshot Instance",
+      "AKS Namespace",
+      "Azure Blob GRS Write Operations",
+      "Azure Kubernetes Protected Instances",
+      "ZRS Data Stored",
+      "ADLS Gen2 Vaulted ZRS Write Operations",
+      "SAP HANA on Azure VM Protected Instances",
+      "On Premises Server Protected Instances"
+    ]
+  },
+  "Azure Firewall": {
+    "serviceFamily": "Networking",
+    "item_count": 212,
+    "sample_productNames": [
+      "Azure Firewall"
+    ],
+    "sample_skuNames": [
+      "Standard Secure Virtual Hub",
+      "Standard",
+      "Basic",
+      "Premium Secured Virtual Hub",
+      "Premium",
+      "Basic Secured Virtual Hub"
+    ],
+    "sample_meterNames": [
+      "Premium Secured Virtual Hub Deployment",
+      "Standard Deployment",
+      "Premium Secured Virtual Hub Capacity Unit",
+      "Basic Secured Virtual Hub Data Processed",
+      "Standard Capacity Unit",
+      "Premium Capacity Unit",
+      "Standard Secure Virtual Hub Data Processed",
+      "Basic Deployment"
+    ]
+  },
+  "Azure Analysis Services": {
+    "serviceFamily": "Analytics",
+    "item_count": 92,
+    "sample_productNames": [
+      "Azure Analysis Services Standard v2",
+      "Azure Analysis Services Developer",
+      "Azure Analysis Services Standard",
+      "Azure Analysis Services Basic"
+    ],
+    "sample_skuNames": [
+      "S9 v2 Scale-Out",
+      "S4",
+      "S9 Scale-Out",
+      "B1",
+      "S4 Scale-Out",
+      "S1 Scale-Out",
+      "S0",
+      "S9"
+    ],
+    "sample_meterNames": [
+      "S9 v2 Scale-Out",
+      "S2 Scale-Out",
+      "S9 Scale-Out",
+      "S0 Scale-Out",
+      "S9",
+      "B1",
+      "S0",
+      "S8"
+    ]
+  },
+  "HDInsight": {
+    "serviceFamily": "Analytics",
+    "item_count": 2306,
+    "sample_productNames": [
+      "HDInsight G Series",
+      "HDInsight D Series",
+      "HDInsight FSv2 Series",
+      "HDInsight Eadsv5 Series",
+      "HDInsight A Series",
+      "HDInsight Lasv3 Series",
+      "HDInsight F Series",
+      "HDInsight FS Series"
+    ],
+    "sample_skuNames": [
+      "D8ads v5",
+      "D48ads v5",
+      "E4a v4/E4as v4",
+      "E64d v5",
+      "A2",
+      "E96ads v5",
+      "F32s v2",
+      "A4"
+    ],
+    "sample_meterNames": [
+      "L8as v3",
+      "Dv211",
+      "E4a v4/E4as v4",
+      "F16s v2",
+      "D4a v4/D4as v4",
+      "F2s",
+      "P30 Disk",
+      "E32d v5"
+    ]
+  },
+  "Azure API for FHIR": {
+    "serviceFamily": "Other",
+    "item_count": 179,
+    "sample_productNames": [
+      "Azure Health Data APIs",
+      "Azure Health Data Services",
+      "Healthcare Agent Service",
+      "MedImageInsight Premium"
+    ],
+    "sample_skuNames": [
+      "Notifications",
+      "Transformations",
+      "Free - Blob Storage",
+      "Standard",
+      "Structured Storage",
+      "Structured De-Identification",
+      "Blob Storage",
+      "Transcode DICOM"
+    ],
+    "sample_meterNames": [
+      "Standard Structured De Identification",
+      "Classic Message",
+      "Export Batch",
+      "Standard Service Runtime",
+      "Structured Storage",
+      "Structured De-Identification",
+      "Free - API Requests",
+      "Export Streaming"
+    ]
+  },
+  "Event Hubs": {
+    "serviceFamily": "Internet of Things",
+    "item_count": 171,
+    "sample_productNames": [
+      "Event Hubs"
+    ],
+    "sample_skuNames": [
+      "Premium",
+      "Standard",
+      "Basic",
+      "Geo Replication Zone 1",
+      "Geo Replication Zone 2",
+      "Dedicated",
+      "Geo Replication Zone 3"
+    ],
+    "sample_meterNames": [
+      "Standard Throughput Unit",
+      "Standard Capture",
+      "Dedicated Extended Retention",
+      "Geo Replication Zone 1 Data Transfer",
+      "Standard Kafka Endpoint",
+      "Geo Replication Zone 2 Data Transfer",
+      "Standard Ingress Events",
+      "Dedicated Capacity Unit"
+    ]
+  },
+  "Application Insights": {
+    "serviceFamily": "Management and Governance",
+    "item_count": 51,
+    "sample_productNames": [
+      "Application Insights"
+    ],
+    "sample_skuNames": [
+      "Basic",
+      "Enterprise"
+    ],
+    "sample_meterNames": [
+      "Multi-step Web Test",
+      "Enterprise Overage Data",
+      "Enterprise Node",
+      "Data Retention"
+    ]
+  },
+  "Azure Managed Instance for Apache Cassandra": {
+    "serviceFamily": "Databases",
+    "item_count": 1009,
+    "sample_productNames": [
+      "Azure Managed Instance for Apache Cassandra - Compute"
+    ],
+    "sample_skuNames": [
+      "Apache_Cassandra_Standard_D4ads_v5",
+      "Apache_Cassandra_Standard_E20s_v5",
+      "Standard_DS14_v2",
+      "Backup",
+      "Apache_Cassandra_Standard_E2ads_v5",
+      "D8ds_v4",
+      "Apache_Cassandra_Standard_D8s_v5",
+      "DS5_v2"
+    ],
+    "sample_meterNames": [
+      "Standard_D16s_v4 vCore",
+      "Standard_DS14_v2 vCore",
+      "Standard_L32as_v3 vCore",
+      "E20as_v4 vCore",
+      "Standard_D8ads_v5 vCore",
+      "Standard_D32ads_v5 vCore",
+      "Standard_D4ads_v5 vCore",
+      "Standard_D8as_v5 vCore"
+    ]
+  },
+  "Sentinel": {
+    "serviceFamily": "Management and Governance",
+    "item_count": 264,
+    "sample_productNames": [
+      "Sentinel",
+      "Sentinel Pre-Purchase Plan",
+      "Sentinel Reservation"
+    ],
+    "sample_skuNames": [
+      "2000 GB Commitment Tier",
+      "50000 GB Commitment Tier",
+      "Pay-as-you-go",
+      "500 GB Commitment Tier",
+      "400 GB Commitment Tier",
+      "50 GB Commitment Tier",
+      "Data lake query",
+      "300 GB Commitment Tier"
+    ],
+    "sample_meterNames": [
+      "25000 GB Commitment Tier Capacity Reservation",
+      "Pay-as-you-go Analysis",
+      "50000 GB Commitment Tier Capacity Reservation",
+      "10000 GB Commitment Tier Capacity Reservation",
+      "Advanced Data Insights",
+      "Solution for SAP Applications Hourly",
+      "400 GB Commitment Tier Capacity Reservation",
+      "50 GB Commitment Tier Capacity Reservation"
+    ]
+  },
+  "Notification Hubs": {
+    "serviceFamily": "Internet of Things",
+    "item_count": 103,
+    "sample_productNames": [
+      "Notification Hubs"
+    ],
+    "sample_skuNames": [
+      "Standard",
+      "Private Link",
+      "Basic",
+      "Availability Zones SKU",
+      "1P Direct Send",
+      "Free"
+    ],
+    "sample_meterNames": [
+      "Standard Pushes",
+      "Private Link Unit",
+      "Standard Unit",
+      "Basic Pushes",
+      "Basic Unit",
+      "Availability Zones Unit",
+      "1P Direct Send Pushes",
+      "Free Unit"
+    ]
+  },
+  "Azure Cognitive Search": {
+    "serviceFamily": "Web",
+    "item_count": 281,
+    "sample_productNames": [
+      "Azure AI Search"
+    ],
+    "sample_skuNames": [
+      "Standard S1",
+      "Document Cracking",
+      "Custom Entity Skills",
+      "Free",
+      "Storage Optimized L1 CC",
+      "Standard S2 CC",
+      "Semantic Ranker",
+      "Storage Optimized L1"
+    ],
+    "sample_meterNames": [
+      "Basic CC Unit",
+      "Semantic Ranker Unit",
+      "Basic Unit",
+      "Document Cracking Image Extraction",
+      "Storage Optimized L2 CC Unit",
+      "Custom Entity Skills Text Records",
+      "Standard S1 Unit",
+      "Agentic Retrieval Low Reasoning Tokens"
+    ]
+  },
+  "Dynamics 365 for Customer Insights": {
+    "serviceFamily": "Management and Governance",
+    "item_count": 3,
+    "sample_productNames": [
+      "Customer Insights"
+    ],
+    "sample_skuNames": [
+      "S1",
+      "B0"
+    ],
+    "sample_meterNames": [
+      "S1 Unit",
+      "B0 Unit"
+    ]
+  },
+  "Azure Grafana Service": {
+    "serviceFamily": "Developer Tools",
+    "item_count": 28,
+    "sample_productNames": [
+      "Azure Managed Grafana"
+    ],
+    "sample_skuNames": [
+      "Standard",
+      "Essential"
+    ],
+    "sample_meterNames": [
+      "Standard Zone Redundancy",
+      "Standard Node",
+      "Essential User",
+      "Standard User"
+    ]
+  },
+  "ExpressRoute": {
+    "serviceFamily": "Networking",
+    "item_count": 400,
+    "sample_productNames": [
+      "ExpressRoute Direct",
+      "ExpressRoute Gateway",
+      "ExpressRoute Ultra High Performance Gateway",
+      "ExpressRoute",
+      "ExpressRoute Global Reach",
+      "ExpressRoute Standard Gateway",
+      "ExpressRoute High Performance Gateway"
+    ],
+    "sample_skuNames": [
+      "High Performance",
+      "10 Gbps Unlimited Data",
+      "5 Gbps Metered Data",
+      "50 Mbps",
+      "40 Gbps Unlimited Data",
+      "1 Gbps Unlimited Data",
+      "Ultra High Performance",
+      "2 Gbps Unlimited Data"
+    ],
+    "sample_meterNames": [
+      "Premium Unlimited Data 100 Gbps Circuit",
+      "Standard Unlimited Data 2 Gbps Circuit",
+      "Data Transfer Out",
+      "Metered Data - Data Transfer Out",
+      "Local Unlimited Data 100 Gbps Circuit",
+      "Local Unlimited Data 40 Gbps Circuit",
+      "Data Transfer In",
+      "Premium Unlimited Data 500 Mbps Circuit"
+    ]
+  },
+  "Azure Data Factory v2": {
+    "serviceFamily": "Analytics",
+    "item_count": 1402,
+    "sample_productNames": [
+      "SSIS Standard E-series v3 VM",
+      "SSIS Enterprise E-series v3 VM",
+      "SSIS Standard D-series v3 VM",
+      "SSIS Standard D-series v2 VM",
+      "SSIS Standard A-series v2 VM",
+      "Azure Data Factory v2",
+      "Azure Data Factory v2 Data Flow - General Purpose",
+      "SSIS Enterprise D-series v2 VM"
+    ],
+    "sample_skuNames": [
+      "A1 v2",
+      "E16 v3",
+      "D4 v2",
+      "E64 v3",
+      "Azure Managed VNET",
+      "D16 v3",
+      "vCore",
+      "E2 v3"
+    ],
+    "sample_meterNames": [
+      "Cloud Data Movement",
+      "Inactive Pipeline",
+      "Cloud Orchestration Activity Run",
+      "A1 v2 AHB",
+      "vCore",
+      "D64 v3 AHB",
+      "D8 v3 AHB",
+      "A4 v2 AHB"
+    ]
+  },
+  "Quantum Computing": {
+    "serviceFamily": "Quantum Computing",
+    "item_count": 44,
+    "sample_productNames": [
+      "Azure Quantum"
+    ],
+    "sample_skuNames": [
+      "Performance at Scale",
+      "Learn and Develop"
+    ],
+    "sample_meterNames": [
+      "Performance at Scale Standard Solver",
+      "Learn and Develop Standard Solver"
+    ]
+  },
+  "Automation": {
+    "serviceFamily": "Management and Governance",
+    "item_count": 112,
+    "sample_productNames": [
+      "Configuration Management",
+      "Process Automation",
+      "Update Management"
+    ],
+    "sample_skuNames": [
+      "Azure",
+      "Free",
+      "Basic",
+      "Non-Azure"
+    ],
+    "sample_meterNames": [
+      "Azure Node",
+      "Watcher",
+      "Basic Runtime",
+      "Basic Node",
+      "Non-Azure Node"
+    ]
+  },
+  "App Configuration": {
+    "serviceFamily": "Developer Tools",
+    "item_count": 322,
+    "sample_productNames": [
+      "App Configuration"
+    ],
+    "sample_skuNames": [
+      "Free",
+      "Premium",
+      "Developer",
+      "Standard"
+    ],
+    "sample_meterNames": [
+      "Developer Snapshots Overage",
+      "Standard Overage Operations",
+      "Developer Overage Operations",
+      "Standard Experimentation Events",
+      "Standard Snapshots Overage",
+      "Free Instance",
+      "Standard Replica Overage Operations",
+      "Developer Instance"
+    ]
+  },
+  "Azure Data Share": {
+    "serviceFamily": "Analytics",
+    "item_count": 12,
+    "sample_productNames": [
+      "Azure Data Share"
+    ],
+    "sample_skuNames": [
+      "Snapshot Execution",
+      "Dataset Snapshots"
+    ],
+    "sample_meterNames": [
+      "Snapshot Execution vCore",
+      "Dataset Snapshots"
+    ]
+  },
+  "Azure IoT Security": {
+    "serviceFamily": "Security",
+    "item_count": 39,
+    "sample_productNames": [
+      "Microsoft Defender for IoT - Managed IoT"
+    ],
+    "sample_skuNames": [
+      "Standard Trial",
+      "Standard"
+    ],
+    "sample_meterNames": [
+      "Managed Trial Message",
+      "Managed Trial Device",
+      "Managed Device",
+      "Managed Message"
+    ]
+  },
+  "Azure Database for MariaDB": {
+    "serviceFamily": "Databases",
+    "item_count": 321,
+    "sample_productNames": [
+      "Azure Database for MariaDB Single Server General Purpose - Compute Gen4",
+      "Azure Database for MariaDB Single Server Basic - Compute Gen5",
+      "Azure Database for MariaDB Single Server - Backup Storage",
+      "Azure Database for MariaDB Single Server General Purpose - Compute Gen5",
+      "Azure Database for MariaDB Single Server Basic - Storage",
+      "Azure Database for MariaDB General Purpose - Large-Scale Storage",
+      "Azure Database for MariaDB Single Server Memory Optimized - Compute Gen5",
+      "Azure Database for MariaDB Single Server General Purpose - Storage"
+    ],
+    "sample_skuNames": [
+      "1 vCore",
+      "2 vCore",
+      "64 vCore",
+      "vCore",
+      "8 vCore",
+      "32 vCore",
+      "General Purpose",
+      "Backup GRS"
+    ],
+    "sample_meterNames": [
+      "vCore",
+      "2 vCore",
+      "Backup GRS Data Stored",
+      "Basic Data Stored",
+      "General Purpose Data Stored",
+      "Backup LRS Data Stored",
+      "Perf Optimized Data Stored",
+      "Standard Usage"
+    ]
+  },
+  "Machine Learning Studio": {
+    "serviceFamily": "AI + Machine Learning",
+    "item_count": 45,
+    "sample_productNames": [
+      "Machine Learning Studio Production Web API",
+      "Machine Learning Studio Production Web API Classic",
+      "Machine Learning Studio"
+    ],
+    "sample_skuNames": [
+      "S3",
+      "S2",
+      "S1",
+      "Classic",
+      "Standard"
+    ],
+    "sample_meterNames": [
+      "S3 Overage Transactions",
+      "S2 Plan",
+      "S2 Overage Transactions",
+      "Included Quantity API Compute",
+      "Included Quantity API Transactions",
+      "Classic",
+      "S1 Overage Transactions",
+      "S2 Overage Compute"
+    ]
+  },
+  "Content Delivery Network": {
+    "serviceFamily": "Networking",
+    "item_count": 152,
+    "sample_productNames": [
+      "Azure CDN from Akamai",
+      "Azure CDN from Microsoft",
+      "Azure CDN from Verizon"
+    ],
+    "sample_skuNames": [
+      "Custom",
+      "Standard",
+      "WAF",
+      "Premium"
+    ],
+    "sample_meterNames": [
+      "Premium Data Transfer",
+      "Standard Data Transfer",
+      "Custom Security 3 Base Fee",
+      "Standard Acceleration Data Transfer",
+      "Custom Acceleration Plus 1 Data Transfer",
+      "WAF Policy",
+      "Custom Media Deliv 3 Data Transfer",
+      "Custom Acceleration Plus 2 Data Transfer"
+    ]
+  },
+  "Stream Analytics": {
+    "serviceFamily": "Analytics",
+    "item_count": 147,
+    "sample_productNames": [
+      "Stream Analytics",
+      "Stream Analytics on Edge"
+    ],
+    "sample_skuNames": [
+      "Dedicated V2",
+      "Standard",
+      "Dedicated",
+      "S1",
+      "Standard V2"
+    ],
+    "sample_meterNames": [
+      "Dedicated V2 Streaming Unit/Job",
+      "Standard Streaming Unit",
+      "Dedicated Streaming Unit",
+      "S1 Device",
+      "Standard V2 Streaming Unit/Job"
+    ]
+  },
+  "Azure Data Explorer": {
+    "serviceFamily": "Analytics",
+    "item_count": 20,
+    "sample_productNames": [
+      "Azure Data Explorer"
+    ],
+    "sample_skuNames": [
+      "Standard"
+    ],
+    "sample_meterNames": [
+      "Standard Engine Cluster Markup"
+    ]
+  },
+  "IoT Hub": {
+    "serviceFamily": "Internet of Things",
+    "item_count": 122,
+    "sample_productNames": [
+      "IoT Hub",
+      "Device Update for IoT Hub",
+      "IoT Hub Device Provisioning"
+    ],
+    "sample_skuNames": [
+      "B2",
+      "B3",
+      "Free",
+      "Standard",
+      "S2",
+      "S3",
+      "B1",
+      "S1"
+    ],
+    "sample_meterNames": [
+      "B2 Unit",
+      "B3 Unit",
+      "Free 1 Device Unit",
+      "Standard 1 Device Unit",
+      "S1 Unit",
+      "S3 Unit",
+      "B1 Unit",
+      "Standard 1 DU instance"
+    ]
+  },
+  "Web PubSub": {
+    "serviceFamily": "Analytics",
+    "item_count": 61,
+    "sample_productNames": [
+      "Web PubSub"
+    ],
+    "sample_skuNames": [
+      "Standard",
+      "Premium"
+    ],
+    "sample_meterNames": [
+      "Standard Unit",
+      "Premium Unit",
+      "Standard Message",
+      "Standard Unit - Free",
+      "Premium Message"
+    ]
+  },
+  "API Management": {
+    "serviceFamily": "Developer Tools",
+    "item_count": 441,
+    "sample_productNames": [
+      "API Management"
+    ],
+    "sample_skuNames": [
+      "Developer",
+      "Consumption",
+      "Standard v2",
+      "Premium v2",
+      "Secondary",
+      "Standard",
+      "Workspace Gateway Standard",
+      "Premium"
+    ],
+    "sample_meterNames": [
+      "Basic v2 Calls",
+      "Premium v2 Self-hosted Gateway",
+      "Standard v2 Self-hosted Gateway",
+      "Basic Unit",
+      "Gateway Unit",
+      "Workspace Gateway Standard Unit",
+      "Standard Workspace Pack",
+      "Secondary Unit"
+    ]
+  },
+  "Windows Virtual Desktop": {
+    "serviceFamily": "Windows Virtual Desktop",
+    "item_count": 94,
+    "sample_productNames": [
+      "Azure Virtual Desktop"
+    ],
+    "sample_skuNames": [
+      "App to Desktop Upgrade",
+      "Desktop & App Hosting",
+      "AVD for Azure Stack HCI",
+      "App Hosting"
+    ],
+    "sample_meterNames": [
+      "App to Desktop Upgrade User",
+      "Desktop & App Hosting Desktop and App Users",
+      "App to Desktop Upgrade Upgrade Users",
+      "AVD for Azure Stack HCI Service Fee/vCPU",
+      "App Hosting App Users",
+      "Desktop & App Hosting User",
+      "App Hosting User"
+    ]
+  },
+  "Azure Arc Enabled Databases": {
+    "serviceFamily": "Databases",
+    "item_count": 97,
+    "sample_productNames": [
+      "Azure Arc-enabled SQL Server - Arc-enabled servers",
+      "Azure Arc enabled SQL Managed Instance Developer",
+      "Azure Arc enabled SQL Managed Instance General Purpose",
+      "Azure Arc enabled SQL Managed Instance Business Critical",
+      "Azure Arc enabled SQL Managed Instance - General Purpose - Azure Hybrid Benefit",
+      "Azure Arc Enabled PostgreSQL Hyperscale - SQL License",
+      "Azure Arc Enabled PostgreSQL Hyperscale",
+      "Azure Arc enabled SQL Managed Instance - General Purpose - Arc Service"
+    ],
+    "sample_skuNames": [
+      "Std edition - ESU 2014 back billing",
+      "vCore",
+      "Std edition - PAYG",
+      "Std edition - ESU 2014",
+      "SQL License",
+      "Std edition - AHB",
+      "Ent edition - ESU 2014 back billing",
+      "Ent edition - License only"
+    ],
+    "sample_meterNames": [
+      "Ent edition - Host - PAYG",
+      "vCore",
+      "Std edition - PAYG",
+      "Std edition - ESU 2014 back billing",
+      "SQL License vCore",
+      "Std edition - AHB",
+      "Ent edition - Virtual license",
+      "Ent edition - License only"
+    ]
+  },
+  "Microsoft Entra Domain Services": {
+    "serviceFamily": "Security",
+    "item_count": 34,
+    "sample_productNames": [
+      "Microsoft Entra Domain Services"
+    ],
+    "sample_skuNames": [
+      "Enterprise",
+      "Premium",
+      "Standard"
+    ],
+    "sample_meterNames": [
+      "Enterprise User Forest",
+      "Premium User Forest",
+      "Standard User Forest"
+    ]
+  },
+  "Azure Bastion": {
+    "serviceFamily": "Networking",
+    "item_count": 253,
+    "sample_productNames": [
+      "Azure Bastion"
+    ],
+    "sample_skuNames": [
+      "Standard",
+      "Premium",
+      "Basic"
+    ],
+    "sample_meterNames": [
+      "Standard Additional Gateway",
+      "Premium Additional Gateway",
+      "Premium Gateway",
+      "Standard Gateway",
+      "Basic Data Transfer Out",
+      "Basic Gateway",
+      "Premium Data Transfer Out",
+      "Standard Data Transfer Out"
+    ]
+  },
+  "Azure Lab Services": {
+    "serviceFamily": "Developer Tools",
+    "item_count": 11,
+    "sample_productNames": [
+      "Azure Lab Services"
+    ],
+    "sample_skuNames": [
+      "Standard"
+    ],
+    "sample_meterNames": [
+      "Standard Lab Unit",
+      "Standard Lab Storage"
+    ]
+  },
+  "Virtual Network": {
+    "serviceFamily": "Networking",
+    "item_count": 187,
+    "sample_productNames": [
+      "Public IP Prefix",
+      "IP Addresses",
+      "Global Virtual Network Peering",
+      "Virtual Network Peering",
+      "Virtual Network Private Link",
+      "Virtual Network Manager",
+      "Azure Virtual Network Manager",
+      "Accelerated Connections"
+    ],
+    "sample_skuNames": [
+      "Standard",
+      "Basic",
+      "Global",
+      "Inter-Region",
+      "Intra-Region",
+      "A4",
+      "TAP"
+    ],
+    "sample_meterNames": [
+      "Standard Static IP Addresses",
+      "Basic IPv4 Dynamic Public IP",
+      "Basic IPv4 Static Public IP",
+      "Standard Data Processed - Ingress",
+      "Global Static Public IP",
+      "Standard IPv4 Static Public IP",
+      "Inter-Region Egress",
+      "Intra-Region Ingress"
+    ]
+  },
+  "Load Balancer": {
+    "serviceFamily": "Networking",
+    "item_count": 10,
+    "sample_productNames": [
+      "Load Balancer"
+    ],
+    "sample_skuNames": [
+      "Standard",
+      "Global",
+      "Gateway"
+    ],
+    "sample_meterNames": [
+      "Standard Data Processed",
+      "Global Data Processed",
+      "Standard Overage LB Rules and Outbound Rules",
+      "Standard Data Processed - Free",
+      "Standard Included LB Rules and Outbound Rules",
+      "Gateway Data Processed",
+      "Gateway Chain",
+      "Global Included LB Rules and Outbound Rules"
+    ]
+  },
+  "Azure Orbital": {
+    "serviceFamily": "Networking",
+    "item_count": 97,
+    "sample_productNames": [
+      "Azure Orbital Bandwidth",
+      "Azure Orbital Ground Station",
+      "Azure Orbital - Microsoft Global Network",
+      "Azure Orbital Standard Gateway",
+      "Azure Orbital - Internet",
+      "Azure Orbital High Performance Gateway"
+    ],
+    "sample_skuNames": [
+      "Narrow Band",
+      "Colocation Antenna",
+      "Colocation O&M",
+      "Colocation Hosting",
+      "1 Mbps",
+      "Colocation Spectrum License",
+      "Colocation Space",
+      "High Performance"
+    ],
+    "sample_meterNames": [
+      "Contact Minutes Reserved Minute",
+      "Standard Gateway",
+      "Colocation O&M Unit",
+      "Colocation Hosting Unit",
+      "1 Mbps Data Transfer Out",
+      "Colocation Spectrum License Unit",
+      "Colocation Space Unit",
+      "Contact Minutes On Demand Minute"
+    ]
+  },
+  "Azure Maps": {
+    "serviceFamily": "Internet of Things",
+    "item_count": 380,
+    "sample_productNames": [
+      "Azure Maps"
+    ],
+    "sample_skuNames": [
+      "Azure Maps Creator",
+      "Location Insights",
+      "Maps",
+      "Geospatial Analytics"
+    ],
+    "sample_meterNames": [
+      "Location Insights Traffic",
+      "Azure Maps Creator Feature State",
+      "Maps Imagery Tiles",
+      "Location Insights Geolocation",
+      "Location Insights Spatial Calculations",
+      "Location Insights Search",
+      "Location Insights Routing",
+      "Location Insights Data"
+    ]
+  },
+  "Insight and Analytics": {
+    "serviceFamily": "Management and Governance",
+    "item_count": 48,
+    "sample_productNames": [
+      "Insight and Analytics"
+    ],
+    "sample_skuNames": [
+      "Standard"
+    ],
+    "sample_meterNames": [
+      "Standard Node",
+      "Standard Data Included per Node",
+      "Standard Data Retention",
+      "Standard Data Overage per Node"
+    ]
+  },
+  "Logic Apps": {
+    "serviceFamily": "Integration",
+    "item_count": 210,
+    "sample_productNames": [
+      "Logic Apps Integration Service Environment - Developer",
+      "Logic Apps",
+      "Logic Apps Integration Account",
+      "Logic Apps Integration Service Environment"
+    ],
+    "sample_skuNames": [
+      "Base",
+      "Consumption",
+      "Standard",
+      "Hybrid",
+      "Premium",
+      "Basic",
+      "Scale"
+    ],
+    "sample_meterNames": [
+      "Basic Unit",
+      "Consumption Data Retention",
+      "Premium Unit",
+      "Consumption Built-in Actions",
+      "Standard vCPU Duration",
+      "Scale Unit",
+      "Standard Memory Duration",
+      "Standard Unit"
+    ]
+  },
+  "Microsoft Graph Services": {
+    "serviceFamily": "Security",
+    "item_count": 54,
+    "sample_productNames": [
+      "Microsoft 365 APIs Extended Usage",
+      "SharePoint Online and OneDrive Enterprise Set Sensitivity Label",
+      "Teams Change Notification API",
+      "Teams Export API"
+    ],
+    "sample_skuNames": [
+      "Teams Calling Ext Use",
+      "M365 APIs Extended Usage",
+      "Outlook Ext Use",
+      "Teams Presence Ext Use",
+      "Teams Msg Ext Use",
+      "SharePoint Online and OneDrive Enterprise Set Sensitivity Label",
+      "Teams Change Notification API",
+      "Teams Export API"
+    ],
+    "sample_meterNames": [
+      "Requests",
+      "Standard API Call",
+      "Teams Change Notification API Paid Message",
+      "Teams Export API Paid Message"
+    ]
+  },
+  "Azure App Testing": {
+    "serviceFamily": "Developer Tools",
+    "item_count": 8,
+    "sample_productNames": [
+      "Azure App Testing"
+    ],
+    "sample_skuNames": [
+      "Playwright Free Test Minutes",
+      "JMeter",
+      "Playwright Windows Test Minutes"
+    ],
+    "sample_meterNames": [
+      "Playwright Free Test Minutes",
+      "JMeter Virtual User Additional Usage",
+      "Playwright Windows Test Minutes"
+    ]
+  },
+  "Azure Bot Service": {
+    "serviceFamily": "AI + Machine Learning",
+    "item_count": 25,
+    "sample_productNames": [
+      "Microsoft Azure Health Bot",
+      "Azure Bot Service"
+    ],
+    "sample_skuNames": [
+      "Agent Tier",
+      "Standard",
+      "Free"
+    ],
+    "sample_meterNames": [
+      "Agent Tier Action",
+      "Standard Overage Messages",
+      "Free Message",
+      "Free MCU",
+      "Standard Overage MCU",
+      "Standard Unit",
+      "Free Premium Channel Messages",
+      "Free Standard Channel Messages"
+    ]
+  },
+  "Bandwidth": {
+    "serviceFamily": "Networking",
+    "item_count": 319,
+    "sample_productNames": [
+      "Rtn Preference: MGN",
+      "Bandwidth - Routing Preference: Internet",
+      "Bandwidth Inter-Region",
+      "Bandwidth Alliance",
+      "Bandwidth Peering Service"
+    ],
+    "sample_skuNames": [
+      "Standard",
+      "China",
+      "Intra Continent",
+      "Inter Continent"
+    ],
+    "sample_meterNames": [
+      "Standard Inter-Region Data Transfer",
+      "China Data Transfer - 1 to 5 Mbps",
+      "Standard Data Transfer In - from China",
+      "China Data Transfer - 4 Mbps",
+      "Standard Inter-Availability Zone Data Transfer Out",
+      "Intra Continent Data Transfer Out",
+      "Standard Data Transfer Out",
+      "China Data Transfer - 2 Mbps"
+    ]
+  },
+  "Syntex": {
+    "serviceFamily": "Microsoft Syntex",
+    "item_count": 303,
+    "sample_productNames": [
+      "Image Tagging",
+      "Syntex Taxonomy Tagging",
+      "Syntex eSignature",
+      "Microsoft 365 Additional Storage",
+      "Syntex Summarization",
+      "Optical Character Recognition",
+      "SharePoint Embedded",
+      "Syntex Backup"
+    ],
+    "sample_skuNames": [
+      "Structured Document Processing",
+      "Cold",
+      "Syntex Summarization",
+      "Syntex Archive",
+      "Translation",
+      "Restored",
+      "Stored",
+      "Syntex eSignature"
+    ],
+    "sample_meterNames": [
+      "Syntex Taxonomy Tagging Transaction",
+      "Syntex eSignature Transaction",
+      "Pre-built understanding Transaction",
+      "Data restored",
+      "Syntex Unstructured Document Processing Transaction",
+      "Content Assembly Transaction",
+      "Syntex Archive Data stored",
+      "Stored Data stored"
+    ]
+  },
+  "Azure Front Door Service": {
+    "serviceFamily": "Networking",
+    "item_count": 87,
+    "sample_productNames": [
+      "Azure Front Door",
+      "Azure Front Door Service"
+    ],
+    "sample_skuNames": [
+      "Premium",
+      "Standard"
+    ],
+    "sample_meterNames": [
+      "Premium Requests",
+      "Standard Requests",
+      "Standard Policy",
+      "Standard Data Transfer Out",
+      "Standard Rule",
+      "Premium Captcha Sessions",
+      "Standard Bot Protection Ruleset",
+      "Premium Data Transfer Out"
+    ]
+  },
+  "Key Vault": {
+    "serviceFamily": "Security",
+    "item_count": 258,
+    "sample_productNames": [
+      "Key Vault",
+      "Azure Dedicated HSM",
+      "Key Vault HSM Pool"
+    ],
+    "sample_skuNames": [
+      "Standard",
+      "Premium",
+      "Standard B1"
+    ],
+    "sample_meterNames": [
+      "Operations",
+      "Advanced Key Operations",
+      "Secret Renewal",
+      "Standard Instance",
+      "Premium HSM-protected RSA 2048-bit key",
+      "Premium HSM-protected Advanced Key",
+      "Standard B1 Instance",
+      "Automated Key Rotation"
+    ]
+  },
+  "Azure Database Migration Service": {
+    "serviceFamily": "Databases",
+    "item_count": 91,
+    "sample_productNames": [
+      "Azure Database Migration Service Premium Compute",
+      "Azure Database Migration Service General Purpose Compute",
+      "Azure Database Migration Service General Purpose Storage",
+      "Azure Database Migration Service Basic Compute"
+    ],
+    "sample_skuNames": [
+      "4 vCore",
+      "16 vCore",
+      "8 vCore",
+      "General Purpose",
+      "2 vCore",
+      "1 vCore"
+    ],
+    "sample_meterNames": [
+      "4 vCore",
+      "16 vCore",
+      "8 vCore",
+      "General Purpose Data Stored - Free",
+      "2 vCore",
+      "1 vCore",
+      "1 vCore vCore - Free"
+    ]
+  },
+  "SQL Data Warehouse": {
+    "serviceFamily": "Databases",
+    "item_count": 129,
+    "sample_productNames": [
+      "SQL Data Warehouse Compute Optimized Gen1"
+    ],
+    "sample_skuNames": [
+      "DWU400",
+      "DWU1000",
+      "DWU2000",
+      "DWU1200",
+      "DWU500",
+      "DWU100",
+      "DWU300",
+      "DWU1500"
+    ],
+    "sample_meterNames": [
+      "100 DWUs",
+      "100 DWUs - Free"
+    ]
+  },
+  "Scheduler": {
+    "serviceFamily": "Management and Governance",
+    "item_count": 29,
+    "sample_productNames": [
+      "Azure Scheduler"
+    ],
+    "sample_skuNames": [
+      "P20 Premium",
+      "Free",
+      "P10 Premium",
+      "Standard"
+    ],
+    "sample_meterNames": [
+      "P20 Premium Unit",
+      "Free Unit",
+      "P10 Premium Unit",
+      "Standard Unit"
+    ]
+  },
+  "Azure DDOS Protection": {
+    "serviceFamily": "Networking",
+    "item_count": 76,
+    "sample_productNames": [
+      "Azure DDOS Protection"
+    ],
+    "sample_skuNames": [
+      "Network Protection",
+      "Azure DDoS Protection IP Protection"
+    ],
+    "sample_meterNames": [
+      "Network Protection Data Processed",
+      "IP Protection Resource",
+      "Network Protection Plan",
+      "Network Protection Resource"
+    ]
+  },
+  "GitHub": {
+    "serviceFamily": "Developer Tools",
+    "item_count": 14,
+    "sample_productNames": [
+      "GitHub Actions",
+      "GitHub Advanced Security",
+      "GitHub Packages"
+    ],
+    "sample_skuNames": [
+      "Linux HP",
+      "Windows B1",
+      "Windows ARM B4",
+      "Secret Scanning for AzDO",
+      "Linux B1",
+      "Linux MO64",
+      "Standard",
+      "Windows GPU B12"
+    ],
+    "sample_meterNames": [
+      "Linux HP Job",
+      "Windows B1 Job",
+      "Windows ARM B4 Job",
+      "Secret Scanning for AzDO Committer",
+      "Windows GPU Job",
+      "Linux MO64 Job",
+      "Standard Data Transfer Out Overage",
+      "Windows GPU B12 Job"
+    ]
+  },
+  "Power BI Embedded": {
+    "serviceFamily": "Analytics",
+    "item_count": 48,
+    "sample_productNames": [
+      "Power BI Embedded"
+    ],
+    "sample_skuNames": [
+      "A5",
+      "A1",
+      "A4",
+      "A6",
+      "A3",
+      "A2",
+      "A8"
+    ],
+    "sample_meterNames": [
+      "A5 Node",
+      "A1 Node",
+      "A4 Node",
+      "A6 Node",
+      "A3 Node",
+      "A2 Node",
+      "A8 Node"
+    ]
+  },
+  "Azure Data Factory": {
+    "serviceFamily": "Analytics",
+    "item_count": 99,
+    "sample_productNames": [
+      "Azure Data Factory"
+    ],
+    "sample_skuNames": [
+      "On Premises",
+      "Cloud"
+    ],
+    "sample_meterNames": [
+      "On Premises Data Movement",
+      "Cloud Low Frequency Activity",
+      "Inactive Pipeline",
+      "On Premises High Frequency Activity",
+      "Cloud High Frequency Activity",
+      "Cloud Data Movement",
+      "On Premises Low Frequency Activity"
+    ]
+  },
+  "Microsoft Purview": {
+    "serviceFamily": "Security",
+    "item_count": 134,
+    "sample_productNames": [
+      "Microsoft Purview Data Compliance",
+      "Microsoft Purview Data Security",
+      "Microsoft Purview Data Governance",
+      "Microsoft Purview On-Demand Classification"
+    ],
+    "sample_skuNames": [
+      "Communication Compliance Standard",
+      "eDiscovery Graph API Standard",
+      "Data Management Standard",
+      "Data Management Advanced",
+      "eDiscovery Premium",
+      "Standard",
+      "Data Management Basic",
+      "Audit Standard"
+    ],
+    "sample_meterNames": [
+      "Communication Compliance Standard Asset",
+      "eDiscovery Graph API Standard Export",
+      "Audit Standard Asset",
+      "Communication Compliance Premium Asset",
+      "eDiscovery Premium GB",
+      "Standard Assets",
+      "Data Management Basic Data Governance Processing Unit",
+      "In Transit Protection Request"
+    ]
+  },
+  "Functions": {
+    "serviceFamily": "Compute",
+    "item_count": 160,
+    "sample_productNames": [
+      "Premium Functions",
+      "Flex Consumption",
+      "Functions"
+    ],
+    "sample_skuNames": [
+      "Premium",
+      "Always Ready",
+      "On Demand",
+      "Standard"
+    ],
+    "sample_meterNames": [
+      "Premium vCPU Duration",
+      "Always Ready Execution Time",
+      "On Demand Total Executions",
+      "Standard Total Executions",
+      "Standard Execution Time",
+      "Premium Memory Duration",
+      "Always Ready Total Executions",
+      "On Demand Execution Time"
+    ]
+  },
+  "Container Registry": {
+    "serviceFamily": "Containers",
+    "item_count": 213,
+    "sample_productNames": [
+      "Container Registry"
+    ],
+    "sample_skuNames": [
+      "Basic",
+      "Premium",
+      "Standard"
+    ],
+    "sample_meterNames": [
+      "Data Stored",
+      "Task vCPU Duration",
+      "Premium GB Registry Replication Data Stored",
+      "Premium Registry Unit",
+      "Premium Registry Replication Unit",
+      "Premium Connected registry",
+      "Standard Registry Unit",
+      "Basic Registry Unit"
+    ]
+  },
+  "Azure Cloud HSM": {
+    "serviceFamily": "Azure Security",
+    "item_count": 15,
+    "sample_productNames": [
+      "Microsoft Azure Cloud HSM"
+    ],
+    "sample_skuNames": [
+      "Standard_B1"
+    ],
+    "sample_meterNames": [
+      "Standard_B1 vCore"
+    ]
+  },
+  "Packet Core": {
+    "serviceFamily": "Telecommunications",
+    "item_count": 8,
+    "sample_productNames": [
+      "Azure Operator 5G Core"
+    ],
+    "sample_skuNames": [
+      "Nexus MCSU - Production",
+      "Nexus MCSU - Lab",
+      "Mobility Management Usage - Lab",
+      "Azure MCSU - Lab",
+      "Mobility Management Usage - Production"
+    ],
+    "sample_meterNames": [
+      "Nexus MCSU - Production",
+      "Nexus MCSU - Lab",
+      "Mobility Management Usage - Lab SAU",
+      "Azure MCSU - Lab",
+      "Mobility Management Usage - Production SAU"
+    ]
+  },
+  "Data Box": {
+    "serviceFamily": "Storage",
+    "item_count": 145,
+    "sample_productNames": [
+      "Data Box Heavy",
+      "Data Box V2",
+      "Data Box Disk",
+      "Data Box",
+      "Data Box Gateway"
+    ],
+    "sample_skuNames": [
+      "Standard",
+      "120 TB",
+      "525 TB",
+      "100 TB"
+    ],
+    "sample_meterNames": [
+      "Standard Lost or Damaged Disk",
+      "100 TB Extra Day Fee",
+      "120 TB Extra Day Fee",
+      "525 TB Service Fee",
+      "Standard Service Fee",
+      "Standard Daily Use Fee",
+      "100 TB Device Standard Shipping",
+      "Standard Lost or Damaged Device"
+    ]
+  },
+  "Azure Stack Edge": {
+    "serviceFamily": "Azure Stack",
+    "item_count": 46,
+    "sample_productNames": [
+      "Azure Stack Edge Pro R",
+      "Azure Stack Edge Pro",
+      "Azure Stack Edge Pro 2",
+      "Azure Stack Edge",
+      "Azure Stack Edge Mini R"
+    ],
+    "sample_skuNames": [
+      "Standard"
+    ],
+    "sample_meterNames": [
+      "Standard Data Destruction Fee - 1 Node + UPS",
+      "Standard Data Destruction Fee",
+      "Device Standard Shipping",
+      "Standard Shipping Fee - Americas",
+      "Standard Monthly Service Fee",
+      "Standard Loss Fee - 1 Node",
+      "Standard Loss Fee",
+      "Standard Return without Drives Fee - SSC 1 Node"
+    ]
+  },
+  "Specialized Compute": {
+    "serviceFamily": "Compute",
+    "item_count": 532,
+    "sample_productNames": [
+      "Specialized Compute Azure VMware Solution",
+      "BareMetal Infrastructure",
+      "Azure Bare Metal",
+      "Azure VMware Solution",
+      "Azure VMware Solution by CloudSimple",
+      "Azure VMware Solution by Virtustream",
+      "Ready Nodes for Nutanix",
+      "Nutanix Reservation"
+    ],
+    "sample_skuNames": [
+      "S72m",
+      "S448om",
+      "AV36P VCF BYOL",
+      "S1568",
+      "S224oo",
+      "S672oom",
+      "S768xm",
+      "CS28"
+    ],
+    "sample_meterNames": [
+      "AN36P",
+      "S896m Instance",
+      "S672oom Instance",
+      "S960m Instance",
+      "S32m Instance",
+      "S96 Instance",
+      "CS36 Node",
+      "S192 Instance"
+    ]
+  },
+  "Intelligent Recommendations": {
+    "serviceFamily": "AI + Machine Learning",
+    "item_count": 40,
+    "sample_productNames": [
+      "Intelligent Recommendations"
+    ],
+    "sample_skuNames": [
+      "Serving",
+      "Modelling"
+    ],
+    "sample_meterNames": [
+      "Serving Request Token",
+      "Modelling Token",
+      "Modelling Usage",
+      "Serving Request Usage"
+    ]
+  },
+  "Email": {
+    "serviceFamily": "Azure Communication Services",
+    "item_count": 23,
+    "sample_productNames": [
+      "Email"
+    ],
+    "sample_skuNames": [
+      "Basic"
+    ],
+    "sample_meterNames": [
+      "Basic Data Transferred",
+      "Basic Sent Email"
+    ]
+  },
+  "Microsoft Azure Payment HSM": {
+    "serviceFamily": "Security",
+    "item_count": 8,
+    "sample_productNames": [
+      "Microsoft Azure Payment HSM"
+    ],
+    "sample_skuNames": [
+      "payShield10K_LMK2_CPS250",
+      "payShield10K_LMK1_CPS60",
+      "payShield10K_LMK1_CPS2500",
+      "payShield10K_LMK2_CPS60",
+      "payShield10K_LMK2_CPS2500"
+    ],
+    "sample_meterNames": [
+      "payShield10K_LMK2_CPS250 Instance",
+      "payShield10K_LMK1_CPS60 Instance",
+      "payShield10K_LMK1_CPS2500 Instance",
+      "payShield10K_LMK2_CPS60 Instance",
+      "payShield10K_LMK2_CPS2500 Instance"
+    ]
+  },
+  "Azure Site Recovery": {
+    "serviceFamily": "Management and Governance",
+    "item_count": 36,
+    "sample_productNames": [
+      "Azure Site Recovery"
+    ],
+    "sample_skuNames": [
+      "Azure",
+      "System Center",
+      "On-premise"
+    ],
+    "sample_meterNames": [
+      "VM Replicated to Azure",
+      "VM Replicated to System Center",
+      "VM Replicated between On-premise sites"
+    ]
+  },
+  "BizTalk Services": {
+    "serviceFamily": "Integration",
+    "item_count": 8,
+    "sample_productNames": [
+      "BizTalk Services"
+    ],
+    "sample_skuNames": [
+      "Premium",
+      "Developer"
+    ],
+    "sample_meterNames": [
+      "Premium Unit",
+      "Developer Unit"
+    ]
+  },
+  "Power BI": {
+    "serviceFamily": "Analytics",
+    "item_count": 35,
+    "sample_productNames": [
+      "Power BI Premium Embedded",
+      "Power BI Premium"
+    ],
+    "sample_skuNames": [
+      "EM3",
+      "EM1",
+      "EM2",
+      "P3",
+      "P1"
+    ],
+    "sample_meterNames": [
+      "EM3 Node",
+      "EM1 Node",
+      "EM2 Node",
+      "P3 Node",
+      "P1 Node"
+    ]
+  },
+  "MS Bing Services": {
+    "serviceFamily": "Other",
+    "item_count": 8,
+    "sample_productNames": [
+      "MS Bing Search v7",
+      "MS Bing Autosuggest v7",
+      "MS Bing Custom Search"
+    ],
+    "sample_skuNames": [
+      "S6 Japan",
+      "Standard",
+      "S4",
+      "S8 Japan",
+      "S6",
+      "S1",
+      "S3 Japan",
+      "S2 Japan"
+    ],
+    "sample_meterNames": [
+      "S6 Japan Transactions",
+      "Standard Transactions",
+      "S4 Transactions",
+      "S8 Japan Transactions",
+      "S6 Transactions",
+      "S1 Transactions",
+      "S3 Japan Transactions",
+      "S2 Japan Transactions"
+    ]
+  },
+  "SignalR": {
+    "serviceFamily": "Analytics",
+    "item_count": 48,
+    "sample_productNames": [
+      "SignalR"
+    ],
+    "sample_skuNames": [
+      "Premium",
+      "Standard"
+    ],
+    "sample_meterNames": [
+      "Premium Unit",
+      "Premium Message",
+      "Standard Unit - Free",
+      "Standard Message",
+      "Standard Unit",
+      "Premium Large Instance Add-on"
+    ]
+  },
+  "Messaging": {
+    "serviceFamily": "Azure Communication Services",
+    "item_count": 25,
+    "sample_productNames": [
+      "Chat",
+      "Channel Fee"
+    ],
+    "sample_skuNames": [
+      "Basic",
+      "Whatsapp"
+    ],
+    "sample_meterNames": [
+      "Basic Sent Message",
+      "Basic Sent InterOp Azure Message",
+      "Whatsapp Consumption Unit"
+    ]
+  },
+  "Azure Remote Rendering": {
+    "serviceFamily": "Mixed Reality",
+    "item_count": 12,
+    "sample_productNames": [
+      "Azure Remote Rendering"
+    ],
+    "sample_skuNames": [
+      "Asset",
+      "Standard",
+      "Premium"
+    ],
+    "sample_meterNames": [
+      "Asset Conversion",
+      "Standard Remote Rendering",
+      "Premium Remote Rendering"
+    ]
+  },
+  "Durable Task Scheduler": {
+    "serviceFamily": "Compute",
+    "item_count": 14,
+    "sample_productNames": [
+      "Durable Task Scheduler"
+    ],
+    "sample_skuNames": [
+      "Dedicated",
+      "Consumption"
+    ],
+    "sample_meterNames": [
+      "Dedicated Capacity Unit",
+      "Consumption Action"
+    ]
+  },
+  "Service Fabric Mesh": {
+    "serviceFamily": "Compute",
+    "item_count": 16,
+    "sample_productNames": [
+      "Reliable Collections",
+      "Container Compute",
+      "Service Fabric Mesh - Volume Disks"
+    ],
+    "sample_skuNames": [
+      "Standard"
+    ],
+    "sample_meterNames": [
+      "Standard Provisioned IOPS (per 100 IOPS)",
+      "Standard vCPU Duration",
+      "Standard Reliable Dictionary and Queue",
+      "Standard Memory Duration",
+      "Standard 32 GiB Disk"
+    ]
+  },
+  "Azure confidential ledger": {
+    "serviceFamily": "Security",
+    "item_count": 12,
+    "sample_productNames": [
+      "Azure confidential ledger",
+      "Managed CCF"
+    ],
+    "sample_skuNames": [
+      "Standard",
+      "MCCF - 9 nodes",
+      "MCCF - 5 nodes",
+      "Additional Storage",
+      "MCCF - Additional Storage",
+      "MCCF - 3 nodes"
+    ],
+    "sample_meterNames": [
+      "Standard Instance",
+      "MCCF - 9 nodes Instance",
+      "MCCF - 5 nodes Instance",
+      "Additional Storage Data Stored",
+      "MCCF - Additional Storage Data Stored",
+      "MCCF - 3 nodes Instance"
+    ]
+  },
+  "IoT Central": {
+    "serviceFamily": "Internet of Things",
+    "item_count": 14,
+    "sample_productNames": [
+      "IoT Central"
+    ],
+    "sample_skuNames": [
+      "Standard"
+    ],
+    "sample_meterNames": [
+      "Standard Overage Messages ST0",
+      "Standard Tier 2",
+      "Standard Tier 0",
+      "Standard Overage Messages",
+      "Standard Tier 1"
+    ]
+  },
+  "Advanced Container Networking Services": {
+    "serviceFamily": "Networking",
+    "item_count": 1,
+    "sample_productNames": [
+      "Advanced Container Networking Services"
+    ],
+    "sample_skuNames": [
+      "Standard"
+    ],
+    "sample_meterNames": [
+      "Standard Node"
+    ]
+  },
+  "Azure DNS": {
+    "serviceFamily": "Networking",
+    "item_count": 16,
+    "sample_productNames": [
+      "Azure DNS"
+    ],
+    "sample_skuNames": [
+      "Public",
+      "Private",
+      "Private Resolver",
+      "DNS Security Policy Domains",
+      "DNS Security Policy Queries"
+    ],
+    "sample_meterNames": [
+      "Public Queries",
+      "Private Zone",
+      "Private Resolver DNS Forwarding Ruleset",
+      "Private Queries",
+      "Private Resolver Outbound Endpoint",
+      "DNS Security Policy Domains Managed Domain",
+      "DNS Security Policy Queries",
+      "Private Resolver Inbound Endpoint"
+    ]
+  },
+  "Azure Stack Hub": {
+    "serviceFamily": "Azure Stack",
+    "item_count": 32,
+    "sample_productNames": [
+      "Azure Stack Hub Ruggedized Appliance",
+      "Azure Stack Hub - Managed Disks",
+      "Azure Stack Hub - SQL Server Enterprise",
+      "Azure Stack Hub - Standard Disks",
+      "Azure Site Recovery on Azure Stack Hub",
+      "Azure Stack Hub - App Service",
+      "Azure Stack Hub - SQL Server Web",
+      "Azure Stack Hub - Functions"
+    ],
+    "sample_skuNames": [
+      "Standard",
+      "M15",
+      "M6",
+      "Windows Admin",
+      "M4",
+      "M30",
+      "Azure Site Recovery for Azure Stack Hub",
+      "Linux Admin"
+    ],
+    "sample_meterNames": [
+      "Windows Core",
+      "Standard 1 Core Admin",
+      "M6 Disk",
+      "Windows Admin 1 Core Admin",
+      "Standard Data Destruction Fee - High Capacity - 4 Node",
+      "Standard Data Stored",
+      "Linux Core",
+      "M4 Disk"
+    ]
+  },
+  "Azure Firewall Manager": {
+    "serviceFamily": "Networking",
+    "item_count": 45,
+    "sample_productNames": [
+      "Azure Firewall Manager"
+    ],
+    "sample_skuNames": [
+      "Secured Virtual Hub with 3rd Party Integration",
+      "Policy analytics",
+      "Standard"
+    ],
+    "sample_meterNames": [
+      "Secured Virtual Hub with 3rd Party Integration Deployment",
+      "Policy analytics Deployment",
+      "Standard Policy per Region"
+    ]
+  },
+  "Microsoft Planetary Computer Pro": {
+    "serviceFamily": "Data",
+    "item_count": 4,
+    "sample_productNames": [
+      "MS Planetary Computer Pro"
+    ],
+    "sample_skuNames": [
+      "Geospatial Storage",
+      "Ingest and Transform",
+      "Bandwidth",
+      "Geospatial Data Operations"
+    ],
+    "sample_meterNames": [
+      "Geospatial Storage Data Stored",
+      "Ingest and Transform vCPU",
+      "Bandwidth Data Transfer",
+      "Geospatial Data Operations"
+    ]
+  },
+  "Digital Twins": {
+    "serviceFamily": "Internet of Things",
+    "item_count": 13,
+    "sample_productNames": [
+      "Digital Twins"
+    ],
+    "sample_skuNames": [
+      "Standard"
+    ],
+    "sample_meterNames": [
+      "Standard Query Units",
+      "Standard Operations",
+      "Standard Message"
+    ]
+  },
+  "Energy Data Manager": {
+    "serviceFamily": "Other",
+    "item_count": 23,
+    "sample_productNames": [
+      "Azure Data Manager for Energy"
+    ],
+    "sample_skuNames": [
+      "Developer",
+      "Standard"
+    ],
+    "sample_meterNames": [
+      "Developer Additional Data Partition",
+      "Standard Additional Data Partition",
+      "Standard Instance",
+      "Developer Instance"
+    ]
+  },
+  "Azure API Center": {
+    "serviceFamily": "Integration",
+    "item_count": 4,
+    "sample_productNames": [
+      "Azure API Center"
+    ],
+    "sample_skuNames": [
+      "apim apic free sku",
+      "Standard"
+    ],
+    "sample_meterNames": [
+      "apim apic free sku Unit",
+      "Standard Unit"
+    ]
+  },
+  "Azure Fluid Relay": {
+    "serviceFamily": "Developer Tools",
+    "item_count": 37,
+    "sample_productNames": [
+      "Azure Fluid Relay"
+    ],
+    "sample_skuNames": [
+      "Standard",
+      "Basic"
+    ],
+    "sample_meterNames": [
+      "Standard Operations Out",
+      "Standard Storage",
+      "Basic Client Connectivity Minutes",
+      "Standard Operations In",
+      "Standard Client Connectivity Minutes",
+      "Basic Storage",
+      "Basic Operations Out",
+      "Basic Operations In"
+    ]
+  },
+  "Azure DevOps": {
+    "serviceFamily": "Developer Tools",
+    "item_count": 4,
+    "sample_productNames": [
+      "Azure Artifacts"
+    ],
+    "sample_skuNames": [
+      "Standard"
+    ],
+    "sample_meterNames": [
+      "Standard Data Stored"
+    ]
+  },
+  "HPC Cache": {
+    "serviceFamily": "Compute",
+    "item_count": 23,
+    "sample_productNames": [
+      "File System Caching Service"
+    ],
+    "sample_skuNames": [
+      "Standard"
+    ],
+    "sample_meterNames": [
+      "Standard Cache",
+      "Standard L_Cache",
+      "Standard Cache Disk"
+    ]
+  },
+  "Microsoft Dragon Copilot": {
+    "serviceFamily": "Other",
+    "item_count": 3,
+    "sample_productNames": [
+      "Microsoft Dragon Copilot"
+    ],
+    "sample_skuNames": [
+      "Pay As You Go"
+    ],
+    "sample_meterNames": [
+      "Pay As You Go Consumption Unit"
+    ]
+  },
+  "Azure Arc": {
+    "serviceFamily": "Azure Arc",
+    "item_count": 11,
+    "sample_productNames": [
+      "Azure Arc",
+      "Azure Arc Extended Security Updates"
+    ],
+    "sample_skuNames": [
+      "Server",
+      "WS 2012 Std Tracking",
+      "Win Server Arc Subscription Reclass DC",
+      "WS 2012 Std 1 Core",
+      "Kubernetes",
+      "WS 2012 DC Tracking",
+      "WS 2012 DC 16 Core",
+      "WS 2012 Std 8 Core"
+    ],
+    "sample_meterNames": [
+      "Guest Configuration Policy/Server",
+      "WS 2012 Std Tracking ESU Back Billing",
+      "Win Server Arc Subscription Reclass DC Core",
+      "WS 2012 Std 1 Core ESU",
+      "Kubernetes Policy/vCPU/Month",
+      "WS 2012 DC Tracking ESU Back Billing",
+      "WS 2012 DC 16 Core ESU Back Billing",
+      "WS 2012 Std 8 Core ESU"
+    ]
+  },
+  "AKS on Azure Stack HCI": {
+    "serviceFamily": "Containers",
+    "item_count": 3,
+    "sample_productNames": [
+      "AKS on Azure Stack HCI"
+    ],
+    "sample_skuNames": [
+      "Standard",
+      "SW Bundle 2P AEHC"
+    ],
+    "sample_meterNames": [
+      "Standard Service Fee/Core",
+      "SW Bundle 2P AEHC Monthly Service Fee",
+      "Standard Trial Fee/Core"
+    ]
+  },
+  "Azure Chaos Studio": {
+    "serviceFamily": "Management and Governance",
+    "item_count": 5,
+    "sample_productNames": [
+      "Azure Chaos Studio"
+    ],
+    "sample_skuNames": [
+      "Essential"
+    ],
+    "sample_meterNames": [
+      "Essential Action-Minute"
+    ]
+  },
+  "Microsoft Copilot Studio": {
+    "serviceFamily": "Microsoft 365 Copilot",
+    "item_count": 25,
+    "sample_productNames": [
+      "Microsoft Copilot Studio"
+    ],
+    "sample_skuNames": [
+      "Pay As You Go"
+    ],
+    "sample_meterNames": [
+      "Pay As You Go Message",
+      "Pay As You Go Copilot Credit"
+    ]
+  },
+  "Microsoft Security Copilot": {
+    "serviceFamily": "Security",
+    "item_count": 2,
+    "sample_productNames": [
+      "Microsoft Security Copilot"
+    ],
+    "sample_skuNames": [
+      "Provisioned",
+      "Overage"
+    ],
+    "sample_meterNames": [
+      "Provisioned Security Compute Unit",
+      "Overage Security Compute Unit"
+    ]
+  },
+  "Microsoft Playwright Testing": {
+    "serviceFamily": "Developer Tools",
+    "item_count": 5,
+    "sample_productNames": [
+      "Microsoft Playwright Testing"
+    ],
+    "sample_skuNames": [
+      "Free",
+      "Reporting - Free",
+      "Reporting"
+    ],
+    "sample_meterNames": [
+      "Free Test",
+      "Reporting - Free Unit",
+      "Reporting Test Results"
+    ]
+  },
+  "Microsoft Graph data connect": {
+    "serviceFamily": "Analytics",
+    "item_count": 1,
+    "sample_productNames": [
+      "Microsoft Graph data connect"
+    ],
+    "sample_skuNames": [
+      "Standard"
+    ],
+    "sample_meterNames": [
+      "Standard 1K Objects Extracted"
+    ]
+  },
+  "Microsoft Genomics": {
+    "serviceFamily": "AI + Machine Learning",
+    "item_count": 6,
+    "sample_productNames": [
+      "Microsoft Genomics"
+    ],
+    "sample_skuNames": [
+      "Alignment and Variant Calling"
+    ],
+    "sample_meterNames": [
+      "Alignment and Variant Calling Incremental Gigabase",
+      "Alignment and Variant Calling Genome"
+    ]
+  },
+  "Traffic Manager": {
+    "serviceFamily": "Networking",
+    "item_count": 8,
+    "sample_productNames": [
+      "Traffic Manager"
+    ],
+    "sample_skuNames": [
+      "Non-Azure Endpoint",
+      "Azure Region",
+      "Azure Endpoint",
+      "Traffic View",
+      "Non-Azure Region"
+    ],
+    "sample_meterNames": [
+      "Non-Azure Endpoint Fast Interval Health Check Add-ons",
+      "DNS Queries",
+      "Azure Endpoint Fast Interval Health Check Add-ons",
+      "Traffic View Data Points Processed",
+      "Non-Azure Region Real User Measurements"
+    ]
+  },
+  "Voice Core": {
+    "serviceFamily": "Telecommunications",
+    "item_count": 2,
+    "sample_productNames": [
+      "Azure Communications Gateway"
+    ],
+    "sample_skuNames": [
+      "Lab",
+      "Standard"
+    ],
+    "sample_meterNames": [
+      "Lab ACG Lab",
+      "ACG Session"
+    ]
+  },
+  "Azure Policy": {
+    "serviceFamily": "Management and Governance",
+    "item_count": 5,
+    "sample_productNames": [
+      "Azure Policy"
+    ],
+    "sample_skuNames": [
+      "Server",
+      "Premium P1 Tier",
+      "K8s",
+      "Basic Tier"
+    ],
+    "sample_meterNames": [
+      "Guest Configuration Policy/Server",
+      "Premium P1 Tier Resource",
+      "Kubernetes Policy/vCPU/Month",
+      "Basic Tier Resource"
+    ]
+  },
+  "Change Tracking and Inventory": {
+    "serviceFamily": "Management and Governance",
+    "item_count": 1,
+    "sample_productNames": [
+      "Change Tracking and Inventory"
+    ],
+    "sample_skuNames": [
+      "Azure Node Complimentary Benefits"
+    ],
+    "sample_meterNames": [
+      "Azure Node Complimentary Benefits Server"
+    ]
+  },
+  "Azure Orbital Edge": {
+    "serviceFamily": "Azure Stack",
+    "item_count": 2,
+    "sample_productNames": [
+      "Azure Orbital Cloud Access - Other",
+      "Azure Orbital Cloud Access - Sub"
+    ],
+    "sample_skuNames": [
+      "Standard",
+      "Standard WAN"
+    ],
+    "sample_meterNames": [
+      "Shipping Fee - US Gov",
+      "Standard WAN Monthly Subscription"
+    ]
+  },
+  "Service Fabric": {
+    "serviceFamily": "Compute",
+    "item_count": 1,
+    "sample_productNames": [
+      "Service Fabric Cluster"
+    ],
+    "sample_skuNames": [
+      "Standard"
+    ],
+    "sample_meterNames": [
+      "Standard Up time"
+    ]
+  },
+  "Azure IoT Operations": {
+    "serviceFamily": "Internet of Things",
+    "item_count": 2,
+    "sample_productNames": [
+      "Azure IoT Operations"
+    ],
+    "sample_skuNames": [
+      "Basic"
+    ],
+    "sample_meterNames": [
+      "Basic Node"
+    ]
+  },
+  "Visual Studio Codespaces": {
+    "serviceFamily": "Developer Tools",
+    "item_count": 1,
+    "sample_productNames": [
+      "Visual Studio Codespaces Linux Environment"
+    ],
+    "sample_skuNames": [
+      "Standard"
+    ],
+    "sample_meterNames": [
+      "Standard Unit"
+    ]
+  },
+  "Azure Route Server": {
+    "serviceFamily": "Networking",
+    "item_count": 1,
+    "sample_productNames": [
+      "Azure Route Server"
+    ],
+    "sample_skuNames": [
+      "Routing Infrastructure Unit"
+    ],
+    "sample_meterNames": [
+      "Routing Infrastructure Unit"
+    ]
+  },
+  "Azure Arc-enabled AKS": {
+    "serviceFamily": "Containers",
+    "item_count": 3,
+    "sample_productNames": [
+      "AKS on Windows Server",
+      "AKS on VMware"
+    ],
+    "sample_skuNames": [
+      "Standard"
+    ],
+    "sample_meterNames": [
+      "Service Fee/Core"
+    ]
+  },
+  "Mixed Reality": {
+    "serviceFamily": "Mixed Reality",
+    "item_count": 2,
+    "sample_productNames": [
+      "Azure Object Anchors"
+    ],
+    "sample_skuNames": [
+      "Reconstruction",
+      "Training"
+    ],
+    "sample_meterNames": [
+      "Reconstruction Relocalization",
+      "Training Job"
+    ]
+  },
+  "SQL DB Edge": {
+    "serviceFamily": "Databases",
+    "item_count": 2,
+    "sample_productNames": [
+      "SQL DB Edge - SQL License"
+    ],
+    "sample_skuNames": [
+      "Premium Container",
+      "Standard Container"
+    ],
+    "sample_meterNames": [
+      "Premium Container License",
+      "Standard Container License"
+    ]
+  },
+  "Data Catalog": {
+    "serviceFamily": "Analytics",
+    "item_count": 3,
+    "sample_productNames": [
+      "Data Catalog"
+    ],
+    "sample_skuNames": [
+      "Standard"
+    ],
+    "sample_meterNames": [
+      "Standard User"
+    ]
+  },
+  "Private Mobile Network": {
+    "serviceFamily": "Networking",
+    "item_count": 3,
+    "sample_productNames": [
+      "Private Mobile Network"
+    ],
+    "sample_skuNames": [
+      "Large",
+      "Small"
+    ],
+    "sample_meterNames": [
+      "Large Unit",
+      "Small Unit"
+    ]
+  },
+  "Power Pages": {
+    "serviceFamily": "Power Platform",
+    "item_count": 2,
+    "sample_productNames": [
+      "Power Pages Anonymous",
+      "Power Pages Authenticated"
+    ],
+    "sample_skuNames": [
+      "Power Pages Anonymous",
+      "Power Pages Authenticated"
+    ],
+    "sample_meterNames": [
+      "Anonymous Users per Site Active User",
+      "Authenticated Users per Site Active User"
+    ]
+  },
+  "Visual Studio Subscription": {
+    "serviceFamily": "Developer Tools",
+    "item_count": 2,
+    "sample_productNames": [
+      "Visual Studio Subscription"
+    ],
+    "sample_skuNames": [
+      "Enterprise Monthly"
+    ],
+    "sample_meterNames": [
+      "Enterprise Monthly User"
+    ]
+  },
+  "Azure Active Directory B2C": {
+    "serviceFamily": "Security",
+    "item_count": 6,
+    "sample_productNames": [
+      "Azure Active Directory B2C"
+    ],
+    "sample_skuNames": [
+      "Standard",
+      "Basic"
+    ],
+    "sample_meterNames": [
+      "Standard Monthly Active Users",
+      "Basic Multi-Factor Authentication"
+    ]
+  },
+  "Trusted Signing": {
+    "serviceFamily": "Security",
+    "item_count": 1,
+    "sample_productNames": [
+      "Trusted Signing"
+    ],
+    "sample_skuNames": [
+      "Premium"
+    ],
+    "sample_meterNames": [
+      "Premium Signature"
+    ]
+  },
+  "Microsoft Entra": {
+    "serviceFamily": "Azure Security",
+    "item_count": 2,
+    "sample_productNames": [
+      "Microsoft Entra External ID"
+    ],
+    "sample_skuNames": [
+      "Phone Authentication Mid Low Cost",
+      "ID Governance"
+    ],
+    "sample_meterNames": [
+      "Phone Authentication Mid Low Cost Transaction",
+      "ID Governance Monthly Active Users"
+    ]
+  },
+  "Azure Update Manager": {
+    "serviceFamily": "Management and Governance",
+    "item_count": 1,
+    "sample_productNames": [
+      "Azure Update Manager"
+    ],
+    "sample_skuNames": [
+      "Basic"
+    ],
+    "sample_meterNames": [
+      "Basic Server"
+    ]
+  },
+  "Azure Local": {
+    "serviceFamily": "Compute",
+    "item_count": 1,
+    "sample_productNames": [
+      "Azure Local"
+    ],
+    "sample_skuNames": [
+      "Azure Benefit"
+    ],
+    "sample_meterNames": [
+      "Azure Benefit Monthly Service Fee"
+    ]
+  },
+  "SAP Embrace": {
+    "serviceFamily": "Other",
+    "item_count": 3,
+    "sample_productNames": [
+      "SAP Edge Services"
+    ],
+    "sample_skuNames": [
+      "Enterprise Version"
+    ],
+    "sample_meterNames": [
+      "Enterprise Version"
+    ]
+  },
+  "StorSimple": {
+    "serviceFamily": "Storage",
+    "item_count": 1,
+    "sample_productNames": [
+      "StorSimple"
+    ],
+    "sample_skuNames": [
+      "Standard"
+    ],
+    "sample_meterNames": [
+      "Standard Data Transformation Volume"
+    ]
+  }
+}

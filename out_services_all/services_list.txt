@@ -1,0 +1,157 @@
+Advanced Container Networking Services
+AKS on Azure Stack HCI
+API Management
+App Configuration
+Application Gateway
+Application Insights
+Automation
+Azure Active Directory B2C
+Azure Analysis Services
+Azure API Center
+Azure API for FHIR
+Azure App Service
+Azure App Testing
+Azure Arc
+Azure Arc Enabled Databases
+Azure Arc-enabled AKS
+Azure Bastion
+Azure Bot Service
+Azure Chaos Studio
+Azure Cloud HSM
+Azure Cognitive Search
+Azure confidential ledger
+Azure Container Apps
+Azure Cosmos DB
+Azure Data Explorer
+Azure Data Factory
+Azure Data Factory v2
+Azure Data Share
+Azure Database for MariaDB
+Azure Database for MySQL
+Azure Database for PostgreSQL
+Azure Database Migration Service
+Azure Databricks
+Azure DDOS Protection
+Azure DevOps
+Azure DNS
+Azure Firewall
+Azure Firewall Manager
+Azure Fluid Relay
+Azure Front Door Service
+Azure Grafana Service
+Azure IoT Operations
+Azure IoT Security
+Azure Kubernetes Service
+Azure Lab Services
+Azure Local
+Azure Machine Learning
+Azure Managed Instance for Apache Cassandra
+Azure Maps
+Azure Monitor
+Azure NetApp Files
+Azure Orbital
+Azure Orbital Edge
+Azure Policy
+Azure Purview
+Azure Remote Rendering
+Azure Route Server
+Azure Site Recovery
+Azure Spring Cloud
+Azure Stack Edge
+Azure Stack Hub
+Azure Synapse Analytics
+Azure Update Manager
+Backup
+Bandwidth
+BizTalk Services
+Change Tracking and Inventory
+Cloud Services
+Cognitive Services
+Container Instances
+Container Registry
+Content Delivery Network
+Data Box
+Data Catalog
+Data Lake Store
+Digital Twins
+Durable Task Scheduler
+Dynamics 365 for Customer Insights
+Email
+Energy Data Manager
+Event Grid
+Event Hubs
+ExpressRoute
+Foundry Models
+Foundry Tools
+Functions
+GitHub
+HDInsight
+HPC Cache
+Insight and Analytics
+Intelligent Recommendations
+IoT Central
+IoT Hub
+Key Vault
+Load Balancer
+Log Analytics
+Logic Apps
+Machine Learning Studio
+Messaging
+Microsoft Azure Payment HSM
+Microsoft Copilot Studio
+Microsoft Defender for Cloud
+Microsoft Dragon Copilot
+Microsoft Entra
+Microsoft Entra Domain Services
+Microsoft Fabric
+Microsoft Genomics
+Microsoft Graph data connect
+Microsoft Graph Services
+Microsoft Planetary Computer Pro
+Microsoft Playwright Testing
+Microsoft Purview
+Microsoft Security Copilot
+Mixed Reality
+MS Bing Services
+Network Watcher
+Notification Hubs
+Packet Core
+Phone Numbers
+Power BI
+Power BI Embedded
+Power Pages
+Private Mobile Network
+Quantum Computing
+Redis Cache
+SAP Embrace
+Scheduler
+Sentinel
+Service Bus
+Service Fabric
+Service Fabric Mesh
+SignalR
+SMS
+Specialized Compute
+SQL Data Warehouse
+SQL Database
+SQL DB Edge
+SQL Managed Instance
+SQL Server Stretch Database
+Storage
+StorSimple
+Stream Analytics
+Syntex
+Time Series Insights
+Traffic Manager
+Trusted Signing
+Virtual Machines
+Virtual Machines Licenses
+Virtual Network
+Virtual WAN
+Visual Studio Codespaces
+Visual Studio Subscription
+Voice
+Voice Core
+VPN Gateway
+Web PubSub
+Windows Virtual Desktop
