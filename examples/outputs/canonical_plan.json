@@ -1,0 +1,103 @@
+{
+  "metadata": {
+    "version": "1.0",
+    "currency": "EUR",
+    "default_region": "westeurope"
+  },
+  "scenarios": [
+    {
+      "id": "baseline",
+      "label": "Baseline",
+      "description": "Fixture plan showing canonical service names + hints",
+      "resources": [
+        {
+          "id": "redis",
+          "category": "cache.redis",
+          "service_name": "Redis Cache",
+          "product_name_contains": [
+            "Redis Cache Hours"
+          ],
+          "meter_name_contains": [
+            "Cache"
+          ],
+          "service_name_raw": "Azure Cache for Redis",
+          "service_name_status": "synonym",
+          "service_name_suggestions": [],
+          "arm_sku_name": null,
+          "region": null,
+          "quantity": 1,
+          "hours_per_month": 730,
+          "billing_model": "payg",
+          "workload_type": "cache",
+          "criticality": "prod",
+          "os_type": "na",
+          "sku_name_contains": [],
+          "arm_sku_name_contains": [],
+          "metrics": {
+            "throughput_mbps": 20
+          },
+          "notes": "",
+          "source": "llm-inferred"
+        },
+        {
+          "id": "public-ip",
+          "category": "network.public_ip",
+          "service_name": "Virtual Network",
+          "product_name_contains": [
+            "IP Addresses"
+          ],
+          "meter_name_contains": [
+            "Public"
+          ],
+          "service_name_raw": "Public IP Addresses",
+          "service_name_status": "synonym",
+          "service_name_suggestions": [],
+          "arm_sku_name": null,
+          "region": null,
+          "quantity": 1,
+          "hours_per_month": 730,
+          "billing_model": "payg",
+          "workload_type": "network_egress",
+          "criticality": "prod",
+          "os_type": "na",
+          "sku_name_contains": [],
+          "arm_sku_name_contains": [],
+          "metrics": {
+            "egress_gb": 100.0
+          },
+          "notes": "",
+          "source": "llm-inferred"
+        },
+        {
+          "id": "openai",
+          "category": "ml.azureml",
+          "service_name": "Foundry Models",
+          "product_name_contains": [
+            "Azure OpenAI"
+          ],
+          "sku_name_contains": [
+            "gpt"
+          ],
+          "service_name_raw": "Azure OpenAI",
+          "service_name_status": "synonym",
+          "service_name_suggestions": [
+            "Foundry Tools"
+          ],
+          "arm_sku_name": null,
+          "region": null,
+          "quantity": 1,
+          "hours_per_month": 730,
+          "billing_model": "payg",
+          "workload_type": "other",
+          "criticality": "prod",
+          "os_type": "na",
+          "meter_name_contains": [],
+          "arm_sku_name_contains": [],
+          "metrics": {},
+          "notes": "",
+          "source": "llm-inferred"
+        }
+      ]
+    }
+  ]
+}

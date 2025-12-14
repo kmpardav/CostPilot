@@ -41,6 +41,10 @@ cat demo_finops_report.md
 jq '.' demo_finops_plan.json
 ```
 
+## Canonical naming + WAF/CAF alignment
+- Planner outputs enforce canonical Azure Retail Prices `serviceName` values from the bundled knowledge pack (`out_kp/llm_context.json`) and attach product/SKU/meter/armSku hint tokens so pricing queries stay deterministic.
+- Designs incorporate Azure Well-Architected Framework pillars and CAF landing zone guidance; when the Responses backend is enabled, web search is only used to confirm official Microsoft naming and best practices.
+
 ## Key flags and guardrails
 - `--compare-policy soft_compare` (default) keeps generating reports even when pricing is incomplete but suppresses deltas and adds a blockers banner. `--compare-policy hard_stop` exits with code 2 before report generation when required categories are incomplete.
 - Required categories for comparability: compute, db, cache, network, storage. Any required resource marked `missing`, `sku_mismatch`, `reservation_uom_ambiguous`, `adjudicator_unresolved`, `estimated`, or with null costs will block comparisons.

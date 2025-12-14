@@ -9,6 +9,8 @@ from __future__ import annotations
 from dataclasses import dataclass
 from typing import Dict, Iterable, List
 
+from ..utils.knowledgepack import canonicalize_service_name
+
 
 @dataclass(frozen=True)
 class CatalogSource:
@@ -30,7 +32,7 @@ def _legacy_service_name(category: str, service_name: str) -> str:
         "SQL Managed Instance",
         "Storage",
         "Azure Cosmos DB",
-        "Azure Cache for Redis",
+        "Redis Cache",
         "Azure App Service",
         "Event Hubs",
         "Service Bus",
@@ -60,9 +62,9 @@ def _legacy_service_name(category: str, service_name: str) -> str:
         "Azure Site Recovery",
         "Public IP Addresses",
         "Azure Machine Learning",
-        "Private Link",
-        "Public IP",
         "Traffic Manager",
+        "Foundry Models",
+        "Foundry Tools",
     }
     if svc in known:
         return svc
@@ -95,7 +97,7 @@ def _legacy_service_name(category: str, service_name: str) -> str:
 
     # Cache
     if cat.startswith("cache.redis"):
-        return "Azure Cache for Redis"
+        return "Redis Cache"
 
     # Analytics
     if cat.startswith("analytics.databricks"):
@@ -151,9 +153,9 @@ def _legacy_service_name(category: str, service_name: str) -> str:
     if cat.startswith("network.bastion"):
         return "Azure Bastion"
     if cat.startswith("network.public_ip"):
-        return "Public IP Addresses"
+        return "Virtual Network"
     if cat.startswith("network.private_endpoint"):
-        return "Private Link"
+        return "Virtual Network"
 
     return svc or "Other"
 
@@ -210,15 +212,19 @@ CATEGORY_CATALOG_SOURCES: Dict[str, List[CatalogSource]] = {
         CatalogSource("Virtual Network", arm_region_mode="global", product_name_hint="ip address"),
     ],
     "network.private_endpoint": [
-        CatalogSource("Private Link"),
-        CatalogSource("Private Link", arm_region_mode="global"),
+        CatalogSource("Virtual Network", product_name_hint="private link"),
+        CatalogSource("Virtual Network", arm_region_mode="global", product_name_hint="private link"),
     ],
     # Cache
     "cache.redis": [
-        CatalogSource("Azure Cache for Redis"),
-        CatalogSource("Azure Cache for Redis", arm_region_mode="empty", product_name_hint="redis"),
+        CatalogSource("Redis Cache"),
+        CatalogSource("Redis Cache", arm_region_mode="empty", product_name_hint="redis"),
     ],
     # ML / AI
+    "ai.openai": [
+        CatalogSource("Foundry Models", arm_region_mode="global", product_name_hint="openai"),
+        CatalogSource("Foundry Tools", arm_region_mode="global", product_name_hint="openai"),
+    ],
     "ml.azureml": [CatalogSource("Azure Machine Learning")],
 }
 
@@ -235,11 +241,31 @@ def get_catalog_sources(category: str) -> List[CatalogSource]:
     """Return the ordered catalog sources for a given category."""
 
     prefix = _matching_prefix(category, CATEGORY_CATALOG_SOURCES.keys())
+    sources: List[CatalogSource] = []
     if prefix:
-        return CATEGORY_CATALOG_SOURCES[prefix]
+        sources = CATEGORY_CATALOG_SOURCES[prefix]
 
-    inferred = _legacy_service_name(category, "")
-    return [CatalogSource(inferred)]
+    if not sources:
+        inferred = _legacy_service_name(category, "")
+        sources = [CatalogSource(inferred)]
+
+    canonical_sources: List[CatalogSource] = []
+    for src in sources:
+        canonical = canonicalize_service_name(src.service_name)
+        service_name = (
+            canonical["canonical"]
+            if canonical["canonical"] != "UNKNOWN_SERVICE"
+            else src.service_name
+        )
+        canonical_sources.append(
+            CatalogSource(
+                service_name,
+                arm_region_mode=src.arm_region_mode,
+                product_name_hint=src.product_name_hint,
+                sku_hint=src.sku_hint,
+            )
+        )
+    return canonical_sources
 
 
 __all__ = ["CatalogSource", "CATEGORY_CATALOG_SOURCES", "get_catalog_sources", "_legacy_service_name"]
