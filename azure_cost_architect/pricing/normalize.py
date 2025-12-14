@@ -2,6 +2,7 @@
 import re
 from typing import Dict, Optional
 
+from ..utils.knowledgepack import canonicalize_service_name
 from .catalog_sources import _legacy_service_name, get_catalog_sources
 
 
@@ -17,14 +18,16 @@ def normalize_service_name(category: str, service_name: Optional[str]) -> str:
     cat = (category or "").lower()
     svc = (service_name or "").strip()
 
+    canonical = canonicalize_service_name(svc)
+    if canonical["canonical"] != "UNKNOWN_SERVICE":
+        return canonical["canonical"]
+
     sources = get_catalog_sources(cat)
     allowed = {src.service_name for src in sources if src.service_name}
 
     if allowed:
         if svc in allowed:
             return svc
-        # If the planner suggested something outside the allowed list, enforce
-        # the deterministic mapping.
         return next(iter(allowed))
 
     return _legacy_service_name(cat, svc)

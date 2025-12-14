@@ -1,4 +1,42 @@
+from collections import defaultdict
+from textwrap import fill
+
 from .config import DEFAULT_CURRENCY, DEFAULT_REGION, HOURS_PROD
+from .utils.knowledgepack import get_allowed_service_names, get_compact_service_metadata
+
+
+def _build_service_hint_block() -> str:
+    allowed = get_allowed_service_names()
+    meta = get_compact_service_metadata(common_limit=25)
+    lines: list[str] = []
+
+    if allowed:
+        lines.append("Allowed Azure Retail serviceName values (case-sensitive):")
+        lines.append(fill(", ".join(allowed), width=96))
+
+    if meta:
+        lines.append("Compact service hints (family | service | tokens -> product/sku/meter samples):")
+        grouped: dict[str, list[tuple[str, dict]]] = defaultdict(list)
+        for svc, info in meta.items():
+            grouped[info.get("family") or "Other"].append((svc, info))
+
+        for fam in sorted(grouped.keys()):
+            for svc, info in sorted(grouped[fam], key=lambda kv: kv[0]):
+                tokens = ", ".join(info.get("top_tokens") or [])
+                samples = []
+                if info.get("sample_products"):
+                    samples.append(f"products={'; '.join(info['sample_products'])}")
+                if info.get("sample_skus"):
+                    samples.append(f"skus={'; '.join(info['sample_skus'])}")
+                if info.get("sample_meters"):
+                    samples.append(f"meters={'; '.join(info['sample_meters'])}")
+                lines.append(f"- {fam} | {svc}: tokens=[{tokens}] -> {' | '.join(samples)}")
+
+    return "\n".join(lines)
+
+
+_SERVICE_HINT_BLOCK = _build_service_hint_block()
+
 
 PROMPT_PLANNER_SYSTEM = f"""
 You are an Azure Solution Architect and FinOps expert.
@@ -7,7 +45,7 @@ Your job is to:
 1. Read a free-text description of a desired solution (Greek or English).
 2. Design a COMPLETE Azure-centric architecture:
    - Compute: VMs, VM Scale Sets, AKS, App Service, Functions, Container Apps.
-   - Data: Azure SQL (DB/MI), PostgreSQL, MySQL, Cosmos DB, Azure Cache for Redis.
+   - Data: Azure SQL (DB/MI), PostgreSQL, MySQL, Cosmos DB, Redis Cache.
    - Storage: Blob Storage, Files, Managed Disks, Data Lake (specify tiers: Hot/Cool/Archive where relevant).
    - Analytics: Databricks, Synapse, Fabric, Data Factory, Data Explorer.
    - Networking: Virtual Network, Subnets, NAT Gateway, VPN Gateway, ExpressRoute,
@@ -18,10 +56,16 @@ Your job is to:
    - Monitoring & Ops: Log Analytics, Azure Monitor, Backup & DR (Azure Backup, Azure Site Recovery),
                        basic observability (metrics, alerts, dashboards).
 
-3. Produce 1–3 SCENARIOS:
-   - "baseline"        – recommended / production-safe.
-   - "cost_optimized"  – cheaper where possible (smaller SKUs, fewer hours, less redundancy).
-   - "high_performance"– higher tiers, more redundancy, maybe GPUs when clearly needed.
+Architecture quality guardrails:
+- Design using Azure Well-Architected Framework pillars: Reliability, Security, Cost Optimization, Operational Excellence, Performance Efficiency.
+- Use CAF landing zone principles for governance, identity, networking, and management.
+- Prefer official Azure reference architectures/templates when they exist; otherwise design new but align to WAF/CAF.
+- When llm-backend=responses (web_search available), use web_search to confirm latest service naming/SKUs/best practices ONLY from official Microsoft sources; otherwise do not guess.
+
+Produce 1–3 SCENARIOS:
+  - "baseline"        – recommended / production-safe.
+  - "cost_optimized"  – cheaper where possible (smaller SKUs, fewer hours, less redundancy).
+  - "high_performance"– higher tiers, more redundancy, maybe GPUs when clearly needed.
 
 You MUST output a JSON object (valid JSON), with this shape:
 
@@ -40,7 +84,11 @@ You MUST output a JSON object (valid JSON), with this shape:
         {{
           "id": "short-id-like-aks-nodes-or-sqlmi1",
           "category": "compute.vm | compute.vmss | compute.aks | appservice | function | containerapps | db.sql | db.sqlmi | db.postgres | db.mysql | db.cosmos | cache.redis | storage.blob | storage.files | storage.disk | analytics.databricks | analytics.fabric | analytics.synapse | analytics.datafactory | analytics.dataexplorer | messaging.eventhubs | messaging.servicebus | messaging.eventgrid | monitoring.loganalytics | security.keyvault | backup.vault | dr.asr | network.vnet | network.appgw | network.lb | network.vpngw | network.er | network.nat | network.egress | network.firewall | network.gateway | network.bastion | network.public_ip | other",
-          "service_name": "Azure Retail serviceName like 'Virtual Machines', 'SQL Database', 'Storage', 'Bandwidth', 'Application Gateway', 'Azure Front Door', 'Event Hubs', 'Service Bus', 'Azure Cosmos DB', 'Azure Cache for Redis', 'Backup', 'Azure Site Recovery', 'Log Analytics', 'Key Vault'",
+          "service_name": "Canonical Azure Retail serviceName like 'Virtual Machines', 'SQL Database', 'Storage', 'Bandwidth', 'Application Gateway', 'Azure Front Door', 'Event Hubs', 'Service Bus', 'Azure Cosmos DB', 'Redis Cache', 'Backup', 'Azure Site Recovery', 'Log Analytics', 'Key Vault' or 'UNKNOWN_SERVICE' if uncertain",
+          "product_name_contains": [],
+          "sku_name_contains": [],
+          "meter_name_contains": [],
+          "arm_sku_name_contains": [],
           "arm_sku_name": "Exact Azure armSkuName if applicable (e.g. 'Standard_D4s_v3', 'GP_Gen5_8') or null",
           "region": "Azure armRegionName (e.g. 'westeurope') or null for default",
           "quantity": 1,
@@ -70,6 +118,16 @@ You MUST output a JSON object (valid JSON), with this shape:
     }}
   ]
 }}
+
+Retail API Canonical Naming Rules:
+- serviceName is case-sensitive and MUST match allowed_service_names; do not invent service names.
+- If unsure: service_name="UNKNOWN_SERVICE" and include 2–3 suggestions from allowed_service_names.
+- Always provide hint token arrays for matching (product_name_contains, sku_name_contains, meter_name_contains, arm_sku_name_contains).
+- Canonical examples: Redis -> service_name="Redis Cache"; Public IP -> service_name="Virtual Network" + product_name_contains=["IP Addresses"] + meter_name_contains=["Public"]; Azure OpenAI -> service_name="Foundry Models" (primary) and optionally "Foundry Tools" + product_name_contains=["Azure OpenAI"].
+- Query guidance: start with serviceName filter, add armRegionName eq '<region>' for regional services, prefer meterRegion='primary' when supported, then narrow with contains(productName|skuName|meterName|armSkuName, token) using hint arrays. Rank by token overlap, unitOfMeasure compatibility, sane priceType (Consumption vs Reservation), and avoid irrelevant meters.
+
+Allowed Retail service universe and hints:
+{_SERVICE_HINT_BLOCK or '- (no knowledge pack loaded)'}
 
 RULES & BEST PRACTICES (VERY IMPORTANT):
 

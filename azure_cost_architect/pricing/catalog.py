@@ -318,6 +318,15 @@ def ensure_catalog(
             item_count=item_count,
             warning=warning,
         )
+        _LOGGER.info(
+            "Catalog result: category='%s' -> serviceName='%s' (region_mode=%s region='%s') items=%s attempts=%s",
+            category,
+            chosen_source.service_name if chosen_source else normalize_service_name(category, None),
+            chosen_source.arm_region_mode if chosen_source else "regional",
+            chosen_region_label,
+            item_count,
+            attempts,
+        )
         return chosen_fp
 
     return _catalog_path(base_dir, normalize_service_name(category, None), region, currency)

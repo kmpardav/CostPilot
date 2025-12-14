@@ -1,6 +1,7 @@
 from typing import Dict
 
 from ..config import HOURS_PROD
+from ..utils.knowledgepack import canonicalize_service_name
 
 _CATEGORY_MAP: Dict[str, str] = {
     "aks": "compute.aks",
@@ -58,6 +59,10 @@ def _canonical_category(raw: str) -> str:
     return cat or "other"
 
 
+def _list_field(value):
+    return value if isinstance(value, list) else []
+
+
 def _default_workload_type(category: str) -> str:
     cat = category.lower()
     if cat.startswith("compute.aks") or cat.startswith("compute.vmss"):
@@ -103,7 +108,14 @@ def validate_plan_schema(plan: dict) -> dict:
                 continue
             res.setdefault("id", "res")
             res["category"] = _canonical_category(res.get("category"))
-            res.setdefault("service_name", None)
+            service_info = canonicalize_service_name(res.get("service_name"))
+            res.setdefault("service_name_raw", res.get("service_name"))
+            res["service_name_status"] = service_info.get("status")
+            res["service_name_suggestions"] = service_info.get("suggestions")
+            if service_info["canonical"] == "UNKNOWN_SERVICE":
+                res["service_name"] = "UNKNOWN_SERVICE"
+            else:
+                res["service_name"] = service_info.get("canonical")
             res.setdefault("arm_sku_name", None)
             res.setdefault("region", None)
             res.setdefault("quantity", 1)
@@ -112,6 +124,10 @@ def validate_plan_schema(plan: dict) -> dict:
             res.setdefault("workload_type", _default_workload_type(res["category"]))
             res.setdefault("criticality", "prod")
             res.setdefault("os_type", "linux" if res["category"].startswith("compute") else "na")
+            res["product_name_contains"] = _list_field(res.get("product_name_contains"))
+            res["sku_name_contains"] = _list_field(res.get("sku_name_contains"))
+            res["meter_name_contains"] = _list_field(res.get("meter_name_contains"))
+            res["arm_sku_name_contains"] = _list_field(res.get("arm_sku_name_contains"))
             metrics = res.get("metrics") if isinstance(res.get("metrics"), dict) else {}
             res["metrics"] = metrics
             if res["category"].startswith("storage") and "storage_gb" not in metrics:
