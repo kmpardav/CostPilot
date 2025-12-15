@@ -1,0 +1,9 @@
+{
+  "appservice": {
+    "p1v3": ["P1 v3", "P1v3"],
+    "p2v3": ["P2 v3", "P2v3"]
+  },
+  "compute.vm": {
+    "standardd2sv3": ["Standard_D2s_v3", "Standard D2s v3"]
+  }
+}
