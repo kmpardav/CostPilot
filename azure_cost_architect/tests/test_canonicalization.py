@@ -5,8 +5,9 @@ PROJECT_ROOT = Path(__file__).resolve().parents[2]
 if str(PROJECT_ROOT) not in sys.path:
     sys.path.insert(0, str(PROJECT_ROOT))
 
-from azure_cost_architect.utils.knowledgepack import canonicalize_service_name
+from azure_cost_architect.pricing.catalog_sources import get_catalog_sources
 from azure_cost_architect.planner.validation import validate_plan_schema
+from azure_cost_architect.utils.knowledgepack import canonicalize_service_name
 
 
 def test_canonicalize_service_name_synonyms():
@@ -15,6 +16,13 @@ def test_canonicalize_service_name_synonyms():
     azure_openai = canonicalize_service_name("Azure OpenAI")
     assert azure_openai["canonical"] == "Foundry Models"
     assert "Foundry Tools" in azure_openai.get("suggestions", [])
+
+
+def test_catalog_sources_preserve_front_door():
+    for category in ("network.frontdoor", "network.gateway"):
+        sources = get_catalog_sources(category)
+        assert sources
+        assert sources[0].service_name == "Azure Front Door"
 
 
 def test_validation_sets_hints_and_canonical_names():
