@@ -2,9 +2,21 @@
 from typing import Dict, Any
 import re
 import logging
+from dataclasses import dataclass
+from typing import List, Optional, Tuple
 
 # Module-level logger
 _LOGGER = logging.getLogger(__name__)
+
+
+@dataclass
+class CandidateSelection:
+    score: int
+    item: Dict[str, Any]
+    matches_sku: bool
+    price_type: str
+    family_mismatch: bool
+
 
 
 def _vm_family_from_arm(arm: str) -> str:
@@ -219,6 +231,177 @@ def _g(it: Dict[str, Any], *keys: str) -> Any:
 
 def _low(s: Any) -> str:
     return (s or "").lower()
+
+
+def _normalize_sku_token(sku: str) -> str:
+    """Normalize SKU tokens for comparison (e.g. "P1 v3" -> "p1v3")."""
+
+    return re.sub(r"[^a-z0-9]", "", (sku or "").lower())
+
+
+def _sku_family_token(norm_sku: str) -> str:
+    """Extract a family signature from a normalized SKU (letter(s)+digits)."""
+
+    m = re.match(r"([a-z]+\d+)", norm_sku)
+    return m.group(1) if m else ""
+
+
+def _candidate_matches_sku(requested_norm: str, item: Dict[str, Any]) -> Tuple[bool, bool]:
+    """Return (matches, family_mismatch) for a candidate."""
+
+    if not requested_norm:
+        return True, False
+
+    fields = [
+        item.get("skuName"),
+        item.get("armSkuName"),
+        item.get("meterName"),
+        item.get("productName") or item.get("ProductName"),
+    ]
+    norm_fields = [_normalize_sku_token(f or "") for f in fields]
+
+    matches = any(
+        nf == requested_norm or nf.startswith(requested_norm) for nf in norm_fields if nf
+    )
+
+    req_family = _sku_family_token(requested_norm)
+    cand_family = ""
+    for nf in norm_fields:
+        if nf and not cand_family:
+            cand_family = _sku_family_token(nf)
+    family_mismatch = bool(req_family and cand_family and req_family != cand_family)
+
+    return matches, family_mismatch
+
+
+def select_best_candidate(
+    resource: Dict[str, Any],
+    candidates: List[Tuple[int, Dict[str, Any]]],
+    env: str,
+    billing_model: str,
+    *,
+    rejected_limit: int = 5,
+) -> Dict[str, Any]:
+    """
+    Select the best candidate respecting strict priceType/SKU intent.
+
+    Returns dict with status, chosen_item, warnings, and debug metadata.
+    """
+
+    preferred_price_type = "consumption" if env in ("prod", "production") and billing_model in ("payg", "pay-as-you-go", "pay_as_you_go") else ""
+
+    requested_sku = (
+        resource.get("arm_sku_name")
+        or resource.get("armSkuName")
+        or (resource.get("sku") or {}).get("armSkuName")
+        or ""
+    )
+    requested_norm = _normalize_sku_token(requested_sku)
+
+    annotated: List[CandidateSelection] = []
+    for score, item in candidates:
+        price_type = _low(_g(item, "type", "Type"))
+        matches, family_mismatch = _candidate_matches_sku(requested_norm, item)
+        annotated.append(
+            CandidateSelection(
+                score=score,
+                item=item,
+                matches_sku=matches and not family_mismatch,
+                price_type=price_type,
+                family_mismatch=family_mismatch,
+            )
+        )
+
+    rejected: List[Dict[str, Any]] = []
+
+    def _record_rejection(cand: CandidateSelection, reason: str) -> None:
+        if len(rejected) >= rejected_limit:
+            return
+        rejected.append(
+            {
+                "skuName": cand.item.get("skuName"),
+                "meterName": cand.item.get("meterName"),
+                "productName": cand.item.get("ProductName") or cand.item.get("productName"),
+                "armSkuName": cand.item.get("armSkuName"),
+                "type": cand.item.get("type"),
+                "reason": reason,
+            }
+        )
+
+    matching = [cand for cand in annotated if cand.matches_sku]
+    if requested_norm and not matching:
+        for cand in annotated:
+            reason = "family_mismatch" if cand.family_mismatch else "sku_not_matched"
+            _record_rejection(cand, reason)
+        return {
+            "status": "unresolved",
+            "chosen_item": None,
+            "warnings": [],
+            "requested_sku_normalized": requested_norm,
+            "preferred_priceType": preferred_price_type or None,
+            "fallback_priceType_used": False,
+            "rejected_candidates": rejected,
+        }
+
+    chosen: Optional[CandidateSelection] = None
+    fallback_used = False
+
+    if preferred_price_type:
+        primary = [cand for cand in matching if cand.price_type == preferred_price_type]
+        if primary:
+            chosen = primary[0]
+        else:
+            devtest = [cand for cand in matching if cand.price_type == "devtestconsumption"]
+            if devtest:
+                chosen = devtest[0]
+                fallback_used = True
+            elif matching:
+                chosen = matching[0]
+    else:
+        if matching:
+            chosen = matching[0]
+        elif annotated:
+            chosen = annotated[0]
+
+    for cand in annotated:
+        if cand is chosen:
+            continue
+        if requested_norm and not cand.matches_sku:
+            reason = "family_mismatch" if cand.family_mismatch else "sku_not_matched"
+        elif preferred_price_type and cand.price_type != preferred_price_type:
+            if fallback_used and cand.price_type == "devtestconsumption":
+                reason = "fallback_candidate"
+            else:
+                reason = "price_type_mismatch"
+        else:
+            reason = "lower_score"
+        _record_rejection(cand, reason)
+
+    warnings: List[str] = []
+    if fallback_used and chosen:
+        warnings.append(
+            f"Fallback to DevTestConsumption for SKU '{requested_sku}' (selected {chosen.item.get('skuName')})"
+        )
+        _LOGGER.warning(
+            "Fallback priceType used for category=%s requested_sku=%s chosen_sku=%s chosen_priceType=%s",
+            resource.get("category"),
+            requested_sku,
+            chosen.item.get("skuName"),
+            chosen.item.get("type"),
+        )
+
+    status = "unresolved" if chosen is None else ("fallback" if fallback_used else "matched")
+
+    return {
+        "status": status,
+        "chosen_item": chosen.item if chosen else None,
+        "chosen_score": chosen.score if chosen else None,
+        "warnings": warnings,
+        "requested_sku_normalized": requested_norm,
+        "preferred_priceType": preferred_price_type or None,
+        "fallback_priceType_used": fallback_used,
+        "rejected_candidates": rejected,
+    }
 
 
 def score_price_item(resource: Dict[str, Any], item: Dict[str, Any], hours_prod: int = 730) -> int:
