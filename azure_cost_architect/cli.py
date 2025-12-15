@@ -21,7 +21,9 @@ import json
 import logging
 import os
 import sys
+import hashlib
 from datetime import datetime, timezone
+from importlib import metadata
 from pathlib import Path
 from typing import Any, Dict, List, Tuple
 
@@ -38,12 +40,14 @@ from .config import (
     DEFAULT_REQUIRED_CATEGORIES,
     DEFAULT_ADJUDICATE_TOPN,
 )
+from .utils import knowledgepack as kp
 from .utils.categories import normalize_required_categories
 from .pricing.cache import load_price_cache, save_price_cache
 from .pricing.enrich import enrich_plan_with_prices
 from .pricing.catalog import ensure_catalog
-from .llm.planner import plan_architecture_chat, plan_architecture_responses
+from .llm.planner import plan_architecture_chat, plan_architecture_responses, plan_architecture_iterative
 from .llm.reporter import generate_report_chat, generate_report_responses
+from .utils.trace import build_trace_logger
 
 
 
@@ -187,6 +191,18 @@ def parse_args() -> argparse.Namespace:
     )
 
     parser.add_argument(
+        "--trace",
+        action="store_true",
+        help="Force writing a run trace JSONL (enabled by default).",
+    )
+    parser.add_argument(
+        "--trace-path",
+        type=str,
+        default=None,
+        help="Override trace output path (default: runs/<prefix>/trace.jsonl)",
+    )
+
+    parser.add_argument(
         "--reset-cache",
         action="store_true",
         help=f"Σβήνει το τοπικό price cache ({CACHE_FILE}) πριν τρέξει.",
@@ -249,6 +265,7 @@ def _warm_catalogs_for_plan(
     currency: str,
     refresh_all: bool,
     refresh_categories: list[str],
+    trace=None,
 ) -> None:
     """
     Βρίσκει όλες τις (category, region) από τα resources του plan και
@@ -288,6 +305,7 @@ def _warm_catalogs_for_plan(
                 region=reg,
                 currency=currency,
                 refresh=do_refresh,
+                trace=trace,
             )
             console.print(f" [green]OK[/green] → {fp}")
         except Exception as ex:
@@ -325,6 +343,15 @@ def _collect_blocker_details(plan: Dict[str, Any]) -> List[Dict[str, Any]]:
     return details
 
 
+def _knowledgepack_hash() -> tuple[str, str]:
+    ctx_path = Path(os.getenv("AZURECOST_LLM_CONTEXT", kp._DEFAULT_CONTEXT_PATH))
+    try:
+        data = ctx_path.read_bytes()
+        return hashlib.sha256(data).hexdigest(), str(ctx_path)
+    except Exception:
+        return "unknown", str(ctx_path)
+
+
 def _apply_compare_policy(plan: Dict[str, Any], compare_policy: str) -> List[Tuple[str, str]]:
     blockers = _collect_compare_blockers(plan)
     if compare_policy == "hard_stop" and blockers:
@@ -346,8 +373,18 @@ def main() -> None:
         required_categories = list(DEFAULT_REQUIRED_CATEGORIES)
     args.required_categories = normalize_required_categories(required_categories)
 
-    run_dir = Path("runs") / args.output_prefix
+    run_id = args.output_prefix
+    run_dir = Path("runs") / run_id
     run_dir.mkdir(parents=True, exist_ok=True)
+
+    trace_path = Path(args.trace_path) if args.trace_path else run_dir / "trace.jsonl"
+
+    trace_env = os.getenv("AZURECOST_TRACE")
+    trace_enabled = True
+    if trace_env is not None and trace_env.strip().lower() in {"0", "false", "no"}:
+        trace_enabled = False
+    if args.trace:
+        trace_enabled = True
 
     log_handlers: list[logging.Handler] = [logging.StreamHandler()]
     console_log_path = run_dir / "console.log"
@@ -359,6 +396,30 @@ def main() -> None:
         handlers=log_handlers,
     )
     logger = logging.getLogger("azure_cost_architect")
+
+    trace_logger = build_trace_logger(trace_path, enabled=trace_enabled)
+    try:
+        tool_version = metadata.version("azure-cost-architect")
+    except Exception:
+        tool_version = "dev"
+
+    kp_hash, kp_path = _knowledgepack_hash()
+    trace_logger.log(
+        "phase0_setup",
+        {
+            "tool_version": tool_version,
+            "region": args.region or DEFAULT_REGION,
+            "currency": args.currency or DEFAULT_CURRENCY,
+            "hours_per_month": HOURS_PROD,
+            "knowledgepack_hash": kp_hash,
+            "knowledgepack_path": kp_path,
+            "llm_backend": args.llm_backend,
+            "models": {
+                "planner": MODEL_PLANNER,
+                "planner_responses": MODEL_PLANNER_RESPONSES,
+            },
+        },
+    )
 
     DEBUG = args.debug or (args.log_level.upper() == "DEBUG")
     logger.debug("CLI arguments: %s", args)
@@ -408,18 +469,21 @@ def main() -> None:
     backend = args.llm_backend
     logger.info("Using LLM backend: %s", backend)
 
-    if backend == "responses":
+    try:
         console.print(
-            "[cyan]Designing architecture with LLM (Responses API + web_search, "
-            f"mode={args.mode})…[/cyan]"
+            "[cyan]Designing architecture with LLM (multi-pass, enforcing Pricing Contract)…[/cyan]"
         )
-        plan = plan_architecture_responses(client, arch_text, mode=args.mode)
-    else:
-        console.print(
-            "[cyan]Designing architecture with LLM (Chat Completions, "
-            f"mode={args.mode})…[/cyan]"
+        plan = plan_architecture_iterative(
+            client,
+            arch_text,
+            mode=args.mode,
+            backend=backend,
+            trace=trace_logger,
         )
-        plan = plan_architecture_chat(client, arch_text, mode=args.mode)
+    except Exception as ex:
+        logger.error("Planner failed to produce a valid plan: %s", ex)
+        console.print(f"[red]Planner failed: {ex}[/red]")
+        sys.exit(1)
 
     # Αν δώσεις region/currency στο CLI, γράφονται στο metadata του plan
     plan.setdefault("metadata", {})
@@ -438,6 +502,14 @@ def main() -> None:
 
     logger.debug("Plan after metadata normalization: %s", plan)
 
+    final_plan_path = run_dir / "final_plan.json"
+    with open(final_plan_path, "w", encoding="utf-8") as f:
+        json.dump(plan, f, indent=2, ensure_ascii=False)
+    trace_logger.log(
+        "phase2_validation",
+        {"message": "final canonical plan written", "path": str(final_plan_path)},
+    )
+
     # --------------------
     # 2) Warm local catalogs (για τις κατηγορίες του plan)
     # --------------------
@@ -447,6 +519,7 @@ def main() -> None:
         currency=currency,
         refresh_all=args.refresh_all_catalogs,
         refresh_categories=args.refresh_catalog,
+        trace=trace_logger,
     )
 
     # --------------------
@@ -462,6 +535,7 @@ def main() -> None:
             adjudicate=args.adjudicate,
             adjudicate_topn=args.adjudicate_topn,
             adjudicator_client=client,
+            trace=trace_logger,
         )
     )
     save_price_cache()
@@ -474,6 +548,11 @@ def main() -> None:
     with open(json_filename, "w", encoding="utf-8") as f:
         json.dump(enriched_plan, f, indent=2, ensure_ascii=False)
     logger.info("Saved enriched plan JSON to %s", json_filename)
+
+    trace_logger.log(
+        "phase7_reporting",
+        {"enriched_plan_path": str(json_filename)},
+    )
 
     blockers = _collect_compare_blockers(enriched_plan)
     if blockers:
@@ -520,6 +599,10 @@ def main() -> None:
         console.rule("[bold green]Cost Report[/bold green]")
         console.print(report_md)
         console.print(f"[green]Saved report to {md_filename}[/green]")
+        trace_logger.log(
+            "phase7_reporting",
+            {"report_path": str(md_filename)},
+        )
     else:
         console.print(
             "[yellow]Skipping Markdown report generation because "

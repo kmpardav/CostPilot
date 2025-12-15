@@ -188,6 +188,7 @@ def ensure_catalog(
     region: str,
     currency: str,
     refresh: bool = False,
+    trace=None,
 ) -> str:
     """
     Δημιουργεί/ανανεώνει τοπικό catalog αρχείο για το συγκεκριμένο category.
@@ -235,6 +236,7 @@ def ensure_catalog(
                     service_name=src.service_name,
                     region=query_region,
                     currency=currency,
+                    trace=trace,
                 )
             except Exception as ex:
                 warning = f"fetch_failed: {ex}"
@@ -332,14 +334,21 @@ def ensure_catalog(
     return _catalog_path(base_dir, normalize_service_name(category, None), region, currency)
 
 
-def load_catalog(base_dir: str, category: str, region: str, currency: str) -> List[Dict[str, Any]]:
+def load_catalog(
+    base_dir: str,
+    category: str,
+    region: str,
+    currency: str,
+    *,
+    trace=None,
+) -> List[Dict[str, Any]]:
     """
     Φορτώνει έναν local catalog για (category, region, currency).
 
     - Αν δεν υπάρχει JSONL αρχείο, θα προσπαθήσει να το δημιουργήσει με ensure_catalog().
     - Αν παρ' όλα αυτά δεν υπάρχει (π.χ. αποτυχία στο fetch), επιστρέφει empty list.
     """
-    fp = ensure_catalog(base_dir, category, region, currency, refresh=False)
+    fp = ensure_catalog(base_dir, category, region, currency, refresh=False, trace=trace)
 
     items: List[Dict[str, Any]] = []
     if os.path.exists(fp):

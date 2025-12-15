@@ -48,6 +48,7 @@ def adjudicate_candidates(
     resource: Dict[str, Any],
     candidates: List[Dict[str, Any]],
     model: str = MODEL_ADJUDICATOR,
+    trace=None,
 ) -> Dict[str, Any]:
     """Ask the LLM to pick among provided candidates.
 
@@ -73,6 +74,16 @@ def adjudicate_candidates(
     )
 
     raw = completion.choices[0].message.content or "{}"
+    if trace:
+        trace.log(
+            "phase5_adjudication",
+            {
+                "resource_id": resource.get("id"),
+                "model": model,
+                "prompt": user_payload,
+                "raw_response": raw,
+            },
+        )
     try:
         return json.loads(raw)
     except json.JSONDecodeError:

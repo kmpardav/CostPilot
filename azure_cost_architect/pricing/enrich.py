@@ -898,6 +898,7 @@ async def _adjudicate_selection(
     candidates: List[Dict[str, Any]],
     top_n: int,
     retries: int = 1,
+    trace=None,
 ) -> Tuple[str, Optional[int], str, Optional[str]]:
     """Call adjudicator with one optional retry."""
 
@@ -933,6 +934,7 @@ async def _adjudicate_selection(
                 client,
                 resource=payload,
                 candidates=candidates[:top_n],
+                trace=trace,
             ),
         )
         status, idx, rationale, cand_id = _validate_adjudicator_decision(
@@ -1137,6 +1139,7 @@ async def fetch_price_for_resource(
     currency: str,
     debug: bool = False,
     adjudicator: Optional[Dict[str, Any]] = None,
+    trace=None,
 ) -> None:
     raw_category = resource.get("category") or "other"
     category = _normalize_category_for_scoring(raw_category)
@@ -1240,7 +1243,22 @@ async def fetch_price_for_resource(
             category=category,
             region=region,
             currency=currency,
+            trace=trace,
         )
+
+        if trace:
+            trace.log(
+                "phase3_retail_lookup",
+                {
+                    "category": category,
+                    "service_name": service_name,
+                    "region": region,
+                    "currency": currency,
+                    "catalog_items": len(all_items),
+                },
+                scenario_id=scenario.get("id"),
+                resource_id=resource.get("id"),
+            )
 
         if not all_items:
             msg = (
@@ -1363,6 +1381,17 @@ async def fetch_price_for_resource(
         decision_status = "auto"
         decision_rationale = ""
 
+        if trace:
+            trace.log(
+                "phase4_scoring",
+                {
+                    "top_candidates": candidates,
+                    "best_score": best_item_score,
+                },
+                scenario_id=scenario.get("id"),
+                resource_id=resource.get("id"),
+            )
+
         top_n_for_adjudicator = len(candidate_items)
 
         if adjudication_enabled:
@@ -1375,6 +1404,7 @@ async def fetch_price_for_resource(
                     currency=currency,
                     candidates=candidates,
                     top_n=max(1, top_n_for_adjudicator),
+                    trace=trace,
                 )
                 decision_rationale = rationale or ""
                 if status == "selected" and idx is not None and idx < len(candidate_items):
@@ -1458,12 +1488,12 @@ async def fetch_price_for_resource(
             price_info["type"] = best_item.get("type")
 
         if adjudication_enabled:
-                resource["adjudication"] = {
-                    "enabled": True,
-                    "top_n": max(1, top_n_for_adjudicator),
-                    "candidates": candidates,
-                    "decision": {
-                        "status": decision_status,
+            resource["adjudication"] = {
+                "enabled": True,
+                "top_n": max(1, top_n_for_adjudicator),
+                "candidates": candidates,
+                "decision": {
+                    "status": decision_status,
                     "selected_index": candidate_items.index(selected_pair)
                     if selected_pair in candidate_items
                     else 0,
@@ -1471,9 +1501,6 @@ async def fetch_price_for_resource(
                     "rationale": decision_rationale,
                 },
             }
-
-        if cache_key:
-            set_cached_price(cache_key, price_info)
 
     # end if not price_info
 
@@ -1579,6 +1606,31 @@ async def fetch_price_for_resource(
     resource["monthly_cost"] = round(monthly_cost, 2)
     resource["yearly_cost"] = round(yearly_cost, 2)
 
+    if trace:
+        trace.log(
+            "phase6_costing",
+            {
+                "unit_price": unit_price,
+                "unit_of_measure": unit_of_measure,
+                "units": units,
+                "monthly_cost": monthly_cost,
+                "yearly_cost": yearly_cost,
+                "billing_model": billing_model,
+            },
+            scenario_id=scenario.get("id"),
+            resource_id=resource.get("id"),
+        )
+
+    if cache_key:
+        status = resource.get("pricing_status")
+        if status not in {
+            "missing",
+            "reservation_uom_ambiguous",
+            "sku_mismatch",
+            "adjudicator_unresolved",
+        }:
+            set_cached_price(cache_key, price_info)
+
 
 # ------------------------------------------------------------
 # Sanity checks στα scenarios (π.χ. cost_optimized vs baseline)
@@ -1671,6 +1723,7 @@ async def enrich_plan_with_prices(
     adjudicate: bool = False,
     adjudicate_topn: int = DEFAULT_ADJUDICATE_TOPN,
     adjudicator_client=None,
+    trace=None,
 ) -> Dict[str, Any]:
     metadata = plan.get("metadata") or {}
     default_region = metadata.get("default_region") or DEFAULT_REGION
@@ -1730,6 +1783,7 @@ async def enrich_plan_with_prices(
                         currency,
                         debug=debug,
                         adjudicator=adjudicator_cfg,
+                        trace=trace,
                     )
                 except Exception as ex:
                     res.update(

@@ -50,5 +50,8 @@ azure_cost_arch_report.md
 debug_plan_raw.json
 debug_report_raw.md
 
+# Run outputs
+runs/
+
 # Windows artifacts
 desktop.ini
