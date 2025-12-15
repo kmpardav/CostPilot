@@ -933,15 +933,24 @@ async def _adjudicate_selection(
     while attempt <= retries:
         attempt += 1
         loop = asyncio.get_running_loop()
-        decision = await loop.run_in_executor(
-            None,
-            lambda: adjudicate_candidates(
-                client,
-                resource=payload,
-                candidates=candidates[:top_n],
-                trace=trace,
-            ),
-        )
+        def _call_adjudicator():
+            try:
+                return adjudicate_candidates(
+                    client,
+                    resource=payload,
+                    candidates=candidates[:top_n],
+                    trace=trace,
+                )
+            except TypeError as ex:
+                if "unexpected keyword argument 'trace'" in str(ex):
+                    return adjudicate_candidates(
+                        client,
+                        resource=payload,
+                        candidates=candidates[:top_n],
+                    )
+                raise
+
+        decision = await loop.run_in_executor(None, _call_adjudicator)
         status, idx, rationale, cand_id = _validate_adjudicator_decision(
             decision, candidates[:top_n], resource.get("id") or ""
         )
@@ -1244,13 +1253,24 @@ async def fetch_price_for_resource(
         # 1) Φόρτωση όλων των items από τον τοπικό catalog
         #    (αν δεν υπάρχει file, load_catalog θα προσπαθήσει να τον φτιάξει).
         # ------------------------------------------------------------
-        all_items: List[Dict[str, Any]] = load_catalog(
-            base_dir=CATALOG_DIR,
-            category=category,
-            region=region,
-            currency=currency,
-            trace=trace,
-        )
+        try:
+            all_items: List[Dict[str, Any]] = load_catalog(
+                base_dir=CATALOG_DIR,
+                category=category,
+                region=region,
+                currency=currency,
+                trace=trace,
+            )
+        except TypeError as ex:
+            if "unexpected keyword argument 'trace'" in str(ex):
+                all_items = load_catalog(
+                    base_dir=CATALOG_DIR,
+                    category=category,
+                    region=region,
+                    currency=currency,
+                )
+            else:
+                raise
 
         if trace:
             trace.log(
@@ -1298,37 +1318,22 @@ async def fetch_price_for_resource(
             category, arm_sku_name or "", all_items
         )
         resource["sku_mismatch"] = had_mismatch
+        base_items = filtered_items or all_items
         if had_mismatch and not filtered_items:
-            resource.update(
-                {
-                    "unit_price": None,
-                    "unit_of_measure": None,
-                    "currency_code": None,
-                    "sku_name": None,
-                    "meter_name": None,
-                    "product_name": None,
-                    "units": None,
-                    "monthly_cost": None,
-                    "yearly_cost": None,
-                    "error": "No allowed Retail meters match requested SKU/tier – manual check required",
-                    "sku_candidates": [],
-                    "pricing_status": "missing",
-                }
-            )
+            # Keep pricing but mark mismatch so downstream logic can flag it without failing early
             _LOGGER.warning(
                 "Resource %s has requested SKU='%s' but no compatible meters were found in catalog (category=%s).",
                 resource.get("id"),
                 arm_sku_name,
                 category,
             )
-            return
 
         # 2b) Billing model (payg/reserved/spot) filtering
-        billing_filtered = _filter_by_billing_model(resource, filtered_items or all_items)
+        billing_filtered = _filter_by_billing_model(resource, base_items)
         items = (
             billing_filtered
             if billing_filtered is not None
-            else (filtered_items or all_items)
+            else base_items
         )
 
         if not items:
@@ -1363,6 +1368,21 @@ async def fetch_price_for_resource(
             (resource.get("criticality") or resource.get("environment") or "prod").lower(),
             (resource.get("billing_model") or resource.get("billingModel") or "").lower(),
         )
+        if (selection.get("status") == "unresolved" or not selection.get("chosen_item")) and arm_sku_name and scored_items:
+            best_score, best_candidate = scored_items[0]
+            selection = {
+                "status": "mismatch_fallback",
+                "chosen_item": best_candidate,
+                "chosen_score": best_score,
+                "warnings": (selection.get("warnings") or [])
+                + ["Requested SKU not found; pricing with best available candidate"],
+                "requested_sku_normalized": selection.get("requested_sku_normalized"),
+                "preferred_priceType": selection.get("preferred_priceType"),
+                "fallback_priceType_used": selection.get("fallback_priceType_used"),
+                "rejected_candidates": selection.get("rejected_candidates"),
+            }
+            resource["sku_mismatch"] = True
+
         if selection.get("status") == "unresolved" or not selection.get("chosen_item"):
             units = compute_units(resource, "")
             resource.update(
