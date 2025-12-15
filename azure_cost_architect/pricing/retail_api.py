@@ -147,6 +147,7 @@ def fetch_all_for_service(
     region: str,
     currency: str,
     debug: bool = False,
+    trace=None,
 ) -> List[Dict[str, Any]]:
     """
     Φέρνει ΟΛΑ τα Retail items για ένα συγκεκριμένο serviceName + region + currency.
@@ -179,6 +180,7 @@ def fetch_all_for_service(
     client = httpx.Client(timeout=timeout)
     items: List[Dict[str, Any]] = []
     page = 0
+    first_url = url
 
     if debug:
         console.print(
@@ -229,5 +231,22 @@ def fetch_all_for_service(
             f"[cyan]fetch_all_for_service: fetched {len(items)} raw items, "
             f"{len(out)} unique[/cyan]"
         )
+
+    if trace:
+        try:
+            trace.log(
+                "phase3_retail_api",
+                {
+                    "service_name": service_name,
+                    "region": region,
+                    "currency": currency,
+                    "url": first_url,
+                    "page_count": page,
+                    "raw_count": len(items),
+                    "unique_count": len(out),
+                },
+            )
+        except Exception:
+            pass
 
     return out
