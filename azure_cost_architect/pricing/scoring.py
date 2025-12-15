@@ -333,10 +333,18 @@ def select_best_candidate(
         for cand in annotated:
             reason = "family_mismatch" if cand.family_mismatch else "sku_not_matched"
             _record_rejection(cand, reason)
+
+        allow_mismatch_fallback = billing_model in {"reserved", "reservation"}
+        best = annotated[0] if (annotated and allow_mismatch_fallback) else None
+        warning = (
+            "Requested SKU not matched; falling back to best available candidate"
+            if best
+            else "Requested SKU not matched and no candidates available"
+        )
         return {
-            "status": "unresolved",
-            "chosen_item": None,
-            "warnings": [],
+            "status": "mismatch" if best else "unresolved",
+            "chosen_item": best.item if best else None,
+            "warnings": [warning] if best else [],
             "requested_sku_normalized": requested_norm,
             "preferred_priceType": preferred_price_type or None,
             "fallback_priceType_used": False,
