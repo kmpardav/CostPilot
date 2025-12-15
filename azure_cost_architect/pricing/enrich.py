@@ -22,7 +22,7 @@ from ..utils.categories import (
 from .cache import build_cache_key, get_cached_price, set_cached_price
 from .normalize import normalize_service_name, sku_keyword_match
 from .catalog import load_catalog
-from .scoring import score_price_item
+from .scoring import score_price_item, select_best_candidate
 from .units import compute_units
 from ..llm.adjudicator import adjudicate_candidates
 
@@ -118,6 +118,7 @@ def _append_scoring_debug(
     *,
     currency: str,
     region: str,
+    selection: Optional[Dict[str, Any]] = None,
 ) -> None:
     """Γράφει μία γραμμή JSON με τους top candidates & τον επιλεγμένο meter."""
     debug_file = _get_debug_file()
@@ -144,6 +145,9 @@ def _append_scoring_debug(
             "scenario_id": scenario.get("id") or scenario.get("name"),
             "resource_id": resource.get("id"),
             "category": resource.get("category"),
+            "requested_sku_normalized": (selection or {}).get("requested_sku_normalized"),
+            "preferred_priceType": (selection or {}).get("preferred_priceType"),
+            "fallback_priceType_used": bool((selection or {}).get("fallback_priceType_used")),
             "requested": {
                 "serviceName": resource.get("service_name") or resource.get("serviceName"),
                 "armSkuName": (resource.get("sku") or {}).get("armSkuName")
@@ -164,6 +168,7 @@ def _append_scoring_debug(
                 "reservationTerm": selected_item.get("reservationTerm"),
             },
             "candidates": top,
+            "rejected_candidates": (selection or {}).get("rejected_candidates"),
         }
         with open(debug_file, "a", encoding="utf-8") as f:
             f.write(json.dumps(rec, ensure_ascii=False) + "\n")
@@ -1351,7 +1356,38 @@ async def fetch_price_for_resource(
         scored_items: List[Tuple[int, Dict[str, Any]]] = _score_candidates(
             resource, items
         )
-        best_item_score, best_item = scored_items[0]
+
+        selection = select_best_candidate(
+            resource,
+            scored_items,
+            (resource.get("criticality") or resource.get("environment") or "prod").lower(),
+            (resource.get("billing_model") or resource.get("billingModel") or "").lower(),
+        )
+        if selection.get("status") == "unresolved" or not selection.get("chosen_item"):
+            units = compute_units(resource, "")
+            resource.update(
+                {
+                    "unit_price": None,
+                    "unit_of_measure": None,
+                    "currency_code": None,
+                    "sku_name": None,
+                    "meter_name": None,
+                    "product_name": None,
+                    "units": units,
+                    "monthly_cost": None,
+                    "yearly_cost": None,
+                    "error": "Price not found for requested SKU",
+                    "sku_candidates": [],
+                    "pricing_status": "missing",
+                }
+            )
+            if selection.get("warnings"):
+                for warn in selection.get("warnings"):
+                    _LOGGER.warning(warn)
+            return
+
+        best_item = selection["chosen_item"]
+        best_item_score = selection.get("chosen_score") or 0
 
         top_n_limit = max(1, adjudicate_topn)
         candidate_items = scored_items[:top_n_limit]
@@ -1360,6 +1396,9 @@ async def fetch_price_for_resource(
         )
         if exact_matches:
             candidate_items = candidate_items + exact_matches
+
+        if not any(pair[1] is best_item for pair in candidate_items):
+            candidate_items = [(best_item_score, best_item)] + candidate_items
 
         candidates: List[Dict[str, Any]] = []
         candidates.extend(
@@ -1472,6 +1511,7 @@ async def fetch_price_for_resource(
             best_item,
             currency=currency,
             region=region,
+            selection=selection,
         )
 
         price_info = {
