@@ -22,33 +22,33 @@ ENV/
 Thumbs.db
 
 # Local catalogs & cache (generated)
-catalog/
-azure_price_cache.json
+#catalog/
+#azure_price_cache.json
 
 # Debug outputs
-debug_plan_raw.json
-debug_enriched.json
-debug_report_raw.md
-debug_*.json
-debug_*.md
+#debug_plan_raw.json
+#debug_enriched.json
+#debug_report_raw.md
+#debug_*.json
+#debug_*.md
 
 # Logs
 *.log
 
 # Pricing dumps or temp files
-prices.json
-azure_cost_report.md
-azure_cost_*report.md
+#prices.json
+#azure_cost_report.md
+#azure_cost_*report.md
 
 # Build artifacts
 *.egg-info/
 
 # CostPilot output files
-azure_cost_arch_plan.json
-debug_scoring.jsonl
-azure_cost_arch_report.md
-debug_plan_raw.json
-debug_report_raw.md
+#azure_cost_arch_plan.json
+#debug_scoring.jsonl
+#azure_cost_arch_report.md
+#debug_plan_raw.json
+#debug_report_raw.md
 
 # Windows artifacts
 desktop.ini
