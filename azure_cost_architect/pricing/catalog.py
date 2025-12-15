@@ -238,6 +238,16 @@ def ensure_catalog(
                     currency=currency,
                     trace=trace,
                 )
+            except TypeError as ex:
+                # Support monkeypatched fetchers without a 'trace' kwarg
+                if "unexpected keyword argument 'trace'" in str(ex):
+                    rows = fetch_all_for_service(
+                        service_name=src.service_name,
+                        region=query_region,
+                        currency=currency,
+                    )
+                else:
+                    raise
             except Exception as ex:
                 warning = f"fetch_failed: {ex}"
                 _LOGGER.error(
