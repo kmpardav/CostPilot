@@ -9,6 +9,7 @@ from typing import Dict, List
 from .rules import apply_planner_rules
 from .validation import validate_plan_schema
 from ..utils.knowledgepack import canonicalize_service_name, get_allowed_service_names
+from ..utils.sku_matcher import load_sku_alias_index, match_sku
 
 
 @dataclass
@@ -17,6 +18,9 @@ class PlanValidationResult:
     errors: List[Dict[str, object]]
     rule_changes: List[str]
     canonical_mappings: List[Dict[str, object]]
+
+
+_SKU_ALIAS_INDEX = load_sku_alias_index()
 
 
 _HINT_REQUIRED_CATEGORIES = {
@@ -88,6 +92,63 @@ def _validate_resource(res: Dict[str, object], allowed: set[str], errors: List[D
         res["billing_model"] = billing_model or "payg"
 
 
+def _apply_sku_matching(
+    res: Dict[str, object],
+    *,
+    resource_id: str,
+    errors: List[Dict[str, object]],
+    rule_changes: List[str],
+) -> None:
+    if not _SKU_ALIAS_INDEX:
+        return
+
+    requested = (
+        res.get("arm_sku_name")
+        or (res.get("sku") or {}).get("armSkuName")
+        or res.get("armSkuName")
+        or ""
+    ).strip()
+
+    if not requested:
+        return
+
+    match = match_sku(requested, res.get("category") or "", _SKU_ALIAS_INDEX)
+    diagnostics = {
+        "input": requested,
+        "matched": match.get("matched_sku"),
+        "method": match.get("matched_by"),
+        "reason": match.get("reason"),
+    }
+    if match.get("suggestions"):
+        diagnostics["suggestions"] = match.get("suggestions")
+    res["sku_match_diagnostics"] = diagnostics
+
+    resolved = match.get("matched_sku")
+    if resolved:
+        if resolved != requested:
+            res["arm_sku_name"] = resolved
+            rule_changes.append(
+                "resource {rid}: normalized arm_sku_name '{requested}' -> "
+                "'{resolved}' ({method})".format(
+                    rid=resource_id, requested=requested, resolved=resolved, method=match.get("matched_by") or "sku_matcher"
+                )
+            )
+        return
+
+    if (res.get("category") or "").lower() not in _SKU_ALIAS_INDEX:
+        return
+
+    errors.append(
+        {
+            "type": "unknown_sku",
+            "resource_id": resource_id,
+            "category": res.get("category"),
+            "requested_sku": requested,
+            "suggestions": match.get("suggestions") or [],
+        }
+    )
+
+
 def validate_pricing_contract(plan: dict) -> PlanValidationResult:
     """Apply schema normalization + rules + Pricing Contract validation."""
 
@@ -125,6 +186,12 @@ def validate_pricing_contract(plan: dict) -> PlanValidationResult:
                 )
 
             _validate_resource(res, allowed_services, errors, rule_changes)
+            _apply_sku_matching(
+                res,
+                resource_id=rid,
+                errors=errors,
+                rule_changes=rule_changes,
+            )
 
     return PlanValidationResult(
         plan=normalized,
