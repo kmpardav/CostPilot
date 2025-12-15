@@ -1146,6 +1146,7 @@ async def fetch_price_for_resource(
     service_name = normalize_service_name(raw_category, resource.get("service_name"))
     arm_sku_name = resource.get("arm_sku_name") or resource.get("armSkuName") or None
     region = (resource.get("region") or default_region or DEFAULT_REGION).strip() or DEFAULT_REGION
+    billing_model = resource.get("billing_model") or "payg"
 
     resource["service_name"] = service_name
     resource["region"] = region
