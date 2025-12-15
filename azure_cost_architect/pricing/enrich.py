@@ -1726,8 +1726,18 @@ async def enrich_plan_with_prices(
     trace=None,
 ) -> Dict[str, Any]:
     metadata = plan.get("metadata") or {}
+    pricing_run_present = "pricing_run" in plan
+    pricing_run_cfg = plan.get("pricing_run") or {}
+
+    if pricing_run_present and not pricing_run_cfg.get("currency_code"):
+        raise ValueError("pricing_run.currency_code must be set for pricing runs")
+
     default_region = metadata.get("default_region") or DEFAULT_REGION
-    currency = metadata.get("currency") or DEFAULT_CURRENCY
+    currency = (
+        pricing_run_cfg.get("currency_code")
+        or metadata.get("currency")
+        or DEFAULT_CURRENCY
+    )
     required_categories = normalize_required_categories(
         metadata.get("required_categories") or DEFAULT_REQUIRED_CATEGORIES
     )
