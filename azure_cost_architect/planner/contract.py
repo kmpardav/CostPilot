@@ -8,6 +8,7 @@ from typing import Dict, List
 
 from .rules import apply_planner_rules
 from .validation import validate_plan_schema
+from ..pricing.catalog_sources import get_catalog_sources
 from ..utils.knowledgepack import canonicalize_service_name, get_allowed_service_names
 from ..utils.sku_matcher import load_sku_alias_index, match_sku
 
@@ -164,7 +165,12 @@ def validate_pricing_contract(plan: dict) -> PlanValidationResult:
         for res in scen.get("resources", []):
             rid = res.get("id") or "resource"
             raw = res.get("service_name_raw") or res.get("service_name") or res.get("category") or ""
-            resolved = canonicalize_service_name(raw)
+            candidates = [
+                src.service_name
+                for src in get_catalog_sources(res.get("category") or "")
+                if src.service_name != "UNKNOWN_SERVICE"
+            ]
+            resolved = canonicalize_service_name(raw, category_candidates=candidates)
             res["service_name_raw"] = raw
             res["service_name"] = resolved.get("canonical")
             res["service_name_status"] = resolved.get("status")

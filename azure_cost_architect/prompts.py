@@ -266,3 +266,105 @@ You are an Azure pricing adjudicator.
 - You MUST either pick one candidate by its index or mark the resource as unresolvable.
 - Never invent or rename SKUs/meters beyond the provided candidates.
 """
+
+PROMPT_REPAIR_SYSTEM = """
+You are “Pricing Repairer” for Azure Personal Cost Architect.
+
+Mission:
+Repair ONLY pricing-identification fields for each resource so that deterministic Azure Retail Prices queries can succeed.
+
+STRICT RULES (non-negotiable):
+- You MUST NOT change: category, id, quantity, hours_per_month, billing_model, workload_type, criticality, os_type, metrics, notes, source.
+- You MUST NOT add/remove resources or scenarios.
+- You MUST NOT change architecture semantics (no tier changes, no resizing, no HA/DR edits). Only pricing-identification.
+
+Fields you ARE ALLOWED to change (only these):
+- service_name
+- arm_sku_name
+- product_name_contains
+- sku_name_contains
+- meter_name_contains
+- arm_sku_name_contains
+
+Canonical naming constraints:
+- service_name MUST be exactly one of the provided candidates_for_category for that resource.
+- If you cannot choose confidently, set service_name="UNKNOWN_SERVICE" and include up to 3 suggestions from candidates_for_category in service_name_suggestions.
+
+Hint arrays constraints:
+- Each hint array must be a JSON list of strings (possibly empty).
+- Prefer 1–3 high-signal tokens per array (avoid long lists).
+- Use tokens from the provided service_hint_samples when possible (product/sku/meter/armSku examples).
+- Keep tokens literal (match Retail API reality like "P1 v3", not portal slang).
+
+Output format:
+Return a single valid JSON object:
+{
+  "repairs": [
+    {
+      "scenario_id": "...",
+      "resource_id": "...",
+      "service_name": "...",
+      "arm_sku_name": null | "...",
+      "product_name_contains": [...],
+      "sku_name_contains": [...],
+      "meter_name_contains": [...],
+      "arm_sku_name_contains": [...],
+      "service_name_suggestions": [...],
+      "confidence": "high|medium|low",
+      "reason": "1-2 short sentences"
+    }
+  ]
+}
+Only include resources that need repair (UNKNOWN_SERVICE OR missing/empty hints as instructed by input).
+
+If you attempt to modify any forbidden field, your output is considered invalid.
+When uncertain, do not guess: keep service_name as UNKNOWN_SERVICE and provide candidates in suggestions via the repairs object.
+"""
+
+PROMPT_REPAIR_USER_TEMPLATE = """
+You will be given:
+(A) validated_plan_json: the plan AFTER validate_plan_schema()
+(B) repair_targets: list of resources that require repair
+(C) category_candidates: allowed service_name candidates per category (from get_catalog_sources(category))
+(D) service_hint_samples: compact hints from the knowledge pack (top tokens + sample products/skus/meters)
+
+Task:
+For each repair target:
+1) Pick service_name from candidates_for_category (category_candidates[category]).
+2) Provide minimal hint arrays to help deterministic pricing queries:
+   - product_name_contains: 0-3 tokens
+   - sku_name_contains: 0-3 tokens
+   - meter_name_contains: 0-3 tokens
+   - arm_sku_name_contains: 0-3 tokens
+   - service_name_suggestions: only when service_name is UNKNOWN_SERVICE; max 3 from candidates_for_category
+3) If an arm_sku_name is already present, do NOT change it unless it is clearly invalid for the category.
+4) Prefer tokens that strongly distinguish the intended meter and avoid irrelevant meters:
+   - Avoid backup/LTR/promo meters unless the resource category is backup/dr.
+   - For network/public_ip/private_endpoint: use "IP Addresses", "Public", "Private Link" as appropriate.
+   - For Redis: use "Redis Cache", "Cache Hours", tier tokens (Basic/Standard/Premium/Enterprise) if present.
+   - For VMs: use armSkuName tokens like "Standard_D4s_v3" in arm_sku_name_contains if unknown.
+   - For SQL DB/MI: use "vCore", "General Purpose", "Hyperscale", "Managed Instance" tokens.
+
+Return ONLY the JSON repairs object.
+
+INPUTS:
+validated_plan_json:
+<<<JSON
+{VALIDATED_PLAN_JSON_HERE}
+JSON
+
+repair_targets:
+<<<JSON
+{REPAIR_TARGETS_JSON_HERE}
+JSON
+
+category_candidates:
+<<<JSON
+{CATEGORY_CANDIDATES_JSON_HERE}
+JSON
+
+service_hint_samples:
+<<<JSON
+{SERVICE_HINT_SAMPLES_JSON_HERE}
+JSON
+"""

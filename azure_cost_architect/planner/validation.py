@@ -1,6 +1,7 @@
 from typing import Dict
 
 from ..config import HOURS_PROD
+from ..pricing.catalog_sources import get_catalog_sources
 from ..utils.knowledgepack import canonicalize_service_name
 
 _CATEGORY_MAP: Dict[str, str] = {
@@ -63,6 +64,17 @@ def _list_field(value):
     return value if isinstance(value, list) else []
 
 
+def _category_candidates(category: str) -> list[str]:
+    seen: set[str] = set()
+    candidates: list[str] = []
+    for src in get_catalog_sources(category):
+        if src.service_name == "UNKNOWN_SERVICE" or src.service_name in seen:
+            continue
+        seen.add(src.service_name)
+        candidates.append(src.service_name)
+    return candidates
+
+
 def _default_workload_type(category: str) -> str:
     cat = category.lower()
     if cat.startswith("compute.aks") or cat.startswith("compute.vmss"):
@@ -108,7 +120,10 @@ def validate_plan_schema(plan: dict) -> dict:
                 continue
             res.setdefault("id", "res")
             res["category"] = _canonical_category(res.get("category"))
-            service_info = canonicalize_service_name(res.get("service_name"))
+            candidates = _category_candidates(res["category"])
+            service_info = canonicalize_service_name(
+                res.get("service_name"), category_candidates=candidates
+            )
             res["service_name_raw"] = res.get("service_name_raw") or res.get("service_name")
             res["service_name_status"] = service_info.get("status")
             res["service_name_suggestions"] = _list_field(service_info.get("suggestions"))
