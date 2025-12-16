@@ -9,7 +9,7 @@ from __future__ import annotations
 from dataclasses import dataclass
 from typing import Dict, Iterable, List
 
-from ..utils.knowledgepack import canonicalize_service_name
+from ..utils.knowledgepack import canonicalize_service_name, get_allowed_service_names
 
 
 @dataclass(frozen=True)
@@ -249,14 +249,21 @@ def get_catalog_sources(category: str) -> List[CatalogSource]:
         inferred = _legacy_service_name(category, "")
         sources = [CatalogSource(inferred)]
 
+    allowed = set(get_allowed_service_names())
     canonical_sources: List[CatalogSource] = []
     for src in sources:
         canonical = canonicalize_service_name(src.service_name)
-        service_name = (
-            canonical["canonical"]
-            if canonical["canonical"] != "UNKNOWN_SERVICE"
-            else src.service_name
-        )
+        service_name = canonical.get("canonical")
+
+        if allowed and service_name not in allowed:
+            for suggestion in canonical.get("suggestions") or []:
+                if suggestion in allowed:
+                    service_name = suggestion
+                    break
+
+        if service_name == "UNKNOWN_SERVICE" or (allowed and service_name not in allowed):
+            service_name = "UNKNOWN_SERVICE"
+
         canonical_sources.append(
             CatalogSource(
                 service_name,

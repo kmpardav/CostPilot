@@ -109,9 +109,9 @@ def validate_plan_schema(plan: dict) -> dict:
             res.setdefault("id", "res")
             res["category"] = _canonical_category(res.get("category"))
             service_info = canonicalize_service_name(res.get("service_name"))
-            res.setdefault("service_name_raw", res.get("service_name"))
+            res["service_name_raw"] = res.get("service_name_raw") or res.get("service_name")
             res["service_name_status"] = service_info.get("status")
-            res["service_name_suggestions"] = service_info.get("suggestions")
+            res["service_name_suggestions"] = _list_field(service_info.get("suggestions"))
             if service_info["canonical"] == "UNKNOWN_SERVICE":
                 res["service_name"] = "UNKNOWN_SERVICE"
             else:
