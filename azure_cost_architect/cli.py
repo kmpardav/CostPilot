@@ -45,6 +45,8 @@ from .config import (
 )
 from .utils import knowledgepack as kp
 from .utils.categories import normalize_required_categories
+from .planner import validate_plan_schema
+from .planner.repair import apply_repairs, build_category_candidates, build_repair_targets, call_repair_llm
 from .pricing.cache import load_price_cache, save_price_cache
 from .pricing.enrich import enrich_plan_with_prices
 from .pricing.catalog import ensure_catalog
@@ -488,6 +490,8 @@ def main() -> None:
         console.print(f"[red]Planner failed: {ex}[/red]")
         sys.exit(1)
 
+    plan = validate_plan_schema(plan)
+
     # Αν δώσεις region/currency στο CLI, γράφονται στο metadata του plan
     plan.setdefault("metadata", {})
     metadata = plan["metadata"]
@@ -502,6 +506,53 @@ def main() -> None:
     metadata["required_categories"] = required_categories
     metadata["adjudication_enabled"] = args.adjudicate
     metadata["adjudication_topn"] = args.adjudicate_topn
+    metadata["repair_iterations"] = metadata.get("repair_iterations", 0)
+
+    # --------------------
+    # 1b) Auto-repair pricing hints (LLM-guided)
+    # --------------------
+    repair_inputs: list[dict] = []
+    repair_outputs: list[dict] = []
+    service_hint_samples = kp.get_compact_service_metadata(common_limit=25)
+
+    for iteration in range(2):
+        repair_targets = build_repair_targets(plan, required_categories=required_categories)
+        if not repair_targets:
+            break
+
+        categories = {t["category"] for t in repair_targets}
+        category_candidates = {cat: build_category_candidates(cat) for cat in categories}
+
+        repair_inputs.append(
+            {
+                "iteration": iteration + 1,
+                "validated_plan": plan,
+                "repair_targets": repair_targets,
+                "category_candidates": category_candidates,
+                "service_hint_samples": service_hint_samples,
+            }
+        )
+
+        repair_response = call_repair_llm(
+            client,
+            plan,
+            repair_targets,
+            category_candidates,
+            service_hint_samples,
+            backend=backend,
+        )
+
+        repair_outputs.append({"iteration": iteration + 1, "response": repair_response})
+        plan = apply_repairs(plan, repair_response.get("repairs"))
+        plan.setdefault("metadata", {})
+        plan["metadata"]["repair_iterations"] = plan["metadata"].get("repair_iterations", 0) + 1
+
+    if repair_inputs:
+        with open(run_dir / "debug_repair_input.json", "w", encoding="utf-8") as f:
+            json.dump(repair_inputs, f, indent=2, ensure_ascii=False)
+    if repair_outputs:
+        with open(run_dir / "debug_repair_output.json", "w", encoding="utf-8") as f:
+            json.dump(repair_outputs, f, indent=2, ensure_ascii=False)
 
     logger.debug("Plan after metadata normalization: %s", plan)
 

@@ -56,23 +56,29 @@ def get_compact_service_metadata(*, common_limit: int = 25, sample_limit: int = 
     return compact
 
 
-def canonicalize_service_name(name: str) -> Dict[str, object]:
+def canonicalize_service_name(
+    name: str,
+    *,
+    category_candidates: list[str] | None = None,
+) -> Dict[str, object]:
     """Normalize user-supplied serviceName to the canonical Retail value."""
 
     raw = (name or "").strip()
     allowed = get_allowed_service_names()
     allowed_set = set(allowed)
     allowed_lower = {svc.lower(): svc for svc in allowed}
+    candidates = category_candidates or []
 
     def _in_allowed(candidate: str) -> bool:
         return bool(candidate) and (not allowed_set or candidate in allowed_set)
 
     def _suggestions(limit: int = 3, cutoff: float = 0.6) -> List[str]:
-        if not allowed:
+        scope = candidates or allowed
+        if not scope:
             return []
-        fuzzy = get_close_matches(raw, allowed, n=limit, cutoff=cutoff)
+        fuzzy = get_close_matches(raw, scope, n=limit, cutoff=cutoff)
         if len(fuzzy) < limit:
-            for svc in allowed:
+            for svc in scope:
                 if svc not in fuzzy:
                     fuzzy.append(svc)
                 if len(fuzzy) >= limit:
@@ -105,6 +111,13 @@ def canonicalize_service_name(name: str) -> Dict[str, object]:
     fuzzy = get_close_matches(raw, allowed, n=3, cutoff=0.65)
     if fuzzy:
         return {"canonical": fuzzy[0], "status": "fuzzy", "suggestions": fuzzy[:3]}
+
+    if candidates:
+        return {
+            "canonical": candidates[0],
+            "status": "category_default",
+            "suggestions": candidates[:3],
+        }
 
     return {
         "canonical": "UNKNOWN_SERVICE",
