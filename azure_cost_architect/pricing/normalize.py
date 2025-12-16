@@ -2,7 +2,7 @@
 import re
 from typing import Dict, Optional
 
-from ..utils.knowledgepack import canonicalize_service_name
+from ..utils.knowledgepack import canonicalize_service_name, get_allowed_service_names
 from .catalog_sources import _legacy_service_name, get_catalog_sources
 
 
@@ -17,18 +17,24 @@ def normalize_service_name(category: str, service_name: Optional[str]) -> str:
 
     cat = (category or "").lower()
     svc = (service_name or "").strip()
+    allowed = set(get_allowed_service_names())
 
-    canonical = canonicalize_service_name(svc)
-    if canonical["canonical"] != "UNKNOWN_SERVICE":
-        return canonical["canonical"]
+    if svc:
+        canonical = canonicalize_service_name(svc)
+        canonical_value = canonical.get("canonical")
+        if canonical_value != "UNKNOWN_SERVICE" and (not allowed or canonical_value in allowed):
+            return canonical_value
+        for suggestion in canonical.get("suggestions") or []:
+            if not allowed or suggestion in allowed:
+                return suggestion
 
     sources = get_catalog_sources(cat)
-    allowed = {src.service_name for src in sources if src.service_name}
+    allowed_from_sources = {src.service_name for src in sources if src.service_name}
 
-    if allowed:
-        if svc in allowed:
+    if allowed_from_sources:
+        if svc in allowed_from_sources:
             return svc
-        return next(iter(allowed))
+        return next(iter(allowed_from_sources))
 
     return _legacy_service_name(cat, svc)
 

@@ -30,7 +30,7 @@ def get_allowed_service_names() -> List[str]:
     return list(allowed)
 
 
-def get_compact_service_metadata(*, common_limit: int = 30, sample_limit: int = 3, token_limit: int = 5) -> Dict[str, Dict]:
+def get_compact_service_metadata(*, common_limit: int = 25, sample_limit: int = 3, token_limit: int = 5) -> Dict[str, Dict]:
     """Return a compact subset of service metadata for prompt injection."""
 
     ctx = load_llm_context()
@@ -61,7 +61,24 @@ def canonicalize_service_name(name: str) -> Dict[str, object]:
 
     raw = (name or "").strip()
     allowed = get_allowed_service_names()
+    allowed_set = set(allowed)
     allowed_lower = {svc.lower(): svc for svc in allowed}
+
+    def _in_allowed(candidate: str) -> bool:
+        return bool(candidate) and (not allowed_set or candidate in allowed_set)
+
+    def _suggestions(limit: int = 3, cutoff: float = 0.6) -> List[str]:
+        if not allowed:
+            return []
+        fuzzy = get_close_matches(raw, allowed, n=limit, cutoff=cutoff)
+        if len(fuzzy) < limit:
+            for svc in allowed:
+                if svc not in fuzzy:
+                    fuzzy.append(svc)
+                if len(fuzzy) >= limit:
+                    break
+        return fuzzy[:limit]
+
     synonyms = {
         "azure cache for redis": ("Redis Cache", []),
         "redis": ("Redis Cache", []),
@@ -72,23 +89,28 @@ def canonicalize_service_name(name: str) -> Dict[str, object]:
         "public ip addresses": ("Virtual Network", []),
     }
 
-    if raw in allowed_lower.values():
+    if _in_allowed(raw):
         return {"canonical": raw, "status": "exact", "suggestions": []}
 
     lowered = raw.lower()
-    if lowered in allowed_lower:
+    if lowered in allowed_lower and _in_allowed(allowed_lower[lowered]):
         canonical = allowed_lower[lowered]
         return {"canonical": canonical, "status": "case_fixed", "suggestions": []}
 
     if lowered in synonyms:
         canonical, extra = synonyms[lowered]
-        return {"canonical": canonical, "status": "synonym", "suggestions": extra}
+        if _in_allowed(canonical):
+            return {"canonical": canonical, "status": "synonym", "suggestions": extra}
 
     fuzzy = get_close_matches(raw, allowed, n=3, cutoff=0.65)
     if fuzzy:
-        return {"canonical": fuzzy[0], "status": "fuzzy", "suggestions": fuzzy}
+        return {"canonical": fuzzy[0], "status": "fuzzy", "suggestions": fuzzy[:3]}
 
-    return {"canonical": "UNKNOWN_SERVICE", "status": "unknown", "suggestions": get_close_matches(raw, allowed, n=3, cutoff=0.45)}
+    return {
+        "canonical": "UNKNOWN_SERVICE",
+        "status": "unknown",
+        "suggestions": _suggestions(limit=3, cutoff=0.45),
+    }
 
 
 __all__ = [

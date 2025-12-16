@@ -22,7 +22,7 @@ def test_catalog_sources_preserve_front_door():
     for category in ("network.frontdoor", "network.gateway"):
         sources = get_catalog_sources(category)
         assert sources
-        assert sources[0].service_name == "Azure Front Door"
+        assert sources[0].service_name == "Azure Front Door Service"
 
 
 def test_validation_sets_hints_and_canonical_names():
@@ -61,8 +61,18 @@ def test_validation_sets_hints_and_canonical_names():
     assert resources["openai"]["service_name"] == "Foundry Models"
     assert "Foundry Tools" in (resources["openai"].get("service_name_suggestions") or [])
 
+    assert resources["redis"].get("service_name_raw") == "Azure Cache for Redis"
+    assert resources["redis"].get("service_name_status") == "synonym"
+
     for res in resources.values():
         assert isinstance(res.get("product_name_contains"), list)
         assert isinstance(res.get("sku_name_contains"), list)
         assert isinstance(res.get("meter_name_contains"), list)
         assert isinstance(res.get("arm_sku_name_contains"), list)
+
+
+def test_unknown_service_returns_suggestions():
+    res = canonicalize_service_name("totally made up service")
+    assert res["canonical"] == "UNKNOWN_SERVICE"
+    assert res.get("suggestions")
+    assert 1 <= len(res.get("suggestions")) <= 3

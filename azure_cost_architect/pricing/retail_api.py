@@ -3,11 +3,38 @@ import asyncio
 from typing import Any, Dict, List, Optional, Tuple, Set
 
 import httpx
+from urllib.parse import urlencode, urlparse, urlunparse, parse_qsl
 from rich.console import Console
 
 from ..config import RETAIL_API_URL
 
 console = Console()
+
+
+def _sanitize_top_param(url: str) -> str:
+    """Clamp $top to the API-supported 1..1000 range and avoid non-positive values."""
+
+    if not url:
+        return url
+
+    parsed = urlparse(url)
+    query_pairs = []
+    has_top = False
+    for key, val in parse_qsl(parsed.query, keep_blank_values=True):
+        if key.lower() == "$top":
+            has_top = True
+            try:
+                top_int = int(val)
+            except Exception:
+                top_int = 100
+            top_int = max(1, min(1000, top_int))
+            val = str(top_int)
+        query_pairs.append((key, val))
+
+    if has_top:
+        parsed = parsed._replace(query=urlencode(query_pairs, doseq=True))
+        return urlunparse(parsed)
+    return url
 
 
 # --------------------------------------------------------------------
@@ -49,6 +76,7 @@ async def query_azure_retail(
                 console.print(
                     f"[cyan]query_azure_retail[{debug_label}]: page {page}, url={url}[/cyan]"
                 )
+            url = _sanitize_top_param(url)
             resp = await client.get(url)
             resp.raise_for_status()
             data = resp.json()
@@ -56,6 +84,7 @@ async def query_azure_retail(
             items.extend(page_items)
 
             next_url = data.get("NextPageLink") or data.get("nextPageLink")
+            next_url = _sanitize_top_param(next_url)
             if next_url and currency and "currencyCode=" not in next_url:
                 sep = "&" if "?" in next_url else "?"
                 next_url = f"{next_url}{sep}currencyCode={currency}"
@@ -196,6 +225,7 @@ def fetch_all_for_service(
                     f"[cyan]fetch_all_for_service: page {page}, url={url}[/cyan]"
                 )
 
+            url = _sanitize_top_param(url)
             resp = client.get(url)
             resp.raise_for_status()
             data = resp.json()
@@ -204,6 +234,7 @@ def fetch_all_for_service(
             items.extend(page_items)
 
             next_url = data.get("NextPageLink") or data.get("nextPageLink")
+            next_url = _sanitize_top_param(next_url)
             if next_url and currency and "currencyCode=" not in next_url:
                 sep = "&" if "?" in next_url else "?"
                 next_url = f"{next_url}{sep}currencyCode={currency}"

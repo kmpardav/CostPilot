@@ -8,7 +8,11 @@
           "category": "compute.vm",
           "service_name_raw": null,
           "service_name_status": "unknown",
-          "service_name_suggestions": [],
+          "service_name_suggestions": [
+            "Advanced Container Networking Services",
+            "AKS Edge Essentials",
+            "AKS on Azure Stack HCI"
+          ],
           "service_name": "UNKNOWN_SERVICE",
           "arm_sku_name": null,
           "region": null,
@@ -34,7 +38,11 @@
           },
           "service_name_raw": null,
           "service_name_status": "unknown",
-          "service_name_suggestions": [],
+          "service_name_suggestions": [
+            "Advanced Container Networking Services",
+            "AKS Edge Essentials",
+            "AKS on Azure Stack HCI"
+          ],
           "service_name": "UNKNOWN_SERVICE",
           "arm_sku_name": null,
           "region": null,
@@ -56,7 +64,11 @@
           "category": "storage.blob",
           "service_name_raw": null,
           "service_name_status": "unknown",
-          "service_name_suggestions": [],
+          "service_name_suggestions": [
+            "Advanced Container Networking Services",
+            "AKS Edge Essentials",
+            "AKS on Azure Stack HCI"
+          ],
           "service_name": "UNKNOWN_SERVICE",
           "arm_sku_name": null,
           "region": null,
@@ -81,7 +93,11 @@
           "category": "network.nat",
           "service_name_raw": null,
           "service_name_status": "unknown",
-          "service_name_suggestions": [],
+          "service_name_suggestions": [
+            "Advanced Container Networking Services",
+            "AKS Edge Essentials",
+            "AKS on Azure Stack HCI"
+          ],
           "service_name": "UNKNOWN_SERVICE",
           "arm_sku_name": null,
           "region": null,
@@ -196,7 +212,11 @@
           },
           "service_name_raw": null,
           "service_name_status": "unknown",
-          "service_name_suggestions": [],
+          "service_name_suggestions": [
+            "Advanced Container Networking Services",
+            "AKS Edge Essentials",
+            "AKS on Azure Stack HCI"
+          ],
           "service_name": "UNKNOWN_SERVICE",
           "region": null,
           "quantity": 1,
