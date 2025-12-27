@@ -113,7 +113,7 @@ DEFAULT_REQUIRED_CATEGORIES = [
 ]
 
 # When using an adjudicator step, only consider top N candidates (performance guard).
-DEFAULT_ADJUDICATE_TOPN = int(os.getenv("AZURECOST_ADJUDICATE_TOPN", "5"))
+DEFAULT_ADJUDICATE_TOPN = int(os.getenv("AZURECOST_ADJUDICATE_TOPN", "15"))
 
 # -------------------------------------------------------------------
 # Local catalog directory (full dumps per service/region/currency)
