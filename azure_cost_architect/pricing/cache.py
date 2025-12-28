@@ -6,7 +6,7 @@ from typing import Any, Dict  # Typing helpers:
                              # - Dict: typing for dictionaries (hash maps).
 
 from rich.console import Console  # Third-party library (rich): Console is used to print colored/well-formatted messages.
-from .config import CACHE_FILE    # Local import: brings in the path/name of the cache file from config.py.
+from ..config import CACHE_FILE    # Local import: brings in the path/name of the cache file from config.py.
 
 console = Console()  # Create ONE Console instance (object) that we can reuse for printing warnings.
 
