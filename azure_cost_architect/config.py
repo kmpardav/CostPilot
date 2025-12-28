@@ -144,7 +144,7 @@ DEFAULT_REQUIRED_CATEGORIES = [
 # - When selecting a "best meter" from Retail API candidates, you may rank candidates.
 # - This controls how many top candidates you keep for adjudication/voting.
 # - Kept as 5 here because that’s what your original config uses.
-DEFAULT_ADJUDICATE_TOPN = int(os.getenv("AZURECOST_ADJUDICATE_TOPN", "5"))
+DEFAULT_ADJUDICATE_TOPN = int(os.getenv("AZURECOST_ADJUDICATE_TOPN", "15"))
 
 # ---------------------------------------------------------------------
 # Local catalog directory (your own Azure Retail dumps per service/region/currency)
