@@ -37,6 +37,12 @@ DEFAULT_MISSING_MONTHLY_PENALTY = 0.0
 # ------------------------------------------------------------
 DEBUG_ENV_VAR = "AZCOST_DEBUG_FILE"
 
+def _env_truthy(name: str, default: bool = False) -> bool:
+    val = os.getenv(name)
+    if val is None:
+        return default
+    return str(val).strip().lower() in {"1", "true", "yes", "y", "on"}
+
 
 def _compute_delta_entry(current: float, baseline: float) -> Dict[str, Any]:
     absolute = round(current - baseline, 2)
@@ -1373,14 +1379,22 @@ async def fetch_price_for_resource(
             (resource.get("criticality") or resource.get("environment") or "prod").lower(),
             (resource.get("billing_model") or resource.get("billingModel") or "").lower(),
         )
-        if (selection.get("status") == "unresolved" or not selection.get("chosen_item")) and arm_sku_name and scored_items:
+        allow_mismatch_fallback = _env_truthy("AZCOST_ALLOW_MISMATCH_FALLBACK", default=False)
+        billing_model = (resource.get("billing_model") or resource.get("billingModel") or "").lower()
+        if (
+            allow_mismatch_fallback
+            and billing_model not in {"reserved", "reservation"}
+            and (selection.get("status") == "unresolved" or not selection.get("chosen_item"))
+            and arm_sku_name
+            and scored_items
+        ):
             best_score, best_candidate = scored_items[0]
             selection = {
                 "status": "mismatch_fallback",
                 "chosen_item": best_candidate,
                 "chosen_score": best_score,
                 "warnings": (selection.get("warnings") or [])
-                + ["Requested SKU not found; pricing with best available candidate"],
+                + ["Requested SKU not found; pricing with best available candidate (best-effort mode enabled)"],
                 "requested_sku_normalized": selection.get("requested_sku_normalized"),
                 "preferred_priceType": selection.get("preferred_priceType"),
                 "fallback_priceType_used": selection.get("fallback_priceType_used"),
@@ -1617,44 +1631,35 @@ async def fetch_price_for_resource(
         )
         return
 
-    ambiguous_reservation = False
+    # Reservations: Retail API unitOfMeasure is often "1 Hour" even when reservationTerm exists.
+    # Treat unitPrice as the total upfront price for ONE reservation for the whole term, and amortize.
     if price_type == "reservation":
-        uom_low = unit_of_measure.lower()
-        term_low = reservation_term.lower()
-        if not uom_low or ("year" not in uom_low and "yr" not in uom_low):
-            ambiguous_reservation = True
-        elif "3" in term_low and "3" not in uom_low:
-            ambiguous_reservation = True
-        elif "1" in term_low and "1" not in uom_low:
-            ambiguous_reservation = True
+        term_low = (reservation_term or "").lower()
+        term_months = 0
+        if "3 year" in term_low:
+            term_months = 36
+        elif "1 year" in term_low:
+            term_months = 12
 
-    if ambiguous_reservation:
-        resource.update(
-            {
-                "units": 1.0,
-                "monthly_cost": None,
-                "yearly_cost": None,
-                "pricing_status": "reservation_uom_ambiguous",
-                "error": "Reservation unit of measure looks hourly/monthly; treated as ambiguous",
-            }
-        )
-        return
+        if term_months <= 0:
+            resource.update(
+                {
+                    "units": float(resource.get("quantity", 1.0)),
+                    "monthly_cost": None,
+                    "yearly_cost": None,
+                    "pricing_status": "reservation_term_missing",
+                    "error": "Reservation price selected but reservationTerm is missing/unknown; cannot amortize",
+                }
+            )
+            return
 
-    units = compute_units(resource, unit_of_measure)
-    monthly_cost = units * float(unit_price)
-    yearly_cost = monthly_cost * 12.0
-
-    if price_type == "reservation" and reservation_term and "year" in unit_of_measure.lower():
-        # Εδώ θεωρούμε ότι unit_price είναι συνολικό κόστος για όλο το term
-        if "3 year" in reservation_term:
-            monthly_cost = float(unit_price) / 36.0
-            yearly_cost = float(unit_price) / 3.0
-        elif "1 year" in reservation_term:
-            monthly_cost = float(unit_price) / 12.0
-            yearly_cost = float(unit_price)
-
-        # Σε reservation σενάρια συνήθως units=1 (αγοράζεις 1 reservation)
-        units = 1.0
+        units = float(resource.get("quantity", 1.0))
+        monthly_cost = (float(unit_price) / float(term_months)) * units
+        yearly_cost = monthly_cost * 12.0
+    else:
+        units = compute_units(resource, unit_of_measure)
+        monthly_cost = units * float(unit_price)
+        yearly_cost = monthly_cost * 12.0
 
     requested_sku = (resource.get("arm_sku_name") or resource.get("armSkuName") or "").lower()
     resolved_text = " ".join(
