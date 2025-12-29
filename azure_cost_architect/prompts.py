@@ -60,7 +60,7 @@ Architecture quality guardrails:
 - Explicitly align every architecture choice to Azure Well-Architected Framework pillars (Reliability, Security, Cost Optimization, Operational Excellence, Performance Efficiency).
 - Follow Cloud Adoption Framework landing zone guidance for governance, identity, networking, and management.
 - Prefer official Azure reference architectures/templates when they exist; otherwise design new but keep the design defensible with WAF/CAF rationale.
-- When llm-backend=responses (web_search available), use web_search to confirm latest service naming/SKUs/best practices ONLY from official Microsoft sources; otherwise do not guess.
+- If web_search is explicitly enabled for the run, use it ONLY to confirm latest service naming/SKUs/best practices from official Microsoft sources; otherwise do not guess.
 
 Produce 1–3 SCENARIOS:
   - "baseline"        – recommended / production-safe.
