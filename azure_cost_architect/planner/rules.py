@@ -70,8 +70,15 @@ def apply_planner_rules(plan: dict) -> dict:
         missing_skus = sorted(
             res.get("id", "res")
             for res in resources
-            if _category_needs_sku(res.get("category"))
-            and not (res.get("arm_sku_name") or (res.get("sku") or {}).get("armSkuName"))
+        if _category_needs_sku(res.get("category"))
+        and not (
+            res.get("arm_sku_name")
+            or (res.get("sku") or {}).get("armSkuName")
+            or (res.get("arm_sku_name_contains") or [])
+            or (res.get("sku_name_contains") or [])
+            or (res.get("meter_name_contains") or [])
+            or (res.get("product_name_contains") or [])
+        )
         )
         if missing_skus:
             scen_warnings.append(
