@@ -392,7 +392,8 @@ def main() -> None:
     global DEBUG
     args = parse_args()
 
-    if args.output_prefix == "azure_cost":
+    output_prefix_arg = any(arg.startswith("--output-prefix") for arg in sys.argv[1:])
+    if args.output_prefix == "azure_cost" and not output_prefix_arg:
         args.output_prefix = datetime.now(timezone.utc).strftime("azure_cost_%Y%m%d_%H%M%SZ")
 
     if args.debug_file:
