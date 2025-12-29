@@ -1237,7 +1237,9 @@ async def fetch_price_for_resource(
             return
 
     # Cache key για price cache (json)
-    cache_key = None if adjudication_enabled else build_cache_key(resource, region, currency)
+    cache_key = None if adjudication_enabled else build_cache_key(
+        resource, region, currency, scenario_id=scenario.get("id")
+    )
     price_info = get_cached_price(cache_key) if cache_key else None
 
     if price_info and debug:
