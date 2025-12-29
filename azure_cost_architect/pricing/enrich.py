@@ -19,7 +19,7 @@ from ..utils.categories import (
     canonical_required_category,
     normalize_required_categories,
 )
-from .cache import build_cache_key, get_cached_price, set_cached_price
+from .cache import build_cache_key, cached_entry_is_usable, get_cached_price, set_cached_price
 from .normalize import normalize_service_name, sku_keyword_match
 from .catalog import load_catalog
 from .scoring import score_price_item, select_best_candidate
@@ -1241,6 +1241,9 @@ async def fetch_price_for_resource(
         resource, region, currency, scenario_id=scenario.get("id")
     )
     price_info = get_cached_price(cache_key) if cache_key else None
+    if price_info and not cached_entry_is_usable(price_info, currency=currency):
+        # Ignore bad/unsafe cache entry and recompute
+        price_info = None
 
     if price_info and debug:
         _LOGGER.debug(
