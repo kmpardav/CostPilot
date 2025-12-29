@@ -82,10 +82,17 @@ def _call_planner_responses(client: OpenAI, user_prompt: str) -> tuple[str, str]
             {"role": "system", "content": PROMPT_PLANNER_SYSTEM},
             {"role": "user", "content": user_prompt},
         ],
-        tools=[{"type": "web_search"}],
-        tool_choice="auto",
+        # Planner should be deterministic and reproducible; avoid web_search here.
+        temperature=0.0,
     )
-    raw = response.output[0].content[0].text
+    # Be defensive: Responses output can contain multiple segments/items.
+    parts: list[str] = []
+    for out in getattr(response, "output", []) or []:
+        for c in getattr(out, "content", []) or []:
+            txt = getattr(c, "text", None)
+            if txt:
+                parts.append(txt)
+    raw = "\n".join(parts).strip()
     return MODEL_PLANNER_RESPONSES, raw
 
 
@@ -198,12 +205,22 @@ def plan_architecture_iterative(
                 },
             )
 
-        if repair_callable:
-            repaired_raw = repair_callable(fix_prompt)
-            parsed = json.loads(extract_json_object(repaired_raw))
-        else:
-            repaired = repair_json_with_llm(client, PROMPT_PLANNER_SYSTEM, fix_prompt)
-            parsed = repaired
+        repaired_raw: Optional[str] = None
+        try:
+            if repair_callable:
+                repaired_raw = repair_callable(fix_prompt)
+                parsed = json.loads(extract_json_object(repaired_raw))
+            else:
+                repaired = repair_json_with_llm(client, PROMPT_PLANNER_SYSTEM, fix_prompt)
+                parsed = repaired
+        except Exception as ex:
+            # Do not crash the whole run; record failure and continue loop.
+            if trace:
+                trace.log(
+                    "phase1_planner_repair_failed",
+                    {"attempt": attempt_no, "error": str(ex), "repair_raw": repaired_raw},
+                )
+            continue
 
         repaired_validation = validate_pricing_contract(parsed or {})
         _log_planner_trace(
@@ -213,7 +230,7 @@ def plan_architecture_iterative(
             model=MODEL_PLANNER,
             system_prompt=PROMPT_PLANNER_SYSTEM,
             user_prompt=fix_prompt,
-            raw=json.dumps(parsed),
+            raw=repaired_raw or json.dumps(parsed),
             parsed=parsed,
             parse_error=None,
             validation=repaired_validation,
