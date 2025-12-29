@@ -24,6 +24,73 @@ class PlannerAttempt:
     validation: PlanValidationResult
 
 
+def _is_plan_shaped(obj: Any) -> bool:
+    """Minimal shape check: enough to prevent useless repair outputs."""
+    if not isinstance(obj, dict):
+        return False
+    metadata = obj.get("metadata")
+    scenarios = obj.get("scenarios")
+    if not isinstance(metadata, dict):
+        return False
+    if not isinstance(scenarios, list) or not scenarios:
+        return False
+    return True
+
+
+def _repair_to_plan_shape(
+    client: OpenAI,
+    *,
+    repair_system_prompt: str,
+    input_text: str,
+    trace: Optional[TraceLogger] = None,
+    attempt: Optional[int] = None,
+) -> Optional[Dict[str, Any]]:
+    """
+    Repair input_text into a plan-shaped JSON dict.
+    Returns dict on success, None on failure (caller can continue loop).
+    """
+    try:
+        repaired = repair_json_with_llm(client, repair_system_prompt, input_text)
+    except Exception as ex:
+        if trace:
+            trace.log("planner_repair_exception", {"attempt": attempt, "error": str(ex)})
+        return None
+
+    if _is_plan_shaped(repaired):
+        return repaired
+
+    schema_prompt = (
+        "You returned valid JSON, but it is not a valid plan object.\n"
+        "Return a SINGLE JSON OBJECT with this minimal schema:\n"
+        "{\n"
+        '  "metadata": { ... },\n'
+        '  "scenarios": [ { "id": "...", "label": "...", "resources": [ ... ] } ]\n'
+        "}\n"
+        "Do not wrap it in an array. Do not return partial fragments.\n\n"
+        "Here is the previous output to transform into the required schema:\n"
+        f"{json.dumps(repaired)}"
+    )
+    if trace:
+        trace.log(
+            "planner_repair_bad_shape",
+            {
+                "attempt": attempt,
+                "got_keys": list(repaired.keys()) if isinstance(repaired, dict) else str(type(repaired)),
+            },
+        )
+    try:
+        repaired_retry = repair_json_with_llm(client, repair_system_prompt, schema_prompt)
+    except Exception as ex:
+        if trace:
+            trace.log("planner_repair_exception_retry", {"attempt": attempt, "error": str(ex)})
+        return None
+    if _is_plan_shaped(repaired_retry):
+        return repaired_retry
+    if trace:
+        trace.log("planner_repair_bad_shape_retry", {"attempt": attempt})
+    return None
+
+
 def _snippet(text: str, *, max_chars: int = 2000) -> str:
     """Return a bounded snippet for prompts/traces to avoid runaway token growth."""
     if not text:
@@ -115,11 +182,16 @@ def _parse_plan_json(raw: str, client: OpenAI) -> tuple[Optional[Dict[str, Any]]
         parsed = json.loads(raw_json)
         return parsed, None
     except json.JSONDecodeError as ex:
-        try:
-            repaired = repair_json_with_llm(client, PROMPT_REPAIR_SYSTEM, raw_json)
-            return repaired, str(ex)
-        except Exception as repair_ex:  # pragma: no cover - defensive
-            return None, f"repair_failed: {repair_ex}"
+        repaired = _repair_to_plan_shape(
+            client,
+            repair_system_prompt=PROMPT_REPAIR_SYSTEM,
+            input_text=raw_json,
+            trace=None,
+            attempt=None,
+        )
+        if repaired is None:
+            return None, f"repair_failed: {ex}"
+        return repaired, str(ex)
 
 
 def _planner_attempt(
@@ -237,9 +309,28 @@ def plan_architecture_iterative(
             if repair_callable:
                 repaired_raw = repair_callable(fix_prompt)
                 parsed = json.loads(extract_json_object(repaired_raw))
+                if not _is_plan_shaped(parsed):
+                    if trace:
+                        trace.log(
+                            "planner_repair_bad_shape_external",
+                            {
+                                "attempt": attempt_no,
+                                "got_keys": list(parsed.keys())
+                                if isinstance(parsed, dict)
+                                else str(type(parsed)),
+                            },
+                        )
+                    continue
             else:
-                repaired = repair_json_with_llm(client, PROMPT_REPAIR_SYSTEM, fix_prompt)
-                parsed = repaired
+                parsed = _repair_to_plan_shape(
+                    client,
+                    repair_system_prompt=PROMPT_REPAIR_SYSTEM,
+                    input_text=fix_prompt,
+                    trace=trace,
+                    attempt=attempt_no,
+                )
+                if parsed is None:
+                    continue
         except Exception as ex:
             # Do not crash the whole run; record failure and continue loop.
             if trace:
