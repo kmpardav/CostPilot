@@ -104,9 +104,9 @@ def canonicalize_service_name(
         return fuzzy[:limit]
 
     synonyms = {
-        "azure cache for redis": ("Azure Cache for Redis", []),
-        "redis": ("Azure Cache for Redis", []),
-        "redis cache": ("Azure Cache for Redis", []),
+        "azure cache for redis": ("Redis Cache", []),
+        "redis": ("Redis Cache", []),
+        "redis cache": ("Redis Cache", []),
         "azure sql": ("SQL Database", ["SQL Managed Instance"]),
         "sql": ("SQL Database", ["SQL Managed Instance"]),
         "vm": ("Virtual Machines", []),
