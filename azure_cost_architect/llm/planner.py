@@ -5,7 +5,11 @@ from typing import Any, Dict, Optional
 from openai import OpenAI
 
 from ..config import MODEL_PLANNER, MODEL_PLANNER_RESPONSES
-from ..prompts import PROMPT_PLANNER_SYSTEM, PROMPT_PLANNER_USER_TEMPLATE
+from ..prompts import (
+    PROMPT_PLANNER_SYSTEM,
+    PROMPT_PLANNER_USER_TEMPLATE,
+    PROMPT_REPAIR_SYSTEM,
+)
 from ..planner.contract import PlanValidationResult, validate_pricing_contract
 from ..utils.trace import TraceLogger
 from .json_repair import extract_json_object, repair_json_with_llm
@@ -112,7 +116,7 @@ def _parse_plan_json(raw: str, client: OpenAI) -> tuple[Optional[Dict[str, Any]]
         return parsed, None
     except json.JSONDecodeError as ex:
         try:
-            repaired = repair_json_with_llm(client, PROMPT_PLANNER_SYSTEM, raw_json)
+            repaired = repair_json_with_llm(client, PROMPT_REPAIR_SYSTEM, raw_json)
             return repaired, str(ex)
         except Exception as repair_ex:  # pragma: no cover - defensive
             return None, f"repair_failed: {repair_ex}"
@@ -234,7 +238,7 @@ def plan_architecture_iterative(
                 repaired_raw = repair_callable(fix_prompt)
                 parsed = json.loads(extract_json_object(repaired_raw))
             else:
-                repaired = repair_json_with_llm(client, PROMPT_PLANNER_SYSTEM, fix_prompt)
+                repaired = repair_json_with_llm(client, PROMPT_REPAIR_SYSTEM, fix_prompt)
                 parsed = repaired
         except Exception as ex:
             # Do not crash the whole run; record failure and continue loop.
