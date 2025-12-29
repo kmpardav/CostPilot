@@ -1,0 +1,478 @@
+{
+  "ai.openai": {
+    "canonical_count": 1245,
+    "alias_key_count": 1245,
+    "collision_key_count": 0,
+    "removed_alias_keys": 0,
+    "top_collisions": []
+  },
+  "analytics.databricks": {
+    "canonical_count": 24,
+    "alias_key_count": 24,
+    "collision_key_count": 0,
+    "removed_alias_keys": 0,
+    "top_collisions": []
+  },
+  "analytics.dataexplorer": {
+    "canonical_count": 1,
+    "alias_key_count": 1,
+    "collision_key_count": 0,
+    "removed_alias_keys": 0,
+    "top_collisions": []
+  },
+  "analytics.fabric": {
+    "canonical_count": 72,
+    "alias_key_count": 72,
+    "collision_key_count": 0,
+    "removed_alias_keys": 0,
+    "top_collisions": []
+  },
+  "appservice": {
+    "canonical_count": 71,
+    "alias_key_count": 71,
+    "collision_key_count": 0,
+    "removed_alias_keys": 0,
+    "top_collisions": []
+  },
+  "appservice.plan": {
+    "canonical_count": 71,
+    "alias_key_count": 71,
+    "collision_key_count": 0,
+    "removed_alias_keys": 0,
+    "top_collisions": []
+  },
+  "backup.vault": {
+    "canonical_count": 16,
+    "alias_key_count": 16,
+    "collision_key_count": 0,
+    "removed_alias_keys": 0,
+    "top_collisions": []
+  },
+  "cache.redis": {
+    "canonical_count": 77,
+    "alias_key_count": 191,
+    "collision_key_count": 7,
+    "removed_alias_keys": 7,
+    "top_collisions": [
+      {
+        "normalized_alias": "c0",
+        "canonical_count": 2,
+        "canonicals": [
+          "Azure_Redis_Cache_Basic_C0_Cache",
+          "Azure_Redis_Cache_Standard_C0_Cache"
+        ]
+      },
+      {
+        "normalized_alias": "c1",
+        "canonical_count": 2,
+        "canonicals": [
+          "Azure_Redis_Cache_Basic_C1_Cache",
+          "Azure_Redis_Cache_Standard_C1_Cache"
+        ]
+      },
+      {
+        "normalized_alias": "c2",
+        "canonical_count": 2,
+        "canonicals": [
+          "Azure_Redis_Cache_Basic_C2_Cache",
+          "Azure_Redis_Cache_Standard_C2_Cache"
+        ]
+      },
+      {
+        "normalized_alias": "c3",
+        "canonical_count": 2,
+        "canonicals": [
+          "Azure_Redis_Cache_Basic_C3_Cache",
+          "Azure_Redis_Cache_Standard_C3_Cache"
+        ]
+      },
+      {
+        "normalized_alias": "c4",
+        "canonical_count": 2,
+        "canonicals": [
+          "Azure_Redis_Cache_Basic_C4_Cache",
+          "Azure_Redis_Cache_Standard_C4_Cache"
+        ]
+      },
+      {
+        "normalized_alias": "c5",
+        "canonical_count": 2,
+        "canonicals": [
+          "Azure_Redis_Cache_Basic_C5_Cache",
+          "Azure_Redis_Cache_Standard_C5_Cache"
+        ]
+      },
+      {
+        "normalized_alias": "c6",
+        "canonical_count": 2,
+        "canonicals": [
+          "Azure_Redis_Cache_Basic_C6_Cache",
+          "Azure_Redis_Cache_Standard_C6_Cache"
+        ]
+      }
+    ]
+  },
+  "compute.aks": {
+    "canonical_count": 1640,
+    "alias_key_count": 1640,
+    "collision_key_count": 0,
+    "removed_alias_keys": 0,
+    "top_collisions": []
+  },
+  "compute.vm": {
+    "canonical_count": 1640,
+    "alias_key_count": 3217,
+    "collision_key_count": 0,
+    "removed_alias_keys": 0,
+    "top_collisions": []
+  },
+  "compute.vmss": {
+    "canonical_count": 1640,
+    "alias_key_count": 3217,
+    "collision_key_count": 0,
+    "removed_alias_keys": 0,
+    "top_collisions": []
+  },
+  "containerapps": {
+    "canonical_count": 2,
+    "alias_key_count": 2,
+    "collision_key_count": 0,
+    "removed_alias_keys": 0,
+    "top_collisions": []
+  },
+  "db.cosmos": {
+    "canonical_count": 64,
+    "alias_key_count": 64,
+    "collision_key_count": 0,
+    "removed_alias_keys": 0,
+    "top_collisions": []
+  },
+  "db.maria": {
+    "canonical_count": 2,
+    "alias_key_count": 2,
+    "collision_key_count": 0,
+    "removed_alias_keys": 0,
+    "top_collisions": []
+  },
+  "db.mysql": {
+    "canonical_count": 61,
+    "alias_key_count": 61,
+    "collision_key_count": 0,
+    "removed_alias_keys": 0,
+    "top_collisions": []
+  },
+  "db.postgres": {
+    "canonical_count": 101,
+    "alias_key_count": 101,
+    "collision_key_count": 0,
+    "removed_alias_keys": 0,
+    "top_collisions": []
+  },
+  "db.sql": {
+    "canonical_count": 80,
+    "alias_key_count": 173,
+    "collision_key_count": 0,
+    "removed_alias_keys": 0,
+    "top_collisions": []
+  },
+  "db.sqlmi": {
+    "canonical_count": 52,
+    "alias_key_count": 52,
+    "collision_key_count": 0,
+    "removed_alias_keys": 0,
+    "top_collisions": []
+  },
+  "integration.apim": {
+    "canonical_count": 5,
+    "alias_key_count": 5,
+    "collision_key_count": 0,
+    "removed_alias_keys": 0,
+    "top_collisions": []
+  },
+  "messaging.eventhubs": {
+    "canonical_count": 3,
+    "alias_key_count": 3,
+    "collision_key_count": 0,
+    "removed_alias_keys": 0,
+    "top_collisions": []
+  },
+  "messaging.servicebus": {
+    "canonical_count": 3,
+    "alias_key_count": 3,
+    "collision_key_count": 0,
+    "removed_alias_keys": 0,
+    "top_collisions": []
+  },
+  "ml.azureml": {
+    "canonical_count": 22,
+    "alias_key_count": 22,
+    "collision_key_count": 0,
+    "removed_alias_keys": 0,
+    "top_collisions": []
+  },
+  "network.appgw": {
+    "canonical_count": 2,
+    "alias_key_count": 2,
+    "collision_key_count": 0,
+    "removed_alias_keys": 0,
+    "top_collisions": []
+  },
+  "network.bastion": {
+    "canonical_count": 1,
+    "alias_key_count": 1,
+    "collision_key_count": 0,
+    "removed_alias_keys": 0,
+    "top_collisions": []
+  },
+  "network.er": {
+    "canonical_count": 7,
+    "alias_key_count": 7,
+    "collision_key_count": 0,
+    "removed_alias_keys": 0,
+    "top_collisions": []
+  },
+  "network.private_endpoint": {
+    "canonical_count": 7,
+    "alias_key_count": 7,
+    "collision_key_count": 0,
+    "removed_alias_keys": 0,
+    "top_collisions": []
+  },
+  "network.public_ip": {
+    "canonical_count": 7,
+    "alias_key_count": 7,
+    "collision_key_count": 0,
+    "removed_alias_keys": 0,
+    "top_collisions": []
+  },
+  "network.vnet": {
+    "canonical_count": 7,
+    "alias_key_count": 7,
+    "collision_key_count": 0,
+    "removed_alias_keys": 0,
+    "top_collisions": []
+  },
+  "network.vpngw": {
+    "canonical_count": 2,
+    "alias_key_count": 2,
+    "collision_key_count": 0,
+    "removed_alias_keys": 0,
+    "top_collisions": []
+  },
+  "storage.blob": {
+    "canonical_count": 101,
+    "alias_key_count": 85,
+    "collision_key_count": 8,
+    "removed_alias_keys": 8,
+    "top_collisions": [
+      {
+        "normalized_alias": "coolgrsdatastored100tb",
+        "canonical_count": 2,
+        "canonicals": [
+          "Cool_GRS_Data_Stored_100 TB",
+          "Cool_GRS_Data_Stored_100 Tb"
+        ]
+      },
+      {
+        "normalized_alias": "coolgzrsdatastored100tb",
+        "canonical_count": 2,
+        "canonicals": [
+          "Cool_GZRS_Data_Stored_100 TB",
+          "Cool_GZRS_Data_Stored_100 Tb"
+        ]
+      },
+      {
+        "normalized_alias": "coollrsdatastored100tb",
+        "canonical_count": 2,
+        "canonicals": [
+          "Cool_LRS_Data_Stored_100 TB",
+          "Cool_LRS_Data_Stored_100 Tb"
+        ]
+      },
+      {
+        "normalized_alias": "coolzrsdatastored100tb",
+        "canonical_count": 2,
+        "canonicals": [
+          "Cool_ZRS_Data_Stored_100 TB",
+          "Cool_ZRS_Data_Stored_100 Tb"
+        ]
+      },
+      {
+        "normalized_alias": "hotgrsdatastored100tb",
+        "canonical_count": 2,
+        "canonicals": [
+          "Hot_GRS_Data_Stored_100 TB",
+          "Hot_GRS_Data_Stored_100 Tb"
+        ]
+      },
+      {
+        "normalized_alias": "hotgzrsdatastored100tb",
+        "canonical_count": 2,
+        "canonicals": [
+          "Hot_GZRS_Data_Stored_100 TB",
+          "Hot_GZRS_Data_Stored_100 Tb"
+        ]
+      },
+      {
+        "normalized_alias": "hotlrsdatastored100tb",
+        "canonical_count": 2,
+        "canonicals": [
+          "Hot_LRS_Data_Stored_100 TB",
+          "Hot_LRS_Data_Stored_100 Tb"
+        ]
+      },
+      {
+        "normalized_alias": "hotzrsdatastored100tb",
+        "canonical_count": 2,
+        "canonicals": [
+          "Hot_ZRS_Data_Stored_100 TB",
+          "Hot_ZRS_Data_Stored_100 Tb"
+        ]
+      }
+    ]
+  },
+  "storage.disk": {
+    "canonical_count": 101,
+    "alias_key_count": 85,
+    "collision_key_count": 8,
+    "removed_alias_keys": 8,
+    "top_collisions": [
+      {
+        "normalized_alias": "coolgrsdatastored100tb",
+        "canonical_count": 2,
+        "canonicals": [
+          "Cool_GRS_Data_Stored_100 TB",
+          "Cool_GRS_Data_Stored_100 Tb"
+        ]
+      },
+      {
+        "normalized_alias": "coolgzrsdatastored100tb",
+        "canonical_count": 2,
+        "canonicals": [
+          "Cool_GZRS_Data_Stored_100 TB",
+          "Cool_GZRS_Data_Stored_100 Tb"
+        ]
+      },
+      {
+        "normalized_alias": "coollrsdatastored100tb",
+        "canonical_count": 2,
+        "canonicals": [
+          "Cool_LRS_Data_Stored_100 TB",
+          "Cool_LRS_Data_Stored_100 Tb"
+        ]
+      },
+      {
+        "normalized_alias": "coolzrsdatastored100tb",
+        "canonical_count": 2,
+        "canonicals": [
+          "Cool_ZRS_Data_Stored_100 TB",
+          "Cool_ZRS_Data_Stored_100 Tb"
+        ]
+      },
+      {
+        "normalized_alias": "hotgrsdatastored100tb",
+        "canonical_count": 2,
+        "canonicals": [
+          "Hot_GRS_Data_Stored_100 TB",
+          "Hot_GRS_Data_Stored_100 Tb"
+        ]
+      },
+      {
+        "normalized_alias": "hotgzrsdatastored100tb",
+        "canonical_count": 2,
+        "canonicals": [
+          "Hot_GZRS_Data_Stored_100 TB",
+          "Hot_GZRS_Data_Stored_100 Tb"
+        ]
+      },
+      {
+        "normalized_alias": "hotlrsdatastored100tb",
+        "canonical_count": 2,
+        "canonicals": [
+          "Hot_LRS_Data_Stored_100 TB",
+          "Hot_LRS_Data_Stored_100 Tb"
+        ]
+      },
+      {
+        "normalized_alias": "hotzrsdatastored100tb",
+        "canonical_count": 2,
+        "canonicals": [
+          "Hot_ZRS_Data_Stored_100 TB",
+          "Hot_ZRS_Data_Stored_100 Tb"
+        ]
+      }
+    ]
+  },
+  "storage.files": {
+    "canonical_count": 101,
+    "alias_key_count": 85,
+    "collision_key_count": 8,
+    "removed_alias_keys": 8,
+    "top_collisions": [
+      {
+        "normalized_alias": "coolgrsdatastored100tb",
+        "canonical_count": 2,
+        "canonicals": [
+          "Cool_GRS_Data_Stored_100 TB",
+          "Cool_GRS_Data_Stored_100 Tb"
+        ]
+      },
+      {
+        "normalized_alias": "coolgzrsdatastored100tb",
+        "canonical_count": 2,
+        "canonicals": [
+          "Cool_GZRS_Data_Stored_100 TB",
+          "Cool_GZRS_Data_Stored_100 Tb"
+        ]
+      },
+      {
+        "normalized_alias": "coollrsdatastored100tb",
+        "canonical_count": 2,
+        "canonicals": [
+          "Cool_LRS_Data_Stored_100 TB",
+          "Cool_LRS_Data_Stored_100 Tb"
+        ]
+      },
+      {
+        "normalized_alias": "coolzrsdatastored100tb",
+        "canonical_count": 2,
+        "canonicals": [
+          "Cool_ZRS_Data_Stored_100 TB",
+          "Cool_ZRS_Data_Stored_100 Tb"
+        ]
+      },
+      {
+        "normalized_alias": "hotgrsdatastored100tb",
+        "canonical_count": 2,
+        "canonicals": [
+          "Hot_GRS_Data_Stored_100 TB",
+          "Hot_GRS_Data_Stored_100 Tb"
+        ]
+      },
+      {
+        "normalized_alias": "hotgzrsdatastored100tb",
+        "canonical_count": 2,
+        "canonicals": [
+          "Hot_GZRS_Data_Stored_100 TB",
+          "Hot_GZRS_Data_Stored_100 Tb"
+        ]
+      },
+      {
+        "normalized_alias": "hotlrsdatastored100tb",
+        "canonical_count": 2,
+        "canonicals": [
+          "Hot_LRS_Data_Stored_100 TB",
+          "Hot_LRS_Data_Stored_100 Tb"
+        ]
+      },
+      {
+        "normalized_alias": "hotzrsdatastored100tb",
+        "canonical_count": 2,
+        "canonicals": [
+          "Hot_ZRS_Data_Stored_100 TB",
+          "Hot_ZRS_Data_Stored_100 Tb"
+        ]
+      }
+    ]
+  }
+}
