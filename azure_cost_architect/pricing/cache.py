@@ -1,6 +1,7 @@
-import json
-import os
 import hashlib
+import json
+import json as _json
+import os
 from typing import Any, Dict
 
 from rich.console import Console
@@ -10,7 +11,7 @@ console = Console()
 _price_cache_best: Dict[str, Dict[str, Any]] = {}
 
 # Bump when the cache key schema changes (prevents silent collisions with old keys).
-CACHE_KEY_VERSION = "v2"
+CACHE_KEY_VERSION = "v3"
 
 def load_price_cache() -> None:
     global _price_cache_best
@@ -32,55 +33,45 @@ def save_price_cache() -> None:
     except Exception as ex:
         console.print(f"[yellow]Warning: failed to save {CACHE_FILE}: {ex}[/yellow]")
 
-def _norm(s: Any) -> str:
-    return (s or "").strip().lower()
-
-def _notes_hash(resource: dict) -> str:
+def _pricing_signature(resource: dict) -> str:
     """
-    Hash notes so we don't leak/duplicate long user text into cache keys,
-    while still making cache reuse safe across different intent.
+    Build a stable, pricing-relevant signature for cache keys.
+    We intentionally ignore non-pricing fields (names, descriptions, etc.).
     """
-    notes = _norm(resource.get("notes"))
-    if not notes:
-        return "no-notes"
-    return hashlib.sha1(notes.encode("utf-8")).hexdigest()[:12]
+    sig = {
+        # primary routing
+        "category": (resource.get("category") or "").strip(),
+        "service_name": (resource.get("service_name") or "").strip(),
+        "arm_sku_name": (resource.get("arm_sku_name") or "").strip(),
+        "billing_model": (resource.get("billing_model") or "payg").strip(),
+        "os_type": (resource.get("os_type") or "na").strip(),
+        # sizing / quantity (these frequently change pricing selection)
+        "quantity": resource.get("quantity", 1.0),
+        "hours": resource.get("hours", 730),
+        # optional hints that materially affect meter match
+        "sku_name_hint": (resource.get("sku_name") or "").strip(),
+        "meter_name_hint": (resource.get("meter_name") or "").strip(),
+        "product_name_hint": (resource.get("product_name") or "").strip(),
+        "price_type": (resource.get("price_type") or "").strip(),
+        "reservation_term": (resource.get("reservation_term") or "").strip(),
+        "tier": (resource.get("tier") or "").strip(),
+        # generic sizing knobs (safe to include if present)
+        "vcores": resource.get("vcores"),
+        "capacity_gb": resource.get("capacity_gb"),
+        "storage_gb": resource.get("storage_gb"),
+        "throughput": resource.get("throughput"),
+    }
+    payload = _json.dumps(sig, sort_keys=True, ensure_ascii=False, separators=(",", ":"))
+    return hashlib.sha1(payload.encode("utf-8")).hexdigest()
 
-def build_cache_key(resource: dict, region: str, currency: str) -> str:
+
+def build_cache_key(resource: dict, region: str, currency: str, *, scenario_id: str | None = None) -> str:
     """
-    Cache key must include any fields that materially affect meter selection.
-
-    IMPORTANT: scoring/select_best_candidate depends on:
-      - criticality/environment
-      - reservation_term
-      - notes (linux/windows/spot/reserved/gp/serverless/etc.)
-    so we include a stable intent signature to prevent cross-scenario contamination.
+    Scenario-isolated cache key to prevent cross-scenario contamination.
     """
-    service_name = (resource.get("service_name") or "").strip()
-    arm_sku_name = (resource.get("arm_sku_name") or "").strip()
-    category = (resource.get("category") or "").strip()
-    billing_model = (resource.get("billing_model") or "payg").strip()
-    os_type = (resource.get("os_type") or "na").strip()
-
-    env = _norm(resource.get("criticality") or resource.get("environment") or "prod")
-    reservation_term = _norm(resource.get("reservation_term") or resource.get("reservationTerm"))
-    notes_sig = _notes_hash(resource)
-
-    # Versioned to avoid collisions with previous cache key schema.
-    return "|".join(
-        [
-            CACHE_KEY_VERSION,
-            service_name,
-            arm_sku_name,
-            region,
-            currency,
-            category,
-            billing_model,
-            os_type,
-            env,
-            reservation_term,
-            notes_sig,
-        ]
-    )
+    sid = (scenario_id or resource.get("scenario_id") or "na").strip()
+    sig_hash = _pricing_signature(resource)
+    return "|".join([CACHE_KEY_VERSION, region, currency, sid, sig_hash])
 
 def get_cached_price(key: str) -> dict:
     return _price_cache_best.get(key)
