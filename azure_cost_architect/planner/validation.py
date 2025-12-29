@@ -131,7 +131,13 @@ def validate_plan_schema(plan: dict) -> dict:
                 res["service_name"] = "UNKNOWN_SERVICE"
             else:
                 res["service_name"] = service_info.get("canonical")
-            res.setdefault("arm_sku_name", None)
+        res.setdefault("arm_sku_name", None)
+        # Normalize: if planner used nested sku.armSkuName, lift it to arm_sku_name so
+        # downstream code can be consistent.
+        if not res.get("arm_sku_name"):
+            sku = res.get("sku") or {}
+            if isinstance(sku, dict) and sku.get("armSkuName"):
+                res["arm_sku_name"] = sku.get("armSkuName")
             res.setdefault("region", None)
             res.setdefault("quantity", 1)
             res.setdefault("hours_per_month", HOURS_PROD)

@@ -33,9 +33,12 @@ def load_sku_alias_index(file_path: Optional[str] = None) -> Dict[str, Dict[str,
     """
 
     path = file_path or os.getenv(_ENV_ALIAS_INDEX) or str(_DEFAULT_ALIAS_FILE)
+    p = Path(path).expanduser()
+    if not p.exists():
+        return {}
 
     try:
-        with open(path, "r", encoding="utf-8") as handle:
+        with open(p, "r", encoding="utf-8") as handle:
             raw_index: Dict[str, Dict[str, List[str]]] = json.load(handle)
     except (FileNotFoundError, json.JSONDecodeError, TypeError):
         return {}
@@ -66,6 +69,14 @@ def match_sku(
 
     norm = normalize_sku(input_sku)
     cat_key = (category or "").lower()
+
+    if not alias_index:
+        return {
+            "matched_sku": None,
+            "matched_by": None,
+            "reason": "SKU alias index not loaded (empty).",
+            "suggestions": [],
+        }
 
     if cat_key not in alias_index:
         return {

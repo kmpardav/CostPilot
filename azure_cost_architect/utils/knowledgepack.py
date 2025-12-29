@@ -3,12 +3,14 @@
 from __future__ import annotations
 
 import json
+import logging
 import os
 from difflib import get_close_matches
 from functools import lru_cache
 from pathlib import Path
 from typing import Dict, List
 
+LOG = logging.getLogger(__name__)
 _DEFAULT_CONTEXT_PATH = Path(__file__).resolve().parents[2] / "out_kp" / "llm_context.json"
 
 
@@ -20,8 +22,9 @@ def load_llm_context() -> Dict:
     try:
         with open(path, "r", encoding="utf-8") as handle:
             return json.load(handle)
-    except Exception:
-        return {}
+    except Exception as exc:
+        LOG.warning("Failed to load llm_context.json from %s: %s", path, exc)
+        return {"allowed_service_names": [], "service_metadata": {}}
 
 
 def get_allowed_service_names() -> List[str]:
@@ -61,16 +64,31 @@ def canonicalize_service_name(
     *,
     category_candidates: list[str] | None = None,
 ) -> Dict[str, object]:
-    """Normalize user-supplied serviceName to the canonical Retail value."""
+    """Normalize user-supplied serviceName to a canonical Retail value.
+
+    Key design points:
+    - If llm_context.json is missing (allowed list empty), we *do not* force UNKNOWN_SERVICE.
+      Instead, we treat the input as already-canonical and rely on category_candidates / catalog mapping.
+    - If we do have an allowed list, we only emit values inside it.
+    """
 
     raw = (name or "").strip()
+    if not raw:
+        return {"canonical": "UNKNOWN_SERVICE", "status": "missing", "suggestions": []}
+
     allowed = get_allowed_service_names()
     allowed_set = set(allowed)
+    has_allowed = bool(allowed_set)
     allowed_lower = {svc.lower(): svc for svc in allowed}
-    candidates = category_candidates or []
+
+    candidates = [c for c in (category_candidates or []) if c]
+    if has_allowed:
+        allowed_candidates = [c for c in candidates if c in allowed_set]
+        if allowed_candidates:
+            candidates = allowed_candidates
 
     def _in_allowed(candidate: str) -> bool:
-        return bool(candidate) and (not allowed_set or candidate in allowed_set)
+        return bool(candidate) and (not has_allowed or candidate in allowed_set)
 
     def _suggestions(limit: int = 3, cutoff: float = 0.6) -> List[str]:
         scope = candidates or allowed
@@ -86,14 +104,30 @@ def canonicalize_service_name(
         return fuzzy[:limit]
 
     synonyms = {
-        "azure cache for redis": ("Redis Cache", []),
-        "redis": ("Redis Cache", []),
-        "azure openai": ("Foundry Models", ["Foundry Tools"]),
-        "openai": ("Foundry Models", ["Foundry Tools"]),
+        "azure cache for redis": ("Azure Cache for Redis", []),
+        "redis": ("Azure Cache for Redis", []),
+        "redis cache": ("Azure Cache for Redis", []),
+        "azure sql": ("SQL Database", ["SQL Managed Instance"]),
+        "sql": ("SQL Database", ["SQL Managed Instance"]),
+        "vm": ("Virtual Machines", []),
+        "virtual machine": ("Virtual Machines", []),
+        "virtual machines": ("Virtual Machines", []),
         "ip addresses": ("Virtual Network", []),
         "public ip": ("Virtual Network", []),
         "public ip addresses": ("Virtual Network", []),
     }
+
+    if not has_allowed:
+        if raw.lower() in synonyms:
+            canonical, extra = synonyms[raw.lower()]
+            return {"canonical": canonical, "status": "synonym", "suggestions": extra}
+        if candidates:
+            return {
+                "canonical": candidates[0],
+                "status": "category_default",
+                "suggestions": candidates[:3],
+            }
+        return {"canonical": raw, "status": "no_context", "suggestions": []}
 
     if _in_allowed(raw):
         return {"canonical": raw, "status": "exact", "suggestions": []}

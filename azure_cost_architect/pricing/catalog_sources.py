@@ -253,7 +253,9 @@ def get_catalog_sources(category: str) -> List[CatalogSource]:
     canonical_sources: List[CatalogSource] = []
     for src in sources:
         canonical = canonicalize_service_name(src.service_name)
-        service_name = canonical.get("canonical")
+        service_name = canonical.get("canonical") or src.service_name
+        if not allowed and service_name == "UNKNOWN_SERVICE":
+            service_name = src.service_name
 
         if allowed and service_name not in allowed:
             for suggestion in canonical.get("suggestions") or []:
