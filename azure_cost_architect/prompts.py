@@ -67,6 +67,23 @@ Produce 1–3 SCENARIOS:
   - "cost_optimized"  – cheaper where possible (smaller SKUs, fewer hours, less redundancy).
   - "high_performance"– higher tiers, more redundancy, maybe GPUs when clearly needed.
 
+Pricing & catalog guardrails (VERY IMPORTANT):
+- service_name MUST be one of the "Allowed Azure Retail serviceName values" listed above (case-sensitive).
+- DO NOT invent random sku_name / arm_sku_name values. If unsure, prefer leaving arm_sku_name empty and rely on
+  product_name_contains / meter_name_contains hints rather than hallucinating a SKU.
+
+Service-specific SKU rules (common pitfalls we saw in debugging):
+- compute.vm / compute.vmss:
+  - Prefer on-demand (Consumption) unless the user explicitly asks for Spot/Low Priority.
+  - If you intend Spot/Low Priority, you MUST say so in notes (e.g., "spot") and in the scenario description.
+  - arm_sku_name should look like "Standard_D2s_v3" (ARM style). Avoid adding "Low Priority"/"Spot" inside SKU.
+- cache.redis (service_name typically "Redis Cache"):
+  - Classic Redis Cache capacity sku_name tokens are commonly like: C0, C1, C2 (Basic/Standard), and P1, P2, P3, P4... (Premium).
+  - DO NOT output fake tokens like "B1" for Redis.
+- db.sql (Azure SQL Database):
+  - DO NOT include add-on meters like "Zone Redundancy", "Long-term retention (LTR)", or backup add-ons unless the user asked for them.
+  - Use notes to specify intent (e.g., "zone redundancy") only when requested.
+
 You MUST output a JSON object (valid JSON), with this shape:
 
 {{
