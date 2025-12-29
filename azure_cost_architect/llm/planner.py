@@ -20,6 +20,15 @@ class PlannerAttempt:
     validation: PlanValidationResult
 
 
+def _snippet(text: str, *, max_chars: int = 2000) -> str:
+    """Return a bounded snippet for prompts/traces to avoid runaway token growth."""
+    if not text:
+        return ""
+    if len(text) <= max_chars:
+        return text
+    return text[:max_chars] + f"\n...[truncated {len(text) - max_chars} chars]"
+
+
 def _log_planner_trace(
     trace: Optional[TraceLogger],
     *,
@@ -189,12 +198,24 @@ def plan_architecture_iterative(
 
         # Ask LLM to repair using the validation errors
         errors_json = json.dumps(attempt.validation.errors)
-        fix_prompt = (
-            "The previous plan violated the Pricing Contract. "
-            "Review the following errors and return ONLY valid JSON with corrections.\n"
-            f"Errors: {errors_json}\n"
-            f"Prior plan: {json.dumps(attempt.parsed or {})}"
-        )
+        if attempt.parsed is None:
+            # Parsing failed; give the repair model enough context to reconstruct intent.
+            fix_prompt = (
+                "The previous model output could not be parsed as valid JSON or did not contain a valid JSON object. "
+                "Reconstruct a complete plan JSON that satisfies the Pricing Contract.\n"
+                "Return ONLY valid JSON (no markdown, no commentary).\n\n"
+                f"Parse error: {attempt.parse_error}\n"
+                "Raw model output snippet:\n"
+                f"{_snippet(attempt.raw_response)}\n\n"
+                f"Contract validation errors: {errors_json}\n"
+            )
+        else:
+            fix_prompt = (
+                "The previous plan violated the Pricing Contract. "
+                "Review the following errors and return ONLY valid JSON with corrections.\n"
+                f"Errors: {errors_json}\n"
+                f"Prior plan: {json.dumps(attempt.parsed)}"
+            )
         if trace:
             trace.log(
                 "phase1_planner_repair",
@@ -202,6 +223,8 @@ def plan_architecture_iterative(
                     "attempt": attempt_no,
                     "errors": attempt.validation.errors,
                     "prompt": fix_prompt,
+                    "had_parsed_plan": attempt.parsed is not None,
+                    "parse_error": attempt.parse_error,
                 },
             )
 
