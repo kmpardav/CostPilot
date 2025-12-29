@@ -40,7 +40,7 @@ DEFAULT_REQUIRED_CATEGORIES = [
     "storage",
 ]
 
-DEFAULT_ADJUDICATE_TOPN = int(os.getenv("AZURECOST_ADJUDICATE_TOPN", "5"))
+DEFAULT_ADJUDICATE_TOPN = int(os.getenv("AZURECOST_ADJUDICATE_TOPN", "15"))
 
 # Local catalog directory (full Azure Retail dumps per service/region/currency)
 # Συνήθως είναι ο φάκελος "catalog" στο root του project.

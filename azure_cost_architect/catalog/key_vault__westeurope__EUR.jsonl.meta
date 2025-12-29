@@ -1,0 +1,10 @@
+{
+  "serviceName": "Key Vault",
+  "category": "security.keyvault",
+  "region": "westeurope",
+  "currency": "EUR",
+  "item_count": 14,
+  "fetched_at": "2025-12-29T22:12:05.758127+00:00",
+  "source": "azure-retail-prices-api",
+  "file": "key_vault__westeurope__EUR.jsonl"
+}

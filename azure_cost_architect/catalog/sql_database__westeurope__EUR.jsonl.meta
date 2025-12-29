@@ -1,0 +1,10 @@
+{
+  "serviceName": "SQL Database",
+  "category": "db.sql",
+  "region": "westeurope",
+  "currency": "EUR",
+  "item_count": 263,
+  "fetched_at": "2025-12-29T22:11:58.758861+00:00",
+  "source": "azure-retail-prices-api",
+  "file": "sql_database__westeurope__EUR.jsonl"
+}

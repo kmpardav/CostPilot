@@ -1,0 +1,10 @@
+{
+  "serviceName": "Redis Cache",
+  "category": "cache.redis",
+  "region": "westeurope",
+  "currency": "EUR",
+  "item_count": 102,
+  "fetched_at": "2025-12-29T22:11:51.968223+00:00",
+  "source": "azure-retail-prices-api",
+  "file": "redis_cache__westeurope__EUR.jsonl"
+}

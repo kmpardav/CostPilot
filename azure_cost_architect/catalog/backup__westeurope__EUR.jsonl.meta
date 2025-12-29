@@ -1,0 +1,10 @@
+{
+  "serviceName": "Backup",
+  "category": "backup.vault",
+  "region": "westeurope",
+  "currency": "EUR",
+  "item_count": 43,
+  "fetched_at": "2025-12-29T22:11:51.222420+00:00",
+  "source": "azure-retail-prices-api",
+  "file": "backup__westeurope__EUR.jsonl"
+}

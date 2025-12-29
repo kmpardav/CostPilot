@@ -1,0 +1,10 @@
+{
+  "serviceName": "Bandwidth",
+  "category": "network.nat",
+  "region": "westeurope",
+  "currency": "EUR",
+  "item_count": 14,
+  "fetched_at": "2025-12-29T22:12:03.157508+00:00",
+  "source": "azure-retail-prices-api",
+  "file": "bandwidth__westeurope__EUR.jsonl"
+}
