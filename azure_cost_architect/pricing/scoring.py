@@ -247,22 +247,22 @@ def _sku_family_token(norm_sku: str) -> str:
 
 
 def _candidate_matches_sku(
-    requested_norm: str, item: Dict[str, Any], *, category: str = ""
+    requested_norm: str,
+    item: Dict[str, Any],
+    category: str,
 ) -> Tuple[bool, bool]:
-    """Return (matches, family_mismatch) for a candidate."""
+    """Return (matches, family_mismatch) for a candidate.
+
+    NOTE:
+    - family_mismatch is only useful for VM-style SKUs (e.g. D/E/F families).
+    - For SQL/Redis the ARM SKU often has a long prefix (SQLDB_..., Azure_Redis_...),
+      so we use contains-match and disable family_mismatch.
+    """
 
     if not requested_norm:
         return True, False
 
-    category_low = (category or "").lower()
-    requested_variants: list[str] = [requested_norm]
-
-    # VM planner outputs often use "Standard_D2s_v3" while Retail sku/meter may omit "Standard_"
-    if category_low.startswith("compute.vm") or category_low.startswith("compute.vmss"):
-        if requested_norm.startswith("standard"):
-            base = requested_norm[len("standard") :]
-            if base:
-                requested_variants.append(base)
+    cat = (category or "").lower()
 
     fields = [
         item.get("skuName"),
@@ -272,30 +272,41 @@ def _candidate_matches_sku(
     ]
     norm_fields = [_normalize_sku_token(f or "") for f in fields]
 
-    # SQL Database Retail armSkuName values often have long prefixes (e.g. SQLDB_GP_Compute_Gen5_2)
-    # while planner intent may be shorter (e.g. GP_Gen5_2). For db.sql, allow substring matches.
-    sql_substring_ok = category_low.startswith("db.sql")
+    # SQL / Redis: requested SKU is often a short token (e.g. GP_Gen5_2, P1),
+    # while catalog contains long ARM SKUs. Use substring matching.
+    if cat in {"db.sql", "cache.redis"}:
+        matches = any(
+            (requested_norm in nf) or (nf in requested_norm)
+            for nf in norm_fields
+            if nf
+        )
+        return matches, False
 
+    # VMs: allow matching even if catalog uses "Standard_" prefix
+    if cat.startswith("compute.vm"):
+        matches = any(
+            nf == requested_norm
+            or nf.startswith(requested_norm)
+            or nf.endswith(requested_norm)  # e.g. standardd2sv3 endswith d2sv3
+            for nf in norm_fields
+            if nf
+        )
+        req_family = _sku_family_token(requested_norm)
+        cand_family = ""
+        for nf in norm_fields:
+            if nf and not cand_family:
+                cand_family = _sku_family_token(nf)
+        family_mismatch = bool(req_family and cand_family and req_family != cand_family)
+        return matches, family_mismatch
+
+    # Generic: keep old behavior
     matches = any(
-        nf
-        and any(
-            (
-                rv
-                and len(rv) >= 2
-                and (nf == rv or nf.startswith(rv) or (sql_substring_ok and rv in nf))
-            )
-            for rv in requested_variants
-        )
+        nf == requested_norm or nf.startswith(requested_norm)
         for nf in norm_fields
+        if nf
     )
 
-    req_family = (
-        ""
-        if sql_substring_ok
-        else _sku_family_token(
-            requested_variants[-1] if requested_variants else requested_norm
-        )
-    )
+    req_family = _sku_family_token(requested_norm)
     cand_family = ""
     for nf in norm_fields:
         if nf and not cand_family:
