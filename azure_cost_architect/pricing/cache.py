@@ -2,6 +2,7 @@ import hashlib
 import json
 import json as _json
 import os
+from hashlib import sha1
 from typing import Any, Dict
 
 from rich.console import Console
@@ -33,28 +34,62 @@ def save_price_cache() -> None:
     except Exception as ex:
         console.print(f"[yellow]Warning: failed to save {CACHE_FILE}: {ex}[/yellow]")
 
+def _norm(value: Any) -> str:
+    return (str(value).strip() if value is not None else "").strip()
+
+def _intent_signature(resource: dict) -> str:
+    """
+    Stable signature of the pricing intent when arm_sku_name is missing.
+    Prevents cache collisions between resources that share service/category
+    but differ in SKU/meter/product intent hints.
+    """
+    sku_contains = resource.get("sku_name_contains") or resource.get("skuNameContains") or []
+    meter_contains = resource.get("meter_name_contains") or resource.get("meterNameContains") or []
+    product_contains = resource.get("product_name_contains") or resource.get("productNameContains") or []
+
+    if isinstance(sku_contains, str):
+        sku_contains = [sku_contains]
+    if isinstance(meter_contains, str):
+        meter_contains = [meter_contains]
+    if isinstance(product_contains, str):
+        product_contains = [product_contains]
+
+    raw = "|".join(
+        [
+            "sku=" + ",".join(sorted(_norm(x).lower() for x in sku_contains if _norm(x))),
+            "meter=" + ",".join(sorted(_norm(x).lower() for x in meter_contains if _norm(x))),
+            "prod=" + ",".join(sorted(_norm(x).lower() for x in product_contains if _norm(x))),
+        ]
+    )
+    return sha1(raw.encode("utf-8")).hexdigest()[:12]
+
 def _pricing_signature(resource: dict) -> str:
     """
     Build a stable, pricing-relevant signature for cache keys.
     We intentionally ignore non-pricing fields (names, descriptions, etc.).
     """
+    arm_sku_name = _norm(resource.get("arm_sku_name") or resource.get("armSkuName"))
+    intent_signature = _intent_signature(resource) if not arm_sku_name else ""
     sig = {
         # primary routing
-        "category": (resource.get("category") or "").strip(),
-        "service_name": (resource.get("service_name") or "").strip(),
-        "arm_sku_name": (resource.get("arm_sku_name") or "").strip(),
-        "billing_model": (resource.get("billing_model") or "payg").strip(),
-        "os_type": (resource.get("os_type") or "na").strip(),
+        "category": _norm(resource.get("category")).lower(),
+        "service_name": _norm(resource.get("service_name") or resource.get("serviceName")).lower(),
+        "arm_sku_name": arm_sku_name.lower(),
+        "intent_signature": intent_signature,
+        "billing_model": _norm(resource.get("billing_model") or resource.get("billingModel") or "payg").lower(),
+        "os_type": _norm(resource.get("os_type") or resource.get("osType") or "na").lower(),
         # sizing / quantity (these frequently change pricing selection)
         "quantity": resource.get("quantity", 1.0),
         "hours": resource.get("hours", 730),
         # optional hints that materially affect meter match
-        "sku_name_hint": (resource.get("sku_name") or "").strip(),
-        "meter_name_hint": (resource.get("meter_name") or "").strip(),
-        "product_name_hint": (resource.get("product_name") or "").strip(),
-        "price_type": (resource.get("price_type") or "").strip(),
-        "reservation_term": (resource.get("reservation_term") or "").strip(),
-        "tier": (resource.get("tier") or "").strip(),
+        "sku_name_hint": _norm(resource.get("sku_name") or resource.get("skuName")).lower(),
+        "meter_name_hint": _norm(resource.get("meter_name") or resource.get("meterName")).lower(),
+        "product_name_hint": _norm(resource.get("product_name") or resource.get("productName")).lower(),
+        "price_type": _norm(resource.get("price_type") or resource.get("priceType")).lower(),
+        "reservation_term": _norm(
+            resource.get("reservation_term") or resource.get("reservationTerm")
+        ).lower(),
+        "tier": _norm(resource.get("tier")).lower(),
         # generic sizing knobs (safe to include if present)
         "vcores": resource.get("vcores"),
         "capacity_gb": resource.get("capacity_gb"),
@@ -69,12 +104,37 @@ def build_cache_key(resource: dict, region: str, currency: str, *, scenario_id: 
     """
     Scenario-isolated cache key to prevent cross-scenario contamination.
     """
-    sid = (scenario_id or resource.get("scenario_id") or "na").strip()
+    sid = _norm(scenario_id or resource.get("scenario_id") or "na")
     sig_hash = _pricing_signature(resource)
-    return "|".join([CACHE_KEY_VERSION, region, currency, sid, sig_hash])
+    return "|".join(
+        [
+            CACHE_KEY_VERSION,
+            _norm(region).lower(),
+            _norm(currency).upper(),
+            sid.lower(),
+            sig_hash,
+        ]
+    )
 
 def get_cached_price(key: str) -> dict:
     return _price_cache_best.get(key)
 
 def set_cached_price(key: str, value: dict) -> None:
     _price_cache_best[key] = value
+
+def cached_entry_is_usable(entry: dict, *, currency: str) -> bool:
+    """
+    Tiny schema guard: cache must contain the minimal fields we rely on downstream.
+    If not, ignore cache and re-score from catalog.
+    """
+    if not isinstance(entry, dict):
+        return False
+    unit_price = entry.get("unit_price", entry.get("unitPrice"))
+    sku_name = entry.get("sku_name", entry.get("skuName"))
+    meter_name = entry.get("meter_name", entry.get("meterName"))
+    cur = entry.get("currency_code", entry.get("currencyCode"))
+    if unit_price is None or sku_name is None or meter_name is None:
+        return False
+    if cur and str(cur).upper() != str(currency).upper():
+        return False
+    return True
