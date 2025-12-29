@@ -4,6 +4,7 @@ from __future__ import annotations
 import json
 import logging
 import os
+import re
 from datetime import datetime, timezone
 from typing import Any, Dict, List, Optional, Tuple
 
@@ -53,6 +54,12 @@ def _meta_path(jsonl_path: str) -> str:
 def _resolve_region(mode: str, requested_region: str) -> Tuple[str, str]:
     mode = (mode or "regional").lower()
     region = (requested_region or "").strip()
+    region_low = region.lower()
+
+    # Some planner outputs use "Zone 1/2/3" as a location hint for Bandwidth meters.
+    # This is NOT a valid armRegionName, so never apply it as a region filter.
+    if re.match(r"^zone\s*\d+$", region_low):
+        return "", "all"
 
     if mode == "global":
         return "Global", "global"
@@ -258,6 +265,30 @@ def ensure_catalog(
                     ex,
                 )
                 rows = []
+
+            # If regional query returns no rows, retry unscoped (no armRegionName filter).
+            # Many networking services (Load Balancer, NAT Gateway, some Bandwidth meters) price under Global scope.
+            if not rows:
+                src_mode = (getattr(src, "arm_region_mode", "regional") or "regional").lower()
+                if src_mode == "regional" and query_region:
+                    query_region2, region_label2 = _resolve_region("empty", region)
+                    try:
+                        rows = fetch_all_for_service(
+                            service_name=src.service_name,
+                            region=query_region2,
+                            currency=currency,
+                            trace=trace,
+                        )
+                        if rows:
+                            query_region = query_region2
+                            region_label = region_label2
+                    except Exception as ex:
+                        _LOGGER.debug(
+                            "Fallback unscoped fetch failed for serviceName='%s' (requested region='%s'): %s",
+                            src.service_name,
+                            region,
+                            ex,
+                        )
 
             attempts.append((src.service_name, query_region, len(rows)))
             if rows:
