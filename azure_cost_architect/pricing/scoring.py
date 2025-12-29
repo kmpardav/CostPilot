@@ -246,11 +246,23 @@ def _sku_family_token(norm_sku: str) -> str:
     return m.group(1) if m else ""
 
 
-def _candidate_matches_sku(requested_norm: str, item: Dict[str, Any]) -> Tuple[bool, bool]:
+def _candidate_matches_sku(
+    requested_norm: str, item: Dict[str, Any], *, category: str = ""
+) -> Tuple[bool, bool]:
     """Return (matches, family_mismatch) for a candidate."""
 
     if not requested_norm:
         return True, False
+
+    category_low = (category or "").lower()
+    requested_variants: list[str] = [requested_norm]
+
+    # VM planner outputs often use "Standard_D2s_v3" while Retail sku/meter may omit "Standard_"
+    if category_low.startswith("compute.vm") or category_low.startswith("compute.vmss"):
+        if requested_norm.startswith("standard"):
+            base = requested_norm[len("standard") :]
+            if base:
+                requested_variants.append(base)
 
     fields = [
         item.get("skuName"),
@@ -260,11 +272,30 @@ def _candidate_matches_sku(requested_norm: str, item: Dict[str, Any]) -> Tuple[b
     ]
     norm_fields = [_normalize_sku_token(f or "") for f in fields]
 
+    # SQL Database Retail armSkuName values often have long prefixes (e.g. SQLDB_GP_Compute_Gen5_2)
+    # while planner intent may be shorter (e.g. GP_Gen5_2). For db.sql, allow substring matches.
+    sql_substring_ok = category_low.startswith("db.sql")
+
     matches = any(
-        nf == requested_norm or nf.startswith(requested_norm) for nf in norm_fields if nf
+        nf
+        and any(
+            (
+                rv
+                and len(rv) >= 2
+                and (nf == rv or nf.startswith(rv) or (sql_substring_ok and rv in nf))
+            )
+            for rv in requested_variants
+        )
+        for nf in norm_fields
     )
 
-    req_family = _sku_family_token(requested_norm)
+    req_family = (
+        ""
+        if sql_substring_ok
+        else _sku_family_token(
+            requested_variants[-1] if requested_variants else requested_norm
+        )
+    )
     cand_family = ""
     for nf in norm_fields:
         if nf and not cand_family:
@@ -301,7 +332,9 @@ def select_best_candidate(
     annotated: List[CandidateSelection] = []
     for score, item in candidates:
         price_type = _low(_g(item, "type", "Type"))
-        matches, family_mismatch = _candidate_matches_sku(requested_norm, item)
+        matches, family_mismatch = _candidate_matches_sku(
+            requested_norm, item, category=resource.get("category") or ""
+        )
         annotated.append(
             CandidateSelection(
                 score=score,
@@ -451,6 +484,22 @@ def score_price_item(resource: Dict[str, Any], item: Dict[str, Any], hours_prod:
 
     text_all = product_name + " " + meter_name + " " + sku_name
 
+    # -------------------------------------------------------------------------
+    # 0.a) Planner-provided hint constraints (soft-but-strong)
+    # -------------------------------------------------------------------------
+    hint_tokens: list[str] = []
+    for k in ("product_name_contains", "meter_name_contains", "sku_name_contains"):
+        v = resource.get(k)
+        if isinstance(v, list):
+            hint_tokens.extend([_low(str(x)) for x in v if str(x).strip()])
+    hint_tokens = [t for t in hint_tokens if len(t) >= 2]
+    if hint_tokens:
+        hits = sum(1 for t in hint_tokens if t in text_all)
+        if hits:
+            score += 80 * hits
+        else:
+            score -= 200
+
     # Mild bonus if the requested SKU is referenced in product/meter names
     if arm_sku_name and arm_sku_name in text_all:
         score += 5
@@ -480,6 +529,22 @@ def score_price_item(resource: Dict[str, Any], item: Dict[str, Any], hours_prod:
     # SQL Server license / DevTest things – avoid if we haven't requested specifically
     if category.startswith("db.sql"):
         if "dev/test" in text_all or "dev test" in text_all:
+            if criticality in ("prod", "production"):
+                return -999
+
+    # SQL Zone Redundancy add-ons: never select unless explicitly requested
+    if category.startswith("db.sql"):
+        if ("zone redundancy" in text_all or "zone redundant" in text_all) and (
+            "zone redundant" not in notes and "zone redundancy" not in notes
+        ):
+            if criticality in ("prod", "production"):
+                return -999
+
+    # VM Spot/Low Priority: never select unless explicitly requested
+    if category.startswith("compute.vm") or category.startswith("compute.vmss"):
+        if ("low priority" in text_all or "spot" in text_all) and (
+            "low priority" not in notes and "spot" not in notes
+        ):
             if criticality in ("prod", "production"):
                 return -999
 
