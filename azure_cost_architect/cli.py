@@ -271,7 +271,7 @@ def _warm_catalogs_for_plan(
     refresh_all: bool,
     refresh_categories: list[str],
     trace=None,
-) -> None:
+) -> list[dict]:
     """
     Βρίσκει όλες τις (category, region) από τα resources του plan και
     φροντίζει να υπάρχει τοπικός κατάλογος για καθεμία.
@@ -282,6 +282,7 @@ def _warm_catalogs_for_plan(
     scenarios = plan.get("scenarios") or []
 
     pairs: set[tuple[str, str]] = set()
+    failures: list[dict] = []
 
     for sc in scenarios:
         for res in sc.get("resources", []):
@@ -291,7 +292,7 @@ def _warm_catalogs_for_plan(
             pairs.add((cat, reg))
 
     if not pairs:
-        return
+        return failures
 
     console.print(
         f"[cyan]Ensuring local catalogs in '{CATALOG_DIR}' "
@@ -315,6 +316,26 @@ def _warm_catalogs_for_plan(
             console.print(f" [green]OK[/green] → {fp}")
         except Exception as ex:
             console.print(f" [red]FAILED[/red] ({ex})")
+            failures.append(
+                {
+                    "category": cat,
+                    "region": reg,
+                    "refresh": do_refresh,
+                    "error": str(ex),
+                }
+            )
+            if trace:
+                trace.log(
+                    "catalog_warm_failed",
+                    {
+                        "category": cat,
+                        "region": reg,
+                        "refresh": do_refresh,
+                        "error": str(ex),
+                    },
+                )
+
+    return failures
 
 
 def _collect_compare_blockers(plan: Dict[str, Any]) -> List[Tuple[str, str]]:
@@ -370,6 +391,12 @@ def _apply_compare_policy(plan: Dict[str, Any], compare_policy: str) -> List[Tup
 def main() -> None:
     global DEBUG
     args = parse_args()
+
+    if args.output_prefix == "azure_cost":
+        args.output_prefix = datetime.now(timezone.utc).strftime("azure_cost_%Y%m%d_%H%M%SZ")
+
+    if args.debug_file:
+        os.environ["AZCOST_DEBUG_FILE"] = args.debug_file
 
     required_categories = [
         c.strip() for c in (args.required_categories or "").split(",") if c.strip()
@@ -567,7 +594,7 @@ def main() -> None:
     # --------------------
     # 2) Warm local catalogs (για τις κατηγορίες του plan)
     # --------------------
-    _warm_catalogs_for_plan(
+    catalog_warm_failures = _warm_catalogs_for_plan(
         plan=plan,
         default_region=default_region,
         currency=currency,
@@ -575,6 +602,15 @@ def main() -> None:
         refresh_categories=args.refresh_catalog,
         trace=trace_logger,
     )
+    if catalog_warm_failures:
+        console.print(
+            "[yellow]Warning: some local catalogs failed to build. Pricing may be incomplete.[/yellow]"
+        )
+        for fail in catalog_warm_failures:
+            console.print(
+                f"  - {fail['category']} @ {fail['region']} (refresh={fail['refresh']}): {fail['error']}"
+            )
+        trace_logger.log("phase3_catalog_warm_summary", {"failures": catalog_warm_failures})
 
     # --------------------
     # 3) Pricing enrichment (μόνο από local catalogs)
