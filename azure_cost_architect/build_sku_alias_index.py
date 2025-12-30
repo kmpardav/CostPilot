@@ -91,12 +91,41 @@ def load_taxonomy(path: Path) -> Dict[str, Any]:
     return json.loads(path.read_text(encoding="utf-8"))
 
 
-def autodiscover_categories() -> List[str]:
+def autodiscover_categories(taxonomy: Optional[Dict[str, Any]] = None) -> List[str]:
     """
-    Auto-discover all category prefixes we support, from the single source of truth:
-    CATEGORY_CATALOG_SOURCES.
+    Auto-discover categories using UNION of:
+      - CATEGORY_CATALOG_SOURCES keys (project truth)
+      - categories that are actually present in taxonomy (via serviceName canonicalization)
+
+    Note: taxonomy does not contain "category" labels, so "taxonomy-aware" discovery
+    works by checking which category->service mappings exist in taxonomy.
     """
-    return sorted({(k or "").lower().strip() for k in CATEGORY_CATALOG_SOURCES.keys() if (k or "").strip()})
+    cats: Set[str] = {
+        (k or "").lower().strip()
+        for k in (CATEGORY_CATALOG_SOURCES or {}).keys()
+        if (k or "").strip()
+    }
+
+    if not taxonomy:
+        return sorted(cats)
+
+    tax_service_index = _build_taxonomy_service_index(taxonomy)
+    tax_services = set(tax_service_index.keys())
+
+    for cat, sources in (CATEGORY_CATALOG_SOURCES or {}).items():
+        c = (cat or "").lower().strip()
+        if not c or not isinstance(sources, list):
+            continue
+        for s in sources:
+            raw = (getattr(s, "service_name", None) or "").strip()
+            if not raw:
+                continue
+            canonical = (canonicalize_service_name(raw) or {}).get("canonical") or raw
+            if canonical in tax_services:
+                cats.add(c)
+                break
+
+    return sorted(cats)
 
 
 def _tb_equiv_key(s: str) -> str:
@@ -419,11 +448,11 @@ def build_alias_index(
     return index, reports
 
 
-def parse_categories_arg(arg: str) -> List[str]:
+def parse_categories_arg(arg: str, taxonomy: Optional[Dict[str, Any]] = None) -> List[str]:
     if arg.strip():
         return [c.strip().lower() for c in arg.split(",") if c.strip()]
     # auto-discover all known category prefixes from catalog_sources
-    return autodiscover_categories()
+    return autodiscover_categories(taxonomy)
 
 
 def _top_collisions(report: CategoryCollisionReport, limit: int = 15) -> List[Tuple[str, int, List[str]]]:
@@ -457,7 +486,7 @@ def main() -> int:
     collision_out.parent.mkdir(parents=True, exist_ok=True)
 
     taxonomy = load_taxonomy(tax_path)
-    categories = parse_categories_arg(args.categories)
+    categories = parse_categories_arg(args.categories, taxonomy)
 
     index, reports = build_alias_index(taxonomy, categories)
 
