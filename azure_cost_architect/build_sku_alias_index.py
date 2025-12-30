@@ -33,6 +33,7 @@ from pathlib import Path
 from typing import Any, Dict, Iterable, List, Optional, Set, Tuple
 
 from .pricing.catalog_sources import CATEGORY_CATALOG_SOURCES, get_catalog_sources
+from .utils.knowledgepack import canonicalize_service_name
 from .utils.sku_matcher import normalize_sku
 
 
@@ -67,6 +68,9 @@ _REDIS_MANAGED_RE = re.compile(
 #   Standard_D2s_v3  -> D2s_v3
 _VM_STANDARD_RE = re.compile(r"^Standard_(?P<short>.+)$")
 
+# Benign SKU dupes in taxonomy sometimes differ only by Tb vs TB (case of 'b')
+_BENIGN_TB_RE = re.compile(r"(?i)(\d+)\s*tb\b")
+
 
 @dataclass
 class CategoryCollisionReport:
@@ -74,6 +78,7 @@ class CategoryCollisionReport:
     canonical_count: int
     alias_key_count: int
     collisions: Dict[str, List[str]]  # normalized_alias -> list of canonicals
+    benign_resolved: Dict[str, List[str]]  # normalized_alias -> list of canonicals (auto-resolved)
     removed_alias_keys: int
 
 
@@ -92,6 +97,69 @@ def autodiscover_categories() -> List[str]:
     CATEGORY_CATALOG_SOURCES.
     """
     return sorted({(k or "").lower().strip() for k in CATEGORY_CATALOG_SOURCES.keys() if (k or "").strip()})
+
+
+def _tb_equiv_key(s: str) -> str:
+    """
+    Build a comparison key for "benign collisions" where taxonomy has duplicates like:
+      '..._100 TB' vs '..._100 Tb' vs '..._100tb'
+    We DON'T mutate the real SKU we emit; we only use this for detecting duplicates.
+    """
+    raw = (s or "").strip()
+    if not raw:
+        return ""
+    # normalize digit+tb patterns to digit+TB (for comparison only)
+    raw = _BENIGN_TB_RE.sub(lambda m: f"{m.group(1)}TB", raw)
+    return raw
+
+
+def _prefer_tb_canonical(canonicals: Iterable[str]) -> str:
+    """
+    Deterministic winner selection for benign TB/Tb collisions.
+    Prefer the variant that already uses 'TB' (uppercase B) in the "digit+TB" pattern.
+    """
+    cands = [c for c in canonicals if (c or "").strip()]
+    if not cands:
+        return ""
+
+    def _score(s: str) -> Tuple[int, int, str]:
+        # best: explicit uppercase TB after digits, e.g. "100 TB" or "100TB"
+        if re.search(r"\d+\s*TB\b|\d+TB\b", s):
+            return (0, len(s), s)
+        # next: any tb (case-insensitive) after digits
+        if re.search(r"(?i)\d+\s*tb\b|\d+tb\b", s):
+            return (1, len(s), s)
+        return (2, len(s), s)
+
+    return sorted(cands, key=_score)[0]
+
+
+def _build_taxonomy_service_index(tax: Dict[str, Any]) -> Dict[str, List[Dict[str, Any]]]:
+    """
+    Build an index:
+      canonical_service_name -> [service_node, ...]
+
+    This gives us the "union" behavior:
+    - CATEGORY_CATALOG_SOURCES chooses which services we care about per category
+    - taxonomy may contain the same service under different names (e.g. "Azure Cache for Redis")
+      and we still want to include ALL those nodes when building SKU aliases.
+    """
+    idx: Dict[str, List[Dict[str, Any]]] = {}
+    for _, family_node in (tax or {}).items():
+        if not isinstance(family_node, dict):
+            continue
+        children = family_node.get("children")
+        if not isinstance(children, dict):
+            continue
+        for svc_name, svc_node in children.items():
+            if not isinstance(svc_node, dict):
+                continue
+            raw = (svc_name or "").strip()
+            if not raw:
+                continue
+            canonical = (canonicalize_service_name(raw) or {}).get("canonical") or raw
+            idx.setdefault(canonical, []).append(svc_node)
+    return idx
 
 
 def find_service_node(tax: Dict[str, Any], service_name: str) -> Optional[Dict[str, Any]]:
@@ -213,6 +281,7 @@ def build_alias_index(
     """
     index: Dict[str, Dict[str, List[str]]] = {}
     reports: Dict[str, CategoryCollisionReport] = {}
+    tax_service_index = _build_taxonomy_service_index(taxonomy)
 
     for category in categories:
         cat = (category or "").lower().strip()
@@ -223,18 +292,29 @@ def build_alias_index(
         if not sources:
             continue
 
-        # taxonomy is keyed by serviceName; gather unique serviceNames from sources
-        service_names = []
+        # Build a UNION of service nodes in taxonomy that belong to the same canonical serviceName(s)
+        # that the category maps to (CATEGORY_CATALOG_SOURCES + knowledgepack canonicalization).
+        service_nodes: List[Dict[str, Any]] = []
+        seen_node_ids: Set[int] = set()
         for s in sources:
-            if s.service_name and s.service_name not in service_names:
-                service_names.append(s.service_name)
+            raw = (s.service_name or "").strip()
+            if not raw:
+                continue
+            # 1) exact lookup (if taxonomy has the exact key)
+            exact = find_service_node(taxonomy, raw)
+            if isinstance(exact, dict) and id(exact) not in seen_node_ids:
+                seen_node_ids.add(id(exact))
+                service_nodes.append(exact)
+            # 2) canonical union lookup (captures synonyms / naming variants in taxonomy)
+            canonical = (canonicalize_service_name(raw) or {}).get("canonical") or raw
+            for node in tax_service_index.get(canonical, []):
+                if id(node) not in seen_node_ids:
+                    seen_node_ids.add(id(node))
+                    service_nodes.append(node)
 
         # aggregate canonicals from all service names for that category
         canonicals: Set[str] = set()
-        for svc in service_names:
-            node = find_service_node(taxonomy, svc)
-            if not node:
-                continue
+        for node in service_nodes:
             canonicals.update(iter_arm_sku_names(node))
 
         canonicals = {c for c in canonicals if c}
@@ -258,7 +338,41 @@ def build_alias_index(
                     continue
                 alias_norm_to_canonicals.setdefault(an, set()).add(canonical)
 
-        # collisions = alias_norm with >1 canonical
+        # Step 1: detect collisions (alias_norm with >1 canonical)
+        raw_collisions: Dict[str, Set[str]] = {
+            an: set(owners)
+            for an, owners in alias_norm_to_canonicals.items()
+            if len(owners) > 1
+        }
+
+        # Step 2: resolve "benign" collisions (TB vs Tb) by choosing a preferred canonical
+        # and keeping the other canonical(s) as extra aliases (so user inputs still match).
+        benign_resolved: Dict[str, List[str]] = {}
+        for an, owners in list(raw_collisions.items()):
+            owners_list = sorted([o for o in owners if o])
+            if not owners_list:
+                continue
+            equiv = {_tb_equiv_key(o) for o in owners_list}
+            if len(equiv) != 1:
+                continue  # hard collision, keep as-is
+
+            chosen = _prefer_tb_canonical(owners_list)
+            if not chosen:
+                continue
+
+            # collapse this alias_norm to a single canonical
+            alias_norm_to_canonicals[an] = {chosen}
+
+            # merge the "losing" canonicals into chosen's alias set (so they still match)
+            merged: Set[str] = set()
+            for o in owners_list:
+                merged.update(canonical_to_aliases.get(o, set()) or {o})
+                merged.add(o)
+            canonical_to_aliases.setdefault(chosen, set()).update(merged)
+
+            benign_resolved[an] = owners_list
+
+        # Step 3: recompute HARD collisions after benign resolution
         collisions: Dict[str, List[str]] = {
             an: sorted(list(owners))
             for an, owners in alias_norm_to_canonicals.items()
@@ -298,6 +412,7 @@ def build_alias_index(
             canonical_count=len(canonicals),
             alias_key_count=len(cat_map),
             collisions=collisions,
+            benign_resolved=benign_resolved,
             removed_alias_keys=removed_alias_keys,
         )
 
@@ -355,7 +470,12 @@ def main() -> int:
             "canonical_count": rep.canonical_count,
             "alias_key_count": rep.alias_key_count,
             "collision_key_count": len(rep.collisions),
+            "benign_resolved_key_count": len(rep.benign_resolved or {}),
             "removed_alias_keys": rep.removed_alias_keys,
+            "benign_resolved_samples": [
+                {"normalized_alias": an, "canonicals": owners}
+                for an, owners in sorted((rep.benign_resolved or {}).items())[:15]
+            ],
             "top_collisions": [
                 {"normalized_alias": an, "canonical_count": cnt, "canonicals": owners}
                 for an, cnt, owners in _top_collisions(rep, limit=15)
@@ -367,9 +487,11 @@ def main() -> int:
     cat_summ = {c: len(index.get(c, {})) for c in categories}
     total_keys = sum(cat_summ.values())
     total_collision_keys = sum(len(r.collisions) for r in reports.values())
+    total_benign = sum(len(r.benign_resolved or {}) for r in reports.values())
     print(f"OK: wrote {out_path}")
     print(f"Categories: {cat_summ} | total_alias_keys={total_keys}")
-    print(f"Collision keys removed: {total_collision_keys} (details in {collision_out})")
+    print(f"Collision keys removed (hard): {total_collision_keys} (details in {collision_out})")
+    print(f"Benign collisions auto-resolved (TB/Tb): {total_benign} (details in {collision_out})")
 
     if args.print_collisions:
         for cat in sorted(reports.keys()):
