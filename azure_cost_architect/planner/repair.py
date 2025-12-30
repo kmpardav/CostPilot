@@ -11,6 +11,7 @@ from ..llm.json_repair import extract_json_object
 from ..prompts import PROMPT_REPAIR_SYSTEM, PROMPT_REPAIR_USER_TEMPLATE
 from ..pricing.catalog_sources import get_catalog_sources
 from ..utils.categories import canonical_required_category, normalize_required_categories
+from .contract import validate_pricing_contract
 from .validation import validate_plan_schema
 
 
@@ -30,7 +31,16 @@ def build_repair_targets(
     )
 
     def _all_hints_empty(res: Dict) -> bool:
-        return all(not res.get(field) for field in ("product_name_contains", "sku_name_contains", "meter_name_contains", "arm_sku_name_contains"))
+        return all(
+            not res.get(field)
+            for field in (
+                "product_name_contains",
+                "sku_name_contains",
+                "meter_name_contains",
+                "arm_sku_name_contains",
+                "arm_sku_name",
+            )
+        )
 
     targets: List[Dict] = []
     for scen in validated_plan.get("scenarios", []):
@@ -148,7 +158,9 @@ def apply_repairs(plan: dict, repairs: Iterable[Dict]) -> dict:
                     _update_resource(res, repair)
                     break
 
-    return validate_plan_schema(updated)
+    updated = validate_plan_schema(updated)
+    contract_result = validate_pricing_contract(updated)
+    return contract_result.plan
 
 
 __all__ = [

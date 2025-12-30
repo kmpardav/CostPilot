@@ -601,6 +601,17 @@ def _normalize_category_for_scoring(category: str) -> str:
     return cat
 
 
+def _norm_sku_token(value: str) -> str:
+    token = (value or "").strip().lower()
+    token = token.replace("_", " ").replace("-", " ").replace(".", " ")
+    return " ".join(token.split())
+
+
+def _looks_like_specific_sku(value: str) -> bool:
+    value = value or ""
+    return "_" in value or any(ch.isdigit() for ch in value)
+
+
 def filter_items_by_sku_intent(
     category: str, requested_sku: str, items: List[Dict[str, Any]]
 ) -> Tuple[List[Dict[str, Any]], bool]:
@@ -613,9 +624,21 @@ def filter_items_by_sku_intent(
     """
     cat = (category or "").lower()
     rs = (requested_sku or "").lower()
+    rs_norm = _norm_sku_token(requested_sku)
 
     if not rs:
         return items, False
+
+    if cat in {"compute.vm", "vm", "virtual_machine", "compute.virtual_machine"} or _looks_like_specific_sku(requested_sku):
+        exact = [
+            it
+            for it in items
+            if _norm_sku_token(it.get("armSkuName")) == rs_norm
+            or _norm_sku_token(it.get("skuName")) == rs_norm
+        ]
+        if exact:
+            return exact, False
+        return [], True
 
     filtered = items
 
@@ -1325,19 +1348,40 @@ async def fetch_price_for_resource(
         # ------------------------------------------------------------
         # 2) Σκληρό filtering βάσει ζητούμενου SKU/tier (χωρίς API calls)
         # ------------------------------------------------------------
+        requested_sku = (arm_sku_name or "").strip()
         filtered_items, had_mismatch = filter_items_by_sku_intent(
-            category, arm_sku_name or "", all_items
+            category, requested_sku, all_items
         )
         resource["sku_mismatch"] = had_mismatch
-        base_items = filtered_items or all_items
-        if had_mismatch and not filtered_items:
-            # Keep pricing but mark mismatch so downstream logic can flag it without failing early
-            _LOGGER.warning(
-                "Resource %s has requested SKU='%s' but no compatible meters were found in catalog (category=%s).",
-                resource.get("id"),
-                arm_sku_name,
-                category,
-            )
+        if requested_sku:
+            base_items = filtered_items
+            if had_mismatch and not base_items:
+                units = compute_units(resource, "")
+                resource.update(
+                    {
+                        "unit_price": None,
+                        "unit_of_measure": None,
+                        "currency_code": None,
+                        "sku_name": None,
+                        "meter_name": None,
+                        "product_name": None,
+                        "units": units,
+                        "monthly_cost": None,
+                        "yearly_cost": None,
+                        "error": (
+                            "Requested SKU '{sku}' not found in catalog "
+                            "({category}, {region}/{currency}). No fallback applied."
+                        ).format(
+                            sku=requested_sku, category=category, region=region, currency=currency
+                        ),
+                        "sku_candidates": [],
+                        "pricing_status": "missing",
+                    }
+                )
+                resource["sku_mismatch"] = True
+                return
+        else:
+            base_items = filtered_items or all_items
 
         # 2b) Billing model (payg/reserved/spot) filtering
         billing_filtered = _filter_by_billing_model(resource, base_items)
@@ -1436,7 +1480,15 @@ async def fetch_price_for_resource(
         if exact_matches:
             candidate_items = candidate_items + exact_matches
 
-        if not any(pair[1] is best_item for pair in candidate_items):
+        best_key = _candidate_key(best_item)
+        if any(_candidate_key(it) == best_key for _, it in candidate_items):
+            candidate_items = [
+                (score, item)
+                for (score, item) in candidate_items
+                if _candidate_key(item) != best_key
+            ]
+            candidate_items = [(best_item_score, best_item)] + candidate_items
+        else:
             candidate_items = [(best_item_score, best_item)] + candidate_items
 
         candidates: List[Dict[str, Any]] = []

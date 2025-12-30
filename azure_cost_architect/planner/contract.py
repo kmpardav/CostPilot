@@ -10,7 +10,7 @@ from .rules import apply_planner_rules
 from .validation import validate_plan_schema
 from ..pricing.catalog_sources import get_catalog_sources
 from ..utils.knowledgepack import canonicalize_service_name, get_allowed_service_names
-from ..utils.sku_matcher import load_sku_alias_index, match_sku
+from ..utils.sku_matcher import load_sku_alias_index, match_sku, normalize_sku
 
 
 @dataclass
@@ -33,6 +33,12 @@ _HINT_REQUIRED_CATEGORIES = {
     "network.egress",
     "network.bandwidth",
 }
+
+
+def _prefer_arm_style(raw: str, options: List[str]) -> str:
+    if not options:
+        return raw
+    return options[0] or raw
 
 
 def _missing_hints(res: Dict[str, object]) -> bool:
@@ -125,6 +131,16 @@ def _apply_sku_matching(
     res["sku_match_diagnostics"] = diagnostics
 
     resolved = match.get("matched_sku")
+    cat_key = (res.get("category") or "").lower()
+    options: List[str] = []
+    if cat_key in _SKU_ALIAS_INDEX:
+        options = _SKU_ALIAS_INDEX[cat_key].get(normalize_sku(requested), [])
+        if not options and resolved:
+            options = _SKU_ALIAS_INDEX[cat_key].get(normalize_sku(resolved), [])
+
+    if options:
+        resolved = _prefer_arm_style(requested, options)
+        diagnostics["matched"] = resolved
     if resolved:
         if resolved != requested:
             res["arm_sku_name"] = resolved
