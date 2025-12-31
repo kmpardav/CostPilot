@@ -142,7 +142,9 @@ def _legacy_service_name(category: str, service_name: str) -> str:
         return "VPN Gateway"
     if cat.startswith("network.er"):
         return "ExpressRoute"
-    if cat.startswith("network.nat") or cat.startswith("network.egress"):
+    if cat.startswith("network.nat"):
+        return "NAT Gateway"
+    if cat.startswith("network.egress"):
         return "Bandwidth"
     if cat.startswith("network.firewall"):
         return "Azure Firewall"
@@ -198,11 +200,11 @@ CATEGORY_CATALOG_SOURCES: Dict[str, List[CatalogSource]] = {
     # Networking
     "network.vnet": [CatalogSource("Virtual Network", arm_region_mode="global")],
     "network.appgw": [CatalogSource("Application Gateway")],
-    "network.lb": [CatalogSource("Load Balancer")],
+    "network.lb": [CatalogSource("Load Balancer", arm_region_mode="empty")],
     "network.vpngw": [CatalogSource("VPN Gateway")],
     "network.er": [CatalogSource("ExpressRoute")],
-    "network.nat": [CatalogSource("Bandwidth")],
-    "network.egress": [CatalogSource("Bandwidth")],
+    "network.nat": [CatalogSource("NAT Gateway")],
+    "network.egress": [CatalogSource("Bandwidth", arm_region_mode="empty")],
     "network.firewall": [CatalogSource("Azure Firewall")],
     "network.gateway": [CatalogSource("Azure Front Door", arm_region_mode="global", product_name_hint="front door")],
     "network.frontdoor": [CatalogSource("Azure Front Door", arm_region_mode="global", product_name_hint="front door")],

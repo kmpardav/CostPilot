@@ -629,7 +629,10 @@ def filter_items_by_sku_intent(
     if not rs:
         return items, False
 
-    if cat in {"compute.vm", "vm", "virtual_machine", "compute.virtual_machine"} or _looks_like_specific_sku(requested_sku):
+    # Exact-match mode should ONLY apply to true VM/Compute SKUs (e.g., Standard_D2s_v3).
+    # Many non-VM resources (e.g., SQLDB_GP_Compute_Gen5_2) contain underscores/digits but are NOT armSkuName-exact.
+    is_vm_sku = rs.startswith(("standard_", "basic_"))
+    if cat in {"compute.vm", "vm", "virtual_machine", "compute.virtual_machine"} or is_vm_sku:
         exact = [
             it
             for it in items
@@ -767,6 +770,144 @@ def _filter_by_billing_model(
         and not (it.get("reservationTerm") or "")
     ]
     return payg
+
+
+def _contains_all(haystack: str, needles: List[str]) -> bool:
+    h = (haystack or "").lower()
+    for n in needles or []:
+        nn = (n or "").strip().lower()
+        if not nn:
+            continue
+        if nn not in h:
+            return False
+    return True
+
+
+def _get_contains_hints(resource: Dict[str, Any]) -> Tuple[List[str], List[str], List[str]]:
+    """Return (sku_contains, meter_contains, product_contains) lists from resource."""
+
+    def _as_list(v: Any) -> List[str]:
+        if v is None:
+            return []
+        if isinstance(v, str):
+            return [v]
+        if isinstance(v, list):
+            return [str(x) for x in v if str(x).strip()]
+        return [str(v)]
+
+    sku_contains = _as_list(resource.get("sku_name_contains") or resource.get("skuNameContains"))
+    meter_contains = _as_list(resource.get("meter_name_contains") or resource.get("meterNameContains"))
+    product_contains = _as_list(resource.get("product_name_contains") or resource.get("productNameContains"))
+    return sku_contains, meter_contains, product_contains
+
+
+def _apply_contains_hints_progressive(
+    resource: Dict[str, Any], items: List[Dict[str, Any]]
+) -> Tuple[List[Dict[str, Any]], bool]:
+    """Progressively apply planner '..._contains' hints, but never eliminate all candidates.
+
+    Returns (items, applied_flag).
+    """
+    sku_contains, meter_contains, product_contains = _get_contains_hints(resource)
+    applied = False
+    cur = list(items)
+
+    # ProductName is usually the most stable hint, try first.
+    if product_contains:
+        cand = [
+            it
+            for it in cur
+            if _contains_all(
+                (it.get("productName") or it.get("ProductName") or ""), product_contains
+            )
+        ]
+        if cand:
+            cur = cand
+            applied = True
+
+    # SKU hint: match across skuName + armSkuName + productName (LLM often mixes these)
+    if sku_contains:
+        cand = []
+        for it in cur:
+            hay = " ".join(
+                [
+                    str(it.get("skuName") or ""),
+                    str(it.get("armSkuName") or ""),
+                    str(it.get("productName") or it.get("ProductName") or ""),
+                ]
+            )
+            if _contains_all(hay, sku_contains):
+                cand.append(it)
+        if cand:
+            cur = cand
+            applied = True
+
+    # Meter hint: match meterName primarily, but allow productName fallback
+    if meter_contains:
+        cand = []
+        for it in cur:
+            hay = " ".join(
+                [
+                    str(it.get("meterName") or ""),
+                    str(it.get("productName") or it.get("ProductName") or ""),
+                ]
+            )
+            if _contains_all(hay, meter_contains):
+                cand.append(it)
+        if cand:
+            cur = cand
+            applied = True
+
+    return cur, applied
+
+
+def _prefer_region_items(region: str, items: List[Dict[str, Any]]) -> Tuple[List[Dict[str, Any]], bool]:
+    """If catalog contains region-scoped meters, prefer exact armRegionName matches."""
+    reg = (region or "").strip().lower()
+    if not reg:
+        return items, False
+    exact = [it for it in items if (it.get("armRegionName") or "").strip().lower() == reg]
+    if exact:
+        return exact, True
+    return items, False
+
+
+def _filter_out_spot_low_priority(
+    resource: Dict[str, Any], items: List[Dict[str, Any]]
+) -> Tuple[List[Dict[str, Any]], bool]:
+    """Exclude Spot/Low Priority meters unless the resource explicitly requests it."""
+    want_spot = str(resource.get("priority") or resource.get("pricing_priority") or "").lower() in {
+        "spot",
+        "low",
+        "low_priority",
+        "lowpriority",
+    }
+    if want_spot:
+        return items, False
+
+    # If any non-spot items exist, drop spot ones.
+    def _is_spot(it: Dict[str, Any]) -> bool:
+        hay = " ".join(
+            [
+                str(it.get("meterName") or ""),
+                str(it.get("productName") or it.get("ProductName") or ""),
+                str(it.get("skuName") or ""),
+            ]
+        ).lower()
+        return ("low priority" in hay) or ("spot" in hay)
+
+    non_spot = [it for it in items if not _is_spot(it)]
+    if non_spot:
+        return non_spot, True
+    return items, False
+
+
+def _prefer_sql_vcore_meters(items: List[Dict[str, Any]]) -> Tuple[List[Dict[str, Any]], bool]:
+    """If vCore meters exist, prefer them over management/shared meters."""
+    vcore = [it for it in items if "vcore" in str(it.get("meterName") or "").lower()]
+    if vcore:
+        return vcore, True
+    return items, False
 
 
 def _select_cheapest_item(
@@ -1386,10 +1527,34 @@ async def fetch_price_for_resource(
         # 2b) Billing model (payg/reserved/spot) filtering
         billing_filtered = _filter_by_billing_model(resource, base_items)
         items = (
-            billing_filtered
-            if billing_filtered is not None
-            else base_items
+            billing_filtered if billing_filtered is not None else base_items
         )
+
+        # Prefer exact region matches when catalogs include mixed regions.
+        items, region_filtered = _prefer_region_items(region, items)
+
+        # Apply planner hints (progressive, never eliminating all candidates).
+        items, hints_applied = _apply_contains_hints_progressive(resource, items)
+
+        # Compute VMs: exclude Spot/Low Priority unless explicitly requested.
+        if category.startswith("compute.vm"):
+            items, spot_filtered = _filter_out_spot_low_priority(resource, items)
+        else:
+            spot_filtered = False
+
+        # SQL Database: prefer vCore meters if present (avoid Shared Resource Management).
+        if category.startswith("db.sql"):
+            items, sql_vcore_preferred = _prefer_sql_vcore_meters(items)
+        else:
+            sql_vcore_preferred = False
+
+        resource["debug_filters"] = {
+            "region_filtered": region_filtered,
+            "hints_applied": hints_applied,
+            "spot_filtered": spot_filtered,
+            "sql_vcore_preferred": sql_vcore_preferred,
+            "candidates_after_filters": len(items),
+        }
 
         if not items:
             resource.update(

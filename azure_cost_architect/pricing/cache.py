@@ -12,7 +12,7 @@ console = Console()
 _price_cache_best: Dict[str, Dict[str, Any]] = {}
 
 # Bump when the cache key schema changes (prevents silent collisions with old keys).
-CACHE_KEY_VERSION = "v3"
+CACHE_KEY_VERSION = "v4"
 
 def load_price_cache() -> None:
     global _price_cache_best
@@ -80,7 +80,7 @@ def _pricing_signature(resource: dict) -> str:
         "os_type": _norm(resource.get("os_type") or resource.get("osType") or "na").lower(),
         # sizing / quantity (these frequently change pricing selection)
         "quantity": resource.get("quantity", 1.0),
-        "hours": resource.get("hours", 730),
+        "hours": resource.get("hours_per_month", resource.get("hours", 730)),
         # optional hints that materially affect meter match
         "sku_name_hint": _norm(resource.get("sku_name") or resource.get("skuName")).lower(),
         "meter_name_hint": _norm(resource.get("meter_name") or resource.get("meterName")).lower(),
