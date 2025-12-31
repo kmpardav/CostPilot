@@ -62,7 +62,8 @@ def _resolve_region(mode: str, requested_region: str) -> Tuple[str, str]:
         return "", "all"
 
     if mode == "global":
-        return "Global", "global"
+        # "global" means unscoped query (no armRegionName filter)
+        return "", "global"
     if mode == "empty":
         return "", "all"
     return region, region or "global"
@@ -154,6 +155,26 @@ def ensure_dir(path: str) -> None:
     os.makedirs(path, exist_ok=True)
 
 
+def _atomic_write_text(path: str, text: str) -> None:
+    """Atomic write (same filesystem) to avoid partial files."""
+    d = os.path.dirname(path) or "."
+    os.makedirs(d, exist_ok=True)
+    tmp_path = path + ".tmp"
+    with open(tmp_path, "w", encoding="utf-8", newline="\n") as f:
+        f.write(text)
+    os.replace(tmp_path, path)
+
+
+def _atomic_write_jsonl(path: str, rows: List[Dict[str, Any]]) -> None:
+    d = os.path.dirname(path) or "."
+    os.makedirs(d, exist_ok=True)
+    tmp_path = path + ".tmp"
+    with open(tmp_path, "w", encoding="utf-8", newline="\n") as f:
+        for r in rows:
+            f.write(json.dumps(r, ensure_ascii=False) + "\n")
+    os.replace(tmp_path, path)
+
+
 def _write_meta(
     jsonl_path: str,
     *,
@@ -163,6 +184,7 @@ def _write_meta(
     currency: str,
     item_count: int,
     warning: Optional[str] = None,
+    attempts: Optional[List[Tuple[str, str, int]]] = None,
 ) -> None:
     """
     Γράφει .meta αρχείο με βασικές πληροφορίες για τον catalog.
@@ -179,11 +201,12 @@ def _write_meta(
     }
     if warning:
         meta["warning"] = warning
+    if attempts is not None:
+        meta["attempts"] = attempts
 
     meta_path = _meta_path(jsonl_path)
     try:
-        with open(meta_path, "w", encoding="utf-8") as f:
-            json.dump(meta, f, indent=2, ensure_ascii=False)
+        _atomic_write_text(meta_path, json.dumps(meta, indent=2, ensure_ascii=False))
     except Exception:
         # Δεν θέλουμε αποτυχία meta να μπλοκάρει το κύριο flow
         _LOGGER.exception("Failed to write meta file '%s'.", meta_path)
@@ -318,12 +341,29 @@ def ensure_catalog(
         return chosen_fp
 
     rows_to_write = chosen_rows or []
-    item_count = 0
-    if chosen_fp:
-        with open(chosen_fp, "w", encoding="utf-8") as f:
-            for r in rows_to_write:
-                f.write(json.dumps(r, ensure_ascii=False) + "\n")
-                item_count += 1
+    prev_count = _existing_item_count(chosen_fp) if chosen_fp else None
+
+    # Avoid poisoning catalogs: never overwrite a non-empty catalog with an empty refresh result.
+    if chosen_fp and (not rows_to_write or len(rows_to_write) == 0):
+        if prev_count and prev_count > 0:
+            chosen_warning = (chosen_warning + "; " if chosen_warning else "") + "refresh_returned_empty_preserved_previous"
+            _write_meta(
+                chosen_fp,
+                service_name=chosen_source.service_name if chosen_source else normalize_service_name(category, None),
+                category=category,
+                region=chosen_region_label,
+                currency=currency,
+                item_count=int(prev_count),
+                warning=chosen_warning,
+                attempts=attempts,
+            )
+            return chosen_fp
+        # No previous file to preserve; write an empty catalog for determinism but mark warning.
+        _atomic_write_jsonl(chosen_fp, [])
+        item_count = 0
+    else:
+        item_count = len(rows_to_write)
+        _atomic_write_jsonl(chosen_fp, rows_to_write)
 
     warning = chosen_warning
     if attempts and item_count > 0 and any(cnt == 0 for _, _, cnt in attempts):

@@ -1,14 +1,101 @@
 # azure_cost_architect/pricing/retail_api.py
 import asyncio
+import random
+import time
 from typing import Any, Dict, List, Optional, Tuple, Set
 
 import httpx
-from urllib.parse import urlencode, urlparse, urlunparse, parse_qsl
+from urllib.parse import urlencode, urlparse, urlunparse, parse_qsl, quote
 from rich.console import Console
 
 from ..config import RETAIL_API_URL
 
 console = Console()
+
+# --------------------------------------------------------------------
+# Resilience helpers (429/5xx retries, exponential backoff)
+# --------------------------------------------------------------------
+
+
+def _is_transient_status(status_code: int) -> bool:
+    return status_code in {408, 429, 500, 502, 503, 504}
+
+
+def _parse_retry_after_seconds(headers: Dict[str, Any]) -> Optional[float]:
+    """Return Retry-After seconds if present and parseable."""
+    try:
+        ra = headers.get("Retry-After") or headers.get("retry-after")
+    except Exception:
+        ra = None
+    if ra is None:
+        return None
+    try:
+        return float(str(ra).strip())
+    except Exception:
+        return None
+
+
+def _sleep_seconds_with_jitter(seconds: float) -> None:
+    seconds = max(0.0, float(seconds))
+    jitter = random.uniform(0.0, min(1.0, seconds * 0.1))
+    time.sleep(seconds + jitter)
+
+
+async def _async_sleep_seconds_with_jitter(seconds: float) -> None:
+    seconds = max(0.0, float(seconds))
+    jitter = random.uniform(0.0, min(1.0, seconds * 0.1))
+    await asyncio.sleep(seconds + jitter)
+
+
+def _encode_filter_value(filter_str: str) -> str:
+    """Encode $filter value safely while keeping OData punctuation readable."""
+    return quote(filter_str, safe="()'$,=_-./:")
+
+
+def _sync_get_json_with_retries(
+    client: httpx.Client, url: str, *, max_attempts: int = 6
+) -> Dict[str, Any]:
+    last_exc: Optional[Exception] = None
+    for attempt in range(1, max_attempts + 1):
+        try:
+            resp = client.get(url)
+            if _is_transient_status(resp.status_code):
+                ra = _parse_retry_after_seconds(resp.headers) or 0.0
+                backoff = min(30.0, (2 ** (attempt - 1)) * 0.5)
+                _sleep_seconds_with_jitter(max(ra, backoff))
+                continue
+            resp.raise_for_status()
+            return resp.json()
+        except Exception as ex:
+            last_exc = ex
+            if attempt >= max_attempts:
+                raise
+            backoff = min(30.0, (2 ** (attempt - 1)) * 0.5)
+            _sleep_seconds_with_jitter(backoff)
+    raise last_exc or RuntimeError("Retail API request failed")
+
+
+async def _async_get_json_with_retries(
+    client: httpx.AsyncClient, url: str, *, max_attempts: int = 6
+) -> Dict[str, Any]:
+    last_exc: Optional[Exception] = None
+    for attempt in range(1, max_attempts + 1):
+        try:
+            resp = await client.get(url)
+            if _is_transient_status(resp.status_code):
+                ra = _parse_retry_after_seconds(resp.headers) or 0.0
+                backoff = min(30.0, (2 ** (attempt - 1)) * 0.5)
+                await _async_sleep_seconds_with_jitter(max(ra, backoff))
+                continue
+            resp.raise_for_status()
+            return resp.json()
+        except Exception as ex:
+            last_exc = ex
+            if attempt >= max_attempts:
+                raise
+            backoff = min(30.0, (2 ** (attempt - 1)) * 0.5)
+            await _async_sleep_seconds_with_jitter(backoff)
+    raise last_exc or RuntimeError("Retail API request failed")
 
 
 def _sanitize_top_param(url: str) -> str:
@@ -57,8 +144,8 @@ async def query_azure_retail(
     if not filter_str:
         return []
 
-    # Χτίζουμε URL. Δεν κάνουμε εδώ urlencode γιατί το API συνήθως δέχεται το φίλτρο raw.
-    url = f"{RETAIL_API_URL}?$filter={filter_str}"
+    # Χτίζουμε URL. Κάνουμε safe encoding του $filter value.
+    url = f"{RETAIL_API_URL}?$filter={_encode_filter_value(filter_str)}"
     if currency:
         # Αν δεν έχει currencyCode, το βάζουμε.
         if "currencyCode=" not in url:
@@ -77,9 +164,7 @@ async def query_azure_retail(
                     f"[cyan]query_azure_retail[{debug_label}]: page {page}, url={url}[/cyan]"
                 )
             url = _sanitize_top_param(url)
-            resp = await client.get(url)
-            resp.raise_for_status()
-            data = resp.json()
+            data = await _async_get_json_with_retries(client, url)
             page_items = data.get("Items") or data.get("items") or []
             items.extend(page_items)
 
@@ -195,9 +280,8 @@ def fetch_all_for_service(
     else:
         filter_str = f"serviceName eq '{service_name}'"
 
-    # Πλήρες URL με φίλτρο.
-    # Δεν κάνουμε εδώ έξτρα urlencode γιατί το API δέχεται το filter raw.
-    url = f"{RETAIL_API_URL}?$filter={filter_str}"
+    # Πλήρες URL με φίλτρο (safe encoding).
+    url = f"{RETAIL_API_URL}?$filter={_encode_filter_value(filter_str)}"
 
     # Προσθέτουμε currencyCode αν δεν υπάρχει ήδη.
     if currency:
@@ -226,15 +310,13 @@ def fetch_all_for_service(
                 )
 
             url = _sanitize_top_param(url)
-            resp = client.get(url)
-            resp.raise_for_status()
-            data = resp.json()
+            data = _sync_get_json_with_retries(client, url)
 
             page_items = data.get("Items") or data.get("items") or []
             items.extend(page_items)
 
             next_url = data.get("NextPageLink") or data.get("nextPageLink")
-            next_url = _sanitize_top_param(next_url)
+            next_url = _sanitize_top_param(next_url) if next_url else None
             if next_url and currency and "currencyCode=" not in next_url:
                 sep = "&" if "?" in next_url else "?"
                 next_url = f"{next_url}{sep}currencyCode={currency}"
