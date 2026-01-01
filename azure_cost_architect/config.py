@@ -11,12 +11,40 @@ DEFAULT_CURRENCY = os.getenv("AZURECOST_DEFAULT_CURRENCY", "EUR")
 HOURS_PROD = 730
 HOURS_DEVTEST = 160
 
+# -----------------------------------------------------------------------------
+# Paths / files controlled via environment (read at runtime!)
+# -----------------------------------------------------------------------------
+ENV_CACHE_FILE = "AZURECOST_CACHE_FILE"  # JSON file for local price cache
+ENV_DEBUG_SCORING_FILE = "AZCOST_DEBUG_FILE"  # scoring debug JSONL
+ENV_DEBUG_ENRICHED_FILE = "AZCOST_DEBUG_ENRICHED_FILE"  # enrich debug JSON
+
+DEFAULT_CACHE_FILE = "azure_price_cache.json"
+DEFAULT_DEBUG_ENRICHED_FILE = "debug_enriched.json"
+
 # Cache file
-CACHE_FILE = os.getenv("AZURECOST_CACHE_FILE", "azure_price_cache.json")
+CACHE_FILE = os.getenv(ENV_CACHE_FILE, DEFAULT_CACHE_FILE)  # backwards-compat constant (may be stale)
 
 # Optional JSONL αρχείο για λεπτομερές scoring/debug (ένα candidate ανά γραμμή)
 # Μπορείς να το δώσεις και με CLI: --debug-file PATH (βλ. cli.py)
-DEBUG_SCORING_FILE = os.getenv("AZCOST_DEBUG_FILE", "").strip()
+DEBUG_SCORING_FILE = os.getenv(ENV_DEBUG_SCORING_FILE, "").strip()
+
+# Debug enriched plan (JSON)
+DEBUG_ENRICHED_FILE = os.getenv(ENV_DEBUG_ENRICHED_FILE, DEFAULT_DEBUG_ENRICHED_FILE).strip()
+
+
+def get_cache_file() -> str:
+    """Return the active price-cache file path (env-aware)."""
+    return os.getenv(ENV_CACHE_FILE, DEFAULT_CACHE_FILE)
+
+
+def get_debug_scoring_file() -> str:
+    """Return the active scoring debug JSONL path (env-aware)."""
+    return os.getenv(ENV_DEBUG_SCORING_FILE, "").strip()
+
+
+def get_debug_enriched_file() -> str:
+    """Return the active debug enriched JSON path (env-aware)."""
+    return os.getenv(ENV_DEBUG_ENRICHED_FILE, DEFAULT_DEBUG_ENRICHED_FILE).strip()
 
 # LLM models (chat)
 MODEL_PLANNER = os.getenv("AZURECOST_PLANNER_MODEL", "gpt-5.1")

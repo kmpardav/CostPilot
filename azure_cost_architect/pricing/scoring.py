@@ -246,10 +246,53 @@ def _sku_family_token(norm_sku: str) -> str:
     return m.group(1) if m else ""
 
 
+def _strip_vm_prefix(norm: str) -> str:
+    """Remove common VM SKU prefixes from normalized tokens (e.g., 'standard')."""
+    if not norm:
+        return ""
+    for p in ("standard", "basic"):
+        if norm.startswith(p):
+            return norm[len(p) :]
+    return norm
+
+
+def _extract_sql_vcores_from_arm_sku(arm_sku: str) -> Optional[int]:
+    """Parse trailing vCore count from SQL ARM SKUs like 'SQLDB_GP_Compute_Gen5_4'."""
+    if not arm_sku:
+        return None
+    s = str(arm_sku).strip()
+    m = re.search(r"_(\d+)$", s)
+    if not m:
+        return None
+    try:
+        return int(m.group(1))
+    except Exception:
+        return None
+
+
+def _extract_sql_vcores_from_sku_name(sku_name: str) -> Optional[int]:
+    """Parse vCore count from human SKU names like '4 vCore'."""
+    if not sku_name:
+        return None
+    s = str(sku_name).lower()
+    m = re.search(r"(\d+)\s*vcore", s)
+    if not m:
+        return None
+    try:
+        return int(m.group(1))
+    except Exception:
+        return None
+
+
+_extract_vcores_from_arm_sku = _extract_sql_vcores_from_arm_sku
+
+
 def _candidate_matches_sku(
     requested_norm: str,
     item: Dict[str, Any],
-    category: str,
+    *,
+    category: str = "",
+    requested_raw: str = "",
 ) -> Tuple[bool, bool]:
     """Return (matches, family_mismatch) for a candidate.
 
@@ -274,30 +317,43 @@ def _candidate_matches_sku(
 
     # SQL / Redis: requested SKU is often a short token (e.g. GP_Gen5_2, P1),
     # while catalog contains long ARM SKUs. Use substring matching.
-    if cat in {"db.sql", "cache.redis"}:
-        matches = any(
-            (requested_norm in nf) or (nf in requested_norm)
-            for nf in norm_fields
-            if nf
-        )
+    if cat.startswith("db.sql"):
+        matches = any((requested_norm in nf) or (nf in requested_norm) for nf in norm_fields if nf)
+        if not matches:
+            return False, False
+        req_vcores = _extract_sql_vcores_from_arm_sku(requested_raw) or _extract_sql_vcores_from_arm_sku(requested_norm)
+        if req_vcores is not None:
+            cand_vcores = (
+                _extract_sql_vcores_from_arm_sku(item.get("armSkuName") or "")
+                or _extract_sql_vcores_from_sku_name(item.get("skuName") or "")
+            )
+            if cand_vcores is None or cand_vcores != req_vcores:
+                return False, False
+        return True, False
+
+    if cat.startswith("cache.redis"):
+        matches = any((requested_norm in nf) or (nf in requested_norm) for nf in norm_fields if nf)
         return matches, False
 
     # VMs: allow matching even if catalog uses "Standard_" prefix
     if cat.startswith("compute.vm"):
+        if any(nf == requested_norm for nf in norm_fields if nf):
+            return True, False
         matches = any(
             nf == requested_norm
             or nf.startswith(requested_norm)
-            or nf.endswith(requested_norm)  # e.g. standardd2sv3 endswith d2sv3
+            or nf.endswith(requested_norm)
+            or requested_norm.endswith(nf)
             for nf in norm_fields
             if nf
         )
-        req_family = _sku_family_token(requested_norm)
+        req_family = _sku_family_token(_strip_vm_prefix(requested_norm))
         cand_family = ""
         for nf in norm_fields:
             if nf and not cand_family:
-                cand_family = _sku_family_token(nf)
+                cand_family = _sku_family_token(_strip_vm_prefix(nf))
         family_mismatch = bool(req_family and cand_family and req_family != cand_family)
-        return matches, family_mismatch
+        return (matches and not family_mismatch), family_mismatch
 
     # Generic: keep old behavior
     matches = any(
@@ -344,7 +400,10 @@ def select_best_candidate(
     for score, item in candidates:
         price_type = _low(_g(item, "type", "Type"))
         matches, family_mismatch = _candidate_matches_sku(
-            requested_norm, item, category=resource.get("category") or ""
+            requested_norm,
+            item,
+            category=resource.get("category") or "",
+            requested_raw=requested_sku,
         )
         annotated.append(
             CandidateSelection(

@@ -36,12 +36,16 @@ from .config import (
     DEFAULT_CURRENCY,
     HOURS_PROD,
     CATALOG_DIR,
-    CACHE_FILE,
     DEFAULT_COMPARE_POLICY,
     DEFAULT_REQUIRED_CATEGORIES,
     DEFAULT_ADJUDICATE_TOPN,
     MODEL_PLANNER,
     MODEL_PLANNER_RESPONSES,
+    ENV_CACHE_FILE,
+    ENV_DEBUG_SCORING_FILE,
+    ENV_DEBUG_ENRICHED_FILE,
+    get_cache_file,
+    get_debug_scoring_file,
 )
 from .utils import knowledgepack as kp
 from .utils.categories import normalize_required_categories
@@ -188,7 +192,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument(
         "--debug-file",
         type=str,
-        default=os.getenv("AZCOST_DEBUG_FILE", ""),
+        default=os.getenv(ENV_DEBUG_SCORING_FILE, ""),
         help=(
             "Αν δοθεί, γράφει αναλυτικό JSONL trace του scoring των Retail meters "
             "(π.χ. debug_scoring.jsonl)."
@@ -210,7 +214,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument(
         "--reset-cache",
         action="store_true",
-        help=f"Σβήνει το τοπικό price cache ({CACHE_FILE}) πριν τρέξει.",
+        help=f"Σβήνει το τοπικό price cache πριν τρέξει (path από env {ENV_CACHE_FILE}).",
     )
 
     # --- Νέα flags για catalogs ---
@@ -397,7 +401,7 @@ def main() -> None:
         args.output_prefix = datetime.now(timezone.utc).strftime("azure_cost_%Y%m%d_%H%M%SZ")
 
     if args.debug_file:
-        os.environ["AZCOST_DEBUG_FILE"] = args.debug_file
+        os.environ[ENV_DEBUG_SCORING_FILE] = args.debug_file
 
     required_categories = [
         c.strip() for c in (args.required_categories or "").split(",") if c.strip()
@@ -409,6 +413,10 @@ def main() -> None:
     run_id = args.output_prefix
     run_dir = Path("runs") / run_id
     run_dir.mkdir(parents=True, exist_ok=True)
+
+    # Run-isolated defaults for cache/debug files (unless user overrides)
+    os.environ.setdefault(ENV_CACHE_FILE, str(run_dir / "azure_price_cache.json"))
+    os.environ.setdefault(ENV_DEBUG_ENRICHED_FILE, str(run_dir / "debug_enriched.json"))
 
     trace_path = Path(args.trace_path) if args.trace_path else run_dir / "trace.jsonl"
 
@@ -458,12 +466,12 @@ def main() -> None:
     logger.debug("CLI arguments: %s", args)
 
     # Αν ο χρήστης θέλει JSONL scoring log, περνάμε το path στα env
-    debug_file = args.debug_file
+    debug_file = args.debug_file or get_debug_scoring_file()
     if not debug_file and DEBUG:
-        debug_file = str(run_dir / "debug_scoring.jsonl")
+        debug_file = str(run_dir / "scoring.jsonl")
 
     if debug_file:
-        os.environ["AZCOST_DEBUG_FILE"] = debug_file
+        os.environ[ENV_DEBUG_SCORING_FILE] = debug_file
 
     console.print("[bold]Azure Personal Cost Architect – Local Tool[/bold]\n")
 
@@ -490,9 +498,10 @@ def main() -> None:
     client = OpenAI(api_key=OPENAI_API_KEY)
 
     # ----- cache handling -----
-    if args.reset_cache and os.path.exists(CACHE_FILE):
-        logger.info("Resetting local price cache %s", CACHE_FILE)
-        os.remove(CACHE_FILE)
+    cache_path = get_cache_file()
+    if args.reset_cache and os.path.exists(cache_path):
+        logger.info("Resetting local price cache %s", cache_path)
+        os.remove(cache_path)
 
     load_price_cache()
 

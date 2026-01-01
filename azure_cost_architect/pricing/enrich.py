@@ -707,7 +707,7 @@ def filter_items_by_sku_intent(
             filtered = filtered_with_redundancy or filtered
 
     # SQL Single DB GP_Gen5_n – προτιμάμε Compute Gen5, όχι management/backup
-    if cat.startswith("db.sql") and "gp_gen5" in rs:
+    if cat.startswith("db.sql") and ("gp_gen5" in rs or "gen5" in rs or "compute_gen5" in rs):
         filtered = [
             it
             for it in filtered
@@ -899,6 +899,42 @@ def _filter_out_spot_low_priority(
     non_spot = [it for it in items if not _is_spot(it)]
     if non_spot:
         return non_spot, True
+    return items, False
+
+
+def _filter_storage_blob_not_files(
+    items: List[Dict[str, Any]]
+) -> Tuple[List[Dict[str, Any]], bool]:
+    """Drop Azure Files / File Shares meters when pricing storage.blob.
+
+    The Retail API 'Storage' service often contains both Blob and Azure Files meters.
+    If our local catalogs are built broadly (serviceName='Storage'), blob categories can
+    accidentally select Azure Files prices unless we filter them out.
+    """
+
+    def _looks_like_azure_files(it: Dict[str, Any]) -> bool:
+        hay = " ".join(
+            [
+                str(it.get("productName") or it.get("ProductName") or ""),
+                str(it.get("meterName") or ""),
+                str(it.get("skuName") or ""),
+            ]
+        ).lower()
+
+        if "azure files" in hay:
+            return True
+        if "file share" in hay or "file shares" in hay or "fileshare" in hay:
+            return True
+        if "file storage" in hay or "file sync" in hay:
+            return True
+        # Many Azure Files meters mention SMB/NFS + file/share wording.
+        if ("smb" in hay or "nfs" in hay) and ("file" in hay or "share" in hay):
+            return True
+        return False
+
+    filtered = [it for it in items if not _looks_like_azure_files(it)]
+    if filtered and len(filtered) != len(items):
+        return filtered, True
     return items, False
 
 
@@ -1536,6 +1572,13 @@ async def fetch_price_for_resource(
         # Apply planner hints (progressive, never eliminating all candidates).
         items, hints_applied = _apply_contains_hints_progressive(resource, items)
 
+        # Storage Blob: ensure we do not accidentally price Azure Files meters
+        # when catalogs are broad under the same 'Storage' service.
+        if category.startswith("storage.blob"):
+            items, blob_vs_files_filtered = _filter_storage_blob_not_files(items)
+        else:
+            blob_vs_files_filtered = False
+
         # Compute VMs: exclude Spot/Low Priority unless explicitly requested.
         if category.startswith("compute.vm"):
             items, spot_filtered = _filter_out_spot_low_priority(resource, items)
@@ -1551,6 +1594,7 @@ async def fetch_price_for_resource(
         resource["debug_filters"] = {
             "region_filtered": region_filtered,
             "hints_applied": hints_applied,
+            "blob_vs_files_filtered": blob_vs_files_filtered,
             "spot_filtered": spot_filtered,
             "sql_vcore_preferred": sql_vcore_preferred,
             "candidates_after_filters": len(items),
