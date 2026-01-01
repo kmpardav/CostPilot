@@ -6,7 +6,7 @@ from hashlib import sha1
 from typing import Any, Dict
 
 from rich.console import Console
-from ..config import CACHE_FILE
+from ..config import get_cache_file
 
 console = Console()
 _price_cache_best: Dict[str, Dict[str, Any]] = {}
@@ -16,23 +16,26 @@ CACHE_KEY_VERSION = "v4"
 
 def load_price_cache() -> None:
     global _price_cache_best
-    if not os.path.exists(CACHE_FILE):
+    cache_file = get_cache_file()
+    if not os.path.exists(cache_file):
         _price_cache_best = {}
         return
     try:
-        with open(CACHE_FILE, "r", encoding="utf-8") as f:
+        with open(cache_file, "r", encoding="utf-8") as f:
             data = json.load(f)
         _price_cache_best = data if isinstance(data, dict) else {}
     except Exception as ex:
-        console.print(f"[yellow]Warning: failed to load {CACHE_FILE}: {ex}[/yellow]")
+        console.print(f"[yellow]Warning: failed to load {cache_file}: {ex}[/yellow]")
         _price_cache_best = {}
 
 def save_price_cache() -> None:
+    cache_file = get_cache_file()
     try:
-        with open(CACHE_FILE, "w", encoding="utf-8") as f:
+        os.makedirs(os.path.dirname(cache_file) or ".", exist_ok=True)
+        with open(cache_file, "w", encoding="utf-8") as f:
             json.dump(_price_cache_best, f, indent=2, ensure_ascii=False)
     except Exception as ex:
-        console.print(f"[yellow]Warning: failed to save {CACHE_FILE}: {ex}[/yellow]")
+        console.print(f"[yellow]Warning: failed to save {cache_file}: {ex}[/yellow]")
 
 def _norm(value: Any) -> str:
     return (str(value).strip() if value is not None else "").strip()
