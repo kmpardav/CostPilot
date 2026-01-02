@@ -420,6 +420,13 @@ def main() -> None:
 
     trace_path = Path(args.trace_path) if args.trace_path else run_dir / "trace.jsonl"
 
+    # Truncate run-local trace/scoring files to avoid append-chaos when reusing the same run_id.
+    if not args.trace_path:
+        try:
+            trace_path.write_text("", encoding="utf-8")
+        except Exception:
+            pass
+
     trace_env = os.getenv("AZURECOST_TRACE")
     trace_enabled = True
     if trace_env is not None and trace_env.strip().lower() in {"0", "false", "no"}:
@@ -429,7 +436,7 @@ def main() -> None:
 
     log_handlers: list[logging.Handler] = [logging.StreamHandler()]
     console_log_path = run_dir / "console.log"
-    log_handlers.append(logging.FileHandler(console_log_path, encoding="utf-8"))
+    log_handlers.append(logging.FileHandler(console_log_path, encoding="utf-8", mode="w"))
 
     logging.basicConfig(
         level=getattr(logging, args.log_level.upper(), logging.INFO),
@@ -470,7 +477,15 @@ def main() -> None:
     if not debug_file and DEBUG:
         debug_file = str(run_dir / "scoring.jsonl")
 
+    # If we are writing into the current run directory, start fresh.
     if debug_file:
+        try:
+            df_path = Path(debug_file)
+            if df_path.parent == run_dir:
+                df_path.write_text("", encoding="utf-8")
+        except Exception:
+            pass
+
         os.environ[ENV_DEBUG_SCORING_FILE] = debug_file
 
     console.print("[bold]Azure Personal Cost Architect – Local Tool[/bold]\n")

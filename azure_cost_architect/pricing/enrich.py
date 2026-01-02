@@ -6,8 +6,10 @@ import json
 import logging
 import re
 import hashlib
+from pathlib import Path
 
 from ..config import (
+    get_debug_enriched_file,
     DEFAULT_CURRENCY,
     DEFAULT_REGION,
     HOURS_PROD,
@@ -1003,6 +1005,8 @@ def _filter_blob_storage_items(
         "adls",
         "dfs",
         "gen2 filesystem",
+        "hierarchical namespace",
+        "hns",
         "queue",
         "table",
     ]
@@ -2075,15 +2079,24 @@ async def fetch_price_for_resource(
         monthly_cost = units * float(unit_price)
         yearly_cost = monthly_cost * 12.0
 
-    requested_sku = (resource.get("arm_sku_name") or resource.get("armSkuName") or "").lower()
-    resolved_text = " ".join(
-        [
-            str(resource.get("sku_name") or ""),
-            str(resource.get("meter_name") or ""),
-            str(resource.get("product_name") or ""),
-        ]
-    ).lower()
-    if requested_sku and requested_sku not in resolved_text:
+    # SKU mismatch detection: use normalized equality against the chosen item's SKU fields.
+    # Do NOT rely on substring matching inside product/meter names (false positives are common).
+    requested_sku_raw = resource.get("arm_sku_name") or resource.get("armSkuName") or ""
+    requested_norm = _norm_sku_token(str(requested_sku_raw))
+
+    chosen_arm_norm = _norm_sku_token(str(best_item.get("armSkuName") or best_item.get("arm_sku_name") or ""))
+    chosen_sku_norm = _norm_sku_token(str(best_item.get("skuName") or best_item.get("sku_name") or ""))
+
+    mismatch = False
+    if requested_norm:
+        if requested_norm == chosen_arm_norm or requested_norm == chosen_sku_norm:
+            mismatch = False
+        else:
+            # If the selector explicitly reported a mismatch, honor it; otherwise keep as matched.
+            sel_status = (selection or {}).get("status") if isinstance(selection, dict) else None
+            mismatch = sel_status in {"mismatch", "mismatch_fallback"}
+
+    if mismatch:
         resource["pricing_status"] = "sku_mismatch"
         resource["sku_mismatch"] = True
 
@@ -2341,8 +2354,13 @@ async def enrich_plan_with_prices(
         },
         "scenarios": enriched_scenarios,
     }
-    with open("debug_enriched.json", "w", encoding="utf-8") as f:
+    debug_enriched_path = get_debug_enriched_file() or "debug_enriched.json"
+    try:
+        Path(debug_enriched_path).parent.mkdir(parents=True, exist_ok=True)
+    except Exception:
+        pass
+    with open(debug_enriched_path, "w", encoding="utf-8") as f:
         json.dump(enriched_plan, f, indent=2, ensure_ascii=False)
 
-    _LOGGER.info("Enrichment finished. Saved debug_enriched.json.")
+    _LOGGER.info("Enrichment finished. Saved %s.", debug_enriched_path)
     return enriched_plan
