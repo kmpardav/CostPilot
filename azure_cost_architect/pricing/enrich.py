@@ -30,6 +30,79 @@ from ..llm.adjudicator import adjudicate_candidates
 
 _LOGGER = logging.getLogger(__name__)
 
+# -----------------------------------------------------------------------------
+# Tier-2: Pricing confidence semantics
+# -----------------------------------------------------------------------------
+
+def _apply_pricing_semantics(resource: Dict[str, Any]) -> None:
+    """Attach machine-readable pricing confidence/completeness metadata.
+
+    This is intentionally *additive* and deterministic.
+    It does not alter selection, scoring, or cost maths.
+    """
+
+    status = (resource.get("pricing_status") or "").lower()
+    category = (resource.get("category") or "").lower()
+
+    # Defaults
+    confidence = "low"
+    completeness = "partial"
+    notes: List[str] = []
+
+    if status == "priced":
+        confidence = "high"
+        completeness = "complete"
+    elif status == "estimated":
+        confidence = "medium"
+        completeness = "partial"
+    elif status in {
+        "missing",
+        "sku_mismatch",
+        "reservation_term_missing",
+        "adjudicator_unresolved",
+    }:
+        confidence = "low"
+        completeness = "partial"
+    else:
+        # Unknown status: keep conservative defaults
+        confidence = "low"
+        completeness = "partial"
+
+    # Explain *why* something is estimated (deterministically), so downstream
+    # reports can surface confidence without guessing.
+    if status == "estimated":
+        if category.startswith("storage.blob"):
+            notes.extend(
+                [
+                    "simplified_model:storage_blob",
+                    "missing_workload:transactions",
+                    "missing_workload:egress_gb",
+                ]
+            )
+        elif category.startswith("network.appgw"):
+            notes.extend(
+                [
+                    "simplified_model:application_gateway",
+                    "missing_workload:capacity_model",
+                ]
+            )
+        else:
+            notes.append("simplified_model")
+
+    # If an error string exists, surface a generic marker (keep the full error
+    # in resource["error"] / resource["pricing_error"].
+    if (resource.get("error") or resource.get("pricing_error")) and "has_error" not in notes:
+        notes.append("has_error")
+
+    resource.setdefault("pricing_confidence", confidence)
+    resource.setdefault("pricing_completeness", completeness)
+    # Keep stable ordering and avoid duplicates
+    if "pricing_notes" not in resource:
+        resource["pricing_notes"] = []
+    existing = list(resource.get("pricing_notes") or [])
+    merged = existing + [n for n in notes if n not in existing]
+    resource["pricing_notes"] = merged
+
 # Missing prices are left as explicit gaps; keep this constant for backwards
 # compatibility with older callers/tests that import it.
 DEFAULT_MISSING_MONTHLY_PENALTY = 0.0
@@ -2328,6 +2401,16 @@ async def enrich_plan_with_prices(
                     )
 
         await asyncio.gather(*[fetch_with_sem(r) for r in resources], return_exceptions=True)
+
+        # Tier-2: attach confidence semantics to *all* resources (even those
+        # that returned early or errored), so downstream reporting can rely on
+        # consistent fields.
+        for res in resources:
+            try:
+                _apply_pricing_semantics(res)
+            except Exception:
+                # Never let metadata enrichment break the run.
+                pass
 
         enriched_scenario = {
             "id": scenario.get("id"),
