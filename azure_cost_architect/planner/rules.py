@@ -6,9 +6,38 @@ It also applies workload presets (baseline controls, NAT/egress defaults)
 to keep scenarios opinionated before pricing.
 """
 
-from typing import Dict, Iterable
+from typing import Dict, Iterable, List
 
 from .presets import apply_workload_presets
+
+
+def _is_hp_scenario(scen: Dict) -> bool:
+    sid = (scen.get("id") or "").strip().lower()
+    label = (scen.get("label") or "").strip().lower()
+    return sid in {"high_performance", "high-performance", "hp"} or "high" in label
+
+
+def _has_redundancy_hint(res: Dict) -> bool:
+    text = " ".join(
+        [
+            str(res.get("arm_sku_name") or res.get("armSkuName") or ""),
+            str(res.get("notes") or ""),
+            str((res.get("metrics") or {})),
+            " ".join(res.get("product_name_contains") or []),
+            " ".join(res.get("meter_name_contains") or []),
+            " ".join(res.get("sku_name_contains") or []),
+            " ".join(res.get("arm_sku_name_contains") or []),
+        ]
+    ).lower()
+    return any(
+        tok in text
+        for tok in ("zone redundancy", "zone redundant", "zrs", "gzrs", "ra-gzrs", "lrs", "grs")
+    )
+
+
+def _append_unique(lst: List[str], value: str) -> None:
+    if value not in lst:
+        lst.append(value)
 
 
 def _category_needs_sku(category: str) -> bool:
@@ -47,6 +76,37 @@ def apply_planner_rules(plan: dict) -> dict:
         scen_warnings = scen.setdefault("warnings", [])
         resources = [res for res in scen.get("resources", []) if isinstance(res, dict)]
         scen["resources"] = resources
+
+        # ------------------------------------------------------------
+        # Tier-2: Scenario enrichment (HP redundancy variants)
+        # ------------------------------------------------------------
+        if _is_hp_scenario(scen):
+            hp_applied_any = False
+            for res in resources:
+                cat = (res.get("category") or "").lower()
+
+                # Respect explicit user intent: if any redundancy hint exists, do nothing.
+                if _has_redundancy_hint(res):
+                    continue
+
+                # SQL: allow Zone Redundancy meters by adding contains-hint.
+                if cat.startswith("db.sql"):
+                    res.setdefault("product_name_contains", [])
+                    _append_unique(res["product_name_contains"], "zone redundancy")
+                    hp_applied_any = True
+
+                # Blob: steer to "global ZRS" style by using GZRS hint.
+                # (Blob pricing already detects LRS/ZRS/GZRS hints via notes/metrics.)
+                if cat.startswith("storage.blob"):
+                    notes = (res.get("notes") or "").strip()
+                    if "gzrs" not in notes.lower():
+                        res["notes"] = (notes + " GZRS").strip()
+                    hp_applied_any = True
+
+            if hp_applied_any:
+                scen_warnings.append(
+                    "hp_variant: added redundancy hints (SQL zone redundancy / Blob GZRS)"
+                )
 
         preset_warnings = apply_workload_presets(resources)
         scen_warnings.extend(preset_warnings)
