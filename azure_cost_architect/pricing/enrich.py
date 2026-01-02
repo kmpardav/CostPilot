@@ -1601,6 +1601,8 @@ async def fetch_price_for_resource(
     if price_info and not cached_entry_is_usable(price_info, currency=currency):
         # Ignore bad/unsafe cache entry and recompute
         price_info = None
+    best_item = None
+    selection: Optional[Dict[str, Any]] = None
 
     if price_info and debug:
         _LOGGER.debug(
@@ -2084,8 +2086,17 @@ async def fetch_price_for_resource(
     requested_sku_raw = resource.get("arm_sku_name") or resource.get("armSkuName") or ""
     requested_norm = _norm_sku_token(str(requested_sku_raw))
 
-    chosen_arm_norm = _norm_sku_token(str(best_item.get("armSkuName") or best_item.get("arm_sku_name") or ""))
-    chosen_sku_norm = _norm_sku_token(str(best_item.get("skuName") or best_item.get("sku_name") or ""))
+    chosen_arm_norm = _norm_sku_token(
+        str((best_item or {}).get("armSkuName") or (best_item or {}).get("arm_sku_name") or "")
+    )
+    chosen_sku_norm = _norm_sku_token(
+        str(
+            (best_item or {}).get("skuName")
+            or (best_item or {}).get("sku_name")
+            or price_info.get("sku_name")
+            or ""
+        )
+    )
 
     mismatch = False
     if requested_norm:
