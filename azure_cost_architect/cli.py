@@ -731,6 +731,12 @@ def main() -> None:
         "command": " ".join(sys.argv),
         "working_directory": os.getcwd(),
         "cli_args": vars(args),
+        "runtime": {
+            # What the process actually did (may differ from CLI flags when
+            # debug defaults or environment overrides are in play).
+            "trace_enabled": bool(trace_enabled),
+            "trace_path": str(trace_path) if trace_enabled else "",
+        },
         "derived": {
             "currency": currency,
             "default_region": default_region,
@@ -745,6 +751,7 @@ def main() -> None:
             "plan": str(json_filename),
             "report": str(md_filename if args.output_format in ("markdown", "both") else ""),
             "debug_scoring": debug_file or "",
+            "trace": str(trace_path) if trace_enabled else "",
             "console_log": str(console_log_path),
         },
     }
