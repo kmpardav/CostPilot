@@ -2086,6 +2086,24 @@ async def fetch_price_for_resource(
 
     # pricing_status: priced / estimated / missing
     pricing_status = "priced" if unit_price is not None else "missing"
+    if best_item is None and pricing_status == "missing":
+        resource.update(
+            {
+                "unit_price": None,
+                "unit_of_measure": None,
+                "currency_code": currency_code,
+                "sku_name": None,
+                "meter_name": None,
+                "product_name": None,
+                "units": None,
+                "monthly_cost": None,
+                "yearly_cost": None,
+                "pricing_status": "missing",
+                "pricing_error": "No valid pricing candidate after filtering",
+                "error": "No valid pricing candidate after filtering",
+            }
+        )
+        return
     if pricing_status == "priced":
         # Σημείωσε explicit 'estimated' για κατηγορίες που ξέρουμε ότι το μοντέλο είναι απλουστευμένο
         if category.startswith("storage.blob") or category.startswith("network.appgw"):
