@@ -40,6 +40,78 @@ def _append_unique(lst: List[str], value: str) -> None:
         lst.append(value)
 
 
+def _has_category(resources: List[Dict], prefix: str) -> bool:
+    p = (prefix or "").lower()
+    for r in resources:
+        if not isinstance(r, dict):
+            continue
+        c = (r.get("category") or "").lower()
+        if c.startswith(p):
+            return True
+    return False
+
+
+def _is_internet_facing(plan: Dict, scen: Dict, resources: List[Dict]) -> bool:
+    """Deterministic, conservative detector for internet-facing workloads.
+
+    Returns True only when we have strong indicators.
+    """
+    # Explicit boolean flags if present (highest trust)
+    for obj in (plan, scen):
+        if isinstance(obj, dict):
+            v = obj.get("internet_facing")
+            if isinstance(v, bool):
+                return v
+
+    # Strong component indicators (short, obvious list)
+    edge_prefixes = (
+        "network.appgw",      # Application Gateway
+        "network.frontdoor",  # Front Door
+        "network.public_ip",  # Public IP
+        "network.cdn",        # CDN
+        "security.waf",       # If modeled separately
+    )
+    for pfx in edge_prefixes:
+        if _has_category(resources, pfx):
+            return True
+
+    # Optional fallback: conservative keyword check if input_text is present
+    text = " ".join(
+        [
+            str(plan.get("input_text") or ""),
+            str(scen.get("notes") or ""),
+        ]
+    ).lower()
+    if any(k in text for k in ("public", "internet", "extern", "waf", "dmz")):
+        return True
+
+    return False
+
+
+def _ensure_hp_firewall(
+    plan: Dict, scen: Dict, resources: List[Dict], scen_warnings: List[str]
+) -> None:
+    """HP security posture: always add Azure Firewall for internet-facing workloads if absent."""
+    if _has_category(resources, "network.firewall"):
+        return
+    if not _is_internet_facing(plan, scen, resources):
+        return
+
+    resources.append(
+        {
+            "id": "azfw-hp-1",
+            "category": "network.firewall",
+            "name": "Azure Firewall (HP security posture)",
+            "notes": (
+                "HP preset: internet-facing workload; add Azure Firewall for centralized policy, "
+                "egress control, and threat protection."
+            ),
+            "metrics": {"hours_per_month": 730},
+        }
+    )
+    scen_warnings.append("hp_security_posture: added network.firewall for internet-facing workload")
+
+
 def _category_needs_sku(category: str) -> bool:
     cat = (category or "").lower()
     return cat.startswith(
@@ -107,6 +179,11 @@ def apply_planner_rules(plan: dict) -> dict:
                 scen_warnings.append(
                     "hp_variant: added redundancy hints (SQL zone redundancy / Blob GZRS)"
                 )
+
+            # ------------------------------------------------------------
+            # Tier-2: HP security posture (Firewall) for internet-facing workloads
+            # ------------------------------------------------------------
+            _ensure_hp_firewall(plan, scen, resources, scen_warnings)
 
         preset_warnings = apply_workload_presets(resources)
         scen_warnings.extend(preset_warnings)
