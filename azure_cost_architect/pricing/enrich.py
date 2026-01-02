@@ -612,6 +612,20 @@ def _looks_like_specific_sku(value: str) -> bool:
     return "_" in value or any(ch.isdigit() for ch in value)
 
 
+def _exact_match_candidates(
+    rs_norm: str, items: List[Dict[str, Any]]
+) -> List[Dict[str, Any]]:
+    # Support both Retail API shapes and our normalized catalog keys.
+    # Some catalogs may store armSkuName/skuName under snake_case.
+    out: List[Dict[str, Any]] = []
+    for it in items:
+        arm = _norm_sku_token(it.get("armSkuName") or it.get("arm_sku_name") or "")
+        sku = _norm_sku_token(it.get("skuName") or it.get("sku_name") or "")
+        if arm == rs_norm or sku == rs_norm:
+            out.append(it)
+    return out
+
+
 def filter_items_by_sku_intent(
     category: str, requested_sku: str, items: List[Dict[str, Any]]
 ) -> Tuple[List[Dict[str, Any]], bool]:
@@ -629,19 +643,31 @@ def filter_items_by_sku_intent(
     if not rs:
         return items, False
 
-    # Exact-match mode should ONLY apply to true VM/Compute SKUs (e.g., Standard_D2s_v3).
-    # Many non-VM resources (e.g., SQLDB_GP_Compute_Gen5_2) contain underscores/digits but are NOT armSkuName-exact.
+    # ------------------------------------------------------------
+    # 1) Strict exact-match for VM SKUs and SQL arm SKUs
+    # ------------------------------------------------------------
+    # - VM SKUs are always exact (Standard_D2s_v3).
+    # - SQL Single DB compute armSkuName MUST also be exact when provided
+    #   (SQLDB_GP_Compute_Gen5_2) or we break vCore scaling.
     is_vm_sku = rs.startswith(("standard_", "basic_"))
     if cat in {"compute.vm", "vm", "virtual_machine", "compute.virtual_machine"} or is_vm_sku:
-        exact = [
-            it
-            for it in items
-            if _norm_sku_token(it.get("armSkuName")) == rs_norm
-            or _norm_sku_token(it.get("skuName")) == rs_norm
-        ]
+        exact = _exact_match_candidates(rs_norm, items)
         if exact:
             return exact, False
         return [], True
+
+    is_sql_arm_sku = cat.startswith("db.sql") and rs.startswith("sqldb_")
+    if is_sql_arm_sku:
+        exact = _exact_match_candidates(rs_norm, items)
+        if exact:
+            return exact, False
+        # Strict: for SQL armSkuName mismatches we do NOT fallback to "nearby" SKUs.
+        return [], True
+
+    # Generic exact match: if we find any exact matches, prefer them (but don't hard-fail).
+    generic_exact = _exact_match_candidates(rs_norm, items)
+    if generic_exact:
+        return generic_exact, False
 
     filtered = items
 
@@ -935,6 +961,119 @@ def _filter_storage_blob_not_files(
     filtered = [it for it in items if not _looks_like_azure_files(it)]
     if filtered and len(filtered) != len(items):
         return filtered, True
+    return items, False
+
+
+def _filter_blob_storage_items(
+    items: List[Dict[str, Any]]
+) -> Tuple[List[Dict[str, Any]], bool]:
+    """Keep only Blob-relevant meters and exclude common false positives (Azure Files, Disks, ADLS, SSD)."""
+    if not items:
+        return items, False
+
+    def _hay(it: Dict[str, Any]) -> str:
+        return " ".join(
+            [
+                str(it.get("serviceName") or ""),
+                str(it.get("productName") or it.get("ProductName") or ""),
+                str(it.get("meterName") or ""),
+                str(it.get("skuName") or ""),
+            ]
+        ).lower()
+
+    blobish = []
+    for it in items:
+        h = _hay(it)
+        if "blob" in h or "block blob" in h or "append blob" in h:
+            blobish.append(it)
+
+    candidates = blobish or items
+
+    bad_terms = [
+        "azure files",
+        "file storage",
+        "files v2",
+        "file share",
+        "file shares",
+        "premium ssd",
+        "ssd",
+        "disk",
+        "managed disk",
+        "data lake",
+        "adls",
+        "dfs",
+        "gen2 filesystem",
+        "queue",
+        "table",
+    ]
+
+    cleaned = [it for it in candidates if not any(t in _hay(it) for t in bad_terms)]
+    if cleaned and (cleaned != items):
+        return cleaned, True
+    if candidates != items:
+        return candidates, True
+    return items, False
+
+
+def _prefer_vm_os_items(
+    resource: Dict[str, Any], items: List[Dict[str, Any]]
+) -> Tuple[List[Dict[str, Any]], bool]:
+    """Prefer Linux vs Windows VM meters based on resource.os_type when both exist."""
+    os_type = (resource.get("os_type") or resource.get("osType") or "").strip().lower()
+    if os_type not in {"linux", "windows"}:
+        return items, False
+
+    def _hay(it: Dict[str, Any]) -> str:
+        return " ".join(
+            [
+                str(it.get("productName") or it.get("ProductName") or ""),
+                str(it.get("meterName") or ""),
+                str(it.get("skuName") or ""),
+            ]
+        ).lower()
+
+    windows = [it for it in items if "windows" in _hay(it)]
+    linux = [it for it in items if "linux" in _hay(it)]
+
+    if os_type == "windows":
+        if windows:
+            return windows, True
+        return items, False
+
+    # linux: prefer explicit linux; otherwise exclude explicit windows if that still leaves options
+    if linux:
+        return linux, True
+    if windows and len(windows) < len(items):
+        return [it for it in items if "windows" not in _hay(it)], True
+    return items, False
+
+
+def _filter_sql_zone_redundancy_default(
+    resource: Dict[str, Any], items: List[Dict[str, Any]]
+) -> Tuple[List[Dict[str, Any]], bool]:
+    """Exclude Zone Redundancy meters unless explicitly requested via SKU or contains-hints."""
+    if not items:
+        return items, False
+
+    requested_sku = (resource.get("arm_sku_name") or resource.get("armSkuName") or "").lower()
+    sku_contains, meter_contains, product_contains = _get_contains_hints(resource)
+    hints_text = " ".join((sku_contains or []) + (meter_contains or []) + (product_contains or [])).lower()
+
+    if ("zone" in requested_sku) or ("zrs" in requested_sku) or ("zone redundancy" in hints_text):
+        return items, False
+
+    def _hay(it: Dict[str, Any]) -> str:
+        return " ".join(
+            [
+                str(it.get("productName") or it.get("ProductName") or ""),
+                str(it.get("meterName") or ""),
+                str(it.get("skuName") or ""),
+            ]
+        ).lower()
+
+    cleaned = [it for it in items if "zone redundancy" not in _hay(it)]
+    if cleaned and len(cleaned) != len(items):
+        return cleaned, True
     return items, False
 
 
@@ -1238,6 +1377,14 @@ def _price_blob_storage(
     ]
 
     requested_redundancy = _requested_redundancy(resource)
+
+    # Extra safety: even if catalog is too broad (Storage service), enforce blob-only candidates here.
+    items, blob_filtered = _filter_blob_storage_items(items)
+    if blob_filtered and _LOGGER.isEnabledFor(logging.DEBUG):
+        _LOGGER.debug(
+            "Blob storage items filtered for resource %s (kept=%d).",
+            resource.get("id"), len(items)
+        )
 
     if all(val <= 0 for _, val in tiers):
         fallback = float(metrics.get("storage_gb") or 0.0)
@@ -1582,21 +1729,27 @@ async def fetch_price_for_resource(
         # Compute VMs: exclude Spot/Low Priority unless explicitly requested.
         if category.startswith("compute.vm"):
             items, spot_filtered = _filter_out_spot_low_priority(resource, items)
+            items, os_filtered = _prefer_vm_os_items(resource, items)
         else:
             spot_filtered = False
+            os_filtered = False
 
         # SQL Database: prefer vCore meters if present (avoid Shared Resource Management).
         if category.startswith("db.sql"):
             items, sql_vcore_preferred = _prefer_sql_vcore_meters(items)
+            items, sql_zone_filtered = _filter_sql_zone_redundancy_default(resource, items)
         else:
             sql_vcore_preferred = False
+            sql_zone_filtered = False
 
         resource["debug_filters"] = {
             "region_filtered": region_filtered,
             "hints_applied": hints_applied,
             "blob_vs_files_filtered": blob_vs_files_filtered,
             "spot_filtered": spot_filtered,
+            "os_filtered": os_filtered,
             "sql_vcore_preferred": sql_vcore_preferred,
+            "sql_zone_filtered": sql_zone_filtered,
             "candidates_after_filters": len(items),
         }
 
