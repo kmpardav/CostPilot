@@ -34,6 +34,15 @@ def normalize_service_name(category: str, service_name: Optional[str]) -> str:
     if allowed_from_sources:
         if svc in allowed_from_sources:
             return svc
+
+        # For the catch-all 'other' category, never guess a completely different service name.
+        # If we don't know the exact Retail 'serviceName', prefer returning the original value
+        # (so catalog build can fail fast / mark as missing) rather than mispricing.
+        if cat.startswith("other"):
+            if svc and svc.upper() != "UNKNOWN_SERVICE":
+                return svc
+            return "UNKNOWN_SERVICE"
+
         return next(iter(allowed_from_sources))
 
     return _legacy_service_name(cat, svc)
