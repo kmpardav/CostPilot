@@ -557,18 +557,45 @@ def score_price_item(resource: Dict[str, Any], item: Dict[str, Any], hours_prod:
     # -------------------------------------------------------------------------
     # 0.a) Planner-provided hint constraints (soft-but-strong)
     # -------------------------------------------------------------------------
-    hint_tokens: list[str] = []
-    for k in ("product_name_contains", "meter_name_contains", "sku_name_contains"):
-        v = resource.get(k)
-        if isinstance(v, list):
-            hint_tokens.extend([_low(str(x)) for x in v if str(x).strip()])
-    hint_tokens = [t for t in hint_tokens if len(t) >= 2]
-    if hint_tokens:
-        hits = sum(1 for t in hint_tokens if t in text_all)
-        if hits:
-            score += 80 * hits
-        else:
-            score -= 200
+    # Treat hint groups differently: productName is often generic, whereas meter/sku contains
+    # are high-signal (e.g. App Service tier like P1v2). Penalize missing high-signal groups.
+    prod_tokens: list[str] = []
+    sku_tokens: list[str] = []
+    meter_tokens: list[str] = []
+
+    v = resource.get("product_name_contains")
+    if isinstance(v, list):
+        prod_tokens = [_low(str(x)) for x in v if str(x).strip()]
+
+    v = resource.get("sku_name_contains")
+    if isinstance(v, list):
+        sku_tokens = [_low(str(x)) for x in v if str(x).strip()]
+
+    v = resource.get("meter_name_contains")
+    if isinstance(v, list):
+        meter_tokens = [_low(str(x)) for x in v if str(x).strip()]
+
+    prod_tokens = [t for t in prod_tokens if len(t) >= 2]
+    sku_tokens = [t for t in sku_tokens if len(t) >= 2]
+    meter_tokens = [t for t in meter_tokens if len(t) >= 2]
+
+    def _hits(tokens: list[str]) -> int:
+        return sum(1 for t in tokens if t in text_all)
+
+    prod_hits = _hits(prod_tokens) if prod_tokens else 0
+    sku_hits = _hits(sku_tokens) if sku_tokens else 0
+    meter_hits = _hits(meter_tokens) if meter_tokens else 0
+
+    if prod_tokens or sku_tokens or meter_tokens:
+        score += 80 * (prod_hits + sku_hits + meter_hits)
+
+        # Missing high-signal hints should be a strong penalty.
+        if meter_tokens and meter_hits == 0:
+            score -= 160
+        if sku_tokens and sku_hits == 0:
+            score -= 120
+        if prod_tokens and prod_hits == 0:
+            score -= 40
 
     # Mild bonus if the requested SKU is referenced in product/meter names
     if arm_sku_name and arm_sku_name in text_all:
@@ -617,6 +644,12 @@ def score_price_item(resource: Dict[str, Any], item: Dict[str, Any], hours_prod:
         ):
             if criticality in ("prod", "production"):
                 return -999
+
+    # App Service plan resources: avoid selecting SSL/add-on meters when the plan tier is specified.
+    # Evidence: a plan resource with meter_name_contains=[P1v2] was matched to SNI SSL in Phase 1 artifacts.
+    if category.startswith("appservice") and ("app service plan" in notes or "service plan" in notes):
+        if "ssl" in text_all or "sni" in text_all:
+            return -999
 
     # -------------------------------------------------------------------------
     # 1) Price type preference (Consumption vs Reservation)

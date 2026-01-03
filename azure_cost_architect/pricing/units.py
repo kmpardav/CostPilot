@@ -55,6 +55,21 @@ def compute_units(resource: dict, unit_of_measure: str) -> float:
 
     # ---- Hour-based meters (compute, reserved, κλπ) ----
     if "hour" in uom:
+        # SQL pricing frequently uses vCore-hour meters. In those cases, units must scale by vCores.
+        vcores = (
+            metrics.get("vcores")
+            or metrics.get("vcore")
+            or resource.get("vcores")
+            or resource.get("vcore")
+        )
+        try:
+            vcores_f = float(vcores) if vcores is not None else 0.0
+        except (TypeError, ValueError):
+            vcores_f = 0.0
+
+        if vcores_f > 0 and "vcore" in meter_text and category.startswith("db.sql"):
+            return qty * hours * vcores_f
+
         return qty * hours
 
     # ---- GB-based meters (storage / egress) ----

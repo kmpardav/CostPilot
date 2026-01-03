@@ -2164,7 +2164,33 @@ async def fetch_price_for_resource(
             )
             return
 
-        units = float(resource.get("quantity", 1.0))
+        # Reservation pricing: amortize the upfront term price.
+        # IMPORTANT: for SQL vCore reservations, the Retail item represents a *per-vCore* reservation.
+        # Therefore units must scale by requested vCores (otherwise 2 vCores == 16 vCores in cost).
+        metrics = resource.get("metrics") or {}
+        vcores = (
+            metrics.get("vcores")
+            or metrics.get("vcore")
+            or resource.get("vcores")
+            or resource.get("vcore")
+        )
+        try:
+            vcores_f = float(vcores) if vcores is not None else 0.0
+        except (TypeError, ValueError):
+            vcores_f = 0.0
+
+        hay = " ".join(
+            [
+                str((best_item or {}).get("productName") or (best_item or {}).get("ProductName") or ""),
+                str((best_item or {}).get("meterName") or ""),
+                str((best_item or {}).get("skuName") or ""),
+                str(unit_of_measure or ""),
+            ]
+        ).lower()
+
+        cap_mult = vcores_f if (vcores_f > 0 and category.startswith("db.sql") and "vcore" in hay) else 1.0
+
+        units = float(resource.get("quantity", 1.0)) * cap_mult
         monthly_cost = (float(unit_price) / float(term_months)) * units
         yearly_cost = monthly_cost * 12.0
     else:
