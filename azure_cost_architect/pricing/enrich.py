@@ -26,9 +26,7 @@ from .normalize import normalize_service_name, sku_keyword_match
 from .catalog import load_catalog
 from .scoring import score_price_item, select_best_candidate
 from .units import compute_units
-# NOTE: We import the adjudicator lazily inside _adjudicate_selection so that
-# deterministic/offline pricing runs (no LLM) can execute selection without
-# OpenAI SDK wiring.
+from ..llm.adjudicator import adjudicate_candidates
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -1094,59 +1092,6 @@ def _filter_blob_storage_items(
     return items, False
 
 
-def _looks_like_storage_files_item(item: Dict[str, Any]) -> bool:
-    txt = " ".join(
-        [
-            str(item.get("productName") or item.get("ProductName") or ""),
-            str(item.get("meterName") or ""),
-            str(item.get("skuName") or ""),
-            str(item.get("armSkuName") or item.get("arm_sku_name") or ""),
-        ]
-    ).lower()
-    bad = [
-        "storage discovery",
-        "objects analyzed",
-        "defender",
-        "malware",
-        "threat",
-        "scan",
-        "blob",
-        "managed disk",
-        "disk",
-        "premium ssd",
-        "ssd",
-        "data lake",
-        "adls",
-        "dfs",
-        "queue",
-        "table",
-    ]
-    if any(b in txt for b in bad):
-        return False
-    good = [
-        "azure files",
-        "files v2",
-        "file storage",
-        "file share",
-        "file shares",
-        "file sync",
-    ]
-    if any(g in txt for g in good):
-        return True
-    return ("file" in txt) and ("storage" in txt)
-
-
-def _filter_storage_files_not_blob_or_discovery(
-    items: List[Dict[str, Any]]
-) -> Tuple[List[Dict[str, Any]], bool]:
-    if not items:
-        return items, False
-    kept = [it for it in items if _looks_like_storage_files_item(it)]
-    if kept and len(kept) != len(items):
-        return kept, True
-    return items, False
-
-
 def _prefer_vm_os_items(
     resource: Dict[str, Any], items: List[Dict[str, Any]]
 ) -> Tuple[List[Dict[str, Any]], bool]:
@@ -1237,16 +1182,7 @@ def _score_candidates(
     scored_items: List[Tuple[int, Dict[str, Any]]] = [
         (score_price_item(resource, it, HOURS_PROD), it) for it in items
     ]
-    def _sort_key(pair: Tuple[int, Dict[str, Any]]) -> Tuple[Any, ...]:
-        score, it = pair
-        unit_raw = it.get("unitPrice")
-        try:
-            unit = float(unit_raw) if unit_raw is not None else 1e30
-        except Exception:
-            unit = 1e30
-        return (-score, unit, _candidate_key(it))
-
-    scored_items.sort(key=_sort_key)
+    scored_items.sort(key=lambda pair: (-pair[0], float(pair[1].get("unitPrice") or 0.0)))
     return scored_items
 
 
@@ -1393,22 +1329,8 @@ async def _adjudicate_selection(
 ) -> Tuple[str, Optional[int], str, Optional[str]]:
     """Call adjudicator with one optional retry."""
 
-    if os.getenv("AZURECOST_DISABLE_ADJUDICATOR", "").strip().lower() in {
-        "1",
-        "true",
-        "yes",
-        "on",
-    }:
-        return "skipped", None, "Adjudicator disabled via AZURECOST_DISABLE_ADJUDICATOR", None
-
     if not candidates:
         return "invalid", None, "No candidates to adjudicate", None
-
-    try:
-        from ..llm.adjudicator import adjudicate_candidates  # type: ignore
-    except Exception as ex:
-        _LOGGER.warning("Adjudicator unavailable (%s). Skipping adjudication.", ex)
-        return "skipped", None, "Adjudicator unavailable", None
 
     payload = {
         "id": resource.get("id"),
@@ -1883,11 +1805,6 @@ async def fetch_price_for_resource(
         else:
             blob_vs_files_filtered = False
 
-        if category.startswith("storage.files"):
-            items, files_vs_blob_filtered = _filter_storage_files_not_blob_or_discovery(items)
-        else:
-            files_vs_blob_filtered = False
-
         # Compute VMs: exclude Spot/Low Priority unless explicitly requested.
         if category.startswith("compute.vm"):
             items, spot_filtered = _filter_out_spot_low_priority(resource, items)
@@ -1908,7 +1825,6 @@ async def fetch_price_for_resource(
             "region_filtered": region_filtered,
             "hints_applied": hints_applied,
             "blob_vs_files_filtered": blob_vs_files_filtered,
-            "files_vs_blob_filtered": files_vs_blob_filtered,
             "spot_filtered": spot_filtered,
             "os_filtered": os_filtered,
             "sql_vcore_preferred": sql_vcore_preferred,
