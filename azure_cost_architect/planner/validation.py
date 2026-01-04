@@ -1,4 +1,6 @@
-from typing import Dict
+from __future__ import annotations
+
+from typing import Any, Dict, List
 
 from ..config import HOURS_PROD
 from ..pricing.catalog_sources import get_catalog_sources
@@ -23,56 +25,87 @@ _CATEGORY_MAP: Dict[str, str] = {
     "redis": "cache.redis",
     "cache": "cache.redis",
     "storage.blob": "storage.blob",
-    "blob.storage": "storage.blob",
     "storage.files": "storage.files",
     "storage.disk": "storage.disk",
+    "storage": "storage.blob",
+    "fabric": "analytics.fabric",
+    "synapse": "analytics.synapse",
+    "datafactory": "analytics.datafactory",
+    "databricks": "analytics.databricks",
+    "adf": "analytics.datafactory",
+    "eventhub": "messaging.eventhubs",
+    "servicebus": "messaging.servicebus",
+    "eventgrid": "messaging.eventgrid",
+    "loganalytics": "monitoring.loganalytics",
+    "keyvault": "security.keyvault",
     "backup": "backup.vault",
-    "backup.vault": "backup.vault",
-    "dr": "dr.asr",
-    "site.recovery": "dr.asr",
-    "bandwidth": "network.egress",
-    "network.egress": "network.egress",
-    "network.nat": "network.nat",
-    "nat": "network.nat",
-    "network.gateway": "network.gateway",
-    "network.frontdoor": "network.frontdoor",
+    "site_recovery": "dr.asr",
+    "asr": "dr.asr",
+    "vnet": "network.vnet",
+    "appgw": "network.appgw",
+    "application_gateway": "network.appgw",
     "frontdoor": "network.frontdoor",
-    "front.door": "network.frontdoor",
-    "trafficmanager": "network.traffic_manager",
-    "traffic.manager": "network.traffic_manager",
-    "appgateway": "network.appgw",
-    "app.gw": "network.appgw",
+    "firewall": "network.firewall",
+    "nat": "network.nat",
     "lb": "network.lb",
-    "loadbalancer": "network.lb",
-    "public.ip": "network.public_ip",
-    "private.endpoint": "network.private_endpoint",
+    "bastion": "network.bastion",
+    "vpn": "network.vpngw",
+    "er": "network.er",
+    "public_ip": "network.public_ip",
 }
 
 
 def _canonical_category(raw: str) -> str:
-    cat = (raw or "other").lower().strip().replace(" ", ".").replace("-", ".")
-    if cat in _CATEGORY_MAP:
-        return _CATEGORY_MAP[cat]
-
-    for prefix, canonical in _CATEGORY_MAP.items():
-        if cat.startswith(prefix):
-            return canonical
-    return cat or "other"
+    if not raw:
+        return "other"
+    low = raw.strip().lower().replace(" ", "").replace("_", ".")
+    return _CATEGORY_MAP.get(low, raw)
 
 
-def _list_field(value):
-    return value if isinstance(value, list) else []
+def _list_field(value: Any) -> List[str]:
+    """Normalize hint-like fields to a list[str] (never None)."""
+    if value is None:
+        return []
+    if isinstance(value, list):
+        out: List[str] = []
+        for v in value:
+            if v is None:
+                continue
+            s = str(v).strip()
+            if s:
+                out.append(s)
+        return out
+    if isinstance(value, str):
+        s = value.strip()
+        return [s] if s else []
+    s = str(value).strip()
+    return [s] if s else []
 
 
 def _category_candidates(category: str) -> list[str]:
-    seen: set[str] = set()
-    candidates: list[str] = []
-    for src in get_catalog_sources(category):
-        if src.service_name == "UNKNOWN_SERVICE" or src.service_name in seen:
-            continue
-        seen.add(src.service_name)
-        candidates.append(src.service_name)
-    return candidates
+    cat = (category or "other").lower()
+
+    candidates = [cat]
+    if "." in cat:
+        candidates.append(cat.split(".", 1)[0])
+
+    # Add “known sources” from config for that broad category
+    try:
+        sources = get_catalog_sources(category=cat)
+        for s in sources:
+            if isinstance(s, dict) and s.get("category"):
+                candidates.append(str(s["category"]).lower())
+    except Exception:
+        pass
+
+    # Dedup
+    seen = set()
+    out = []
+    for c in candidates:
+        if c not in seen:
+            out.append(c)
+            seen.add(c)
+    return out
 
 
 def _default_workload_type(category: str) -> str:
@@ -97,6 +130,12 @@ def _default_workload_type(category: str) -> str:
 
 
 def validate_plan_schema(plan: dict) -> dict:
+    """Normalize planner JSON into a shape that downstream pricing can rely on.
+
+    This is intentionally conservative: it never invents SKUs/meters.
+    It only normalizes types, canonicalizes category/service_name, and applies safe defaults.
+    """
+
     if not isinstance(plan, dict):
         return {"metadata": {}, "scenarios": []}
 
@@ -112,13 +151,16 @@ def validate_plan_schema(plan: dict) -> dict:
         scen.setdefault("label", scen["id"])
         scen.setdefault("description", "")
         scen.setdefault("resources", [])
-        if not isinstance(scen["resources"], list):
+        if isinstance(scen.get("resources"), dict):
+            scen["resources"] = [scen["resources"]]
+        elif not isinstance(scen.get("resources"), list):
             scen["resources"] = []
 
         for res in scen["resources"]:
             if not isinstance(res, dict):
                 continue
             res.setdefault("id", "res")
+            # --- Category / ServiceName canonicalization ---
             res["category"] = _canonical_category(res.get("category"))
             candidates = _category_candidates(res["category"])
             service_info = canonicalize_service_name(
@@ -127,28 +169,33 @@ def validate_plan_schema(plan: dict) -> dict:
             res["service_name_raw"] = res.get("service_name_raw") or res.get("service_name")
             res["service_name_status"] = service_info.get("status")
             res["service_name_suggestions"] = _list_field(service_info.get("suggestions"))
-            if service_info["canonical"] == "UNKNOWN_SERVICE":
+            if service_info.get("canonical") == "UNKNOWN_SERVICE":
                 res["service_name"] = "UNKNOWN_SERVICE"
             else:
-                res["service_name"] = service_info.get("canonical")
-        res.setdefault("arm_sku_name", None)
-        # Normalize: if planner used nested sku.armSkuName, lift it to arm_sku_name so
-        # downstream code can be consistent.
-        if not res.get("arm_sku_name"):
-            sku = res.get("sku") or {}
-            if isinstance(sku, dict) and sku.get("armSkuName"):
-                res["arm_sku_name"] = sku.get("armSkuName")
+                res["service_name"] = service_info["canonical"]
+
+            # --- armSkuName normalization (never gates other defaults) ---
+            res.setdefault("arm_sku_name", None)
+            if not res.get("arm_sku_name"):
+                sku = res.get("sku") or {}
+                if isinstance(sku, dict) and sku.get("armSkuName"):
+                    res["arm_sku_name"] = sku.get("armSkuName")
+
+            # --- Safe defaults / normalization (MUST run for every resource) ---
             res.setdefault("region", None)
             res.setdefault("quantity", 1)
             res.setdefault("hours_per_month", HOURS_PROD)
             res.setdefault("billing_model", "payg")
             res.setdefault("workload_type", _default_workload_type(res["category"]))
             res.setdefault("criticality", "prod")
-            res.setdefault("os_type", "linux" if res["category"].startswith("compute") else "na")
+            res.setdefault("os_type", "linux" if res["category"].startswith("compute.") else "na")
+
+            # Hint arrays must always be lists.
             res["product_name_contains"] = _list_field(res.get("product_name_contains"))
             res["sku_name_contains"] = _list_field(res.get("sku_name_contains"))
             res["meter_name_contains"] = _list_field(res.get("meter_name_contains"))
             res["arm_sku_name_contains"] = _list_field(res.get("arm_sku_name_contains"))
+
             metrics = res.get("metrics") if isinstance(res.get("metrics"), dict) else {}
             res["metrics"] = metrics
             if res["category"].startswith("storage") and "storage_gb" not in metrics:
