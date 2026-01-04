@@ -233,6 +233,44 @@ def _low(s: Any) -> str:
     return (s or "").lower()
 
 
+def _item_text(it: Dict[str, Any]) -> str:
+    """Concatenate common Retail API fields into a single searchable string."""
+    return " ".join(
+        [
+            _low(_g(it, "serviceName", "service_name")),
+            _low(_g(it, "productName", "product_name")),
+            _low(_g(it, "skuName", "sku_name")),
+            _low(_g(it, "armSkuName", "arm_sku_name")),
+            _low(_g(it, "meterName", "meter_name")),
+        ]
+    ).strip()
+
+
+def _looks_like_storage_files_item(it: Dict[str, Any]) -> bool:
+    """Best-effort guardrail for category=storage.files."""
+    text = _item_text(it)
+    bad_markers = [
+        "storage discovery",
+        "objects analyzed",
+        "defender",
+        "malware",
+        "threat",
+        "scan",
+    ]
+    if any(b in text for b in bad_markers):
+        return False
+    good_markers = [
+        "azure files",
+        "files v2",
+        "file share",
+        "file shares",
+        "file storage",
+    ]
+    if any(g in text for g in good_markers):
+        return True
+    return ("file" in text) and ("storage" in text)
+
+
 def _normalize_sku_token(sku: str) -> str:
     """Normalize SKU tokens for comparison (e.g. "P1 v3" -> "p1v3")."""
 
@@ -1052,6 +1090,29 @@ def score_price_item(resource: Dict[str, Any], item: Dict[str, Any], hours_prod:
     if category.startswith("network.public_ip"):
         if _is_public_ip_address_meter(product_name, meter_name):
             score += 15
+
+    # -------------------------------------------------------------------------
+    # 10b) Storage Files (guardrails)
+    # -------------------------------------------------------------------------
+    if category.startswith("storage.files"):
+        if not _looks_like_storage_files_item(item):
+            return -999
+        t = _item_text(item)
+        if any(k in t for k in ("files v2", "azure files", "file storage", "file share")):
+            score += 40
+        if any(k in t for k in ("data stored", "provisioned", "storage", "gb", "tb")):
+            score += 25
+        if any(k in t for k in ("operations", "transactions", "requests", "protocol operations")):
+            score -= 15
+
+    # -------------------------------------------------------------------------
+    # 10c) Microsoft Fabric capacity (tie-breaker preference)
+    # -------------------------------------------------------------------------
+    if category.startswith("analytics.fabric"):
+        if price_type == "consumption":
+            arm = _low(_g(item, "armSkuName", "arm_sku_name"))
+            if arm == "fabric_capacity_cu_hour":
+                score += 40
 
     # -------------------------------------------------------------------------
     # 11) Detect Dev/Test promo meters
