@@ -84,21 +84,6 @@ Service-specific SKU rules (common pitfalls we saw in debugging):
   - DO NOT include add-on meters like "Zone Redundancy", "Long-term retention (LTR)", or backup add-ons unless the user asked for them.
   - Use notes to specify intent (e.g., "zone redundancy") only when requested.
 
-- analytics.fabric (Microsoft Fabric):
-  - Model Fabric storage ONLY via the Fabric capacity resource metrics/notes (do NOT add separate Storage/ADLS/Blob resources for OneLake unless the user explicitly asks).
-  - To avoid ambiguous Fabric capacity meters, ALWAYS provide matching hints:
-    * service_name: "Microsoft Fabric"
-    * product_name_contains: ["Fabric Capacity"]
-    * arm_sku_name_contains: ["Fabric_Capacity_CU_Hour"]  (PAYG capacity CU-hour)
-    * meter_name_contains: ["Compute Capacity Usage"]
-  - If you propose a reserved Fabric capacity (e.g., F64), set billing_model="reserved" and use sku_name_contains like ["Fabric F64"].
-
-- storage.files (Azure Files / File Storage):
-  - Avoid generic "Storage Discovery" / "Defender" / scanning meters.
-  - Prefer hints that clearly target Azure Files (examples):
-    * product_name_contains: ["Files v2"] or ["File Storage"]
-    * meter_name_contains: ["Data Stored"] (plus redundancy in notes: LRS/ZRS/GRS only if requested)
-
 You MUST output a JSON object (valid JSON), with this shape:
 
 {{
