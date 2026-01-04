@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 from typing import Dict
 
 from ..config import HOURS_PROD
@@ -97,6 +99,15 @@ def _default_workload_type(category: str) -> str:
 
 
 def validate_plan_schema(plan: dict) -> dict:
+    """Normalize planner JSON into a shape that downstream pricing can rely on.
+
+    NOTE: This function is intentionally conservative. It does not invent SKUs/meters;
+    it only:
+      - canonicalizes category/service_name,
+      - normalizes field types,
+      - applies safe defaults.
+    """
+
     if not isinstance(plan, dict):
         return {"metadata": {}, "scenarios": []}
 
@@ -119,6 +130,8 @@ def validate_plan_schema(plan: dict) -> dict:
             if not isinstance(res, dict):
                 continue
             res.setdefault("id", "res")
+
+            # --- Category / ServiceName canonicalization ---
             res["category"] = _canonical_category(res.get("category"))
             candidates = _category_candidates(res["category"])
             service_info = canonicalize_service_name(
@@ -127,30 +140,41 @@ def validate_plan_schema(plan: dict) -> dict:
             res["service_name_raw"] = res.get("service_name_raw") or res.get("service_name")
             res["service_name_status"] = service_info.get("status")
             res["service_name_suggestions"] = _list_field(service_info.get("suggestions"))
-            if service_info["canonical"] == "UNKNOWN_SERVICE":
+            if service_info.get("canonical") == "UNKNOWN_SERVICE":
                 res["service_name"] = "UNKNOWN_SERVICE"
             else:
                 res["service_name"] = service_info.get("canonical")
-        res.setdefault("arm_sku_name", None)
-        # Normalize: if planner used nested sku.armSkuName, lift it to arm_sku_name so
-        # downstream code can be consistent.
-        if not res.get("arm_sku_name"):
-            sku = res.get("sku") or {}
-            if isinstance(sku, dict) and sku.get("armSkuName"):
-                res["arm_sku_name"] = sku.get("armSkuName")
+
+            # --- Safe defaults / normalization ---
+            res.setdefault("arm_sku_name", None)
+
+            # Normalize: if planner used nested sku.armSkuName, lift it to arm_sku_name so
+            # downstream code can be consistent.
+            if not res.get("arm_sku_name"):
+                sku = res.get("sku") or {}
+                if isinstance(sku, dict) and sku.get("armSkuName"):
+                    res["arm_sku_name"] = sku.get("armSkuName")
+
             res.setdefault("region", None)
             res.setdefault("quantity", 1)
             res.setdefault("hours_per_month", HOURS_PROD)
             res.setdefault("billing_model", "payg")
             res.setdefault("workload_type", _default_workload_type(res["category"]))
             res.setdefault("criticality", "prod")
-            res.setdefault("os_type", "linux" if res["category"].startswith("compute") else "na")
+            res.setdefault(
+                "os_type",
+                "linux" if (res["category"].startswith("compute.")) else "na",
+            )
+
+            # Hint arrays must always be lists.
             res["product_name_contains"] = _list_field(res.get("product_name_contains"))
             res["sku_name_contains"] = _list_field(res.get("sku_name_contains"))
             res["meter_name_contains"] = _list_field(res.get("meter_name_contains"))
             res["arm_sku_name_contains"] = _list_field(res.get("arm_sku_name_contains"))
+
             metrics = res.get("metrics") if isinstance(res.get("metrics"), dict) else {}
             res["metrics"] = metrics
+
             if res["category"].startswith("storage") and "storage_gb" not in metrics:
                 metrics["storage_gb"] = 100.0
             if res["category"].startswith("network") and "egress_gb" not in metrics:
@@ -159,6 +183,7 @@ def validate_plan_schema(plan: dict) -> dict:
                 metrics["vcores"] = 2
             if res["category"].startswith("cache.redis") and "throughput_mbps" not in metrics:
                 metrics["throughput_mbps"] = 20
+
             res.setdefault("notes", "")
             res.setdefault("source", "llm-inferred")
 
