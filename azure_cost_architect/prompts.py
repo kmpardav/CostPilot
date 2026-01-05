@@ -205,6 +205,16 @@ RULES & BEST PRACTICES (VERY IMPORTANT):
   - It is OK to output it as a resource; the pricing layer may treat it as zero cost.
 
 Return ONLY valid JSON. No Markdown or commentary outside JSON.
+
+If you are unsure about the correct category for a resource:
+- DO NOT invent a category
+- DO NOT use generic values like "other"
+- Use the special internal category "__unclassified__"
+
+Resources marked "__unclassified__" must still include:
+- name
+- service_name
+- description
 """
 
 PROMPT_PLANNER_USER_TEMPLATE = """
@@ -250,6 +260,11 @@ Your goals:
   - Backup vault & Site Recovery
   - Network egress / NAT / Gateways / Front Door
   - Where costs may scale with data volume or throughput.
+- If the plan contains resources with category "__unclassified__":
+  - Add a dedicated section titled "Unclassified Resources (Not Priced)"
+  - Clearly state that these resources were detected but not priced
+  - Explain that taxonomy coverage is incomplete for these services
+  - Do NOT include unclassified resources in total cost calculations.
 - If compare_blockers is present or any scenario has totals.comparable = false, add a prominent banner called "Pricing completeness" listing blockers (scenario, resource_id, category, reason, requested_sku, chosen meter). Suppress delta tables when delta_vs_baseline.status == "not_comparable".
 - Use totals.required.priced_total / estimated_total for comparisons; overall totals may include optional services.
 

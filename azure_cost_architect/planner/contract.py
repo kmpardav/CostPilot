@@ -17,6 +17,8 @@ from ..utils.knowledgepack import (
 )
 from ..utils.sku_matcher import load_sku_alias_index, match_sku, normalize_sku
 
+FALLBACK_CATEGORY = "__unclassified__"
+
 
 @dataclass
 class PlanValidationResult:
@@ -188,14 +190,26 @@ def validate_pricing_contract(plan: dict) -> PlanValidationResult:
     rule_changes: List[str] = []
     canonical_mappings: List[Dict[str, object]] = []
     errors: List[Dict[str, object]] = []
+    has_unclassified = False
 
     allowed_services = set(get_allowed_service_names())
 
     for scen in normalized.get("scenarios", []):
         for res in scen.get("resources", []):
             rid = res.get("id") or "resource"
-            raw = res.get("service_name_raw") or res.get("service_name") or res.get("category") or ""
+            raw_category = res.get("category")
             registry = _get_registry()
+            if not registry.get(raw_category):
+                res["original_category"] = raw_category
+                res["category"] = FALLBACK_CATEGORY
+                res["pricing_status"] = "unclassified"
+                res.setdefault("pricing_notes", [])
+                res["pricing_notes"].append(
+                    f"Category '{raw_category}' not found in taxonomy registry; marked as unclassified."
+                )
+                has_unclassified = True
+                continue
+            raw = res.get("service_name_raw") or res.get("service_name") or res.get("category") or ""
             registry.require(res.get("category"))
             candidates = [
                 src.service_name
@@ -230,6 +244,10 @@ def validate_pricing_contract(plan: dict) -> PlanValidationResult:
                 errors=errors,
                 rule_changes=rule_changes,
             )
+
+    if has_unclassified:
+        normalized.setdefault("meta", {})
+        normalized["meta"]["has_unclassified_resources"] = True
 
     return PlanValidationResult(
         plan=normalized,
