@@ -1654,6 +1654,38 @@ def _price_blob_storage(
 
 
 # ------------------------------------------------------------
+# Helpers: tolerate planner providing "contains" hints as str OR list[str]
+# ------------------------------------------------------------
+
+def _as_list_str(v: Any) -> List[str]:
+    """Normalize a value that may be str|list|None to a list[str]."""
+    if v is None:
+        return []
+    if isinstance(v, list):
+        return [str(x) for x in v if x is not None and str(x).strip() != ""]
+    s = str(v).strip()
+    return [s] if s else []
+
+
+def _contains_token(v: Any, token: str) -> bool:
+    """True if any normalized string contains token (case-insensitive)."""
+    t = (token or "").lower()
+    for s in _as_list_str(v):
+        if t in s.lower():
+            return True
+    return False
+
+
+def _startswith_token(v: Any, token: str) -> bool:
+    """True if any normalized string startswith token (case-insensitive)."""
+    t = (token or "").lower()
+    for s in _as_list_str(v):
+        if s.lower().startswith(t):
+            return True
+    return False
+
+
+# ------------------------------------------------------------
 # Service-specific pricing expansions (multi-meter services)
 # ------------------------------------------------------------
 
@@ -1678,12 +1710,16 @@ def _expand_pricing_resources(resources: List[Dict[str, Any]]) -> List[Dict[str,
         if raw_cat.startswith("network.firewall"):
             base_id = resource.get("id") or "azfw"
             hours = float(resource.get("hours_per_month") or 730)
+            # sku_name_contains may be list; keep the original hint if present, else default
+            sku_hint = resource.get("sku_name_contains")
+            if not _as_list_str(sku_hint):
+                sku_hint = "Standard"
             expanded.append(
                 _clone_resource(
                     resource,
                     new_id=f"{base_id}-deployment",
                     meter_name_contains="Deployment",
-                    sku_name_contains=(resource.get("sku_name_contains") or "Standard"),
+                    sku_name_contains=sku_hint,
                     units=hours,
                     _pricing_component="firewall_deployment",
                 )
@@ -1699,8 +1735,9 @@ def _expand_pricing_resources(resources: List[Dict[str, Any]]) -> List[Dict[str,
             continue
 
         # Event Hubs Premium: Processing Unit hours + Extended Retention storage (GB-month)
-        if raw_cat.startswith("messaging.eventhubs") and "Premium" in (
-            resource.get("sku_name_contains") or resource.get("sku") or ""
+        if raw_cat.startswith("messaging.eventhubs") and (
+            _contains_token(resource.get("sku_name_contains"), "Premium")
+            or _contains_token(resource.get("sku"), "Premium")
         ):
             base_id = resource.get("id") or "eventhubs"
             qty = float(resource.get("quantity") or 1)
@@ -1735,9 +1772,7 @@ def _expand_pricing_resources(resources: List[Dict[str, Any]]) -> List[Dict[str,
             continue
 
         # Azure Functions Consumption: Executions + Execution Time (GB-seconds)
-        if raw_cat.startswith("function") and (resource.get("sku_name_contains") or "").lower().startswith(
-            "consumption"
-        ):
+        if raw_cat.startswith("function") and _startswith_token(resource.get("sku_name_contains"), "Consumption"):
             base_id = resource.get("id") or "functions"
             metrics = dict(resource.get("metrics") or {})
             if metrics.get("executions_per_month") is None and metrics.get("operations_per_month") is not None:
