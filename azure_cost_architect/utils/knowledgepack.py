@@ -10,8 +10,12 @@ from functools import lru_cache
 from pathlib import Path
 from typing import Dict, List
 
+from azure_cost_architect.taxonomy.registry import CanonicalService, TaxonomyRegistry
+
 LOG = logging.getLogger(__name__)
 _DEFAULT_CONTEXT_PATH = Path(__file__).resolve().parents[2] / "out_kp" / "llm_context.json"
+_DEFAULT_TAXONOMY_PATH = Path(__file__).resolve().parents[2] / "taxonomy.json"
+_FALLBACK_TAXONOMY_PATH = Path(__file__).resolve().parents[2] / "out_kp" / "taxonomy.json"
 
 # Common alias -> Azure Retail Prices API serviceName canonical values
 SERVICE_NAME_ALIASES: Dict[str, str] = {
@@ -41,6 +45,25 @@ def load_llm_context() -> Dict:
     except Exception as exc:
         LOG.warning("Failed to load llm_context.json from %s: %s", path, exc)
         return {"allowed_service_names": [], "service_metadata": {}}
+
+
+@lru_cache(maxsize=1)
+def load_taxonomy() -> Dict:
+    """Load taxonomy.json (cached)."""
+    env_path = os.getenv("AZURECOST_TAXONOMY")
+    if env_path:
+        path = Path(env_path)
+    else:
+        path = _DEFAULT_TAXONOMY_PATH if _DEFAULT_TAXONOMY_PATH.exists() else _FALLBACK_TAXONOMY_PATH
+
+    if not path.exists():
+        raise FileNotFoundError(f"taxonomy.json not found at {path}")
+
+    try:
+        return json.loads(path.read_text(encoding="utf-8"))
+    except Exception as exc:
+        LOG.warning("Failed to load taxonomy.json from %s: %s", path, exc)
+        return {}
 
 
 def get_allowed_service_names() -> List[str]:
@@ -179,9 +202,76 @@ def canonicalize_service_name(
     }
 
 
+def build_taxonomy_registry(taxonomy: dict) -> TaxonomyRegistry:
+    registry = TaxonomyRegistry()
+
+    families = None
+    if isinstance(taxonomy, dict):
+        families = taxonomy.get("families")
+    elif isinstance(taxonomy, list):
+        families = taxonomy
+
+    if families:
+        for family in families:
+            for service in family.get("services", []):
+                category = service.get("category")
+                if not category:
+                    continue
+
+                registry.register(
+                    CanonicalService(
+                        canonical_key=service["key"],
+                        taxonomy_path=[
+                            family["name"],
+                            service["name"],
+                        ],
+                        category=category,
+                        retail_service_name=service.get("retail_service_name", service["name"]),
+                        region_mode=service.get("region_mode", "regional"),
+                        pricing_strategy=service.get("pricing_strategy", "estimate_only"),
+                        preferred_meter_keywords=service.get("preferred_meter_keywords", []),
+                        disallowed_meter_keywords=service.get("disallowed_meter_keywords", []),
+                        fallback_strategy=service.get("fallback_strategy", "estimate"),
+                    )
+                )
+
+        return registry
+
+    try:
+        from ..pricing.catalog_sources import CATEGORY_CATALOG_SOURCES
+    except Exception:
+        return registry
+
+    for category, sources in (CATEGORY_CATALOG_SOURCES or {}).items():
+        service_name = None
+        region_mode = "regional"
+        if sources:
+            source = sources[0]
+            service_name = getattr(source, "service_name", None)
+            region_mode = getattr(source, "arm_region_mode", "regional") or "regional"
+
+        registry.register(
+            CanonicalService(
+                canonical_key=category,
+                taxonomy_path=[category],
+                category=category,
+                retail_service_name=service_name or category,
+                region_mode=region_mode,
+                pricing_strategy="estimate_only",
+                preferred_meter_keywords=[],
+                disallowed_meter_keywords=[],
+                fallback_strategy="estimate",
+            )
+        )
+
+    return registry
+
+
 __all__ = [
     "load_llm_context",
+    "load_taxonomy",
     "get_allowed_service_names",
     "get_compact_service_metadata",
     "canonicalize_service_name",
+    "build_taxonomy_registry",
 ]

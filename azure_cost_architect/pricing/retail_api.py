@@ -9,8 +9,10 @@ from urllib.parse import urlencode, urlparse, urlunparse, parse_qsl, quote
 from rich.console import Console
 
 from ..config import RETAIL_API_URL
+from .http_policy import HttpRetryPolicy
 
 console = Console()
+_retry_policy = HttpRetryPolicy()
 
 # --------------------------------------------------------------------
 # Resilience helpers (429/5xx retries, exponential backoff)
@@ -59,6 +61,9 @@ def _sync_get_json_with_retries(
     for attempt in range(1, max_attempts + 1):
         try:
             resp = client.get(url)
+            if resp.status_code == 429:
+                _retry_policy.wait(attempt - 1, _parse_retry_after_seconds(resp.headers))
+                continue
             if _is_transient_status(resp.status_code):
                 ra = _parse_retry_after_seconds(resp.headers) or 0.0
                 backoff = min(30.0, (2 ** (attempt - 1)) * 0.5)
@@ -82,6 +87,9 @@ async def _async_get_json_with_retries(
     for attempt in range(1, max_attempts + 1):
         try:
             resp = await client.get(url)
+            if resp.status_code == 429:
+                await _retry_policy.wait_async(attempt - 1, _parse_retry_after_seconds(resp.headers))
+                continue
             if _is_transient_status(resp.status_code):
                 ra = _parse_retry_after_seconds(resp.headers) or 0.0
                 backoff = min(30.0, (2 ** (attempt - 1)) * 0.5)
