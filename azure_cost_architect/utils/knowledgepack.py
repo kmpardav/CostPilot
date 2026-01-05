@@ -13,6 +13,22 @@ from typing import Dict, List
 LOG = logging.getLogger(__name__)
 _DEFAULT_CONTEXT_PATH = Path(__file__).resolve().parents[2] / "out_kp" / "llm_context.json"
 
+# Common alias -> Azure Retail Prices API serviceName canonical values
+SERVICE_NAME_ALIASES: Dict[str, str] = {
+    # Marketing / renamed services
+    "microsoft purview": "Azure Purview",
+    "azure purview": "Azure Purview",
+    "microsoft sentinel": "Sentinel",
+    "microsoft defender for cloud": "Microsoft Defender for Cloud",
+    "entra id": "Azure Active Directory",
+    "microsoft entra id": "Azure Active Directory",
+    "azure ad": "Azure Active Directory",
+    "azure ai services": "Cognitive Services",
+    "azure cognitive services": "Cognitive Services",
+    "api management": "API Management",
+    "azure api management": "API Management",
+}
+
 
 @lru_cache(maxsize=1)
 def load_llm_context() -> Dict:
@@ -73,6 +89,9 @@ def canonicalize_service_name(
     """
 
     raw = (name or "").strip()
+    alias = SERVICE_NAME_ALIASES.get(raw.lower())
+    if alias:
+        raw = alias
     if not raw:
         return {"canonical": "UNKNOWN_SERVICE", "status": "missing", "suggestions": []}
 
