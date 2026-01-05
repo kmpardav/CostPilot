@@ -1654,6 +1654,160 @@ def _price_blob_storage(
 
 
 # ------------------------------------------------------------
+# Service-specific pricing expansions (multi-meter services)
+# ------------------------------------------------------------
+
+def _clone_resource(base: Dict[str, Any], *, new_id: str, **updates: Any) -> Dict[str, Any]:
+    resource = dict(base)
+    resource["id"] = new_id
+    resource.update(updates)
+    return resource
+
+
+def _expand_pricing_resources(resources: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
+    """Expand logical resources into multiple pricing resources where Azure bills with multiple meters.
+
+    This keeps the rest of the pipeline simple (each resource -> one meter), while allowing
+    accurate modeling for services like Azure Firewall, Event Hubs Premium, and Functions Consumption.
+    """
+    expanded: List[Dict[str, Any]] = []
+    for resource in resources:
+        raw_cat = (resource.get("category") or "other").lower()
+
+        # Azure Firewall: Deployment (hourly) + Data Processed (GB)
+        if raw_cat.startswith("network.firewall"):
+            base_id = resource.get("id") or "azfw"
+            hours = float(resource.get("hours_per_month") or 730)
+            expanded.append(
+                _clone_resource(
+                    resource,
+                    new_id=f"{base_id}-deployment",
+                    meter_name_contains="Deployment",
+                    sku_name_contains=(resource.get("sku_name_contains") or "Standard"),
+                    units=hours,
+                    _pricing_component="firewall_deployment",
+                )
+            )
+            expanded.append(
+                _clone_resource(
+                    resource,
+                    new_id=f"{base_id}-data",
+                    meter_name_contains="Data Processed",
+                    _pricing_component="firewall_data_processed",
+                )
+            )
+            continue
+
+        # Event Hubs Premium: Processing Unit hours + Extended Retention storage (GB-month)
+        if raw_cat.startswith("messaging.eventhubs") and "Premium" in (
+            resource.get("sku_name_contains") or resource.get("sku") or ""
+        ):
+            base_id = resource.get("id") or "eventhubs"
+            qty = float(resource.get("quantity") or 1)
+            hours = float(resource.get("hours_per_month") or 730)
+            metrics = resource.get("metrics") or {}
+            retention_gb = float(metrics.get("storage_gb") or 0.0)
+
+            expanded.append(
+                _clone_resource(
+                    resource,
+                    new_id=f"{base_id}-pu",
+                    service_name="Event Hubs",
+                    sku_name_contains="Premium",
+                    meter_name_contains="Premium Processing Unit",
+                    quantity=qty,
+                    hours_per_month=hours,
+                    _pricing_component="eventhubs_pu_hours",
+                )
+            )
+            if retention_gb > 0:
+                expanded.append(
+                    _clone_resource(
+                        resource,
+                        new_id=f"{base_id}-retention",
+                        service_name="Event Hubs",
+                        sku_name_contains="Premium",
+                        meter_name_contains="Extended Retention",
+                        metrics=dict(metrics, storage_gb=retention_gb),
+                        _pricing_component="eventhubs_extended_retention",
+                    )
+                )
+            continue
+
+        # Azure Functions Consumption: Executions + Execution Time (GB-seconds)
+        if raw_cat.startswith("function") and (resource.get("sku_name_contains") or "").lower().startswith(
+            "consumption"
+        ):
+            base_id = resource.get("id") or "functions"
+            metrics = dict(resource.get("metrics") or {})
+            if metrics.get("executions_per_month") is None and metrics.get("operations_per_month") is not None:
+                metrics["executions_per_month"] = metrics.get("operations_per_month")
+
+            expanded.append(
+                _clone_resource(
+                    resource,
+                    new_id=f"{base_id}-exec",
+                    service_name="Functions",
+                    meter_name_contains="Total Executions",
+                    metrics=metrics,
+                    _pricing_component="functions_executions",
+                )
+            )
+            expanded.append(
+                _clone_resource(
+                    resource,
+                    new_id=f"{base_id}-time",
+                    service_name="Functions",
+                    meter_name_contains="Execution Time",
+                    metrics=metrics,
+                    _pricing_component="functions_execution_time",
+                )
+            )
+            continue
+
+        expanded.append(resource)
+
+    return expanded
+
+
+def _apply_service_specific_hints(resource: Dict[str, Any]) -> None:
+    """Tighten matching hints for known services to avoid cross-service false matches."""
+    raw_cat = (resource.get("category") or "other").lower()
+    svc = (resource.get("service_name") or "").strip()
+
+    # API Management tiers
+    if ("api management" in svc.lower()) or raw_cat.startswith("app.api_management") or raw_cat.startswith(
+        "network.apim"
+    ):
+        resource.setdefault("service_name", "API Management")
+        if not resource.get("meter_name_contains"):
+            resource["meter_name_contains"] = "Unit"
+        if not resource.get("sku_name_contains") and resource.get("sku"):
+            resource["sku_name_contains"] = str(resource.get("sku"))
+
+    # Sentinel – billed per GB analyzed
+    if svc.lower() in {"sentinel", "microsoft sentinel"} or raw_cat.startswith("security.siem") or raw_cat.startswith(
+        "monitoring.sentinel"
+    ):
+        resource["service_name"] = "Sentinel"
+        resource.setdefault("meter_name_contains", "Analysis")
+
+    # Purview (data governance)
+    if "purview" in svc.lower():
+        resource["service_name"] = "Azure Purview"
+        resource.setdefault("meter_name_contains", "vCore")
+        vcores = resource.get("vcores")
+        if (not resource.get("quantity")) and vcores:
+            resource["quantity"] = vcores
+
+    # Defender for Cloud – priced per protected node/resource
+    if "defender" in svc.lower():
+        resource["service_name"] = "Microsoft Defender for Cloud"
+        resource.setdefault("meter_name_contains", "Standard Node")
+        resource.setdefault("sku_name_contains", "Standard")
+
+
+# ------------------------------------------------------------
 # Pricing ενός resource από local catalog + cache
 # ------------------------------------------------------------
 
@@ -1804,6 +1958,24 @@ async def fetch_price_for_resource(
                 scenario_id=scenario.get("id"),
                 resource_id=resource.get("id"),
             )
+
+        _apply_service_specific_hints(resource)
+
+        svc = (resource.get("service_name") or "").strip()
+        if svc and svc.upper() != "UNKNOWN_SERVICE":
+            exact = [it for it in all_items if (it.get("serviceName") or "").strip() == svc]
+            if exact:
+                all_items = exact
+                if trace:
+                    trace.log(
+                        "pricing_catalog_filtered_by_service",
+                        {
+                            "service_name": svc,
+                            "catalog_items_after": len(all_items),
+                        },
+                        scenario_id=scenario.get("id"),
+                        resource_id=resource.get("id"),
+                    )
 
         if not all_items:
             msg = (
@@ -2480,6 +2652,8 @@ async def enrich_plan_with_prices(
 
     for scenario in scenarios:
         resources = scenario.get("resources") or []
+        resources = _expand_pricing_resources(resources)
+        scenario["resources"] = resources
         _LOGGER.info(
             "Enriching scenario '%s' (id=%s) with %d resources.",
             scenario.get("label") or scenario.get("id"),

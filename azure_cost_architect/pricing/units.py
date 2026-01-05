@@ -72,6 +72,34 @@ def compute_units(resource: dict, unit_of_measure: str) -> float:
 
         return qty * hours
 
+    # ---- Functions execution time meters (GB-seconds) ----
+    # Azure Functions consumption includes a meter for execution time, typically measured in GB-seconds.
+    # We derive it from:
+    #   executions_per_month * avg_duration_seconds * memory_gb
+    if "gb" in uom and ("second" in uom or "sec" in uom) and (
+        "gb-second" in uom or "gb second" in uom or "gbsec" in uom
+    ):
+        execs = float(
+            metrics.get("executions_per_month", 0.0)
+            or metrics.get("operations_per_month", 0.0)
+            or 0.0
+        )
+        avg_ms = float(metrics.get("avg_duration_ms", 0.0) or 0.0)
+        avg_s = avg_ms / 1000.0 if avg_ms > 0 else float(metrics.get("avg_duration_s", 0.0) or 0.0)
+        if avg_s <= 0:
+            avg_s = 0.5  # conservative default when not provided
+        mem_mb = float(metrics.get("memory_mb", 0.0) or 0.0)
+        mem_gb = (mem_mb / 1024.0) if mem_mb > 0 else float(metrics.get("memory_gb", 0.0) or 0.0)
+        if mem_gb <= 0:
+            mem_gb = 0.5  # conservative default 512MB
+        gb_seconds = float(metrics.get("gb_seconds", 0.0) or 0.0)
+        if gb_seconds > 0:
+            return gb_seconds
+        return max(execs, 0.0) * max(avg_s, 0.0) * max(mem_gb, 0.0)
+
+    if "gb-month" in uom or ("gb" in uom and "month" in uom):
+        return max(storage_gb, 0.0)
+
     # ---- GB-based meters (storage / egress) ----
     if "gb" in uom:
         base = egress_gb if category.startswith("network") else storage_gb
@@ -98,6 +126,14 @@ def compute_units(resource: dict, unit_of_measure: str) -> float:
             except ValueError:
                 pass
         return max(base, 0.0)
+
+    # ---- per node / resource ----
+    if "node" in uom:
+        # Defender for Cloud and some security meters are priced per protected node/resource.
+        nodes = metrics.get("nodes") or metrics.get("protected_nodes") or None
+        if nodes is not None:
+            return float(nodes)
+        return float(qty or 1)
 
     # ---- RU/s (Cosmos, κλπ) ----
     if "ru/s" in uom.replace(" ", ""):
