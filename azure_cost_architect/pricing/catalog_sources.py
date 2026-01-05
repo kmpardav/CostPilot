@@ -171,6 +171,8 @@ CATEGORY_CATALOG_SOURCES: Dict[str, List[CatalogSource]] = {
     # App Service
     "appservice": [CatalogSource("Azure App Service")],
     "appservice.plan": [CatalogSource("Azure App Service")],
+    # Functions
+    "function": [CatalogSource("Functions")],
     # Storage
     "storage.blob": [CatalogSource("Storage")],
     "storage.files": [CatalogSource("Storage")],
@@ -192,6 +194,11 @@ CATEGORY_CATALOG_SOURCES: Dict[str, List[CatalogSource]] = {
     "messaging.servicebus": [CatalogSource("Service Bus")],
     "messaging.eventgrid": [CatalogSource("Event Grid")],
     "integration.apim": [CatalogSource("API Management")],
+
+    # (Optional) Security/Governance — will resolve only if in allowed serviceName universe
+    "security.sentinel": [CatalogSource("Microsoft Sentinel")],
+    "security.defender": [CatalogSource("Microsoft Defender for Cloud")],
+    "governance.purview": [CatalogSource("Microsoft Purview")],
     # Security / monitoring / mgmt
     "monitoring.loganalytics": [CatalogSource("Log Analytics")],
     "security.keyvault": [CatalogSource("Key Vault")],

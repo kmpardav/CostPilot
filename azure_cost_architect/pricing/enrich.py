@@ -1772,9 +1772,41 @@ def _expand_pricing_resources(resources: List[Dict[str, Any]]) -> List[Dict[str,
             continue
 
         # Azure Functions Consumption: Executions + Execution Time (GB-seconds)
-        if raw_cat.startswith("function") and _startswith_token(resource.get("sku_name_contains"), "Consumption"):
+        # Be tolerant: planner may emit sku_name_contains as str OR list, and may include "consumption" anywhere.
+        if raw_cat.startswith("function") and (
+            _startswith_token(resource.get("sku_name_contains"), "Consumption")
+            or _contains_token(resource.get("sku_name_contains"), "Consumption")
+        ):
             base_id = resource.get("id") or "functions"
             metrics = dict(resource.get("metrics") or {})
+
+            # Pull common workload hints from top-level fields (if planner didn't put them under metrics)
+            if metrics.get("executions_per_month") is None:
+                metrics["executions_per_month"] = (
+                    resource.get("monthly_executions")
+                    or resource.get("executions_per_month")
+                    or resource.get("invocations_per_month")
+                    or metrics.get("operations_per_month")
+                    or 5_000_000
+                )
+            if metrics.get("avg_duration_ms") is None:
+                metrics["avg_duration_ms"] = (
+                    resource.get("avg_duration_ms")
+                    or (
+                        float(resource.get("avg_duration_seconds")) * 1000.0
+                        if resource.get("avg_duration_seconds")
+                        else None
+                    )
+                    or 200.0
+                )
+            if metrics.get("avg_memory_gb") is None:
+                mem_gb = resource.get("avg_memory_gb")
+                if mem_gb is None and resource.get("avg_memory_mb") is not None:
+                    try:
+                        mem_gb = float(resource.get("avg_memory_mb")) / 1024.0
+                    except Exception:
+                        mem_gb = None
+                metrics["avg_memory_gb"] = mem_gb if mem_gb is not None else 0.5
             if metrics.get("executions_per_month") is None and metrics.get("operations_per_month") is not None:
                 metrics["executions_per_month"] = metrics.get("operations_per_month")
 
