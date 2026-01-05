@@ -52,6 +52,12 @@ _CATEGORY_MAP: Dict[str, str] = {
     "vpn": "network.vpngw",
     "er": "network.er",
     "public_ip": "network.public_ip",
+    "apim": "integration.apim",
+    "api_management": "integration.apim",
+    "sentinel": "security.sentinel",
+    "defender": "security.defender",
+    "defender_for_cloud": "security.defender",
+    "purview": "governance.purview",
 }
 
 
