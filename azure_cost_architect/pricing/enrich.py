@@ -27,6 +27,8 @@ from .normalize import normalize_service_name, sku_keyword_match
 from .catalog import load_catalog
 from .scoring import score_price_item, select_best_candidate
 from .units import compute_units
+
+FALLBACK_CATEGORY = "__unclassified__"
 _LOGGER = logging.getLogger(__name__)
 _taxonomy_registry = None
 
@@ -307,7 +309,11 @@ def aggregate_scenario_costs(
     required_mismatch_count = 0
     required_reservation_ambiguous_count = 0
     required_estimated_count = 0
-    total_resources = len(scenario.get("resources", []))
+    total_resources = sum(
+        1
+        for res in scenario.get("resources", [])
+        if (res.get("category") or "").lower() != FALLBACK_CATEGORY
+    )
     compare_skip_reason: Optional[str] = None
     required_categories = normalize_required_categories(
         required_categories
@@ -328,6 +334,9 @@ def aggregate_scenario_costs(
         status = (res.get("pricing_status") or "priced").lower()
         monthly = res.get("monthly_cost")
         yearly = res.get("yearly_cost")
+
+        if (cat or "").lower() == FALLBACK_CATEGORY or status == "unclassified":
+            continue
 
         is_required = _is_required(cat)
 
@@ -1896,6 +1905,15 @@ async def fetch_price_for_resource(
     trace=None,
 ) -> None:
     raw_category = resource.get("category") or "other"
+    if (raw_category or "").lower() == FALLBACK_CATEGORY:
+        resource["pricing_status"] = "unclassified"
+        resource["monthly_cost"] = None
+        resource["yearly_cost"] = None
+        resource.setdefault("pricing_notes", [])
+        resource["pricing_notes"].append(
+            "Pricing skipped because resource category is unclassified."
+        )
+        return
     category = _normalize_category_for_scoring(raw_category)
     service_name = normalize_service_name(raw_category, resource.get("service_name"))
     arm_sku_name = resource.get("arm_sku_name") or resource.get("armSkuName") or None
