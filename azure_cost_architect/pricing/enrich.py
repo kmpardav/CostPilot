@@ -21,12 +21,21 @@ from ..utils.categories import (
     canonical_required_category,
     normalize_required_categories,
 )
+from ..utils.knowledgepack import build_taxonomy_registry, load_taxonomy
 from .cache import build_cache_key, cached_entry_is_usable, get_cached_price, set_cached_price
 from .normalize import normalize_service_name, sku_keyword_match
 from .catalog import load_catalog
 from .scoring import score_price_item, select_best_candidate
 from .units import compute_units
 _LOGGER = logging.getLogger(__name__)
+_taxonomy_registry = None
+
+
+def _get_registry():
+    global _taxonomy_registry
+    if _taxonomy_registry is None:
+        _taxonomy_registry = build_taxonomy_registry(load_taxonomy())
+    return _taxonomy_registry
 
 # -----------------------------------------------------------------------------
 # Tier-2: Pricing confidence semantics
@@ -447,7 +456,6 @@ def aggregate_scenario_costs(
                 req_entry["yearly_estimated"] += yearly
                 req_entry["monthly_with_estimates"] += monthly
                 req_entry["yearly_with_estimates"] += yearly
-                blocker_reason = "estimated_required"
         else:
             # Unknown status is treated as missing to avoid undercounting.
             missing_count += 1
@@ -497,8 +505,6 @@ def aggregate_scenario_costs(
     required_comparable = (
         not required_blockers
         and required_monthly_missing == 0
-        and required_monthly_estimated == 0
-        and required_estimated_count == 0
     )
     is_complete = required_comparable
     comparable = required_comparable
@@ -1646,6 +1652,7 @@ def _price_blob_storage(
             "monthly_cost": round(total_monthly, 2),
             "yearly_cost": round(total_monthly * 12, 2),
             "pricing_status": "estimated" if chosen else "missing",
+            "pricing_confidence": "medium" if chosen else "low",
             "error": "" if chosen else "Blob tier meters not found",
             "sku_candidates": chosen,
         }
@@ -1898,6 +1905,10 @@ async def fetch_price_for_resource(
     resource["service_name"] = service_name
     resource["region"] = region
 
+    registry = _get_registry()
+    svc = registry.require(raw_category)
+    strategy = svc.pricing_strategy
+
     res_id = (resource.get("id") or "").lower()
     adjudication_enabled = bool(adjudicator and adjudicator.get("enabled"))
     adjudicate_topn = int(
@@ -1965,7 +1976,29 @@ async def fetch_price_for_resource(
         return
 
     # Ειδικές διαδρομές pricing
-    if category.startswith("storage.blob"):
+    if strategy == "control_plane_zero":
+        resource.update(
+            {
+                "unit_price": 0.0,
+                "unit_of_measure": "Control plane (no direct charge)",
+                "currency_code": currency,
+                "sku_name": resource.get("arm_sku_name") or "",
+                "meter_name": "",
+                "product_name": resource.get("service_name") or "",
+                "sku_candidates": [],
+                "pricing_status": "priced",
+                "pricing_confidence": "high",
+                "units": float(resource.get("quantity", 1.0)),
+                "monthly_cost": 0.0,
+                "yearly_cost": 0.0,
+                "error": "",
+            }
+        )
+        if debug:
+            _LOGGER.debug("Resource %s is control-plane-only – assigning 0 cost.", resource.get("id"))
+        return
+
+    if strategy == "storage_tiered" or category.startswith("storage.blob"):
         if _price_blob_storage(resource, category, region, currency):
             return
 
@@ -2450,6 +2483,7 @@ async def fetch_price_for_resource(
                 "reservationTerm": price_info.get("reservationTerm"),
                 "sku_candidates": price_info.get("sku_candidates", []),
                 "pricing_status": pricing_status,
+                "pricing_confidence": "medium" if pricing_status == "estimated" else "high",
                 "error": "",
             }
         )

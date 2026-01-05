@@ -149,7 +149,7 @@ def test_appservice_is_treated_as_compute_required():
     assert totals["comparable"] is False
 
 
-def test_required_estimated_blocks_comparability():
+def test_required_estimated_allows_comparability():
     scenario = {
         "id": "baseline",
         "resources": [
@@ -167,9 +167,9 @@ def test_required_estimated_blocks_comparability():
         scenario, currency="USD", required_categories=["compute", "db"]
     )
 
-    assert totals["required"]["comparable"] is False
-    assert totals["compare_skip_reason"] == "estimated_required"
-    assert totals["required"]["blockers"][0]["resource_id"] == "vm1"
+    assert totals["required"]["comparable"] is True
+    assert totals["compare_skip_reason"] is None
+    assert not totals["required"]["blockers"]
 
 
 def test_adjudicator_unresolved_counts_as_blocker():
@@ -233,4 +233,3 @@ from azure_cost_architect.pricing.enrich import (
     aggregate_scenario_costs,
     attach_baseline_deltas,
 )
-

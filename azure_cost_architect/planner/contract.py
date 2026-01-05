@@ -9,7 +9,12 @@ from typing import Dict, List
 from .rules import apply_planner_rules
 from .validation import validate_plan_schema
 from ..pricing.catalog_sources import get_catalog_sources
-from ..utils.knowledgepack import canonicalize_service_name, get_allowed_service_names
+from ..utils.knowledgepack import (
+    build_taxonomy_registry,
+    canonicalize_service_name,
+    get_allowed_service_names,
+    load_taxonomy,
+)
 from ..utils.sku_matcher import load_sku_alias_index, match_sku, normalize_sku
 
 
@@ -22,6 +27,15 @@ class PlanValidationResult:
 
 
 _SKU_ALIAS_INDEX = load_sku_alias_index()
+_taxonomy_registry = None
+
+
+def _get_registry():
+    global _taxonomy_registry
+    if _taxonomy_registry is None:
+        taxonomy = load_taxonomy()
+        _taxonomy_registry = build_taxonomy_registry(taxonomy)
+    return _taxonomy_registry
 
 
 _HINT_REQUIRED_CATEGORIES = {
@@ -181,6 +195,8 @@ def validate_pricing_contract(plan: dict) -> PlanValidationResult:
         for res in scen.get("resources", []):
             rid = res.get("id") or "resource"
             raw = res.get("service_name_raw") or res.get("service_name") or res.get("category") or ""
+            registry = _get_registry()
+            registry.require(res.get("category"))
             candidates = [
                 src.service_name
                 for src in get_catalog_sources(res.get("category") or "")

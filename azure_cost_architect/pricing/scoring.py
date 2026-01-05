@@ -5,8 +5,18 @@ import logging
 from dataclasses import dataclass
 from typing import List, Optional, Tuple
 
+from ..utils.knowledgepack import build_taxonomy_registry, load_taxonomy
+
 # Module-level logger
 _LOGGER = logging.getLogger(__name__)
+_taxonomy_registry = None
+
+
+def _get_registry():
+    global _taxonomy_registry
+    if _taxonomy_registry is None:
+        _taxonomy_registry = build_taxonomy_registry(load_taxonomy())
+    return _taxonomy_registry
 
 
 @dataclass
@@ -579,6 +589,9 @@ def score_price_item(resource: Dict[str, Any], item: Dict[str, Any], hours_prod:
     - Να βοηθάμε το sort στο enrich.py να επιλέξει λογικά SKUs.
     """
     score = 0
+    category = _low(resource.get("category") or "other")
+    registry = _get_registry()
+    svc = registry.require(category)
 
     meters = resource.get("metrics", {})
     redis_tp = float(
@@ -589,7 +602,6 @@ def score_price_item(resource: Dict[str, Any], item: Dict[str, Any], hours_prod:
     )
     usage = meters.get("baseline", {}).get("usage", {})  # reserved για μελλοντικά fine-tuning
     arm_sku_name = _low(resource.get("arm_sku_name"))
-    category = _low(resource.get("category") or "other")
     service_name = _low(resource.get("service_name") or resource.get("serviceName") or "")
     criticality = _low(resource.get("criticality") or "prod")
     billing_model = _low(resource.get("billing_model") or resource.get("billingModel") or "")
@@ -605,6 +617,15 @@ def score_price_item(resource: Dict[str, Any], item: Dict[str, Any], hours_prod:
     reservation_term = _low(_g(item, "reservationTerm", "ReservationTerm"))
 
     text_all = product_name + " " + meter_name + " " + sku_name
+
+    text_guard = f"{product_name} {meter_name}"
+    for bad in svc.disallowed_meter_keywords:
+        if bad in text_guard:
+            score -= 500
+
+    for good in svc.preferred_meter_keywords:
+        if good in text_guard:
+            score += 200
 
     # -------------------------------------------------------------------------
     # 0.a) Planner-provided hint constraints (soft-but-strong)
