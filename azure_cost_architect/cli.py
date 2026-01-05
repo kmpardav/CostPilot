@@ -403,12 +403,19 @@ def main() -> None:
     if args.debug_file:
         os.environ[ENV_DEBUG_SCORING_FILE] = args.debug_file
 
-    required_categories = [
+    # Exact categories (taxonomy-level) as provided by the user or defaults.
+    required_categories_exact = [
         c.strip() for c in (args.required_categories or "").split(",") if c.strip()
     ]
-    if not required_categories:
-        required_categories = list(DEFAULT_REQUIRED_CATEGORIES)
-    args.required_categories = normalize_required_categories(required_categories)
+    if not required_categories_exact:
+        required_categories_exact = list(DEFAULT_REQUIRED_CATEGORIES)
+
+    # Keep exact list for pricing/contract/caching/catalog warming.
+    args.required_categories = required_categories_exact
+
+    # Optional: families for guardrails/repair (compute, db, network, storage...)
+    # Use ONLY where coarse grouping is explicitly desired.
+    required_category_families = normalize_required_categories(required_categories_exact)
 
     run_id = args.output_prefix
     run_dir = Path("runs") / run_id
@@ -555,7 +562,7 @@ def main() -> None:
     metadata["currency"] = currency
     metadata["default_region"] = default_region
     metadata["compare_policy"] = args.compare_policy
-    metadata["required_categories"] = required_categories
+    metadata["required_categories"] = required_categories_exact
     metadata["adjudication_enabled"] = args.adjudicate
     metadata["adjudication_topn"] = args.adjudicate_topn
     metadata["repair_iterations"] = metadata.get("repair_iterations", 0)
@@ -568,7 +575,11 @@ def main() -> None:
     service_hint_samples = kp.get_compact_service_metadata(common_limit=25)
 
     for iteration in range(2):
-        repair_targets = build_repair_targets(plan, required_categories=required_categories)
+        repair_targets = build_repair_targets(
+            plan,
+            # For repair heuristics you may prefer families, but keep exacts available.
+            required_categories=required_category_families,
+        )
         if not repair_targets:
             break
 
@@ -742,7 +753,7 @@ def main() -> None:
             "default_region": default_region,
             "llm_backend": backend,
             "compare_policy": args.compare_policy,
-            "required_categories": required_categories,
+            "required_categories": required_categories_exact,
             "adjudication_enabled": args.adjudicate,
             "adjudication_topn": args.adjudicate_topn,
         },

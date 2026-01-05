@@ -3,7 +3,7 @@ from __future__ import annotations
 from typing import Any, Dict, List
 
 from ..config import HOURS_PROD
-from ..pricing.catalog_sources import get_catalog_sources
+from ..pricing.catalog_sources import get_catalog_sources, CATEGORY_CATALOG_SOURCES
 from ..utils.knowledgepack import canonicalize_service_name
 
 _CATEGORY_MAP: Dict[str, str] = {
@@ -59,6 +59,39 @@ _CATEGORY_MAP: Dict[str, str] = {
     "defender_for_cloud": "security.defender",
     "purview": "governance.purview",
 }
+
+
+def _build_service_to_category_index() -> Dict[str, str]:
+    """
+    Build a best-effort reverse index:
+      Retail serviceName -> canonical CostPilot category
+    using the CATEGORY_CATALOG_SOURCES mapping (single source of truth).
+    """
+    out: Dict[str, str] = {}
+    for cat, sources in CATEGORY_CATALOG_SOURCES.items():
+        for src in sources:
+            svc = (getattr(src, "service_name", None) or "").strip()
+            if not svc:
+                continue
+            # Prefer the first (most-specific) mapping encountered.
+            out.setdefault(svc, cat)
+    return out
+
+
+_SERVICE_TO_CATEGORY = _build_service_to_category_index()
+
+
+def _infer_category_from_service_name(service_name_raw: str) -> str | None:
+    """
+    If the planner gives category=other/unknown, try to infer category from service_name.
+    This avoids taxonomy-registry failures and prevents pricing from skipping everything.
+    """
+    raw = (service_name_raw or "").strip()
+    if not raw:
+        return None
+    canon = canonicalize_service_name(raw).get("canonical") or raw
+    # Try canonical first, then raw.
+    return _SERVICE_TO_CATEGORY.get(canon) or _SERVICE_TO_CATEGORY.get(raw)
 
 
 def _canonical_category(raw: str) -> str:
@@ -167,7 +200,19 @@ def validate_plan_schema(plan: dict) -> dict:
                 continue
             res.setdefault("id", "res")
             # --- Category / ServiceName canonicalization ---
-            res["category"] = _canonical_category(res.get("category"))
+            category_raw = str(res.get("category") or "other")
+            category = _canonical_category(category_raw)
+
+            # Fallback: if planner gives other/unknown category, infer from service name
+            # so the resource remains priceable and taxonomy-compliant.
+            if category.lower() in {"other", "unknown", "__unclassified__"}:
+                inferred = _infer_category_from_service_name(
+                    str(res.get("service_name") or res.get("service_name_raw") or "")
+                )
+                if inferred:
+                    category = inferred
+
+            res["category"] = category
             candidates = _category_candidates(res["category"])
             service_info = canonicalize_service_name(
                 res.get("service_name"), category_candidates=candidates

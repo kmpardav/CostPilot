@@ -4,6 +4,8 @@ from __future__ import annotations
 
 from typing import Iterable, List
 
+FAMILY_NOTE = "NOTE: This module collapses taxonomy categories into coarse families (compute/db/network/storage)."
+
 
 # Map common category families to the canonical prefixes used by guardrails.
 _CATEGORY_ALIASES = {
@@ -20,9 +22,11 @@ _CATEGORY_ALIASES = {
 def canonical_required_category(category: str) -> str:
     """Return a normalized prefix for required-category filtering.
 
-    The guardrails work on coarse families (compute, db, cache, network, storage).
+    The guardrails may work on coarse families (compute, db, cache, network, storage).
     Some services sit under other namespaces (e.g., appservice), so we collapse
     them to the compute family to avoid missing blockers.
+
+    DO NOT use this for taxonomy validation or pricing catalogs.
     """
 
     low = (category or "other").strip().lower()
@@ -44,4 +48,3 @@ def normalize_required_categories(categories: Iterable[str]) -> List[str]:
             seen.add(norm)
             normalized.append(norm)
     return normalized
-
