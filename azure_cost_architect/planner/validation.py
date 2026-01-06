@@ -1,10 +1,12 @@
 from __future__ import annotations
 
-from typing import Any, Dict, List
+from typing import Any, Dict, List, Optional
 
 from ..config import HOURS_PROD
 from ..pricing.catalog_sources import get_catalog_sources, CATEGORY_CATALOG_SOURCES
 from ..utils.knowledgepack import canonicalize_service_name
+
+FALLBACK_CATEGORY = "__unclassified__"
 
 _CATEGORY_MAP: Dict[str, str] = {
     "aks": "compute.aks",
@@ -29,6 +31,10 @@ _CATEGORY_MAP: Dict[str, str] = {
     "storage.disk": "storage.disk",
     "storage": "storage.blob",
     "fabric": "analytics.fabric",
+    "microsoftfabric": "analytics.fabric",
+    "azuremachinelearning": "ai.azureml",
+    "machinelearning": "ai.azureml",
+    "azureml": "ai.azureml",
     "synapse": "analytics.synapse",
     "datafactory": "analytics.datafactory",
     "databricks": "analytics.databricks",
@@ -59,6 +65,19 @@ _CATEGORY_MAP: Dict[str, str] = {
     "defender_for_cloud": "security.defender",
     "purview": "governance.purview",
 }
+
+
+def _safe_category(category: Optional[str]) -> str:
+    """
+    Returns a category that is guaranteed to be accepted by the taxonomy registry.
+    Any unknown/empty category becomes FALLBACK_CATEGORY.
+    """
+    c = (category or "").strip()
+    if not c:
+        return FALLBACK_CATEGORY
+    if c.lower() in {"other", "misc", "unknown"}:
+        return FALLBACK_CATEGORY
+    return c
 
 
 def _build_service_to_category_index() -> Dict[str, str]:
@@ -96,9 +115,10 @@ def _infer_category_from_service_name(service_name_raw: str) -> str | None:
 
 def _canonical_category(raw: str) -> str:
     if not raw:
-        return "other"
+        return FALLBACK_CATEGORY
     low = raw.strip().lower().replace(" ", "").replace("_", ".")
-    return _CATEGORY_MAP.get(low, raw)
+    mapped = _CATEGORY_MAP.get(low, raw)
+    return _safe_category(mapped)
 
 
 def _list_field(value: Any) -> List[str]:
@@ -200,12 +220,15 @@ def validate_plan_schema(plan: dict) -> dict:
                 continue
             res.setdefault("id", "res")
             # --- Category / ServiceName canonicalization ---
-            category_raw = str(res.get("category") or "other")
+            category_raw = str(res.get("category") or "")
             category = _canonical_category(category_raw)
+
+            if category != (category_raw or ""):
+                res["category_raw"] = category_raw or res.get("category_raw")
 
             # Fallback: if planner gives other/unknown category, infer from service name
             # so the resource remains priceable and taxonomy-compliant.
-            if category.lower() in {"other", "unknown", "__unclassified__"}:
+            if category.lower() in {"other", "unknown", "misc", FALLBACK_CATEGORY}:
                 inferred = _infer_category_from_service_name(
                     str(res.get("service_name") or res.get("service_name_raw") or "")
                 )

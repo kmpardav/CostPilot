@@ -3,6 +3,7 @@ from typing import Any, Dict, List, Tuple, Optional
 import asyncio
 import os
 import json
+import math
 import logging
 import re
 import hashlib
@@ -267,6 +268,54 @@ def _append_scoring_debug(
         pass
 
 
+def _append_scoring_debug_unpriced(
+    scenario: Dict[str, Any],
+    resource: Dict[str, Any],
+    *,
+    region: str,
+    currency: str,
+    reason: str,
+    selection: str = "n/a",
+) -> None:
+    """Write a JSONL entry even when pricing failed, so debug output isn't empty."""
+    debug_file = _get_debug_file()
+    if not debug_file:
+        return
+    try:
+        resource_stub = {
+            "id": resource.get("id"),
+            "name": resource.get("name"),
+            "category": resource.get("category"),
+            "service_name": resource.get("service_name") or resource.get("service"),
+            "sku_name": resource.get("sku_name"),
+        }
+        payload = {
+            "scenario_id": scenario.get("id") or scenario.get("name"),
+            "scenario_name": scenario.get("label") or scenario.get("name"),
+            "resource": resource_stub,
+            "selection": selection,
+            "region": region,
+            "currency": currency,
+            "status": "unpriced_estimated",
+            "reason": reason,
+        }
+        with open(debug_file, "a", encoding="utf-8") as f:
+            f.write(json.dumps(payload, ensure_ascii=False) + "\n")
+    except Exception:
+        pass
+
+
+def _apply_estimated_cost(resource: Dict[str, Any]) -> None:
+    est = resource.get("monthly_estimate")
+    try:
+        est_val = float(est) if est is not None else 0.0
+    except Exception:
+        est_val = 0.0
+    resource["monthly_cost"] = est_val
+    resource["yearly_cost"] = est_val * 12.0
+    resource["pricing_status"] = "estimated"
+
+
 # ------------------------------------------------------------
 # Aggregation των κόστους ανά σενάριο
 # ------------------------------------------------------------
@@ -312,7 +361,7 @@ def aggregate_scenario_costs(
     total_resources = sum(
         1
         for res in scenario.get("resources", [])
-        if (res.get("category") or "").lower() != FALLBACK_CATEGORY
+        if (res.get("pricing_status") or "").lower() != "unclassified"
     )
     compare_skip_reason: Optional[str] = None
     required_categories = normalize_required_categories(
@@ -335,7 +384,7 @@ def aggregate_scenario_costs(
         monthly = res.get("monthly_cost")
         yearly = res.get("yearly_cost")
 
-        if (cat or "").lower() == FALLBACK_CATEGORY or status == "unclassified":
+        if status == "unclassified":
             continue
 
         is_required = _is_required(cat)
@@ -1906,12 +1955,30 @@ async def fetch_price_for_resource(
 ) -> None:
     raw_category = resource.get("category") or "other"
     if (raw_category or "").lower() == FALLBACK_CATEGORY:
-        resource["pricing_status"] = "unclassified"
-        resource["monthly_cost"] = None
-        resource["yearly_cost"] = None
         resource.setdefault("pricing_notes", [])
         resource["pricing_notes"].append(
-            "Pricing skipped because resource category is unclassified."
+            "Pricing estimated because resource category is unclassified."
+        )
+        resource.update(
+            {
+                "unit_price": None,
+                "unit_of_measure": None,
+                "currency_code": None,
+                "sku_name": None,
+                "meter_name": None,
+                "product_name": None,
+                "units": None,
+                "error": "Unclassified category; using estimated cost.",
+                "sku_candidates": [],
+            }
+        )
+        _apply_estimated_cost(resource)
+        _append_scoring_debug_unpriced(
+            scenario,
+            resource,
+            region=(resource.get("region") or default_region or DEFAULT_REGION),
+            currency=currency,
+            reason="Unclassified category",
         )
         return
     category = _normalize_category_for_scoring(raw_category)
@@ -2114,8 +2181,16 @@ async def fetch_price_for_resource(
                     "yearly_cost": None,
                     "error": "Price not found (empty local catalog)",
                     "sku_candidates": [],
-                    "pricing_status": "missing",
+                    "pricing_status": "estimated",
                 }
+            )
+            _apply_estimated_cost(resource)
+            _append_scoring_debug_unpriced(
+                scenario,
+                resource,
+                region=region,
+                currency=currency,
+                reason="Empty local catalog",
             )
             _LOGGER.warning("Pricing missing for resource %s: %s", resource.get("id"), msg)
             return
@@ -2150,8 +2225,16 @@ async def fetch_price_for_resource(
                             sku=requested_sku, category=category, region=region, currency=currency
                         ),
                         "sku_candidates": [],
-                        "pricing_status": "missing",
+                        "pricing_status": "estimated",
                     }
+                )
+                _apply_estimated_cost(resource)
+                _append_scoring_debug_unpriced(
+                    scenario,
+                    resource,
+                    region=region,
+                    currency=currency,
+                    reason="Requested SKU not found",
                 )
                 resource["sku_mismatch"] = True
                 return
@@ -2226,8 +2309,16 @@ async def fetch_price_for_resource(
                     "yearly_cost": None,
                     "error": "No pricing items match billing model",
                     "sku_candidates": [],
-                    "pricing_status": "missing",
+                    "pricing_status": "estimated",
                 }
+            )
+            _apply_estimated_cost(resource)
+            _append_scoring_debug_unpriced(
+                scenario,
+                resource,
+                region=region,
+                currency=currency,
+                reason="No pricing items match billing model",
             )
             return
 
@@ -2282,8 +2373,16 @@ async def fetch_price_for_resource(
                     "yearly_cost": None,
                     "error": "Price not found for requested SKU",
                     "sku_candidates": [],
-                    "pricing_status": "missing",
+                    "pricing_status": "estimated",
                 }
+            )
+            _apply_estimated_cost(resource)
+            _append_scoring_debug_unpriced(
+                scenario,
+                resource,
+                region=region,
+                currency=currency,
+                reason="Price not found for requested SKU",
             )
             if selection.get("warnings"):
                 for warn in selection.get("warnings"):
@@ -2396,8 +2495,17 @@ async def fetch_price_for_resource(
                         "yearly_cost": None,
                         "error": decision_rationale or "Adjudicator could not resolve resource",
                         "sku_candidates": candidates,
-                        "pricing_status": "adjudicator_unresolved",
+                        "pricing_status": "estimated",
                     }
+                )
+                _apply_estimated_cost(resource)
+                _append_scoring_debug_unpriced(
+                    scenario,
+                    resource,
+                    region=region,
+                    currency=currency,
+                    reason=decision_rationale or "Adjudicator unresolvable",
+                    selection=selection.get("status") if selection else "adjudicator",
                 )
                 return
 
@@ -2478,10 +2586,18 @@ async def fetch_price_for_resource(
                 "units": None,
                 "monthly_cost": None,
                 "yearly_cost": None,
-                "pricing_status": "missing",
+                "pricing_status": "estimated",
                 "pricing_error": "No valid pricing candidate after filtering",
                 "error": "No valid pricing candidate after filtering",
             }
+        )
+        _apply_estimated_cost(resource)
+        _append_scoring_debug_unpriced(
+            scenario,
+            resource,
+            region=region,
+            currency=currency,
+            reason="No valid pricing candidate after filtering",
         )
         return
     if pricing_status == "priced":
@@ -2512,9 +2628,17 @@ async def fetch_price_for_resource(
                 "units": None,
                 "monthly_cost": None,
                 "yearly_cost": None,
-                "pricing_status": "missing",
+                "pricing_status": "estimated",
                 "error": "Price item selected but unit_price is null",
             }
+        )
+        _apply_estimated_cost(resource)
+        _append_scoring_debug_unpriced(
+            scenario,
+            resource,
+            region=region,
+            currency=currency,
+            reason="Selected price item missing unit_price",
         )
         _LOGGER.warning(
             "Resource %s selected a price item but unit_price is null (category=%s).",
@@ -2612,6 +2736,13 @@ async def fetch_price_for_resource(
     resource["units"] = round(units, 4)
     resource["monthly_cost"] = round(monthly_cost, 2)
     resource["yearly_cost"] = round(yearly_cost, 2)
+
+    mc = resource.get("monthly_cost")
+    try:
+        if mc is None or (isinstance(mc, float) and (math.isnan(mc) or math.isinf(mc))):
+            _apply_estimated_cost(resource)
+    except Exception:
+        _apply_estimated_cost(resource)
 
     if trace:
         trace.log(
