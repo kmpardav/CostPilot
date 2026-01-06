@@ -73,7 +73,14 @@ def _missing_hints(res: Dict[str, object]) -> bool:
     )
 
 
-def _validate_resource(res: Dict[str, object], allowed: set[str], errors: List[Dict[str, object]], rule_changes: List[str]) -> None:
+def _validate_resource(
+    res: Dict[str, object],
+    allowed: set[str],
+    *,
+    enforce_allowed: bool,
+    errors: List[Dict[str, object]],
+    rule_changes: List[str],
+) -> None:
     canonical = (res.get("service_name") or "").strip()
     suggestions = res.get("service_name_suggestions") or []
     rid = res.get("id") or "resource"
@@ -85,15 +92,19 @@ def _validate_resource(res: Dict[str, object], allowed: set[str], errors: List[D
                 res["service_name"] = mapped
         return
 
-    if canonical == "UNKNOWN_SERVICE" or canonical not in allowed:
-        errors.append(
-            {
-                "type": "unknown_service",
-                "resource_id": rid,
-                "service_name_raw": res.get("service_name_raw") or res.get("service_name"),
-                "suggestions": suggestions,
-            }
-        )
+    # IMPORTANT:
+    # If allowed-services knowledgepack is missing/empty, OR this resource is unclassified,
+    # do NOT block the planner with unknown_service errors; keep the resource and let pricing estimate.
+    if enforce_allowed and allowed:
+        if canonical == "UNKNOWN_SERVICE" or canonical not in allowed:
+            errors.append(
+                {
+                    "type": "unknown_service",
+                    "resource_id": rid,
+                    "service_name_raw": res.get("service_name_raw") or res.get("service_name"),
+                    "suggestions": suggestions,
+                }
+            )
 
     if _missing_hints(res):
         errors.append(
@@ -192,30 +203,47 @@ def validate_pricing_contract(plan: dict) -> PlanValidationResult:
     errors: List[Dict[str, object]] = []
     has_unclassified = False
 
-    allowed_services = set(get_allowed_service_names())
+    allowed_services_list = get_allowed_service_names() or []
+    allowed_services = set(allowed_services_list)
+    # If allowed_services is empty, enforcement must be disabled; otherwise every service becomes "unknown".
+    enforce_allowed_globally = bool(allowed_services)
+
+    registry = _get_registry()
 
     for scen in normalized.get("scenarios", []):
         for res in scen.get("resources", []):
             rid = res.get("id") or "resource"
             raw_category = res.get("category")
-            registry = _get_registry()
-            if not registry.get(raw_category):
+            is_category_registered = bool(raw_category) and bool(registry.get(raw_category))
+
+            # If category is unknown to taxonomy, we MUST NOT drop/skip the resource.
+            # Mark it as estimated and keep it in the plan so downstream reporting/pricing stays complete.
+            if not is_category_registered:
                 res["original_category"] = raw_category
                 res["category"] = FALLBACK_CATEGORY
-                res["pricing_status"] = "unclassified"
+                res["pricing_status"] = "estimated"
                 res.setdefault("pricing_notes", [])
                 res["pricing_notes"].append(
-                    f"Category '{raw_category}' not found in taxonomy registry; marked as unclassified."
+                    f"Category '{raw_category}' not found in taxonomy registry; keeping resource as estimated under '{FALLBACK_CATEGORY}'."
                 )
                 has_unclassified = True
-                continue
-            raw = res.get("service_name_raw") or res.get("service_name") or res.get("category") or ""
-            registry.require(res.get("category"))
-            candidates = [
-                src.service_name
-                for src in get_catalog_sources(res.get("category") or "")
-                if src.service_name != "UNKNOWN_SERVICE"
-            ]
+            else:
+                registry.require(raw_category)
+
+            raw = res.get("service_name_raw") or res.get("service_name") or raw_category or ""
+
+            # Candidate serviceName hints only make sense when category is known and mapped to catalog sources.
+            candidates: List[str] = []
+            if is_category_registered:
+                try:
+                    candidates = [
+                        src.service_name
+                        for src in get_catalog_sources(raw_category or "")
+                        if src.service_name != "UNKNOWN_SERVICE"
+                    ]
+                except Exception:
+                    candidates = []
+
             resolved = canonicalize_service_name(raw, category_candidates=candidates)
             res["service_name_raw"] = raw
             res["service_name"] = resolved.get("canonical")
@@ -237,7 +265,18 @@ def validate_pricing_contract(plan: dict) -> PlanValidationResult:
                     f"resource {rid}: canonicalized service_name '{raw}' -> '{res.get('service_name')}' ({res.get('service_name_status')})"
                 )
 
-            _validate_resource(res, allowed_services, errors, rule_changes)
+            # Enforce allowed-services only if:
+            #  - knowledgepack provided a non-empty allowed list, AND
+            #  - the resource category is known (otherwise treat as estimated).
+            enforce_allowed = enforce_allowed_globally and is_category_registered
+
+            _validate_resource(
+                res,
+                allowed_services,
+                enforce_allowed=enforce_allowed,
+                errors=errors,
+                rule_changes=rule_changes,
+            )
             _apply_sku_matching(
                 res,
                 resource_id=rid,
