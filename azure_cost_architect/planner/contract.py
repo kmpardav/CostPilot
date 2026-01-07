@@ -4,7 +4,7 @@ from __future__ import annotations
 
 from copy import deepcopy
 from dataclasses import dataclass
-from typing import Dict, List
+from typing import Dict, List, Optional
 
 from .rules import apply_planner_rules
 from .validation import validate_plan_schema
@@ -17,6 +17,7 @@ from ..utils.knowledgepack import (
     suggest_arm_sku_names,
 )
 from ..utils.sku_matcher import load_sku_alias_index, match_sku, normalize_sku
+from ..utils.trace import TraceLogger
 
 FALLBACK_CATEGORY = "__unclassified__"
 
@@ -142,6 +143,7 @@ def _apply_sku_matching(
     resource_id: str,
     errors: List[Dict[str, object]],
     rule_changes: List[str],
+    trace: Optional[TraceLogger] = None,
 ) -> None:
     if not _SKU_ALIAS_INDEX:
         return
@@ -200,6 +202,20 @@ def _apply_sku_matching(
     cat_lower = (res.get("category") or "").lower()
     if cat_lower in _NON_FATAL_SKU_CATEGORIES:
         # Downgrade to warning: clear the invalid arm_sku_name and let pricing resolve via hints.
+        if trace is not None:
+            trace.anomaly(
+                "unknown_sku_nonfatal",
+                message=(
+                    f"Non-fatal unknown_sku for resource '{resource_id}' (category='{cat_lower}'): "
+                    f"arm_sku_name='{requested}'. Downgrading and clearing arm_sku_name so pricing can resolve via hints."
+                ),
+                data={
+                    "resource_id": resource_id,
+                    "category": cat_lower,
+                    "requested_sku": requested,
+                    "suggestions": suggestions,
+                },
+            )
         res["arm_sku_name"] = None
         res.setdefault("pricing_notes", [])
         res["pricing_notes"].append(
@@ -212,6 +228,20 @@ def _apply_sku_matching(
         )
         return
 
+    if trace is not None:
+        trace.anomaly(
+            "unknown_sku",
+            message=(
+                f"Fatal unknown_sku for resource '{resource_id}' (category='{cat_lower}'): "
+                f"arm_sku_name='{requested}'. No deterministic match/suggestions found."
+            ),
+            data={
+                "resource_id": resource_id,
+                "category": cat_lower,
+                "requested_sku": requested,
+                "suggestions": suggestions,
+            },
+        )
     errors.append(
         {
             "type": "unknown_sku",
@@ -223,7 +253,11 @@ def _apply_sku_matching(
     )
 
 
-def validate_pricing_contract(plan: dict) -> PlanValidationResult:
+def validate_pricing_contract(
+    plan: dict,
+    *,
+    trace: Optional[TraceLogger] = None,
+) -> PlanValidationResult:
     """Apply schema normalization + rules + Pricing Contract validation."""
 
     normalized = apply_planner_rules(validate_plan_schema(deepcopy(plan)))
@@ -312,6 +346,7 @@ def validate_pricing_contract(plan: dict) -> PlanValidationResult:
                 resource_id=rid,
                 errors=errors,
                 rule_changes=rule_changes,
+                trace=trace,
             )
 
     if has_unclassified:

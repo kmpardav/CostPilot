@@ -13,6 +13,7 @@ from ..prompts import (
 )
 from ..planner.contract import PlanValidationResult, validate_pricing_contract
 from ..utils.trace import TraceLogger
+from ..utils.knowledgepack import get_taxonomy_option_paths_for_category
 from .json_repair import extract_json_object, repair_json_with_llm
 
 
@@ -216,7 +217,7 @@ def _planner_attempt(
         model_used, raw = _call_planner_chat(client, user_prompt)
 
     parsed, parse_error = _parse_plan_json(raw, client)
-    validation = validate_pricing_contract(parsed or {})
+    validation = validate_pricing_contract(parsed or {}, trace=trace)
 
     _log_planner_trace(
         trace,
@@ -237,6 +238,70 @@ def _planner_attempt(
         parsed=parsed,
         parse_error=parse_error,
         validation=validation,
+    )
+
+
+def _build_taxonomy_option_injection(
+    errors: list[dict],
+    *,
+    trace: Optional[TraceLogger],
+    attempt_no: int,
+    max_paths_per_resource: int = 15,
+) -> str:
+    """Build deterministic, ground-truth options for repair prompts.
+
+    When the planner emits unknown/non-ARM SKUs, we inject a compact list of
+    valid taxonomy paths (family/service/product/sku/meter/armSkuNames, etc.)
+    so the model can pick from *known-good* options.
+    """
+
+    if not errors:
+        return ""
+
+    unknown = [e for e in errors if (e.get("type") == "unknown_sku")]
+    if not unknown:
+        return ""
+
+    payload: list[dict] = []
+    total_paths = 0
+    for e in unknown:
+        category = e.get("category") or ""
+        paths = get_taxonomy_option_paths_for_category(
+            str(category), limit=max_paths_per_resource
+        )
+        total_paths += len(paths)
+        payload.append(
+            {
+                "resource_id": e.get("resource_id"),
+                "category": category,
+                "requested_sku": e.get("requested_sku"),
+                "taxonomy_option_paths": paths,
+            }
+        )
+
+    if trace is not None:
+        trace.anomaly(
+            "taxonomy_option_injection",
+            message=(
+                "Injected ground-truth taxonomy option paths into planner repair prompt "
+                "for unknown_sku resources."
+            ),
+            data={
+                "attempt": attempt_no,
+                "unknown_sku_count": len(unknown),
+                "option_path_count": total_paths,
+                "resource_ids": [p.get("resource_id") for p in payload],
+            },
+        )
+
+    return (
+        "\n\n---\n"
+        "GROUND-TRUTH TAXONOMY OPTIONS (MUST USE)\n"
+        "The prior plan contained unknown/non-ARM SKU tokens. For each resource below, "
+        "choose a valid arm_sku_name OR adjust hints to match one of the taxonomy_option_paths. "
+        "Do not invent SKUs.\n\n"
+        + json.dumps(payload, ensure_ascii=False, indent=2)
+        + "\n---\n"
     )
 
 
@@ -275,6 +340,11 @@ def plan_architecture_iterative(
 
         # Ask LLM to repair using the validation errors
         errors_json = json.dumps(attempt.validation.errors)
+        taxonomy_injection = _build_taxonomy_option_injection(
+            attempt.validation.errors,
+            trace=trace,
+            attempt_no=attempt_no,
+        )
         if attempt.parsed is None:
             # Parsing failed; give the repair model enough context to reconstruct intent.
             fix_prompt = (
@@ -285,12 +355,14 @@ def plan_architecture_iterative(
                 "Raw model output snippet:\n"
                 f"{_snippet(attempt.raw_response)}\n\n"
                 f"Contract validation errors: {errors_json}\n"
+                f"{taxonomy_injection}"
             )
         else:
             fix_prompt = (
                 "The previous plan violated the Pricing Contract. "
                 "Review the following errors and return ONLY valid JSON with corrections.\n"
                 f"Errors: {errors_json}\n"
+                f"{taxonomy_injection}\n"
                 f"Prior plan: {json.dumps(attempt.parsed)}"
             )
         if trace:
@@ -341,7 +413,7 @@ def plan_architecture_iterative(
                 )
             continue
 
-        repaired_validation = validate_pricing_contract(parsed or {})
+        repaired_validation = validate_pricing_contract(parsed or {}, trace=trace)
         _log_planner_trace(
             trace,
             attempt=attempt_no,

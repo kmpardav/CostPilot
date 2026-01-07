@@ -346,6 +346,120 @@ def suggest_arm_sku_names(raw_sku: str, *, limit: int = 8) -> List[str]:
     return [sku for _, sku in scored[:limit]]
 
 
+# ---------------------------------------------------------------------------
+# Taxonomy option paths (service-scoped, deterministic)
+# ---------------------------------------------------------------------------
+
+
+@lru_cache(maxsize=512)
+def _taxonomy_option_paths_for_service_cached(service_name: str) -> List[dict]:
+    """
+    Build a deterministic list of taxonomy "paths" for a given Retail API serviceName.
+
+    We extract leaf meters and preserve a compact representation:
+      family/service/product/sku/meter/count/units/price_types/arm_sku_names
+
+    This is used to inject valid options into the repair prompt when the LLM emits
+    unknown/non-ARM SKU tokens.
+    """
+
+    taxonomy = load_taxonomy()
+    if not isinstance(taxonomy, dict) or not service_name:
+        return []
+
+    paths: List[dict] = []
+
+    # taxonomy.json (project) is a family->service->product->sku->meter tree
+    for family_name, family_node in taxonomy.items():
+        children = (family_node or {}).get("children") or {}
+        if service_name not in children:
+            continue
+
+        svc_node = children.get(service_name) or {}
+        products = svc_node.get("children") or {}
+        for product_name, product_node in products.items():
+            skus = (product_node or {}).get("children") or {}
+            for sku_name, sku_node in skus.items():
+                meters = (sku_node or {}).get("children") or {}
+                for meter_name, meter_node in meters.items():
+                    arm_sku_names = (meter_node or {}).get("armSkuNames") or []
+                    if not arm_sku_names:
+                        # still include it (sometimes SKU names exist even if armSkuNames empty)
+                        arm_sku_names = []
+
+                    paths.append(
+                        {
+                            "family": family_name,
+                            "service": service_name,
+                            "product": product_name,
+                            "sku": sku_name,
+                            "meter": meter_name,
+                            "count": (meter_node or {}).get("count"),
+                            "units": (meter_node or {}).get("unitOfMeasure"),
+                            "price_types": (meter_node or {}).get("priceTypes") or [],
+                            "arm_sku_names": arm_sku_names,
+                        }
+                    )
+
+    # Sort deterministically: prefer higher-count meters, then stable lexical
+    def _key(p: dict):
+        c = p.get("count")
+        try:
+            c = int(c) if c is not None else 0
+        except Exception:
+            c = 0
+        return (-c, str(p.get("product")), str(p.get("sku")), str(p.get("meter")))
+
+    paths.sort(key=_key)
+    return paths
+
+
+def get_taxonomy_option_paths_for_service(
+    service_name: str,
+    *,
+    limit: int = 25,
+) -> List[dict]:
+    """Return top-N deterministic taxonomy option paths for a specific serviceName."""
+    service_name = (service_name or "").strip()
+    if not service_name:
+        return []
+    paths = _taxonomy_option_paths_for_service_cached(service_name)
+    return paths[: max(0, int(limit))]
+
+
+def get_taxonomy_option_paths_for_category(
+    category: str,
+    *,
+    limit: int = 25,
+) -> List[dict]:
+    """
+    Resolve category -> serviceName via catalog_sources, then return taxonomy paths.
+
+    This keeps the repair loop "grounded" without forcing the LLM to search blindly.
+    """
+
+    cat = (category or "").strip()
+    if not cat:
+        return []
+
+    try:
+        from ..pricing.catalog_sources import get_catalog_sources
+    except Exception:
+        return []
+
+    sources = get_catalog_sources(cat)
+    if not sources:
+        return []
+
+    # Primary source is enough for option injection
+    service_name = getattr(sources[0], "service_name", "") or ""
+    service_name = service_name.strip()
+    if not service_name:
+        return []
+
+    return get_taxonomy_option_paths_for_service(service_name, limit=limit)
+
+
 __all__ = [
     "load_llm_context",
     "load_taxonomy",
@@ -354,4 +468,6 @@ __all__ = [
     "canonicalize_service_name",
     "build_taxonomy_registry",
     "suggest_arm_sku_names",
+    "get_taxonomy_option_paths_for_service",
+    "get_taxonomy_option_paths_for_category",
 ]
