@@ -44,6 +44,9 @@ from .config import (
     ENV_CACHE_FILE,
     ENV_DEBUG_SCORING_FILE,
     ENV_DEBUG_ENRICHED_FILE,
+    ENV_TRACE_ENABLED,
+    ENV_TRACE_LEVEL,
+    ENV_TRACE_STORY,
     get_cache_file,
     get_debug_scoring_file,
 )
@@ -204,6 +207,30 @@ def parse_args() -> argparse.Namespace:
         action="store_true",
         help="Force writing a run trace JSONL (enabled by default).",
     )
+    parser.add_argument(
+        "--trace-level",
+        choices=["pipeline", "verbose", "debug"],
+        default=os.getenv(ENV_TRACE_LEVEL, "pipeline"),
+        help=(
+            "Trace verbosity level. "
+            "'pipeline' logs only major stages, "
+            "'verbose' includes key decisions, "
+            "'debug' includes deep spans/snapshots."
+        ),
+    )
+    parser.add_argument(
+        "--trace-story",
+        dest="trace_story",
+        action="store_true",
+        help="Write a human-readable run_story.md derived from trace.jsonl.",
+    )
+    parser.add_argument(
+        "--no-trace-story",
+        dest="trace_story",
+        action="store_false",
+        help="Disable run_story.md even if tracing is enabled.",
+    )
+    parser.set_defaults(trace_story=(os.getenv(ENV_TRACE_STORY, "0").strip().lower() in {"1", "true", "yes"}))
     parser.add_argument(
         "--trace-path",
         type=str,
@@ -434,12 +461,15 @@ def main() -> None:
         except Exception:
             pass
 
-    trace_env = os.getenv("AZURECOST_TRACE")
+    trace_env = os.getenv(ENV_TRACE_ENABLED)
     trace_enabled = True
     if trace_env is not None and trace_env.strip().lower() in {"0", "false", "no"}:
         trace_enabled = False
     if args.trace:
         trace_enabled = True
+
+    trace_level = (args.trace_level or os.getenv(ENV_TRACE_LEVEL, "pipeline")).strip().lower()
+    trace_story = bool(args.trace_story)
 
     log_handlers: list[logging.Handler] = [logging.StreamHandler()]
     console_log_path = run_dir / "console.log"
@@ -452,7 +482,12 @@ def main() -> None:
     )
     logger = logging.getLogger("azure_cost_architect")
 
-    trace_logger = build_trace_logger(trace_path, enabled=trace_enabled)
+    trace_logger = build_trace_logger(
+        trace_path,
+        enabled=trace_enabled,
+        level=trace_level,
+        story_enabled=trace_story,
+    )
     try:
         tool_version = metadata.version("azure-cost-architect")
     except Exception:
@@ -566,6 +601,11 @@ def main() -> None:
     metadata["adjudication_enabled"] = args.adjudicate
     metadata["adjudication_topn"] = args.adjudicate_topn
     metadata["repair_iterations"] = metadata.get("repair_iterations", 0)
+
+    trace_logger.note(
+        "Run started. Reading input, planning scenarios, warming catalogs, pricing, and generating report.",
+        data={"run_id": run_id, "currency": currency, "default_region": default_region, "trace_level": trace_level},
+    )
 
     # --------------------
     # 1b) Auto-repair pricing hints (LLM-guided)
@@ -770,6 +810,13 @@ def main() -> None:
     with open(metadata_path, "w", encoding="utf-8") as f:
         json.dump(metadata_payload, f, indent=2, ensure_ascii=False)
     logger.info("Saved run metadata to %s", metadata_path)
+
+    if trace_enabled and trace_story:
+        try:
+            story_path = trace_logger.render_story_markdown(run_dir / "run_story.md")
+            logger.info("Saved run story to %s", story_path)
+        except Exception as ex:
+            logger.debug("Failed to render run story: %s", ex)
 
 
 if __name__ == "__main__":

@@ -10,6 +10,7 @@ from rich.console import Console
 
 from ..config import RETAIL_API_URL
 from .http_policy import HttpRetryPolicy
+from ..utils.trace import traced
 
 console = Console()
 _retry_policy = HttpRetryPolicy()
@@ -264,6 +265,7 @@ async def query_azure_retail_candidates(
 # --------------------------------------------------------------------
 # NEW: fetch_all_for_service – πλήρης κατάλογος ανά service/region/currency
 # --------------------------------------------------------------------
+@traced("retail_api.fetch_all_for_service", level="debug")
 def fetch_all_for_service(
     service_name: str,
     region: str,

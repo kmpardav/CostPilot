@@ -14,6 +14,7 @@ from .catalog_sources import CatalogSource, get_catalog_sources
 from .retail_api import fetch_all_for_service
 from .normalize import normalize_service_name
 from ..config import RETAIL_API_URL
+from ..utils.trace import traced
 
 META_SUFFIX = ".meta"
 _LOGGER = logging.getLogger(__name__)
@@ -212,6 +213,7 @@ def _write_meta(
         _LOGGER.exception("Failed to write meta file '%s'.", meta_path)
 
 
+@traced("pricing.ensure_catalog", level="debug")
 def ensure_catalog(
     base_dir: str,
     category: str,
@@ -415,6 +417,7 @@ def ensure_catalog(
     return _catalog_path(base_dir, normalize_service_name(category, None), region, currency)
 
 
+@traced("pricing.load_catalog", level="debug")
 def load_catalog(
     base_dir: str,
     category: str,

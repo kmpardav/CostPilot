@@ -1955,6 +1955,12 @@ async def fetch_price_for_resource(
 ) -> None:
     raw_category = resource.get("category") or "other"
     if (raw_category or "").lower() == FALLBACK_CATEGORY:
+        if trace:
+            trace.anomaly(
+                "pricing.estimated_fallback",
+                message="Resource category is unclassified; pricing will use estimates.",
+                data={"resource_id": resource.get("id"), "name": resource.get("name")},
+            )
         resource.setdefault("pricing_notes", [])
         resource["pricing_notes"].append(
             "Pricing estimated because resource category is unclassified."
@@ -2163,6 +2169,19 @@ async def fetch_price_for_resource(
                     )
 
         if not all_items:
+            if trace:
+                trace.anomaly(
+                    "catalog.empty",
+                    message="Local catalog returned zero pricing items; pricing will use estimates.",
+                    data={
+                        "category": category,
+                        "service_name": service_name,
+                        "region": region,
+                        "currency": currency,
+                    },
+                    scenario_id=scenario.get("id"),
+                    resource_id=resource.get("id"),
+                )
             msg = (
                 f"No pricing items found in local catalog for category='{category}', "
                 f"region='{region}', currency='{currency}'."
@@ -2206,6 +2225,14 @@ async def fetch_price_for_resource(
         if requested_sku:
             base_items = filtered_items
             if had_mismatch and not base_items:
+                if trace:
+                    trace.anomaly(
+                        "sku.requested_not_found",
+                        message="Requested armSkuName had no matching items in the local catalog.",
+                        data={"arm_sku_name": arm_sku_name, "category": category, "region": region},
+                        scenario_id=scenario.get("id"),
+                        resource_id=resource.get("id"),
+                    )
                 units = compute_units(resource, "")
                 resource.update(
                     {
@@ -2294,8 +2321,17 @@ async def fetch_price_for_resource(
             "sql_zone_filtered": sql_zone_filtered,
             "candidates_after_filters": len(items),
         }
+        debug_filters = resource["debug_filters"]
 
         if not items:
+            if trace:
+                trace.anomaly(
+                    "candidates.empty",
+                    message="All candidates were filtered out; pricing will use estimates.",
+                    data={"category": category, "region": region, "filters": debug_filters},
+                    scenario_id=scenario.get("id"),
+                    resource_id=resource.get("id"),
+                )
             resource.update(
                 {
                     "unit_price": None,
@@ -2359,6 +2395,14 @@ async def fetch_price_for_resource(
             resource["sku_mismatch"] = True
 
         if selection.get("status") == "unresolved" or not selection.get("chosen_item"):
+            if trace:
+                trace.anomaly(
+                    "selection.unresolved",
+                    message="No meter selection could be made from candidates; pricing will use estimates.",
+                    data={"category": category, "region": region, "candidate_count": len(items)},
+                    scenario_id=scenario.get("id"),
+                    resource_id=resource.get("id"),
+                )
             units = compute_units(resource, "")
             resource.update(
                 {
