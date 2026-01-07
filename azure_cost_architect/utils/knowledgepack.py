@@ -5,6 +5,7 @@ from __future__ import annotations
 import json
 import logging
 import os
+import re
 from difflib import get_close_matches
 from functools import lru_cache
 from pathlib import Path
@@ -267,6 +268,84 @@ def build_taxonomy_registry(taxonomy: dict) -> TaxonomyRegistry:
     return registry
 
 
+# ---------------------------------------------------------------------------
+# SKU suggestion helpers (taxonomy-driven, deterministic)
+# ---------------------------------------------------------------------------
+
+
+@lru_cache(maxsize=1)
+def _collect_all_arm_sku_names() -> List[str]:
+    """Collect all distinct armSkuNames found in taxonomy.json.
+
+    This is used as a deterministic fallback to suggest valid ARM SKU strings
+    when the planner emits "portal slang".
+    """
+
+    taxonomy = load_taxonomy() or {}
+    found: set[str] = set()
+
+    def _walk(node: object) -> None:
+        if not isinstance(node, dict):
+            return
+
+        # Meter nodes in our taxonomy store armSkuNames directly.
+        arm_list = node.get("armSkuNames")
+        if isinstance(arm_list, list):
+            for v in arm_list:
+                if isinstance(v, str) and v.strip():
+                    found.add(v.strip())
+
+        children = node.get("children")
+        if isinstance(children, dict):
+            for child in children.values():
+                _walk(child)
+
+    # Support both schema styles:
+    # 1) dict of families: { "Databases": {children...}, ... }
+    # 2) {"families": [ ... ]}
+    if isinstance(taxonomy, dict) and "families" in taxonomy:
+        families = taxonomy.get("families") or []
+        if isinstance(families, list):
+            for fam in families:
+                _walk(fam)
+    elif isinstance(taxonomy, dict):
+        for fam in taxonomy.values():
+            _walk(fam)
+    elif isinstance(taxonomy, list):
+        for fam in taxonomy:
+            _walk(fam)
+
+    return sorted(found)
+
+
+def suggest_arm_sku_names(raw_sku: str, *, limit: int = 8) -> List[str]:
+    """Suggest likely ARM SKU names from taxonomy based on a raw token.
+
+    Heuristic: tokenized substring match on the armSkuNames universe.
+    This is only a *suggestion* mechanism; it does not claim perfect mapping.
+    """
+
+    raw = (raw_sku or "").strip()
+    if not raw:
+        return []
+
+    # Normalize common planner tokens like "GP_Gen5" -> ["gp", "gen5"]
+    tokens = [t for t in re.split(r"[^a-zA-Z0-9]+", raw.lower()) if t]
+    if not tokens:
+        return []
+
+    universe = _collect_all_arm_sku_names()
+    scored: list[tuple[int, str]] = []
+    for sku in universe:
+        s = sku.lower()
+        score = sum(1 for t in tokens if t in s)
+        if score:
+            scored.append((score, sku))
+
+    scored.sort(key=lambda x: (x[0], len(x[1])), reverse=True)
+    return [sku for _, sku in scored[:limit]]
+
+
 __all__ = [
     "load_llm_context",
     "load_taxonomy",
@@ -274,4 +353,5 @@ __all__ = [
     "get_compact_service_metadata",
     "canonicalize_service_name",
     "build_taxonomy_registry",
+    "suggest_arm_sku_names",
 ]

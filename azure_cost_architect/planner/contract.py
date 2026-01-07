@@ -14,6 +14,7 @@ from ..utils.knowledgepack import (
     canonicalize_service_name,
     get_allowed_service_names,
     load_taxonomy,
+    suggest_arm_sku_names,
 )
 from ..utils.sku_matcher import load_sku_alias_index, match_sku, normalize_sku
 
@@ -48,6 +49,15 @@ _HINT_REQUIRED_CATEGORIES = {
     "storage.blob",
     "network.egress",
     "network.bandwidth",
+}
+
+
+# For some services, the planner will often emit "portal slang" SKUs (e.g. GP_Gen5, S2).
+# These are not ARM SKU names and should not hard-fail the entire planning loop.
+# Instead, we downgrade unknown_sku to a non-fatal warning and let pricing resolve via hints.
+_NON_FATAL_SKU_CATEGORIES = {
+    "db.sqlmi",
+    "appservice",
 }
 
 
@@ -182,13 +192,33 @@ def _apply_sku_matching(
     if (res.get("category") or "").lower() not in _SKU_ALIAS_INDEX:
         return
 
+    suggestions = match.get("suggestions") or []
+    if not suggestions:
+        # Deterministic fallback: search taxonomy armSkuNames universe.
+        suggestions = suggest_arm_sku_names(requested, limit=8)
+
+    cat_lower = (res.get("category") or "").lower()
+    if cat_lower in _NON_FATAL_SKU_CATEGORIES:
+        # Downgrade to warning: clear the invalid arm_sku_name and let pricing resolve via hints.
+        res["arm_sku_name"] = None
+        res.setdefault("pricing_notes", [])
+        res["pricing_notes"].append(
+            "Planner emitted a non-ARM SKU token; cleared arm_sku_name so pricing can resolve via hints."
+        )
+        if suggestions:
+            res["arm_sku_name_suggestions"] = suggestions
+        rule_changes.append(
+            f"resource {resource_id}: downgraded unknown_sku '{requested}' for category '{cat_lower}' (non-fatal); cleared arm_sku_name"
+        )
+        return
+
     errors.append(
         {
             "type": "unknown_sku",
             "resource_id": resource_id,
             "category": res.get("category"),
             "requested_sku": requested,
-            "suggestions": match.get("suggestions") or [],
+            "suggestions": suggestions,
         }
     )
 

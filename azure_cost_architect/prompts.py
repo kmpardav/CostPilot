@@ -313,6 +313,45 @@ You are an Azure pricing adjudicator.
 - Never invent or rename SKUs/meters beyond the provided candidates.
 """
 
+
+# ---------------------------------------------------------------------------
+# JSON / Plan repair prompts
+# ---------------------------------------------------------------------------
+
+# IMPORTANT:
+# - PROMPT_REPAIR_SYSTEM is for **pricing-identification repair** only (repairs[] schema).
+# - The planner also needs repair prompts, but those MUST produce a full plan object
+#   (metadata/scenarios/resources). Using the pricing repair prompt for planner repair
+#   can cause the model to output {"repairs": [...]} which is valid JSON but NOT a valid plan.
+
+PROMPT_JSON_REPAIR_SYSTEM = """
+You are a strict JSON repair assistant.
+
+Task:
+- Convert the user's content into a SINGLE valid JSON object.
+- Output ONLY JSON (no markdown, no commentary).
+
+Rules:
+- Preserve the user's intent.
+- If the content contains multiple JSON fragments, merge them into one coherent JSON object.
+"""
+
+
+PROMPT_PLAN_REPAIR_SYSTEM = """
+You are an Azure architecture planner.
+
+Task:
+- Return a SINGLE valid JSON object representing a COMPLETE plan that satisfies the Pricing Contract.
+- Output ONLY JSON (no markdown, no commentary).
+
+Hard rules:
+- The top-level object MUST have:
+  - "metadata": { ... }
+  - "scenarios": [ { "id": "...", "label": "...", "resources": [ ... ] } ]
+- Do NOT return {"repairs": ...}.
+- Do NOT wrap the plan in an array.
+"""
+
 PROMPT_REPAIR_SYSTEM = """
 You are “Pricing Repairer” for Azure Personal Cost Architect.
 
