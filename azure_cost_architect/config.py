@@ -18,6 +18,11 @@ ENV_CACHE_FILE = "AZURECOST_CACHE_FILE"  # JSON file for local price cache
 ENV_DEBUG_SCORING_FILE = "AZCOST_DEBUG_FILE"  # scoring debug JSONL
 ENV_DEBUG_ENRICHED_FILE = "AZCOST_DEBUG_ENRICHED_FILE"  # enrich debug JSON
 
+# Tracing (feature flags)
+ENV_TRACE_ENABLED = "AZURECOST_TRACE"  # 0/false/no disables trace; otherwise enabled by default
+ENV_TRACE_LEVEL = "AZURECOST_TRACE_LEVEL"  # pipeline|verbose|debug
+ENV_TRACE_STORY = "AZURECOST_TRACE_STORY"  # 1/0 toggles run_story.md generation
+
 DEFAULT_CACHE_FILE = "azure_price_cache.json"
 DEFAULT_DEBUG_ENRICHED_FILE = "debug_enriched.json"
 
