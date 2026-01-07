@@ -8,7 +8,8 @@ from ..config import MODEL_PLANNER, MODEL_PLANNER_RESPONSES
 from ..prompts import (
     PROMPT_PLANNER_SYSTEM,
     PROMPT_PLANNER_USER_TEMPLATE,
-    PROMPT_REPAIR_SYSTEM,
+    PROMPT_JSON_REPAIR_SYSTEM,
+    PROMPT_PLAN_REPAIR_SYSTEM,
 )
 from ..planner.contract import PlanValidationResult, validate_pricing_contract
 from ..utils.trace import TraceLogger
@@ -184,7 +185,7 @@ def _parse_plan_json(raw: str, client: OpenAI) -> tuple[Optional[Dict[str, Any]]
     except json.JSONDecodeError as ex:
         repaired = _repair_to_plan_shape(
             client,
-            repair_system_prompt=PROMPT_REPAIR_SYSTEM,
+            repair_system_prompt=PROMPT_JSON_REPAIR_SYSTEM,
             input_text=raw_json,
             trace=None,
             attempt=None,
@@ -324,7 +325,7 @@ def plan_architecture_iterative(
             else:
                 parsed = _repair_to_plan_shape(
                     client,
-                    repair_system_prompt=PROMPT_REPAIR_SYSTEM,
+                    repair_system_prompt=PROMPT_PLAN_REPAIR_SYSTEM,
                     input_text=fix_prompt,
                     trace=trace,
                     attempt=attempt_no,
