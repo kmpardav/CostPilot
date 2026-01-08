@@ -290,7 +290,7 @@ def validate_pricing_contract(
                 if raw_service:
                     svc_res = canonicalize_service_name(raw_service)
                     canonical = (svc_res.get("canonical") or "").strip()
-                    service_ok = bool(canonical) and canonical != UNKNOWN_SERVICE_NAME and (
+                    service_ok = bool(canonical) and canonical != "UNKNOWN_SERVICE" and (
                         (not enforce_allowed_globally) or (canonical in allowed_services)
                     )
                     if service_ok:
