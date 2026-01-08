@@ -1,4 +1,5 @@
 # azure_cost_architect/pricing/enrich.py
+from copy import deepcopy
 from typing import Any, Dict, List, Tuple, Optional
 import asyncio
 import os
@@ -1774,6 +1775,105 @@ def _expand_pricing_resources(resources: List[Dict[str, Any]]) -> List[Dict[str,
     """
     expanded: List[Dict[str, Any]] = []
     for resource in resources:
+        # -------------------------------------------------------------
+        # Generic pricing_components expansion (scale-out pattern)
+        # -------------------------------------------------------------
+        pcs = resource.get("pricing_components")
+        if isinstance(pcs, list) and pcs:
+            base_id = resource.get("id") or "resource"
+            base_hints = resource.get("pricing_hints") or {}
+            base_metrics = resource.get("metrics") or {}
+            base_details = resource.get("details") or {}
+
+            for comp in pcs:
+                if not isinstance(comp, dict):
+                    continue
+                key = str(comp.get("key") or "").strip()
+                if not key:
+                    continue
+
+                child = deepcopy(resource)
+                child["pricing_component_key"] = key
+                label = str(comp.get("label") or "").strip()
+                if label:
+                    child["pricing_component_label"] = label
+
+                child["id"] = f"{base_id}--pc-{key}"
+
+                # Merge pricing hints
+                comp_hints = comp.get("pricing_hints") or {}
+                merged_hints: Dict[str, Any] = {}
+                if isinstance(base_hints, dict):
+                    merged_hints.update(base_hints)
+                if isinstance(comp_hints, dict):
+                    # merge lists by concatenation (avoid losing parent hints)
+                    for hint_key, hint_value in comp_hints.items():
+                        if (
+                            hint_key in merged_hints
+                            and isinstance(merged_hints[hint_key], list)
+                            and isinstance(hint_value, list)
+                        ):
+                            merged_hints[hint_key] = merged_hints[hint_key] + hint_value
+                        else:
+                            merged_hints[hint_key] = hint_value
+                if merged_hints:
+                    child["pricing_hints"] = merged_hints
+
+                # Compute units_override from component.units
+                units = comp.get("units") or {}
+                if not isinstance(units, dict):
+                    units = {}
+                kind = str(units.get("kind") or "quantity").strip().lower()
+
+                units_override: Optional[float] = None
+                if kind == "quantity":
+                    try:
+                        units_override = float(child.get("quantity") or 1.0)
+                    except Exception:
+                        units_override = 1.0
+                elif kind == "fixed":
+                    try:
+                        units_override = float(units.get("value", 1.0))
+                    except Exception:
+                        units_override = 1.0
+                elif kind == "metric":
+                    metric_key = str(units.get("metric_key") or "").strip()
+                    if metric_key:
+                        raw_val: Any = None
+                        if isinstance(base_metrics, dict) and metric_key in base_metrics:
+                            raw_val = base_metrics.get(metric_key)
+                        elif isinstance(base_details, dict) and metric_key in base_details:
+                            raw_val = base_details.get(metric_key)
+                        try:
+                            units_override = float(raw_val)
+                        except Exception:
+                            units_override = None
+
+                        # Optional scale
+                        if units_override is not None and "scale" in units:
+                            try:
+                                units_override = units_override * float(units.get("scale") or 1.0)
+                            except Exception:
+                                pass
+
+                if units_override is not None:
+                    child["units_override"] = float(units_override)
+
+                # hours behavior
+                hours_behavior = str(comp.get("hours_behavior") or "inherit").strip().lower()
+                if hours_behavior == "ignore":
+                    child.pop("hours_per_month", None)
+
+                # annotate
+                child.setdefault("pricing_notes", [])
+                child["pricing_notes"].append(f"pricing_components:{key}")
+
+                expanded.append(child)
+
+            # IMPORTANT: do not keep the parent resource for pricing,
+            # because it is a logical container (would double count).
+            continue
+
         raw_cat = (resource.get("category") or "other").lower()
 
         # Azure Firewall: Deployment (hourly) + Data Processed (GB)

@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import copy
 from typing import Any, Dict, List, Optional
 
 from ..config import HOURS_PROD
@@ -294,5 +295,65 @@ def validate_plan_schema(plan: dict) -> dict:
                 metrics["throughput_mbps"] = 20
             res.setdefault("notes", "")
             res.setdefault("source", "llm-inferred")
+
+            # -------------------------------------------------------------
+            # Normalize pricing_components (optional)
+            # -------------------------------------------------------------
+            pcs = res.get("pricing_components")
+            if pcs is None:
+                continue
+            if not isinstance(pcs, list):
+                # If LLM emitted a single object, wrap it; else drop invalid
+                pcs = [pcs] if isinstance(pcs, dict) else []
+
+            normalized: List[Dict[str, Any]] = []
+            seen_keys = set()
+            for comp in pcs:
+                if not isinstance(comp, dict):
+                    continue
+                key = str(comp.get("key") or "").strip()
+                if not key or key in seen_keys:
+                    continue
+                seen_keys.add(key)
+
+                comp_norm = copy.deepcopy(comp)
+
+                # Defaults
+                comp_norm.setdefault("label", "")
+                comp_norm.setdefault("pricing_hints", {})
+                if not isinstance(comp_norm["pricing_hints"], dict):
+                    comp_norm["pricing_hints"] = {}
+
+                comp_norm.setdefault("hours_behavior", "inherit")
+                if comp_norm["hours_behavior"] not in ("inherit", "ignore"):
+                    comp_norm["hours_behavior"] = "inherit"
+
+                comp_norm.setdefault("units", {})
+                if not isinstance(comp_norm["units"], dict):
+                    comp_norm["units"] = {}
+
+                unit_kind = str(comp_norm["units"].get("kind") or "").strip().lower()
+                if unit_kind not in ("quantity", "metric", "fixed"):
+                    unit_kind = "quantity"
+                comp_norm["units"]["kind"] = unit_kind
+
+                if unit_kind == "metric":
+                    metric_key = str(comp_norm["units"].get("metric_key") or "").strip()
+                    comp_norm["units"]["metric_key"] = metric_key
+                    # Optional scale
+                    if "scale" in comp_norm["units"]:
+                        try:
+                            comp_norm["units"]["scale"] = float(comp_norm["units"]["scale"])
+                        except Exception:
+                            comp_norm["units"].pop("scale", None)
+                elif unit_kind == "fixed":
+                    try:
+                        comp_norm["units"]["value"] = float(comp_norm["units"].get("value", 1.0))
+                    except Exception:
+                        comp_norm["units"]["value"] = 1.0
+
+                normalized.append(comp_norm)
+
+            res["pricing_components"] = normalized
 
     return plan
