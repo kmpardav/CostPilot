@@ -249,6 +249,25 @@ def _matching_prefix(category: str, keys: Iterable[str]) -> str | None:
 def get_catalog_sources(category: str) -> List[CatalogSource]:
     """Return the ordered catalog sources for a given category."""
 
+    # --------------------------------------------------------------------
+    # Generic service-scoped category:
+    #   category = "service::<Retail Prices API serviceName>"
+    #
+    # This unlocks full coverage for services present in taxonomy.json,
+    # without needing to maintain CATEGORY_CATALOG_SOURCES mappings for
+    # every single Azure service.
+    # --------------------------------------------------------------------
+    if isinstance(category, str) and category.startswith("service::"):
+        service_name = category.split("::", 1)[1].strip()
+        if not service_name:
+            return []
+        # Try regional first (armRegionName=<requested region>), then fallback to
+        # empty/global (no armRegionName filter) because some services are global.
+        return [
+            CatalogSource(service_name, arm_region_mode="regional"),
+            CatalogSource(service_name, arm_region_mode="empty"),
+        ]
+
     prefix = _matching_prefix(category, CATEGORY_CATALOG_SOURCES.keys())
     sources: List[CatalogSource] = []
     if prefix:

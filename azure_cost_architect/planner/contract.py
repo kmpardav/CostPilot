@@ -283,16 +283,55 @@ def validate_pricing_contract(
             # If category is unknown to taxonomy, we MUST NOT drop/skip the resource.
             # Mark it as estimated and keep it in the plan so downstream reporting/pricing stays complete.
             if not is_category_registered:
-                res["original_category"] = raw_category
-                res["category"] = FALLBACK_CATEGORY
-                res["pricing_status"] = "estimated"
-                res.setdefault("pricing_notes", [])
-                res["pricing_notes"].append(
-                    f"Category '{raw_category}' not found in taxonomy registry; keeping resource as estimated under '{FALLBACK_CATEGORY}'."
-                )
-                has_unclassified = True
+                # If the planner emitted an unknown category but did provide a service_name that exists
+                # in our taxonomy allow-list, deterministically rebind to a service-scoped category so
+                # pricing can still proceed via Retail API catalogs.
+                raw_service = (res.get("service_name_raw") or res.get("service_name") or "").strip()
+                if raw_service:
+                    svc_res = canonicalize_service_name(raw_service)
+                    canonical = (svc_res.get("canonical") or "").strip()
+                    service_ok = bool(canonical) and canonical != UNKNOWN_SERVICE_NAME and (
+                        (not enforce_allowed_globally) or (canonical in allowed_services)
+                    )
+                    if service_ok:
+                        res["original_category"] = raw_category
+                        res["category"] = f"service::{canonical}"
+                        # Keep service_name aligned to the canonical Retail serviceName.
+                        res["service_name"] = canonical
+                        rule_changes.append(
+                            f"resource {rid}: category '{raw_category}' not registered; rebound to '{res['category']}'"
+                        )
+                        if trace:
+                            trace.anomaly(
+                                "category_rebound",
+                                message=f"Rebound unknown category '{raw_category}' -> '{res['category']}'",
+                                data={
+                                    "resource_id": rid,
+                                    "service_name": canonical,
+                                    "original_category": raw_category,
+                                },
+                            )
+                        raw_category = res["category"]
+                        is_category_registered = True
+                    # else: fall through to __unclassified__ handling below
+
+                if is_category_registered:
+                    # Service-scoped categories are not present in the taxonomy registry,
+                    # so skip registry.require(...) and proceed with canonicalization/pricing.
+                    pass
+                else:
+                    res["original_category"] = raw_category
+                    res["category"] = FALLBACK_CATEGORY
+                    res["pricing_status"] = "estimated"
+                    res.setdefault("pricing_notes", [])
+                    res["pricing_notes"].append(
+                        f"Category '{raw_category}' not found in taxonomy registry; keeping resource as estimated under '{FALLBACK_CATEGORY}'."
+                    )
+                    has_unclassified = True
             else:
-                registry.require(raw_category)
+                # Only require known (registry-backed) categories.
+                if not (isinstance(raw_category, str) and raw_category.startswith("service::")):
+                    registry.require(raw_category)
 
             raw = res.get("service_name_raw") or res.get("service_name") or raw_category or ""
 
