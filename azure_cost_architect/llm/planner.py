@@ -16,6 +16,48 @@ from ..utils.trace import TraceLogger
 from ..utils.knowledgepack import get_taxonomy_option_paths_for_category
 from .json_repair import extract_json_object, repair_json_with_llm
 
+_PRICING_COMPONENTS_GUIDANCE = """
+PRICING COMPONENTS (IMPORTANT):
+Some services are priced via multiple meters (e.g., "zones + queries", "transactions", etc.).
+For such resources, emit:
+
+  "pricing_components": [
+    {
+      "key": "<component-id>",               // e.g. "zones", "queries", "transactions"
+      "label": "<human label>",              // optional
+      "pricing_hints": {                     // optional meter selection hints
+        "product_name_contains": ["..."],
+        "meter_name_contains": ["..."]
+      },
+      "units": {
+        "kind": "quantity" | "metric" | "fixed",
+        // if kind == "metric":
+        "metric_key": "queries_per_month" | "transactions_per_month" | "requests_per_month" | "operations_per_month",
+        "scale": 1                           // optional numeric scale
+        // if kind == "fixed": "value": 1
+      },
+      "hours_behavior": "inherit" | "ignore" // ignore for monthly/usage meters
+    }
+  ]
+
+EXAMPLES:
+1) Azure DNS public zones+queries:
+  resource.service_name="Azure DNS"
+  pricing_components:
+    - key="zones", units.kind="quantity", hints contain ["DNS","Zone"], hours_behavior="ignore"
+    - key="queries", units.kind="metric", metric_key="queries_per_month",
+      hints contain ["DNS","Query"], hours_behavior="ignore"
+
+2) Azure Maps transactions:
+  resource.service_name="Azure Maps"
+  pricing_components:
+    - key="transactions", units.kind="metric", metric_key="transactions_per_month",
+      hints contain ["Maps","Transaction"] or meter_name_contains ["Transaction"], hours_behavior="ignore"
+
+If pricing_components is present, keep the parent resource as a logical container.
+Do NOT create separate resources manually; the pricing engine will expand them.
+"""
+
 
 @dataclass
 class PlannerAttempt:
@@ -206,7 +248,11 @@ def _planner_attempt(
     attempt: int,
     planner_callable=None,
 ) -> PlannerAttempt:
-    user_prompt = PROMPT_PLANNER_USER_TEMPLATE.format(arch_text=arch_text, mode=mode)
+    user_prompt = (
+        PROMPT_PLANNER_USER_TEMPLATE.format(arch_text=arch_text, mode=mode)
+        + "\n\n"
+        + _PRICING_COMPONENTS_GUIDANCE
+    )
     model_used: str
     raw: str
     if planner_callable:
