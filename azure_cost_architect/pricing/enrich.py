@@ -1842,6 +1842,9 @@ def _expand_pricing_resources(resources: List[Dict[str, Any]]) -> List[Dict[str,
                         raw_val: Any = None
                         if isinstance(base_metrics, dict) and metric_key in base_metrics:
                             raw_val = base_metrics.get(metric_key)
+                        # Support hourly components that reference top-level hours_per_month.
+                        if raw_val is None and metric_key == "hours_per_month":
+                            raw_val = resource.get("hours_per_month")
                         elif isinstance(base_details, dict) and metric_key in base_details:
                             raw_val = base_details.get(metric_key)
                         try:

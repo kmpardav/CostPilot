@@ -7,6 +7,13 @@ from ..config import HOURS_PROD
 from ..pricing.catalog_sources import get_catalog_sources, CATEGORY_CATALOG_SOURCES
 from ..utils.knowledgepack import canonicalize_service_name
 
+from .pricing_rules import (
+    CANONICAL_METRIC_KEYS,
+    METRIC_KEY_ALIASES,
+    canonicalize_metrics,
+    normalize_pricing_components,
+)
+
 FALLBACK_CATEGORY = "__unclassified__"
 
 _CATEGORY_MAP: Dict[str, str] = {
@@ -284,11 +291,12 @@ def validate_plan_schema(plan: dict) -> dict:
             res["arm_sku_name_contains"] = _list_field(res.get("arm_sku_name_contains"))
 
             metrics = res.get("metrics") if isinstance(res.get("metrics"), dict) else {}
+            metrics = canonicalize_metrics(metrics)
             res["metrics"] = metrics
             if res["category"].startswith("storage") and "storage_gb" not in metrics:
                 metrics["storage_gb"] = 100.0
-            if res["category"].startswith("network") and "egress_gb" not in metrics:
-                metrics["egress_gb"] = 100.0
+            if res["category"].startswith("network") and "egress_gb_per_month" not in metrics:
+                metrics["egress_gb_per_month"] = 100.0
             if res["category"].startswith("db.") and "vcores" not in metrics:
                 metrics["vcores"] = 2
             if res["category"].startswith("cache.redis") and "throughput_mbps" not in metrics:
@@ -299,6 +307,8 @@ def validate_plan_schema(plan: dict) -> dict:
             # -------------------------------------------------------------
             # Normalize pricing_components (optional)
             # -------------------------------------------------------------
+            pcs = res.get("pricing_components")
+            normalize_pricing_components(res)
             pcs = res.get("pricing_components")
             if pcs is None:
                 continue
@@ -355,5 +365,24 @@ def validate_plan_schema(plan: dict) -> dict:
                 normalized.append(comp_norm)
 
             res["pricing_components"] = normalized
+
+            # Enforce canonical metric keys for component metric_key (no silent fallbacks).
+            comps = res.get("pricing_components") or []
+            if isinstance(comps, list) and comps:
+                for comp in comps:
+                    units = (comp or {}).get("units") or {}
+                    if not isinstance(units, dict):
+                        continue
+                    if str(units.get("kind") or "").strip().lower() != "metric":
+                        continue
+                    metric_key = str(units.get("metric_key") or "").strip()
+                    if metric_key and metric_key not in CANONICAL_METRIC_KEYS and metric_key not in METRIC_KEY_ALIASES:
+                        errors.append(
+                            f"pricing_components[{res.get('id')}] metric_key '{metric_key}' is not canonical; "
+                            f"use one of: {sorted(CANONICAL_METRIC_KEYS)}"
+                        )
+                    canon = METRIC_KEY_ALIASES.get(metric_key)
+                    if canon and canon in metrics and metric_key not in metrics:
+                        metrics[metric_key] = metrics[canon]
 
     return plan
