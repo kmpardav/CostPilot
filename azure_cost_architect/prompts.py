@@ -72,6 +72,21 @@ Pricing & catalog guardrails (VERY IMPORTANT):
 - DO NOT invent random sku_name / arm_sku_name values. If unsure, prefer leaving arm_sku_name empty and rely on
   product_name_contains / meter_name_contains hints rather than hallucinating a SKU.
 
+Componentized pricing (VERY IMPORTANT):
+- For any usage-based or multi-meter service (DNS, Front Door, CDN, Log ingestion, Service Bus, Firewall/NAT data),
+  output `pricing_components` instead of trying to force a single meter.
+- `resource.pricing_components` is OPTIONAL. If present, pricing will be computed from the components.
+- Each component MUST include:
+  - key, label
+  - units: {kind: quantity|fixed|metric, metric_key if metric}
+  - hours_behavior: inherit|ignore
+  - pricing_hints: {meter_name_contains/product_name_contains/sku_name_contains}
+- Canonical metric keys only (NO service prefixes like dns_queries_per_month):
+  - queries_per_month, transactions_per_month, requests_per_month, operations_per_month, messages_per_month
+  - data_processed_gb_per_month, egress_gb_per_month, ingress_gb_per_month, storage_gb
+  - users, devices
+  - (for hourly components) hours_per_month
+
 Service-specific SKU rules (common pitfalls we saw in debugging):
 - compute.vm / compute.vmss:
   - Prefer on-demand (Consumption) unless the user explicitly asks for Spot/Low Priority.
@@ -133,7 +148,9 @@ You MUST output a JSON object (valid JSON), with this shape:
             "hot_gb": 0,
             "cool_gb": 0,
             "archive_gb": 0,
-            "egress_gb": 0,
+            "egress_gb_per_month": 0,
+            "ingress_gb_per_month": 0,
+            "data_processed_gb_per_month": 0,
             "operations_per_month": 0,
             "messages_per_month": 0,
             "throughput_ru": 0,
@@ -142,6 +159,9 @@ You MUST output a JSON object (valid JSON), with this shape:
             "dtus": 0,
             "vcores": 0
           }},
+          "pricing_components": [
+            {{"key":"zones","label":"Zones","units":{{"kind":"quantity"}},"hours_behavior":"ignore","pricing_hints":{{"meter_name_contains":["Zone"]}}}}
+          ],
           "notes": "Assumptions about HA/DR, performance, redundancy, tiers, and any mapping approximations.",
           "source": "user-exact | llm-inferred"
         }}
@@ -184,7 +204,7 @@ RULES & BEST PRACTICES (VERY IMPORTANT):
     - 1x Log Analytics workspace (monitoring.loganalytics),
     - 1x Backup vault (backup.vault) with realistic storage_gb (150–300 GB),
     - Site Recovery (dr.asr) if DR is in scope (at least 1 protected instance),
-    - Some outbound bandwidth via network.nat or network.egress (egress_gb > 0).
+    - Some outbound bandwidth via network.nat or network.egress (egress_gb_per_month > 0).
 - HA/DR clarity:
   - Explicitly mention if HA/DR is intentionally omitted; otherwise assume zone-redundant or pair-region replicas where available.
 - Explicit network/runtime dependencies:
@@ -192,13 +212,13 @@ RULES & BEST PRACTICES (VERY IMPORTANT):
   - Public IPs (network.public_ip) for ingress/egress endpoints with hourly billing where applicable.
   - Private Endpoints (network.private_endpoint) for PaaS services when privacy is needed; note hourly metering.
 - Bandwidth and egress:
-  - Include network.nat or network.egress with metrics.egress_gb for any internet-bound workloads; add VPN/ExpressRoute SKUs for private connectivity with realistic bandwidth metrics.
+  - Include network.nat or network.egress with metrics.egress_gb_per_month for any internet-bound workloads; add VPN/ExpressRoute SKUs for private connectivity with realistic bandwidth metrics.
   - For web + DB stacks exposed to internet clients, prefer a front door (network.frontdoor) or Application Gateway (network.appgw) with WAF and note SSL/offload needs. If no cache is mentioned, propose cache.redis for session/state offloading.
 - Networking completeness examples:
-  - Web app with internet users: network.nat + network.public_ip + network.appgw or network.gateway; set metrics.egress_gb and note WAF/SSL needs.
-  - Hybrid connectivity: add network.vpngw or network.er with bandwidth assumptions (metrics.egress_gb) and hours_per_month for gateways.
+  - Web app with internet users: network.nat + network.public_ip + network.appgw or network.gateway; set metrics.egress_gb_per_month and note WAF/SSL needs.
+  - Hybrid connectivity: add network.vpngw or network.er with bandwidth assumptions (metrics.egress_gb_per_month) and hours_per_month for gateways.
 - For dev/test:
-  - You may reduce hours_per_month (160 is typical) and scale down storage_gb / egress_gb.
+  - You may reduce hours_per_month (160 is typical) and scale down storage_gb / egress_gb_per_month.
   - You can omit Site Recovery if DR is clearly out of scope.
 - Virtual Network (network.vnet):
   - VNet itself is logically required but usually has no direct charge.

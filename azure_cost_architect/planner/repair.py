@@ -12,6 +12,10 @@ from ..prompts import PROMPT_REPAIR_SYSTEM, PROMPT_REPAIR_USER_TEMPLATE
 from ..pricing.catalog_sources import get_catalog_sources
 from ..utils.categories import canonical_required_category, normalize_required_categories
 from .contract import validate_pricing_contract
+from .pricing_rules import (
+    build_pricing_components_for_resource,
+    normalize_pricing_components,
+)
 from .validation import validate_plan_schema
 
 
@@ -133,6 +137,42 @@ def apply_repairs(plan: dict, repairs: Iterable[Dict]) -> dict:
 
     updated = deepcopy(plan)
 
+    def _fill_missing_pricing_components() -> None:
+        """Deterministically fill pricing_components for known services.
+
+        This is intentionally conservative:
+        - we do NOT guess unknown services
+        - we do NOT synthesize components from random metrics
+        - we only apply a small, explicit rule table (planner/pricing_rules.py)
+        """
+
+        for scen in updated.get("scenarios", []) or []:
+            for res in scen.get("resources", []) or []:
+                # If planner already emitted components, just normalize shape/aliases.
+                if res.get("pricing_components"):
+                    normalize_pricing_components(res)
+                    continue
+
+                comps = build_pricing_components_for_resource(res)
+                if not comps:
+                    continue
+
+                # If a component expects hours_per_month, make sure a value exists.
+                for comp in comps:
+                    units = (comp or {}).get("units") or {}
+                    if (
+                        isinstance(units, dict)
+                        and str(units.get("kind") or "").lower() == "metric"
+                        and str(units.get("metric_key") or "") == "hours_per_month"
+                    ):
+                        # hours_per_month is normally a top-level field; keep it there and
+                        # let enrich read it for component units computation.
+                        if "hours_per_month" not in res:
+                            res["hours_per_month"] = 730
+
+                res["pricing_components"] = comps
+                normalize_pricing_components(res)
+
     def _update_resource(res: Dict, patch: Dict) -> None:
         allowed_fields = {
             "service_name",
@@ -158,6 +198,7 @@ def apply_repairs(plan: dict, repairs: Iterable[Dict]) -> dict:
                     _update_resource(res, repair)
                     break
 
+    _fill_missing_pricing_components()
     updated = validate_plan_schema(updated)
     contract_result = validate_pricing_contract(updated)
     return contract_result.plan

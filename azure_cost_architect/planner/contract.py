@@ -21,6 +21,10 @@ from ..utils.trace import TraceLogger
 
 FALLBACK_CATEGORY = "__unclassified__"
 
+# Safety constant: some refactors used UNKNOWN_SERVICE_NAME by mistake.
+# Keep it defined to avoid NameError and keep intent clear.
+UNKNOWN_SERVICE_NAME = "UNKNOWN_SERVICE"
+
 
 @dataclass
 class PlanValidationResult:
