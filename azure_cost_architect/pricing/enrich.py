@@ -22,7 +22,12 @@ from ..utils.categories import (
     canonical_required_category,
     normalize_required_categories,
 )
-from ..utils.knowledgepack import build_taxonomy_registry, load_taxonomy
+from ..utils.knowledgepack import (
+    build_taxonomy_registry,
+    load_taxonomy,
+    CanonicalService,
+    canonicalize_service_name,
+)
 from .cache import build_cache_key, cached_entry_is_usable, get_cached_price, set_cached_price
 from .normalize import normalize_service_name, sku_keyword_match
 from .catalog import load_catalog
@@ -1997,7 +2002,24 @@ async def fetch_price_for_resource(
     resource["region"] = region
 
     registry = _get_registry()
-    svc = registry.require(raw_category)
+    # -------------------------------------------------------------
+    # service::<ServiceName> category: bypass taxonomy registry.require()
+    # and treat it as a service-scoped pricing target.
+    # -------------------------------------------------------------
+    if raw_category.startswith("service::"):
+        embedded = raw_category.split("::", 1)[1].strip()
+        canon = canonicalize_service_name(embedded)
+        embedded_canon = (canon.get("canonical") or embedded).strip()
+        if embedded_canon:
+            # Ensure the resource service_name aligns with the embedded service name
+            resource["service_name"] = embedded_canon
+        svc = CanonicalService(
+            category=raw_category,
+            service_name=resource.get("service_name") or embedded_canon,
+            pricing_strategy="catalog",
+        )
+    else:
+        svc = registry.require(raw_category)
     strategy = svc.pricing_strategy
 
     res_id = (resource.get("id") or "").lower()
