@@ -78,9 +78,9 @@ Componentized pricing (VERY IMPORTANT):
 - `resource.pricing_components` is OPTIONAL. If present, pricing will be computed from the components.
 - Each component MUST include:
   - key, label
-  - units: {kind: quantity|fixed|metric, metric_key if metric}
+  - units: {{kind: quantity|fixed|metric, metric_key if metric}}
   - hours_behavior: inherit|ignore
-  - pricing_hints: {meter_name_contains/product_name_contains/sku_name_contains}
+  - pricing_hints: {{meter_name_contains/product_name_contains/sku_name_contains}}
 - Canonical metric keys only (NO service prefixes like dns_queries_per_month):
   - queries_per_month, transactions_per_month, requests_per_month, operations_per_month, messages_per_month
   - data_processed_gb_per_month, egress_gb_per_month, ingress_gb_per_month, storage_gb
