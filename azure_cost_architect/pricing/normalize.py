@@ -15,8 +15,21 @@ def normalize_service_name(category: str, service_name: Optional[str]) -> str:
       γιατί έτσι εμφανίζεται στο Azure Retail Prices API.
     """
 
-    cat = (category or "").lower()
+    raw_category = (category or "").strip()
     svc = (service_name or "").strip()
+
+    # --------------------------------------------------------------------
+    # service-scoped category: category="service::<Retail serviceName>"
+    # Keep embedded serviceName casing intact (do NOT lowercase it).
+    # Also allow this to provide the service_name if missing.
+    # --------------------------------------------------------------------
+    if raw_category.startswith("service::"):
+        embedded = raw_category.split("::", 1)[1].strip()
+        if embedded and not svc:
+            svc = embedded
+        cat = raw_category
+    else:
+        cat = raw_category.lower()
     allowed = set(get_allowed_service_names())
 
     if svc:

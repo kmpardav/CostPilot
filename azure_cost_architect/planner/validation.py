@@ -236,6 +236,18 @@ def validate_plan_schema(plan: dict) -> dict:
                     category = inferred
 
             res["category"] = category
+
+            # -----------------------------------------------------------------
+            # Generic service-scoped category fallback:
+            # If category still looks "fallback-ish" but we have a valid canonical
+            # service_name, bind category to: service::<ServiceName>
+            # This unlocks Retail API catalog routing without maintaining per-service
+            # category maps.
+            # -----------------------------------------------------------------
+            cat_l = (res.get("category") or "").strip().lower()
+            svc = (res.get("service_name") or "").strip()
+            if svc and svc != "UNKNOWN_SERVICE" and cat_l in ("other", "unknown", "misc", FALLBACK_CATEGORY):
+                res["category"] = f"service::{svc}"
             candidates = _category_candidates(res["category"])
             service_info = canonicalize_service_name(
                 res.get("service_name"), category_candidates=candidates
