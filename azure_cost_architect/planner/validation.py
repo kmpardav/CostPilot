@@ -7,14 +7,79 @@ from ..config import HOURS_PROD
 from ..pricing.catalog_sources import get_catalog_sources, CATEGORY_CATALOG_SOURCES
 from ..utils.knowledgepack import canonicalize_service_name
 
-from .pricing_rules import (
-    CANONICAL_METRIC_KEYS,
-    METRIC_KEY_ALIASES,
-    canonicalize_metrics,
-    normalize_pricing_components,
-)
+from .pricing_rules import normalize_pricing_components
 
 FALLBACK_CATEGORY = "__unclassified__"
+
+# ------------------------------------------------------------
+# Canonical metrics keys + alias normalization (back-compat)
+# ------------------------------------------------------------
+_CANONICAL_METRIC_KEYS: set[str] = {
+    "queries_per_month",
+    "transactions_per_month",
+    "requests_per_month",
+    "operations_per_month",
+    "messages_per_month",
+    "data_processed_gb_per_month",
+    "egress_gb_per_month",
+    "ingress_gb_per_month",
+    "storage_gb",
+    "users",
+    "devices",
+    # existing sizing metrics used elsewhere (not part of usage schema)
+    "vcores",
+    "throughput_mbps",
+    "throughput_ru",
+}
+
+_METRIC_ALIAS_MAP: Dict[str, str] = {
+    # legacy / service-prefixed
+    "dns_queries_per_month": "queries_per_month",
+    "dns_query_count_per_month": "queries_per_month",
+    "map_transactions_per_month": "transactions_per_month",
+    "maps_transactions_per_month": "transactions_per_month",
+    "api_calls_per_month": "requests_per_month",
+    "http_requests_per_month": "requests_per_month",
+    "ops_per_month": "operations_per_month",
+    "monthly_operations": "operations_per_month",
+    "msg_per_month": "messages_per_month",
+    # ambiguous but common
+    "egress_gb": "egress_gb_per_month",
+    "ingress_gb": "ingress_gb_per_month",
+    "data_processed_gb": "data_processed_gb_per_month",
+    # short-hands
+    "queries": "queries_per_month",
+    "transactions": "transactions_per_month",
+    "requests": "requests_per_month",
+    "operations": "operations_per_month",
+    "messages": "messages_per_month",
+}
+
+
+def _canonicalize_metrics(metrics: Any) -> Dict[str, Any]:
+    """Rename known aliases -> canonical keys (preserve canonical on conflict)."""
+    if not isinstance(metrics, dict):
+        return {}
+    out: Dict[str, Any] = {}
+    # first: keep existing canonical keys
+    for k, v in metrics.items():
+        if k in _CANONICAL_METRIC_KEYS:
+            out[k] = v
+    # then: map aliases if canonical not already set
+    for k, v in metrics.items():
+        if k in out:
+            continue
+        canon = _METRIC_ALIAS_MAP.get(k)
+        if canon and canon not in out:
+            out[canon] = v
+    # finally: keep other non-empty keys as-is (sizing etc.)
+    for k, v in metrics.items():
+        if k in out:
+            continue
+        if v is None:
+            continue
+        out[k] = v
+    return out
 
 _CATEGORY_MAP: Dict[str, str] = {
     "aks": "compute.aks",
@@ -290,13 +355,14 @@ def validate_plan_schema(plan: dict) -> dict:
             res["meter_name_contains"] = _list_field(res.get("meter_name_contains"))
             res["arm_sku_name_contains"] = _list_field(res.get("arm_sku_name_contains"))
 
-            metrics = res.get("metrics") if isinstance(res.get("metrics"), dict) else {}
-            metrics = canonicalize_metrics(metrics)
+            metrics = _canonicalize_metrics(res.get("metrics"))
             res["metrics"] = metrics
             if res["category"].startswith("storage") and "storage_gb" not in metrics:
                 metrics["storage_gb"] = 100.0
             if res["category"].startswith("network") and "egress_gb_per_month" not in metrics:
                 metrics["egress_gb_per_month"] = 100.0
+            if res["category"].startswith("network") and "egress_gb" not in metrics:
+                metrics["egress_gb"] = float(metrics.get("egress_gb_per_month") or 0.0)
             if res["category"].startswith("db.") and "vcores" not in metrics:
                 metrics["vcores"] = 2
             if res["category"].startswith("cache.redis") and "throughput_mbps" not in metrics:
@@ -348,7 +414,11 @@ def validate_plan_schema(plan: dict) -> dict:
                 comp_norm["units"]["kind"] = unit_kind
 
                 if unit_kind == "metric":
-                    metric_key = str(comp_norm["units"].get("metric_key") or "").strip()
+                    if not str(comp_norm["units"].get("metric_key") or "").strip():
+                        comp_norm.setdefault("warnings", [])
+                        comp_norm["warnings"].append("missing_metric_key")
+                    metric_key_raw = str(comp_norm["units"].get("metric_key") or "").strip()
+                    metric_key = _METRIC_ALIAS_MAP.get(metric_key_raw, metric_key_raw)
                     comp_norm["units"]["metric_key"] = metric_key
                     # Optional scale
                     if "scale" in comp_norm["units"]:
@@ -376,12 +446,12 @@ def validate_plan_schema(plan: dict) -> dict:
                     if str(units.get("kind") or "").strip().lower() != "metric":
                         continue
                     metric_key = str(units.get("metric_key") or "").strip()
-                    if metric_key and metric_key not in CANONICAL_METRIC_KEYS and metric_key not in METRIC_KEY_ALIASES:
+                    if metric_key and metric_key not in _CANONICAL_METRIC_KEYS:
                         errors.append(
                             f"pricing_components[{res.get('id')}] metric_key '{metric_key}' is not canonical; "
-                            f"use one of: {sorted(CANONICAL_METRIC_KEYS)}"
+                            f"use one of: {sorted(_CANONICAL_METRIC_KEYS)}"
                         )
-                    canon = METRIC_KEY_ALIASES.get(metric_key)
+                    canon = _METRIC_ALIAS_MAP.get(metric_key)
                     if canon and canon in metrics and metric_key not in metrics:
                         metrics[metric_key] = metrics[canon]
 

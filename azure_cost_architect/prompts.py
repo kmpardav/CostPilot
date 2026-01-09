@@ -1,6 +1,64 @@
 from collections import defaultdict
 from textwrap import fill
 
+# ---------------------------------------------------------------------------
+# Safety constants (avoid NameError if referenced in prompt templates)
+# ---------------------------------------------------------------------------
+UNKNOWN_SERVICE = "UNKNOWN_SERVICE"
+# Back-compat / typo-proof alias (some older edits may reference this)
+UNKNOWN_SERVICE_NAME = UNKNOWN_SERVICE
+
+# ---------------------------------------------------------------------------
+# Canonical metrics schema (planner + validation)
+# ---------------------------------------------------------------------------
+CANONICAL_METRICS_SCHEMA = """\nCanonical metrics keys (use EXACTLY these keys; do not invent new ones):
+
+Usage counters (counts/month):
+- queries_per_month
+- transactions_per_month
+- requests_per_month
+- operations_per_month
+- messages_per_month
+
+Data volumes:
+- data_processed_gb_per_month
+- egress_gb_per_month
+- ingress_gb_per_month
+- storage_gb
+
+Licensing-style:
+- users
+- devices
+
+Rules:
+1) Do NOT create service-prefixed keys like dns_queries_per_month; always use queries_per_month.
+2) If you need multiple dimensions, split into multiple pricing_components.
+"""
+
+# ---------------------------------------------------------------------------
+# pricing_components schema (generic, scale-out)
+# NOTE: This string is interpolated inside an f-string; braces must be doubled.
+# ---------------------------------------------------------------------------
+PRICING_COMPONENTS_SCHEMA = """\npricing_components: optional list of component objects. If present, the parent
+resource represents a logical container; pricing/enrich will expand components
+into priced child resources and will NOT price the parent (to avoid double count).
+
+Each component object:
+- key: short id (e.g. zones, queries, transactions, requests, egress, ingestion_gb)
+- label: human label
+- units: {{kind: quantity|fixed|metric, metric_key?: str, value?: number, scale?: number}}
+  - kind=quantity: units = resource.quantity
+  - kind=fixed: units = units.value
+  - kind=metric: units = resource.metrics[metric_key] * (scale if provided)
+- hours_behavior: inherit|ignore
+- pricing_hints: optional dict with any of:
+  - product_name_contains: [strings]
+  - sku_name_contains: [strings]
+  - meter_name_contains: [strings]
+  - arm_sku_name_contains: [strings]
+- notes: optional string
+"""
+
 from .config import DEFAULT_CURRENCY, DEFAULT_REGION, HOURS_PROD
 from .utils.knowledgepack import get_allowed_service_names, get_compact_service_metadata
 
@@ -71,6 +129,12 @@ Pricing & catalog guardrails (VERY IMPORTANT):
 - service_name MUST be one of the "Allowed Azure Retail serviceName values" listed above (case-sensitive).
 - DO NOT invent random sku_name / arm_sku_name values. If unsure, prefer leaving arm_sku_name empty and rely on
   product_name_contains / meter_name_contains hints rather than hallucinating a SKU.
+
+# Pricing components schema (for usage-based services)
+{PRICING_COMPONENTS_SCHEMA}
+
+# Canonical metrics schema (MUST FOLLOW)
+{CANONICAL_METRICS_SCHEMA}
 
 Componentized pricing (VERY IMPORTANT):
 - For any usage-based or multi-meter service (DNS, Front Door, CDN, Log ingestion, Service Bus, Firewall/NAT data),

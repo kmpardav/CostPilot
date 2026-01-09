@@ -19,6 +19,179 @@ from .pricing_rules import (
 from .validation import validate_plan_schema
 
 
+# ---------------------------------------------------------------------------
+# Deterministic post-repair enhancements (no LLM dependency)
+# - Strengthen pricing_hints using service_name/category when missing
+# - Fill missing pricing_components for common usage-based services
+# ---------------------------------------------------------------------------
+
+def _append_unique(lst: List[str], value: str) -> None:
+    if value and value not in lst:
+        lst.append(value)
+
+
+def _strengthen_hints(res: Dict) -> None:
+    """If hints are empty/weak, add safe, generic contains tokens."""
+    svc = (res.get("service_name") or "").strip()
+    if svc and svc != "UNKNOWN_SERVICE":
+        res.setdefault("product_name_contains", [])
+        if isinstance(res["product_name_contains"], list):
+            _append_unique(res["product_name_contains"], svc)
+
+    cat = (res.get("category") or "").strip()
+    if cat:
+        res.setdefault("meter_name_contains", [])
+        if isinstance(res["meter_name_contains"], list) and not res["meter_name_contains"]:
+            c = cat.lower()
+            if "dns" in c:
+                _append_unique(res["meter_name_contains"], "Zone")
+                _append_unique(res["meter_name_contains"], "Query")
+            elif "frontdoor" in c or "cdn" in c:
+                _append_unique(res["meter_name_contains"], "Request")
+                _append_unique(res["meter_name_contains"], "Data Transfer")
+            elif "servicebus" in c or "eventhub" in c:
+                _append_unique(res["meter_name_contains"], "Message")
+
+
+def _ensure_pricing_components(res: Dict) -> None:
+    """Fill pricing_components when known usage-based services omitted components.
+
+    Conservative: only adds components for services/categories we routinely meter,
+    and only when canonical metrics exist (or a safe quantity-only component).
+    """
+    if res.get("pricing_components"):
+        return
+
+    metrics = res.get("metrics") or {}
+    if not isinstance(metrics, dict):
+        metrics = {}
+
+    svc = (res.get("service_name") or "").strip().lower()
+    cat = (res.get("category") or "").strip().lower()
+
+    def _pc(
+        key: str,
+        label: str,
+        *,
+        units: Dict,
+        hours_behavior: str = "ignore",
+        pricing_hints: Optional[Dict] = None,
+    ) -> Dict:
+        return {
+            "key": key,
+            "label": label,
+            "units": units,
+            "hours_behavior": hours_behavior,
+            "pricing_hints": pricing_hints or {},
+        }
+
+    pcs: List[Dict] = []
+
+    # Azure DNS: zones (quantity) + queries (metric)
+    if "azure dns" in svc or "dns" in cat:
+        pcs.append(
+            _pc(
+                "zones",
+                "Zones",
+                units={"kind": "quantity"},
+                pricing_hints={"meter_name_contains": ["Zone"]},
+            )
+        )
+        if "queries_per_month" in metrics:
+            pcs.append(
+                _pc(
+                    "queries",
+                    "Queries",
+                    units={"kind": "metric", "metric_key": "queries_per_month"},
+                    pricing_hints={"meter_name_contains": ["Query", "Queries"]},
+                )
+            )
+
+    # Azure Maps: transactions
+    if "azure maps" in svc or "maps" in cat:
+        if "transactions_per_month" in metrics:
+            pcs.append(
+                _pc(
+                    "transactions",
+                    "Transactions",
+                    units={"kind": "metric", "metric_key": "transactions_per_month"},
+                    pricing_hints={"meter_name_contains": ["Transaction", "Transactions"]},
+                )
+            )
+
+    # Front Door / CDN: requests + egress
+    if "front door" in svc or "frontdoor" in cat or "cdn" in cat:
+        if "requests_per_month" in metrics:
+            pcs.append(
+                _pc(
+                    "requests",
+                    "Requests",
+                    units={"kind": "metric", "metric_key": "requests_per_month"},
+                    pricing_hints={"meter_name_contains": ["Request", "Requests"]},
+                )
+            )
+        if "egress_gb_per_month" in metrics or "egress_gb" in metrics:
+            pcs.append(
+                _pc(
+                    "egress",
+                    "Egress (GB)",
+                    units={"kind": "metric", "metric_key": "egress_gb_per_month"},
+                    pricing_hints={"meter_name_contains": ["Data Transfer", "Egress", "GB"]},
+                )
+            )
+
+    # Monitor / Log Analytics: ingestion
+    if "log analytics" in svc or "azure monitor" in svc or "monitor" in cat or "loganalytics" in cat:
+        if "data_processed_gb_per_month" in metrics:
+            pcs.append(
+                _pc(
+                    "ingestion_gb",
+                    "Ingestion (GB)",
+                    units={"kind": "metric", "metric_key": "data_processed_gb_per_month"},
+                    pricing_hints={"meter_name_contains": ["Ingestion", "Data", "GB"]},
+                )
+            )
+
+    # Service Bus / Event Hubs: messages
+    if "service bus" in svc or "servicebus" in cat or "event hub" in svc or "eventhubs" in cat:
+        if "messages_per_month" in metrics:
+            pcs.append(
+                _pc(
+                    "messages",
+                    "Messages",
+                    units={"kind": "metric", "metric_key": "messages_per_month"},
+                    pricing_hints={"meter_name_contains": ["Message", "Messages"]},
+                )
+            )
+
+    # Key Vault: transactions
+    if "key vault" in svc or "keyvault" in cat:
+        if "transactions_per_month" in metrics or "operations_per_month" in metrics or "requests_per_month" in metrics:
+            pcs.append(
+                _pc(
+                    "transactions",
+                    "Transactions",
+                    units={"kind": "metric", "metric_key": "transactions_per_month"},
+                    pricing_hints={"meter_name_contains": ["Operation", "Transaction", "Transactions"]},
+                )
+            )
+
+    # Firewall / NAT: data processed
+    if "firewall" in cat or "azure firewall" in svc or "nat" in cat or "nat gateway" in svc:
+        if "data_processed_gb_per_month" in metrics:
+            pcs.append(
+                _pc(
+                    "data_processed_gb",
+                    "Data processed (GB)",
+                    units={"kind": "metric", "metric_key": "data_processed_gb_per_month"},
+                    pricing_hints={"meter_name_contains": ["Data", "Processed", "GB"]},
+                )
+            )
+
+    if pcs:
+        res["pricing_components"] = pcs
+
+
 def build_repair_targets(
     validated_plan: dict,
     *,
@@ -196,9 +369,17 @@ def apply_repairs(plan: dict, repairs: Iterable[Dict]) -> dict:
             for res in scen.get("resources", []):
                 if res.get("id") == rid:
                     _update_resource(res, repair)
+                    _strengthen_hints(res)
+                    _ensure_pricing_components(res)
                     break
 
     _fill_missing_pricing_components()
+    for scen in updated.get("scenarios", []) or []:
+        for res in scen.get("resources", []) or []:
+            if not isinstance(res, dict):
+                continue
+            _strengthen_hints(res)
+            _ensure_pricing_components(res)
     updated = validate_plan_schema(updated)
     contract_result = validate_pricing_contract(updated)
     return contract_result.plan

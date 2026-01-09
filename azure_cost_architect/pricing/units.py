@@ -3,6 +3,59 @@ import re
 from ..config import HOURS_DEVTEST, HOURS_PROD
 
 
+_PACK_PATTERNS = [
+    # per 1,000,000 / 1M
+    re.compile(r"(?:per\s*)?(?:1\s*m|1\s*million|1,?000,?000)\b"),
+    # per 10,000 / 10K
+    re.compile(r"(?:per\s*)?(?:10\s*k|10,?000)\b"),
+    # per 1,000
+    re.compile(r"(?:per\s*)?(?:1\s*k|1,?000)\b"),
+]
+
+
+def _parse_per_pack_divisor(uom: str, meter_text: str) -> float:
+    """Return divisor for 'per N' meters (e.g., per 10K requests)."""
+    blob = f"{uom} {meter_text}".lower()
+    if _PACK_PATTERNS[0].search(blob):
+        return 1_000_000.0
+    if _PACK_PATTERNS[1].search(blob):
+        return 10_000.0
+    if _PACK_PATTERNS[2].search(blob):
+        return 1_000.0
+    return 1.0
+
+
+def _monthly_count_for_meter(metrics: dict, meter_text: str) -> float:
+    """Pick the right canonical monthly counter based on meter text."""
+    mt = (meter_text or "").lower()
+
+    def _f(key: str) -> float:
+        try:
+            return float(metrics.get(key) or 0.0)
+        except (TypeError, ValueError):
+            return 0.0
+
+    if "query" in mt:
+        return _f("queries_per_month") or _f("operations_per_month")
+    if "transaction" in mt:
+        return _f("transactions_per_month") or _f("operations_per_month")
+    if "request" in mt:
+        return _f("requests_per_month") or _f("operations_per_month")
+    if "message" in mt:
+        return _f("messages_per_month") or _f("operations_per_month")
+    if "operation" in mt or "call" in mt:
+        return _f("operations_per_month") or _f("requests_per_month") or _f(
+            "transactions_per_month"
+        )
+    return (
+        _f("operations_per_month")
+        or _f("requests_per_month")
+        or _f("transactions_per_month")
+        or _f("queries_per_month")
+        or _f("messages_per_month")
+    )
+
+
 def compute_units(resource: dict, unit_of_measure: str) -> float:
     qty = float(resource.get("quantity", 1.0))
     hours = float(resource.get("hours_per_month", 0.0) or 0.0)
@@ -13,9 +66,16 @@ def compute_units(resource: dict, unit_of_measure: str) -> float:
 
     metrics = resource.get("metrics") or {}
     storage_gb = float(metrics.get("storage_gb", 0.0) or 0.0)
-    egress_gb = float(metrics.get("egress_gb", 0.0) or 0.0)
+    egress_gb = float(metrics.get("egress_gb_per_month") or metrics.get("egress_gb") or 0.0)
+    data_processed_gb = float(
+        metrics.get("data_processed_gb_per_month") or metrics.get("data_processed_gb") or 0.0
+    )
+    ingress_gb = float(metrics.get("ingress_gb_per_month") or metrics.get("ingress_gb") or 0.0)
     ops = float(metrics.get("operations_per_month", 0.0) or 0.0)
     msgs = float(metrics.get("messages_per_month", 0.0) or 0.0)
+    requests = float(metrics.get("requests_per_month", 0.0) or 0.0)
+    transactions = float(metrics.get("transactions_per_month", 0.0) or 0.0)
+    queries = float(metrics.get("queries_per_month", 0.0) or 0.0)
     ru = float(metrics.get("throughput_ru", 0.0) or 0.0)
     throughput_mbps = float(
         metrics.get("throughput_mbps")
@@ -103,6 +163,12 @@ def compute_units(resource: dict, unit_of_measure: str) -> float:
     # ---- GB-based meters (storage / egress) ----
     if "gb" in uom:
         base = egress_gb if category.startswith("network") else storage_gb
+        if data_processed_gb > 0 and (
+            "processed" in meter_text
+            or "data processed" in meter_text
+            or ("data" in meter_text and category.startswith("network"))
+        ):
+            base = data_processed_gb
 
         if category.startswith("storage.blob"):
             tier = ""
@@ -172,13 +238,27 @@ def compute_units(resource: dict, unit_of_measure: str) -> float:
                 pack = 1.0
         return (base_tp / pack) * hours
 
-    # ---- per million / 10k operations ----
-    if "1m" in uom or "1 million" in uom or "1,000,000" in uom:
-        return max(msgs, ops, 0.0) / 1_000_000.0
-    if "10k" in uom or "10 k" in uom:
-        return max(msgs, ops, 0.0) / 10_000.0
-    if "operation" in uom or "request" in uom or "message" in uom:
-        return max(msgs, ops, 0.0)
+    # ---- per N operations/requests/messages (1K / 10K / 1M) ----
+    if any(
+        tok in uom
+        for tok in (
+            "operation",
+            "operations",
+            "request",
+            "requests",
+            "message",
+            "messages",
+            "query",
+            "queries",
+            "transaction",
+            "transactions",
+        )
+    ):
+        divisor = _parse_per_pack_divisor(uom, meter_text)
+        count = _monthly_count_for_meter(metrics, meter_text)
+        if divisor > 1.0:
+            return max(count, 0.0) / divisor
+        return max(count, 0.0)
 
     # Public IP / Private Link – default to hourly if nothing else matched
     if category.startswith("network.public_ip") or category.startswith("network.private_endpoint"):

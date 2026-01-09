@@ -1738,6 +1738,24 @@ def _as_list_str(v: Any) -> List[str]:
     return [s] if s else []
 
 
+def _merge_hint_values(base: Any, extra: Any) -> Any:
+    """Merge pricing_hints values safely.
+
+    - Lists: concatenate and de-duplicate (preserve order)
+    - Scalars: overwrite with extra when provided
+    """
+    if isinstance(base, list) or isinstance(extra, list):
+        out: List[str] = []
+        for v in _as_list_str(base):
+            if v not in out:
+                out.append(v)
+        for v in _as_list_str(extra):
+            if v not in out:
+                out.append(v)
+        return out
+    return extra if extra is not None else base
+
+
 def _contains_token(v: Any, token: str) -> bool:
     """True if any normalized string contains token (case-insensitive)."""
     t = (token or "").lower()
@@ -1785,6 +1803,13 @@ def _expand_pricing_resources(resources: List[Dict[str, Any]]) -> List[Dict[str,
             base_metrics = resource.get("metrics") or {}
             base_details = resource.get("details") or {}
 
+            parent = deepcopy(resource)
+            parent.setdefault("pricing_notes", [])
+            parent["pricing_notes"].append("componentized_parent")
+            parent["pricing_status"] = "componentized_parent"
+            parent["_skip_pricing"] = True
+            expanded.append(parent)
+
             for comp in pcs:
                 if not isinstance(comp, dict):
                     continue
@@ -1806,16 +1831,10 @@ def _expand_pricing_resources(resources: List[Dict[str, Any]]) -> List[Dict[str,
                 if isinstance(base_hints, dict):
                     merged_hints.update(base_hints)
                 if isinstance(comp_hints, dict):
-                    # merge lists by concatenation (avoid losing parent hints)
                     for hint_key, hint_value in comp_hints.items():
-                        if (
-                            hint_key in merged_hints
-                            and isinstance(merged_hints[hint_key], list)
-                            and isinstance(hint_value, list)
-                        ):
-                            merged_hints[hint_key] = merged_hints[hint_key] + hint_value
-                        else:
-                            merged_hints[hint_key] = hint_value
+                        merged_hints[hint_key] = _merge_hint_values(
+                            merged_hints.get(hint_key), hint_value
+                        )
                 if merged_hints:
                     child["pricing_hints"] = merged_hints
 
@@ -1873,8 +1892,7 @@ def _expand_pricing_resources(resources: List[Dict[str, Any]]) -> List[Dict[str,
 
                 expanded.append(child)
 
-            # IMPORTANT: do not keep the parent resource for pricing,
-            # because it is a logical container (would double count).
+            # Parent is included as non-priced (skip) to avoid double counting.
             continue
 
         raw_cat = (resource.get("category") or "other").lower()
@@ -2061,6 +2079,20 @@ async def fetch_price_for_resource(
     adjudicator: Optional[Dict[str, Any]] = None,
     trace=None,
 ) -> None:
+    if resource.get("_skip_pricing"):
+        resource.update(
+            {
+                "unit_price": 0.0,
+                "unit_of_measure": "componentized",
+                "currency_code": currency,
+                "sku_name": None,
+                "meter_name": None,
+                "product_name": None,
+                "units": 0.0,
+            }
+        )
+        resource["pricing_status"] = resource.get("pricing_status") or "componentized_parent"
+        return
     raw_category = resource.get("category") or "other"
     if (raw_category or "").lower() == FALLBACK_CATEGORY:
         if trace:
