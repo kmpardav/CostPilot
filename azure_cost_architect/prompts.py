@@ -1,6 +1,21 @@
 from collections import defaultdict
 from textwrap import fill
 
+
+class _SafeFormatDict(dict):
+    """
+    Safe formatter mapping:
+    - Known placeholders are substituted.
+    - Unknown placeholders like {errors} remain literally "{errors}" (no crash).
+    """
+
+    def __missing__(self, key: str) -> str:
+        return "{" + key + "}"
+
+
+def _safe_format(template: str, mapping: dict) -> str:
+    return template.format_map(_SafeFormatDict(mapping))
+
 # ---------------------------------------------------------------------------
 # Safety constants (avoid NameError if referenced in prompt templates)
 # ---------------------------------------------------------------------------
@@ -140,8 +155,10 @@ def _build_service_hint_block() -> str:
 
 _SERVICE_HINT_BLOCK = _build_service_hint_block()
 
-
-PROMPT_PLANNER_SYSTEM = f"""
+# IMPORTANT:
+# Do NOT use f-strings for large prompt templates. Any accidental "{errors}" or "{kind: ...}"
+# would be interpreted by Python and crash with NameError / formatting errors.
+PROMPT_PLANNER_SYSTEM_TEMPLATE = """
 You are an Azure Solution Architect and FinOps expert.
 
 Your job is to:
@@ -291,7 +308,7 @@ Retail API Canonical Naming Rules:
   * Prefer meterRegion='primary' when present, rank by token overlap + unitOfMeasure compatibility + sane priceType (Consumption for PAYG; Reservation when explicitly requested), and drop irrelevant meters (backup/LTR/promo) unless the user requested them.
 
 Allowed Retail service universe and hints:
-{_SERVICE_HINT_BLOCK or '- (no knowledge pack loaded)'}
+{SERVICE_HINT_BLOCK}
 
 RULES & BEST PRACTICES (VERY IMPORTANT):
 
@@ -345,6 +362,18 @@ Resources marked "__unclassified__" must still include:
 - service_name
 - description
 """
+
+PROMPT_PLANNER_SYSTEM = _safe_format(
+    PROMPT_PLANNER_SYSTEM_TEMPLATE,
+    {
+        "DEFAULT_CURRENCY": DEFAULT_CURRENCY,
+        "DEFAULT_REGION": DEFAULT_REGION,
+        "HOURS_PROD": HOURS_PROD,
+        "PRICING_COMPONENTS_SCHEMA": PRICING_COMPONENTS_SCHEMA,
+        "CANONICAL_METRICS_SCHEMA": CANONICAL_METRICS_SCHEMA,
+        "SERVICE_HINT_BLOCK": (_SERVICE_HINT_BLOCK or "- (no knowledge pack loaded)"),
+    },
+)
 
 PROMPT_PLANNER_USER_TEMPLATE = """
 User description (free text, Greek or English):
