@@ -447,10 +447,23 @@ def validate_plan_schema(plan: dict) -> dict:
                         continue
                     metric_key = str(units.get("metric_key") or "").strip()
                     if metric_key and metric_key not in _CANONICAL_METRIC_KEYS:
-                        errors.append(
+                        # NOTE: validate_plan_schema() does not maintain an `errors` list.
+                        # Never crash normalization; record a warning on the component/resource instead.
+                        warn_msg = (
                             f"pricing_components[{res.get('id')}] metric_key '{metric_key}' is not canonical; "
                             f"use one of: {sorted(_CANONICAL_METRIC_KEYS)}"
                         )
+                        # attach to component warnings
+                        if isinstance(comp, dict):
+                            comp.setdefault("warnings", [])
+                            if not isinstance(comp.get("warnings"), list):
+                                comp["warnings"] = []
+                            comp["warnings"].append(warn_msg)
+                        # attach to resource pricing_notes for visibility downstream
+                        res.setdefault("pricing_notes", [])
+                        if not isinstance(res.get("pricing_notes"), list):
+                            res["pricing_notes"] = [str(res.get("pricing_notes"))]
+                        res["pricing_notes"].append(warn_msg)
                     canon = _METRIC_ALIAS_MAP.get(metric_key)
                     if canon and canon in metrics and metric_key not in metrics:
                         metrics[metric_key] = metrics[canon]
