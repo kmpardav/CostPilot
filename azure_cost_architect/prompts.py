@@ -9,6 +9,51 @@ UNKNOWN_SERVICE = "UNKNOWN_SERVICE"
 UNKNOWN_SERVICE_NAME = UNKNOWN_SERVICE
 
 # ---------------------------------------------------------------------------
+# Planner policy: deterministic rule for when pricing_components is REQUIRED
+# Keep this short; we inject it into the planner *user prompt* for stronger
+# compliance without bloating the already-large system prompt.
+# ---------------------------------------------------------------------------
+PLANNER_PROMPT_POLICY_COMPONENTS = """
+PLANNER PROMPT POLICY — pricing_components (DETERMINISTIC, MUST FOLLOW)
+
+RULE 0 — Canonical metrics ONLY:
+Use only these metric keys (no service prefixes):
+queries_per_month, transactions_per_month, requests_per_month, operations_per_month, messages_per_month,
+data_processed_gb_per_month, egress_gb_per_month, ingress_gb_per_month, storage_gb, users, devices.
+
+RULE 1 — pricing_components is REQUIRED if ANY usage signal exists:
+A) resource.metrics contains any usage key (any *_per_month except hours_per_month),
+   or any of: data_processed_gb_per_month, egress_gb_per_month, ingress_gb_per_month, messages_per_month.
+B) The text mentions usage terms: requests/transactions/queries/messages/events/ingestion/egress/bandwidth/GB
+   or per-10K/per-1M/per-million.
+C) The service/tier is typically multi-meter consumption:
+   DNS, Maps, Front Door, CDN, Monitor/Log Analytics, Firewall, NAT Gateway, Key Vault,
+   Service Bus, Event Hubs, Event Grid, Azure AI/Cognitive.
+
+If ANY of (A/B/C) is true → emit pricing_components.
+
+RULE 2 — pricing_components usually NOT needed for pure capacity-only resources:
+VMs (hourly), SQL vCores (hourly), App Service Plan (instances/hours), etc.,
+unless usage signals exist (then split).
+
+RULE 3 — Minimal deterministic component templates (keep components <= 2 per service):
+- Azure DNS: zones (quantity) + queries (metric_key=queries_per_month)
+- Azure Maps: transactions (metric_key=transactions_per_month)
+- Monitor/Log Analytics: ingestion_gb (metric_key=data_processed_gb_per_month)
+- Service Bus/Event Hubs: messages (metric_key=messages_per_month)  [if only “events”, use operations_per_month]
+- Front Door/CDN: requests (metric_key=requests_per_month) + egress (metric_key=egress_gb_per_month)
+- Key Vault: transactions (metric_key=transactions_per_month) else operations_per_month
+- Firewall/NAT: data_processed_gb (metric_key=data_processed_gb_per_month) [+ optional hourly base if explicitly stated]
+- Entra licensing: licenses (metric_key=users) only if explicitly in scope; otherwise mark as estimate
+
+RULE 4 — If you cannot decide between requests vs transactions:
+Prefer requests_per_month for HTTP/API/WAF/CDN/FrontDoor.
+Prefer transactions_per_month for Maps/AI “transactions”.
+Else use operations_per_month.
+Never invent a new metric key.
+"""
+
+# ---------------------------------------------------------------------------
 # Canonical metrics schema (planner + validation)
 # ---------------------------------------------------------------------------
 CANONICAL_METRICS_SCHEMA = """\nCanonical metrics keys (use EXACTLY these keys; do not invent new ones):

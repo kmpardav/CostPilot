@@ -10,6 +10,7 @@ from ..prompts import (
     PROMPT_PLANNER_USER_TEMPLATE,
     PROMPT_JSON_REPAIR_SYSTEM,
     PROMPT_PLAN_REPAIR_SYSTEM,
+    PLANNER_PROMPT_POLICY_COMPONENTS,
 )
 from ..planner.contract import PlanValidationResult, validate_pricing_contract
 from ..utils.trace import TraceLogger
@@ -57,6 +58,12 @@ EXAMPLES:
 If pricing_components is present, keep the parent resource as a logical container.
 Do NOT create separate resources manually; the pricing engine will expand them.
 """
+
+_PLANNER_POLICY_INJECTION = (
+    "\n\n"
+    + PLANNER_PROMPT_POLICY_COMPONENTS.strip()
+    + "\n"
+)
 
 
 @dataclass
@@ -252,6 +259,7 @@ def _planner_attempt(
         PROMPT_PLANNER_USER_TEMPLATE.format(arch_text=arch_text, mode=mode)
         + "\n\n"
         + _PRICING_COMPONENTS_GUIDANCE
+        + _PLANNER_POLICY_INJECTION
     )
     model_used: str
     raw: str
