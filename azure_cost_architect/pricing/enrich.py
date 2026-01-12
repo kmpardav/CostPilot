@@ -2140,6 +2140,10 @@ async def fetch_price_for_resource(
     # -------------------------------------------------------------
     # service::<ServiceName> category: bypass taxonomy registry.require()
     # and treat it as a service-scoped pricing target.
+    #
+    # NOTE: Do NOT instantiate CanonicalService here. The taxonomy module
+    # may have a different CanonicalService signature across snapshots,
+    # and for this path we only need a deterministic pricing_strategy.
     # -------------------------------------------------------------
     if raw_category.startswith("service::"):
         embedded = raw_category.split("::", 1)[1].strip()
@@ -2148,14 +2152,10 @@ async def fetch_price_for_resource(
         if embedded_canon:
             # Ensure the resource service_name aligns with the embedded service name
             resource["service_name"] = embedded_canon
-        svc = CanonicalService(
-            category=raw_category,
-            service_name=resource.get("service_name") or embedded_canon,
-            pricing_strategy="catalog",
-        )
+        strategy = "catalog"
     else:
         svc = registry.require(raw_category)
-    strategy = svc.pricing_strategy
+        strategy = svc.pricing_strategy
 
     res_id = (resource.get("id") or "").lower()
     adjudication_enabled = bool(adjudicator and adjudicator.get("enabled"))
