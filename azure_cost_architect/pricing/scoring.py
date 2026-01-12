@@ -589,9 +589,21 @@ def score_price_item(resource: Dict[str, Any], item: Dict[str, Any], hours_prod:
     - Να βοηθάμε το sort στο enrich.py να επιλέξει λογικά SKUs.
     """
     score = 0
-    category = _low(resource.get("category") or "other")
+    raw_category = resource.get("category") or "other"
+    category = _low(raw_category)
     registry = _get_registry()
-    svc = registry.require(category)
+
+    # service::<Retail serviceName> categories are not present in taxonomy registry.
+    # For these, fall back to a neutral scorer configuration instead of hard-failing.
+    if isinstance(raw_category, str) and raw_category.startswith("service::"):
+        class _Svc:
+            pricing_strategy = "catalog"
+            disallowed_meter_keywords: list[str] = []
+            preferred_meter_keywords: list[str] = []
+
+        svc = _Svc()
+    else:
+        svc = registry.require(raw_category)
 
     meters = resource.get("metrics", {})
     redis_tp = float(

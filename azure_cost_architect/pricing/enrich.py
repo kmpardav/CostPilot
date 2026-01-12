@@ -368,6 +368,10 @@ def aggregate_scenario_costs(
         1
         for res in scenario.get("resources", [])
         if (res.get("pricing_status") or "").lower() != "unclassified"
+        and not (
+            (res.get("pricing_status") or "").lower() == "componentized_parent"
+            and res.get("_skip_pricing")
+        )
     )
     compare_skip_reason: Optional[str] = None
     required_categories = normalize_required_categories(
@@ -391,6 +395,11 @@ def aggregate_scenario_costs(
         yearly = res.get("yearly_cost")
 
         if status == "unclassified":
+            continue
+
+        # Componentized parents are logical groupings (their children carry the cost).
+        # Do not treat them as missing or blockers for comparability.
+        if status == "componentized_parent" and res.get("_skip_pricing"):
             continue
 
         is_required = _is_required(cat)
@@ -738,7 +747,12 @@ def attach_baseline_deltas(enriched_scenarios: List[Dict[str, Any]]) -> None:
 
 
 def _normalize_category_for_scoring(category: str) -> str:
-    cat = (category or "other").lower()
+    raw = (category or "other").strip()
+    # Preserve casing for service-scoped categories: service::<Retail serviceName>
+    # (Retail API filters may be case-sensitive for serviceName.)
+    if raw.startswith("service::"):
+        return raw
+    cat = raw.lower()
     if cat.startswith("appservice.plan"):
         return "appservice"
     return cat
@@ -2133,8 +2147,31 @@ async def fetch_price_for_resource(
     region = (resource.get("region") or default_region or DEFAULT_REGION).strip() or DEFAULT_REGION
     billing_model = resource.get("billing_model") or "payg"
 
+    # ------------------------------------------------------------
+    # Heuristic: AML compute instances are priced as VM hours in Retail API.
+    # If the planner emitted Azure ML service category with a VM-size arm_sku_name,
+    # price it via compute.vm to avoid a guaranteed SKU-mismatch under Azure ML catalogs.
+    # ------------------------------------------------------------
+    if arm_sku_name and arm_sku_name.lower().startswith(("standard_", "basic_")):
+        raw_cat_low = (raw_category or "").lower()
+        svc_low = (service_name or "").lower()
+        if ("machine learning" in svc_low) or raw_cat_low.startswith(
+            ("ml.", "service::azure machine learning")
+        ):
+            resource.setdefault("pricing_notes", [])
+            resource["pricing_notes"].append(
+                "AML compute SKU looks like a VM size; priced via compute.vm (Virtual Machines)."
+            )
+            resource["category_priced_as"] = "compute.vm"
+            category = "compute.vm"
+            service_name = "Virtual Machines"
+
     resource["service_name"] = service_name
     resource["region"] = region
+
+    raw_category_for_strategy = raw_category
+    if resource.get("category_priced_as") == "compute.vm":
+        raw_category_for_strategy = "compute.vm"
 
     registry = _get_registry()
     # -------------------------------------------------------------
@@ -2145,8 +2182,8 @@ async def fetch_price_for_resource(
     # may have a different CanonicalService signature across snapshots,
     # and for this path we only need a deterministic pricing_strategy.
     # -------------------------------------------------------------
-    if raw_category.startswith("service::"):
-        embedded = raw_category.split("::", 1)[1].strip()
+    if raw_category_for_strategy.startswith("service::"):
+        embedded = raw_category_for_strategy.split("::", 1)[1].strip()
         canon = canonicalize_service_name(embedded)
         embedded_canon = (canon.get("canonical") or embedded).strip()
         if embedded_canon:
@@ -2154,7 +2191,7 @@ async def fetch_price_for_resource(
             resource["service_name"] = embedded_canon
         strategy = "catalog"
     else:
-        svc = registry.require(raw_category)
+        svc = registry.require(raw_category_for_strategy)
         strategy = svc.pricing_strategy
 
     res_id = (resource.get("id") or "").lower()
