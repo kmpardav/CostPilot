@@ -97,24 +97,46 @@ def _discover_service_names_by_keyword(keyword: str, currency: str) -> List[str]
     if not keyword:
         return []
 
-    filter_str = (
-        f"startswith(tolower(productName),'%s') or startswith(tolower(meterName),'%s')"
-        % (keyword.lower(), keyword.lower())
-    )
+    kw = keyword.lower().strip()
+    if not kw:
+        return []
 
-    url = f"{RETAIL_API_URL}?$filter={filter_str}&$top=200"
-    if currency and "currencyCode=" not in url:
-        sep = "&" if "?" in url else "?"
-        url = f"{url}{sep}currencyCode={currency}"
+    # Try a permissive query first (contains across serviceName/productName/meterName/skuName).
+    # If the Retail API rejects `contains(...)` (some OData subsets do), fall back to startswith.
+    filters = [
+        (
+            "contains(tolower(serviceName),'{kw}') or "
+            "contains(tolower(productName),'{kw}') or "
+            "contains(tolower(meterName),'{kw}') or "
+            "contains(tolower(skuName),'{kw}')"
+        ).format(kw=kw),
+        (
+            "startswith(tolower(productName),'{kw}') or "
+            "startswith(tolower(meterName),'{kw}')"
+        ).format(kw=kw),
+    ]
 
     client = httpx.Client(timeout=httpx.Timeout(30.0, connect=10.0))
     try:
-        resp = client.get(url)
-        resp.raise_for_status()
-        data = resp.json()
-        items = data.get("Items") or data.get("items") or []
-        return sorted({it.get("serviceName") for it in items if it.get("serviceName")})
-    except Exception:
+        for filter_str in filters:
+            url = f"{RETAIL_API_URL}?$filter={filter_str}&$top=200"
+            if currency and "currencyCode=" not in url:
+                sep = "&" if "?" in url else "?"
+                url = f"{url}{sep}currencyCode={currency}"
+
+            try:
+                resp = client.get(url)
+                resp.raise_for_status()
+                data = resp.json()
+                items = data.get("Items") or data.get("items") or []
+                service_names = sorted(
+                    {it.get("serviceName") for it in items if it.get("serviceName")}
+                )
+                if service_names:
+                    return service_names
+            except Exception:
+                # try next filter
+                continue
         return []
     finally:
         client.close()
