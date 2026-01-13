@@ -12,7 +12,8 @@ console = Console()
 _price_cache_best: Dict[str, Dict[str, Any]] = {}
 
 # Bump when the cache key schema changes (prevents silent collisions with old keys).
-CACHE_KEY_VERSION = "v4"
+# Cache schema bump: signature now considers category_priced_as
+CACHE_KEY_VERSION = "v5"
 
 def load_price_cache() -> None:
     global _price_cache_best
@@ -75,7 +76,7 @@ def _pricing_signature(resource: dict) -> str:
     intent_signature = _intent_signature(resource) if not arm_sku_name else ""
     sig = {
         # primary routing
-        "category": _norm(resource.get("category")).lower(),
+        "category": _norm(resource.get("category_priced_as") or resource.get("category")).lower(),
         "service_name": _norm(resource.get("service_name") or resource.get("serviceName")).lower(),
         "arm_sku_name": arm_sku_name.lower(),
         "intent_signature": intent_signature,

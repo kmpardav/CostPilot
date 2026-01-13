@@ -321,14 +321,32 @@ def apply_repairs(plan: dict, repairs: Iterable[Dict]) -> dict:
 
         for scen in updated.get("scenarios", []) or []:
             for res in scen.get("resources", []) or []:
-                # If planner already emitted components, just normalize shape/aliases.
-                if res.get("pricing_components"):
+                existing = res.get("pricing_components") or []
+                if existing:
                     normalize_pricing_components(res)
-                    continue
+                    existing = res.get("pricing_components") or []
 
                 comps = build_pricing_components_for_resource(res)
                 if not comps:
                     continue
+
+                # Merge missing keys from rule table into existing components.
+                rule_by_key = {c.get("key"): c for c in comps if isinstance(c, dict)}
+                exist_by_key = {c.get("key"): c for c in existing if isinstance(c, dict)}
+
+                # Special-case: Event Hubs Premium should not be “messages” based.
+                rid = str(res.get("id") or "").lower()
+                svc = str(res.get("service_name") or "").lower()
+                if svc == "event hubs" and "premium" in rid and "messages" in exist_by_key:
+                    exist_by_key.pop("messages", None)
+
+                for k, v in rule_by_key.items():
+                    if k and k not in exist_by_key:
+                        exist_by_key[k] = dict(v)
+
+                merged = [exist_by_key[k] for k in sorted(exist_by_key.keys()) if k]
+                res["pricing_components"] = merged
+                normalize_pricing_components(res)
 
                 # If a component expects hours_per_month, make sure a value exists.
                 for comp in comps:
@@ -342,9 +360,6 @@ def apply_repairs(plan: dict, repairs: Iterable[Dict]) -> dict:
                         # let enrich read it for component units computation.
                         if "hours_per_month" not in res:
                             res["hours_per_month"] = 730
-
-                res["pricing_components"] = comps
-                normalize_pricing_components(res)
 
     def _update_resource(res: Dict, patch: Dict) -> None:
         allowed_fields = {
