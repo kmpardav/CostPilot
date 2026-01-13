@@ -1852,6 +1852,18 @@ def _expand_pricing_resources(resources: List[Dict[str, Any]]) -> List[Dict[str,
                 if merged_hints:
                     child["pricing_hints"] = merged_hints
 
+                # Materialize pricing_hints into the top-level fields used
+                # by scoring/filtering logic (meter_name_contains, etc.).
+                for hk in (
+                    "product_name_contains",
+                    "sku_name_contains",
+                    "meter_name_contains",
+                    "arm_sku_name_contains",
+                ):
+                    if hk in merged_hints and merged_hints.get(hk):
+                        # Merge safely with existing top-level hints
+                        child[hk] = _merge_hint_values(child.get(hk), merged_hints.get(hk))
+
                 # Compute units_override from component.units
                 units = comp.get("units") or {}
                 if not isinstance(units, dict):
@@ -1899,6 +1911,17 @@ def _expand_pricing_resources(resources: List[Dict[str, Any]]) -> List[Dict[str,
                 hours_behavior = str(comp.get("hours_behavior") or "inherit").strip().lower()
                 if hours_behavior == "ignore":
                     child.pop("hours_per_month", None)
+                elif hours_behavior == "multiply":
+                    # Multiply units_override by hours_per_month (or default)
+                    try:
+                        h = float(resource.get("hours_per_month") or HOURS_PROD)
+                    except Exception:
+                        h = float(HOURS_PROD)
+                    if "units_override" in child and child["units_override"] is not None:
+                        try:
+                            child["units_override"] = float(child["units_override"]) * h
+                        except Exception:
+                            pass
 
                 # annotate
                 child.setdefault("pricing_notes", [])
@@ -2169,6 +2192,19 @@ async def fetch_price_for_resource(
     resource["service_name"] = service_name
     resource["region"] = region
 
+    # If planner nested hints inside pricing_hints, copy them to the fields
+    # that the scoring engine actually reads.
+    ph = resource.get("pricing_hints") or {}
+    if isinstance(ph, dict):
+        for hk in (
+            "product_name_contains",
+            "sku_name_contains",
+            "meter_name_contains",
+            "arm_sku_name_contains",
+        ):
+            if hk in ph and ph.get(hk):
+                resource[hk] = _merge_hint_values(resource.get(hk), ph.get(hk))
+
     raw_category_for_strategy = raw_category
     if resource.get("category_priced_as") == "compute.vm":
         raw_category_for_strategy = "compute.vm"
@@ -2361,6 +2397,38 @@ async def fetch_price_for_resource(
                         scenario_id=scenario.get("id"),
                         resource_id=resource.get("id"),
                     )
+            else:
+                # Guardrail: if resource explicitly requested a service_name but
+                # the loaded catalog doesn't contain it, do NOT silently price
+                # via another service (this caused DNS->FrontDoor and
+                # CognitiveServices->AISearch mispricing).
+                if isinstance(category, str) and category.startswith("service::"):
+                    all_items = []
+                else:
+                    # try service-scoped fallback catalog
+                    svc_cat = f"service::{svc}"
+                    try:
+                        svc_items = load_catalog(
+                            base_dir=CATALOG_DIR,
+                            category=svc_cat,
+                            region=region,
+                            currency=currency,
+                            trace=trace,
+                        )
+                    except TypeError:
+                        svc_items = load_catalog(
+                            base_dir=CATALOG_DIR,
+                            category=svc_cat,
+                            region=region,
+                            currency=currency,
+                        )
+                    svc_exact = [it for it in svc_items if (it.get("serviceName") or "").strip() == svc]
+                    if svc_exact:
+                        resource["category_priced_as"] = svc_cat
+                        category = svc_cat
+                        all_items = svc_exact
+                    else:
+                        all_items = []
 
         if not all_items:
             if trace:
@@ -2629,6 +2697,49 @@ async def fetch_price_for_resource(
 
         best_item = selection["chosen_item"]
         best_item_score = selection.get("chosen_score") or 0
+
+        # Low-confidence guard: if we have explicit intent hints but
+        # the best score is poor/negative, refuse to misprice.
+        contains_hints = any(
+            _as_list_str(resource.get(k))
+            for k in ("product_name_contains", "sku_name_contains", "meter_name_contains", "arm_sku_name_contains")
+        )
+        if contains_hints and best_item_score < 20:
+            if trace:
+                trace.anomaly(
+                    "selection.low_confidence_rejected",
+                    message="Best candidate score too low for explicit intent hints; refusing mispricing.",
+                    data={"best_score": best_item_score, "category": category, "service_name": svc},
+                    scenario_id=scenario.get("id"),
+                    resource_id=resource.get("id"),
+                )
+            resource.setdefault("pricing_notes", [])
+            resource["pricing_notes"].append("low_confidence_match_rejected")
+            resource.update(
+                {
+                    "unit_price": None,
+                    "unit_of_measure": None,
+                    "currency_code": None,
+                    "sku_name": None,
+                    "meter_name": None,
+                    "product_name": None,
+                    "units": compute_units(resource, ""),
+                    "monthly_cost": None,
+                    "yearly_cost": None,
+                    "error": "Low confidence meter match rejected; requires explicit SKU/meter hints or catalog correction.",
+                    "sku_candidates": candidates,
+                    "pricing_status": "estimated",
+                }
+            )
+            _apply_estimated_cost(resource)
+            _append_scoring_debug_unpriced(
+                scenario,
+                resource,
+                region=region,
+                currency=currency,
+                reason="Low confidence match rejected",
+            )
+            return
 
         top_n_limit = max(1, adjudicate_topn)
         candidate_items = scored_items[:top_n_limit]

@@ -303,6 +303,63 @@ SERVICE_COMPONENT_RULES: Dict[str, List[Dict[str, Any]]] = {
             pricing_hints={"meter_name_contains": ["Data Processed"]},
         ),
     ],
+    # -----------------------------------------------------------------
+    # Microsoft Fabric: model capacity hours + OneLake storage.
+    # NOTE (deterministic assumption): “OneLake Data Stored” meters are
+    # inconsistent across sub-products; we match generic “Data Stored”
+    # under productName “OneLake”, excluding nothing (guardrails prevent
+    # cross-service fallback).
+    # -----------------------------------------------------------------
+    "microsoft fabric": [
+        _pc(
+            "capacity_hours",
+            "Fabric capacity usage (hourly)",
+            units={"kind": "quantity"},
+            hours_behavior="multiply",
+            pricing_hints={
+                "product_name_contains": ["Fabric Capacity", "Microsoft Fabric"],
+                "meter_name_contains": ["Capacity Usage", "Compute Capacity Usage"],
+            },
+        ),
+        _pc(
+            "onelake_storage_gb_month",
+            "OneLake storage data stored (GB-month)",
+            units=_metric_units("storage_gb"),
+            hours_behavior="ignore",
+            pricing_hints={
+                "product_name_contains": ["OneLake"],
+                "meter_name_contains": ["Data Stored"],
+            },
+        ),
+    ],
+
+    # -----------------------------------------------------------------
+    # Event Hubs Premium: Processing Unit hours + optional retention.
+    # -----------------------------------------------------------------
+    "event hubs": [
+        _pc(
+            "processing_unit_hours",
+            "Premium Processing Unit hours",
+            units={"kind": "quantity"},
+            hours_behavior="multiply",
+            pricing_hints={
+                "product_name_contains": ["Event Hubs"],
+                "sku_name_contains": ["Premium"],
+                "meter_name_contains": ["Processing Unit"],
+            },
+        ),
+        _pc(
+            "extended_retention_gb_month",
+            "Premium Extended Retention (GB-month)",
+            units=_metric_units("storage_gb"),
+            hours_behavior="ignore",
+            pricing_hints={
+                "product_name_contains": ["Event Hubs"],
+                "sku_name_contains": ["Premium"],
+                "meter_name_contains": ["Extended Retention"],
+            },
+        ),
+    ],
     # NAT Gateway: hourly gateway + data processed
     "nat gateway": [
         _pc(

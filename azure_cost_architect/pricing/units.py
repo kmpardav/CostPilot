@@ -57,6 +57,64 @@ def _monthly_count_for_meter(metrics: dict, meter_text: str) -> float:
 
 
 def compute_units(resource: dict, unit_of_measure: str) -> float:
+    # ------------------------------------------------------------------
+    # If component expansion provided a deterministic units_override,
+    # prefer it. Still apply pack divisors (1K/10K/1M) when the meter
+    # is priced per N operations/requests/messages.
+    # ------------------------------------------------------------------
+    override = resource.get("units_override")
+    if override is not None:
+        try:
+            base = float(override)
+        except (TypeError, ValueError):
+            base = None
+        if base is not None:
+            uom_low = (unit_of_measure or "").lower().strip()
+            meter_text = " ".join(
+                [
+                    (resource.get("product_name") or ""),
+                    (resource.get("meter_name") or ""),
+                    (resource.get("sku_name") or ""),
+                    uom_low,
+                ]
+            ).lower()
+
+            # per N ops/req/msg/query/txn meters
+            if any(
+                tok in uom_low
+                for tok in (
+                    "operation",
+                    "operations",
+                    "request",
+                    "requests",
+                    "message",
+                    "messages",
+                    "query",
+                    "queries",
+                    "transaction",
+                    "transactions",
+                )
+            ):
+                divisor = _parse_per_pack_divisor(uom_low, meter_text)
+                if divisor > 1.0:
+                    return max(base, 0.0) / divisor
+                return max(base, 0.0)
+
+            # GB packs ("100 GB")
+            if "gb" in uom_low:
+                m = re.search(r"([\d,.]+)\s*gb", uom_low)
+                if m:
+                    try:
+                        pack = float(m.group(1).replace(",", ""))
+                        if pack > 0:
+                            return max(base, 0.0) / pack
+                    except ValueError:
+                        pass
+                return max(base, 0.0)
+
+            # Hour-based meters: override already “final units”
+            return max(base, 0.0)
+
     qty = float(resource.get("quantity", 1.0))
     hours = float(resource.get("hours_per_month", 0.0) or 0.0)
     criticality = (resource.get("criticality") or "prod").lower()
