@@ -58,16 +58,36 @@ def _ensure_pricing_components(res: Dict) -> None:
 
     Conservative: only adds components for services/categories we routinely meter,
     and only when canonical metrics exist (or a safe quantity-only component).
+
+    Also applies a small deterministic cleanup for known conflicts:
+    - Event Hubs Premium: do not allow a generic "messages" component to exist,
+      because it frequently misbinds to retention (GB-month) meters.
     """
+    svc = (res.get("service_name") or "").strip().lower()
+    cat = (res.get("category") or "").strip().lower()
+    rid = (res.get("id") or "").strip().lower()
+    arm_sku = (res.get("arm_sku_name") or res.get("armSkuName") or "").strip().lower()
+    notes = (res.get("notes") or "").strip().lower()
+
+    is_eventhubs = ("event hub" in svc) or ("eventhubs" in cat) or ("eventhub" in cat)
+    is_premium_eventhubs = is_eventhubs and ("premium" in (rid + " " + arm_sku + " " + notes + " " + svc))
+
+    # If pricing_components already exist, only apply safe cleanup and exit.
     if res.get("pricing_components"):
+        if is_premium_eventhubs:
+            pcs = res.get("pricing_components")
+            if isinstance(pcs, list):
+                kept = [pc for pc in pcs if (pc or {}).get("key") != "messages"]
+                if len(kept) != len(pcs):
+                    res["pricing_components"] = kept
+                    res.setdefault("pricing_notes", [])
+                    if "eventhubs_premium_removed_messages_component" not in res["pricing_notes"]:
+                        res["pricing_notes"].append("eventhubs_premium_removed_messages_component")
         return
 
     metrics = res.get("metrics") or {}
     if not isinstance(metrics, dict):
         metrics = {}
-
-    svc = (res.get("service_name") or "").strip().lower()
-    cat = (res.get("category") or "").strip().lower()
 
     def _pc(
         key: str,
@@ -153,7 +173,9 @@ def _ensure_pricing_components(res: Dict) -> None:
             )
 
     # Service Bus / Event Hubs: messages
-    if "service bus" in svc or "servicebus" in cat or "event hub" in svc or "eventhubs" in cat:
+    # IMPORTANT: Event Hubs Premium does NOT bill per-message like Standard;
+    # generic 'messages' components frequently misbind to retention meters.
+    if ("service bus" in svc or "servicebus" in cat or "event hub" in svc or "eventhubs" in cat) and (not is_premium_eventhubs):
         if "messages_per_month" in metrics:
             pcs.append(
                 _pc(

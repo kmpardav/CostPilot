@@ -2698,6 +2698,18 @@ async def fetch_price_for_resource(
         best_item = selection["chosen_item"]
         best_item_score = selection.get("chosen_score") or 0
 
+        # Build a small candidate preview early (before any early-return branches)
+        # so that debug artifacts never reference an undefined local 'candidates'.
+        try:
+            preview_limit = min(10, len(scored_items))
+        except Exception:
+            preview_limit = 0
+        candidates_preview: List[Dict[str, Any]] = (
+            _build_candidate_entries(resource, scored_items, limit=preview_limit, group="preview")
+            if preview_limit > 0
+            else []
+        )
+
         # Low-confidence guard: if we have explicit intent hints but
         # the best score is poor/negative, refuse to misprice.
         contains_hints = any(
@@ -2727,7 +2739,7 @@ async def fetch_price_for_resource(
                     "monthly_cost": None,
                     "yearly_cost": None,
                     "error": "Low confidence meter match rejected; requires explicit SKU/meter hints or catalog correction.",
-                    "sku_candidates": candidates,
+                    "sku_candidates": candidates_preview,
                     "pricing_status": "estimated",
                 }
             )
@@ -2843,7 +2855,7 @@ async def fetch_price_for_resource(
                         "monthly_cost": None,
                         "yearly_cost": None,
                         "error": decision_rationale or "Adjudicator could not resolve resource",
-                        "sku_candidates": candidates,
+                        "sku_candidates": candidates_preview,
                         "pricing_status": "estimated",
                     }
                 )
@@ -2890,7 +2902,7 @@ async def fetch_price_for_resource(
             "sku_name": best_item.get("skuName"),
             "meter_name": best_item.get("meterName"),
             "product_name": best_item.get("ProductName") or best_item.get("productName"),
-            "sku_candidates": candidates,
+            "sku_candidates": candidates_preview,
         }
         if best_item.get("reservationTerm"):
             price_info["reservationTerm"] = best_item.get("reservationTerm")
@@ -2995,6 +3007,51 @@ async def fetch_price_for_resource(
             category,
         )
         return
+
+    # Guardrail: prevent marking paid services as priced when unit_price is 0.0.
+    # This usually happens when we accidentally select a non-billable / non-primary meter.
+    try:
+        unit_price_f = float(unit_price)
+    except Exception:
+        unit_price_f = 0.0
+
+    if unit_price_f <= 0.0:
+        hay = " ".join(
+            [
+                str((best_item or {}).get("productName") or (best_item or {}).get("ProductName") or ""),
+                str((best_item or {}).get("meterName") or ""),
+                str((best_item or {}).get("skuName") or ""),
+                str(unit_of_measure or ""),
+            ]
+        ).lower()
+        freeish = any(tok in hay for tok in ("free", "included", "trial", "no charge", "no-charge"))
+        if not freeish:
+            resource.setdefault("pricing_notes", [])
+            resource["pricing_notes"].append("unit_price_zero_downgraded")
+            resource.update(
+                {
+                    "unit_price": None,
+                    "unit_of_measure": None,
+                    "currency_code": currency_code,
+                    "sku_name": None,
+                    "meter_name": None,
+                    "product_name": None,
+                    "units": compute_units(resource, ""),
+                    "monthly_cost": None,
+                    "yearly_cost": None,
+                    "pricing_status": "estimated",
+                    "error": "Selected meter has zero unit_price; downgraded to estimated to avoid mispricing.",
+                }
+            )
+            _apply_estimated_cost(resource)
+            _append_scoring_debug_unpriced(
+                scenario,
+                resource,
+                region=region,
+                currency=currency,
+                reason="Selected meter has zero unit_price (downgraded)",
+            )
+            return
 
     # Reservations: Retail API unitOfMeasure is often "1 Hour" even when reservationTerm exists.
     # Treat unitPrice as the total upfront price for ONE reservation for the whole term, and amortize.

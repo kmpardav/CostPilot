@@ -630,6 +630,95 @@ def score_price_item(resource: Dict[str, Any], item: Dict[str, Any], hours_prod:
 
     text_all = product_name + " " + meter_name + " " + sku_name
 
+    # ---------------------------------------------------------------------
+    # 0) Deterministic guardrails for common misbindings
+    # ---------------------------------------------------------------------
+    pricing_component_key = _low(
+        resource.get("pricing_component_key")
+        or resource.get("pricingComponentKey")
+        or resource.get("pricing_component")
+        or ""
+    )
+
+    # Prefer primary meters (Option 1): Retail API returns isPrimaryMeterRegion.
+    is_primary_raw = _g(item, "isPrimaryMeterRegion", "is_primary_meter_region")
+
+    def _is_true(v) -> Optional[bool]:
+        if v is None:
+            return None
+        if isinstance(v, bool):
+            return v
+        if isinstance(v, (int, float)):
+            return bool(v)
+        s = str(v).strip().lower()
+        if s in {"true", "1", "yes", "y"}:
+            return True
+        if s in {"false", "0", "no", "n"}:
+            return False
+        return None
+
+    is_primary = _is_true(is_primary_raw)
+    if is_primary is True:
+        score += 40
+    elif is_primary is False:
+        score -= 40
+
+    # Prevent counter-like components from binding to storage/retention meters.
+    # Example failure: Event Hubs "messages" binding to "GB/Month" retention.
+    counter_keys = {
+        "messages",
+        "events",
+        "ingress_events",
+        "operations",
+        "requests",
+        "transactions",
+        "queries",
+    }
+    if pricing_component_key in counter_keys:
+        if (
+            ("gb" in unit_of_measure and "month" in unit_of_measure)
+            or "retention" in text_all
+            or "stored" in text_all
+            or "storage" in text_all
+        ):
+            return -999
+
+    # Even when pricing_component_key is missing, if the resource metrics are clearly
+    # counter-like, do not allow binding to storage/retention meters.
+    # (Prevents Event Hubs: messages -> retention GB-month misbinding)
+    try:
+        counter_metric_present = any(
+            float(meters.get(k, 0.0) or 0.0) > 0.0
+            for k in (
+                "messages_per_month",
+                "operations_per_month",
+                "requests_per_month",
+                "transactions_per_month",
+                "queries_per_month",
+            )
+        )
+    except Exception:
+        counter_metric_present = False
+
+    if counter_metric_present and (
+        ("gb" in unit_of_measure and "month" in unit_of_measure)
+        or "retention" in text_all
+        or "stored" in text_all
+        or "storage" in text_all
+    ):
+        return -999
+
+    # Reject / strongly penalize suspicious 0-priced meters for paid services.
+    # Zero-priced entries are often non-primary, not billable, or promotional.
+    if unit_price <= 0.0:
+        freeish = any(tok in text_all for tok in ("free", "included", "trial", "no charge", "no-charge"))
+        if not freeish:
+            # If primary flag is present and false -> very likely a non-billable mirror.
+            if is_primary is False:
+                score -= 900
+            else:
+                score -= 450
+
     text_guard = f"{product_name} {meter_name}"
     for bad in svc.disallowed_meter_keywords:
         if bad in text_guard:

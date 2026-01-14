@@ -91,6 +91,49 @@ def _existing_item_count(jsonl_path: str) -> Optional[int]:
         return None
 
 
+def _coerce_bool(value: Any) -> Optional[bool]:
+    """Coerce Retail API bool-like fields (e.g., isPrimaryMeterRegion) to bool."""
+    if value is None:
+        return None
+    if isinstance(value, bool):
+        return value
+    if isinstance(value, int):
+        return bool(value)
+    try:
+        s = str(value).strip().lower()
+    except Exception:
+        return None
+    if s in {"true", "1", "yes"}:
+        return True
+    if s in {"false", "0", "no"}:
+        return False
+    return None
+
+
+def _unit_price_value(it: Dict[str, Any]) -> float:
+    for k in ("unitPrice", "unit_price", "retailPrice", "retail_price"):
+        if k in it and it[k] is not None:
+            try:
+                return float(it[k])
+            except Exception:
+                return 0.0
+    return 0.0
+
+
+def _all_unit_prices_zero(rows: List[Dict[str, Any]]) -> bool:
+    if not rows:
+        return True
+    return all(_unit_price_value(r) <= 0.0 for r in rows)
+
+
+def _prefer_primary_meter_region(rows: List[Dict[str, Any]]) -> Tuple[List[Dict[str, Any]], bool]:
+    """Prefer isPrimaryMeterRegion=True rows when present; otherwise return original."""
+    primary = [r for r in rows if _coerce_bool(r.get("isPrimaryMeterRegion")) is True]
+    if primary:
+        return primary, True
+    return rows, False
+
+
 def _discover_service_names_by_keyword(keyword: str, currency: str) -> List[str]:
     """Lightweight discovery query to locate serviceNames for a keyword."""
 
@@ -373,6 +416,44 @@ def ensure_catalog(
                             region,
                             ex,
                         )
+
+            # Prefer primary meter region items when present. This avoids selecting
+            # non-primary meter-region rows (often unitPrice=0) that poison catalogs.
+            raw_rows = rows
+            rows, primary_filtered = _prefer_primary_meter_region(rows)
+            if primary_filtered:
+                warning = (warning + "; " if warning else "") + "primary_meter_region_only"
+
+            # If everything we kept is zero-priced, try to recover deterministically.
+            if rows and _all_unit_prices_zero(rows):
+                # 1) Retry unscoped if we were scoped (regional queries sometimes return 0-priced stubs)
+                if query_region:
+                    try:
+                        rows_retry = fetch_all_for_service(
+                            service_name=src.service_name,
+                            region="",
+                            currency=currency,
+                            trace=trace,
+                        )
+                        rows_retry, primary_filtered_retry = _prefer_primary_meter_region(rows_retry)
+                        if rows_retry and not _all_unit_prices_zero(rows_retry):
+                            rows = rows_retry
+                            query_region = ""
+                            region_label = "all"
+                            warning = (warning + "; " if warning else "") + "retry_unscoped_nonzero"
+                    except Exception:
+                        pass
+
+                # 2) If still zero, prefer any non-zero rows from the original (usually non-primary but billable)
+                if rows and _all_unit_prices_zero(rows):
+                    non_zero = [r for r in (raw_rows or []) if _unit_price_value(r) > 0.0]
+                    if non_zero:
+                        rows = non_zero
+                        warning = (warning + "; " if warning else "") + "fallback_nonzero_rows"
+
+                # 3) Still zero: keep (for determinism) but mark warning
+                if rows and _all_unit_prices_zero(rows):
+                    warning = (warning + "; " if warning else "") + "all_unit_price_zero"
 
             attempts.append((src.service_name, query_region, len(rows)))
             if rows:
