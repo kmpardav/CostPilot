@@ -1796,6 +1796,9 @@ def _clone_resource(base: Dict[str, Any], *, new_id: str, **updates: Any) -> Dic
     resource = dict(base)
     resource["id"] = new_id
     resource.update(updates)
+    # Ensure componentized resources carry a pricing_component_key for deterministic scoring.
+    if "pricing_component_key" not in resource and "_pricing_component" in resource:
+        resource["pricing_component_key"] = resource.get("_pricing_component")
     return resource
 
 

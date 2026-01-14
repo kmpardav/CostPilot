@@ -637,6 +637,7 @@ def score_price_item(resource: Dict[str, Any], item: Dict[str, Any], hours_prod:
         resource.get("pricing_component_key")
         or resource.get("pricingComponentKey")
         or resource.get("pricing_component")
+        or resource.get("_pricing_component")
         or ""
     )
 
@@ -840,10 +841,46 @@ def score_price_item(resource: Dict[str, Any], item: Dict[str, Any], hours_prod:
     elif pricing_component_key == "operations":
         if "operation" in text_all or "operations" in text_all:
             score += 100
+        else:
+            score -= 200
+        # Operations meters are usage counters; strongly penalize hour-based meters.
+        if "hour" in unit_of_measure or "/hour" in unit_of_measure:
+            score -= 300
+
+    elif pricing_component_key in ("firewall_deployment", "firewall_deployment_hours"):
+        # Deployment is billed per firewall-hour; never bind to data processed.
+        if "processed" in text_all:
+            score -= 400
+        if "deployment" in text_all or "firewall" in text_all:
+            score += 120
+        else:
+            score -= 200
+        if "hour" in unit_of_measure or "/hour" in unit_of_measure:
+            score += 80
+        else:
+            score -= 200
+
+    elif pricing_component_key in ("firewall_data_processed", "firewall_data_processed_gb"):
+        # Data processed is billed per GB; never bind to hourly meters.
+        if "hour" in unit_of_measure or "/hour" in unit_of_measure:
+            score -= 400
+        if "processed" in text_all:
+            score += 160
+        else:
+            score -= 200
+        if "gb" in unit_of_measure or "gib" in unit_of_measure:
+            score += 80
+        else:
+            score -= 150
 
     # -------------------------------------------------------------------------
     # 0) Early “hard” guards
     # -------------------------------------------------------------------------
+
+    # Generic promotional/discounted meters should never be selected for production pricing.
+    if criticality in ("prod", "production"):
+        if "discounted" in text_all or "promotion" in text_all or "promo" in text_all:
+            return -999
 
     # Blob: πέτα managed disks όταν ψάχνουμε για blob capacity
     if category.startswith("storage.blob"):
@@ -856,6 +893,27 @@ def score_price_item(resource: Dict[str, Any], item: Dict[str, Any], hours_prod:
             return -999
         if "china" in text_all or "gov" in text_all:
             return -999
+
+    # Key Vault: avoid selecting HSM Pool instance meters unless the resource explicitly asks for HSM.
+    if category.startswith("security.keyvault"):
+        if "hsm pool" in product_name.lower() or "hsm pool" in meter_name.lower() or "hsm" in product_name.lower():
+            wants_hsm = False
+            for field in (
+                resource.get("id"),
+                resource.get("name"),
+                resource.get("product_name_contains"),
+                resource.get("sku_name_contains"),
+                resource.get("meter_name_contains"),
+                resource.get("arm_sku_name"),
+                resource.get("notes"),
+            ):
+                if isinstance(field, list):
+                    if any("hsm" in str(x).lower() for x in field):
+                        wants_hsm = True
+                elif field and "hsm" in str(field).lower():
+                    wants_hsm = True
+            if not wants_hsm:
+                return -999
 
     # Log Analytics: πέτα free/promotional meters για prod
     if category.startswith("monitoring.loganalytics"):
