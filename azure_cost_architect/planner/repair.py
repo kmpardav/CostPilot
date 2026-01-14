@@ -8,9 +8,16 @@ from openai import OpenAI
 
 from ..config import DEFAULT_REQUIRED_CATEGORIES, MODEL_PLANNER
 from ..llm.json_repair import extract_json_object
+from ..llm.llm_trace import (
+    trace_llm_request,
+    trace_llm_response,
+    trace_llm_validate,
+    trace_llm_accepted,
+)
 from ..prompts import PROMPT_REPAIR_SYSTEM, PROMPT_REPAIR_USER_TEMPLATE
 from ..pricing.catalog_sources import get_catalog_sources
 from ..utils.categories import canonical_required_category, normalize_required_categories
+from ..utils.trace import TraceLogger
 from .contract import validate_pricing_contract
 from .pricing_rules import (
     build_pricing_components_for_resource,
@@ -290,6 +297,7 @@ def call_repair_llm(
     service_hint_samples: Dict,
     *,
     backend: str = "chat",
+    trace: Optional[TraceLogger] = None,
 ) -> Dict:
     """Call the repair LLM and return the parsed JSON response."""
 
@@ -298,6 +306,16 @@ def call_repair_llm(
         REPAIR_TARGETS_JSON_HERE=json.dumps(repair_targets, ensure_ascii=False, indent=2),
         CATEGORY_CANDIDATES_JSON_HERE=json.dumps(category_candidates, ensure_ascii=False, indent=2),
         SERVICE_HINT_SAMPLES_JSON_HERE=json.dumps(service_hint_samples, ensure_ascii=False, indent=2),
+    )
+
+    trace_llm_request(
+        trace,
+        stage="planner.auto_repair",
+        backend=backend,
+        model=MODEL_PLANNER,
+        temperature=0.0,
+        response_format={"type": "json_object"} if backend != "responses" else None,
+        messages=[{"role": "system", "content": PROMPT_REPAIR_SYSTEM}, {"role": "user", "content": user_prompt}],
     )
 
     if backend == "responses":
@@ -322,8 +340,24 @@ def call_repair_llm(
         )
         raw = completion.choices[0].message.content or ""
 
+    trace_llm_response(trace, stage="planner.auto_repair", backend=backend, model=MODEL_PLANNER, raw_text=raw)
+
     parsed = json.loads(extract_json_object(raw) or "{}")
     parsed.setdefault("repairs", [])
+    ok = isinstance(parsed, dict) and isinstance(parsed.get("repairs"), list)
+    trace_llm_validate(
+        trace,
+        stage="planner.auto_repair",
+        ok=ok,
+        errors=[] if ok else [{"type": "bad_shape"}],
+    )
+    if ok:
+        trace_llm_accepted(
+            trace,
+            stage="planner.auto_repair",
+            note="auto-repair response accepted",
+            extra={"repairs_count": len(parsed.get("repairs") or [])},
+        )
     return parsed
 
 

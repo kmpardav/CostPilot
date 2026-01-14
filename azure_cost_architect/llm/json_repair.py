@@ -1,4 +1,5 @@
 import json
+from typing import Optional
 
 from openai import OpenAI
 try:
@@ -9,6 +10,8 @@ except Exception:  # fallback αν δεν υπάρχει rich
             print(*args, **kwargs)
 
 from ..config import MODEL_PLANNER
+from ..utils.trace import TraceLogger
+from .llm_trace import trace_llm_request, trace_llm_response
 
 console = Console()
 
@@ -28,7 +31,14 @@ def extract_json_object(text: str) -> str:
     return text
 
 
-def repair_json_with_llm(client: OpenAI, system_prompt: str, raw_text: str) -> dict:
+def repair_json_with_llm(
+    client: OpenAI,
+    system_prompt: str,
+    raw_text: str,
+    *,
+    trace: Optional[TraceLogger] = None,
+    stage: str = "json_repair",
+) -> dict:
     """
     Ζητάει από τον LLM να "επισκευάσει" ένα JSON που βγήκε λίγο χαλασμένο
     (π.χ. single quotes, trailing commas, κλπ.) και να επιστρέψει
@@ -40,6 +50,15 @@ def repair_json_with_llm(client: OpenAI, system_prompt: str, raw_text: str) -> d
         "Do not add commentary.\n\nCONTENT:\n"
         + raw_text
     )
+    trace_llm_request(
+        trace,
+        stage=stage,
+        backend="chat",
+        model=MODEL_PLANNER,
+        temperature=0.0,
+        response_format={"type": "json_object"},
+        messages=[{"role": "system", "content": system_prompt}, {"role": "user", "content": fix_prompt}],
+    )
     completion = client.chat.completions.create(
         model=MODEL_PLANNER,
         response_format={"type": "json_object"},
@@ -50,5 +69,8 @@ def repair_json_with_llm(client: OpenAI, system_prompt: str, raw_text: str) -> d
         ],
     )
     fixed = completion.choices[0].message.content or ""
+    trace_llm_response(
+        trace, stage=stage, backend="chat", model=MODEL_PLANNER, raw_text=fixed
+    )
     fixed = extract_json_object(fixed)
     return json.loads(fixed)
