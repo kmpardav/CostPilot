@@ -127,11 +127,50 @@ def _all_unit_prices_zero(rows: List[Dict[str, Any]]) -> bool:
 
 
 def _prefer_primary_meter_region(rows: List[Dict[str, Any]]) -> Tuple[List[Dict[str, Any]], bool]:
-    """Prefer isPrimaryMeterRegion=True rows when present; otherwise return original."""
+    """Prefer isPrimaryMeterRegion=True rows when present, but do NOT drop non-primary.
+
+    Rationale (Option 1): primary meters are usually the billable, region-scoped meters.
+    However, some paid meters (e.g., Key Vault operations) may appear only in non-primary
+    sets or in unscoped results, so we keep them and let scoring decide.
+    """
     primary = [r for r in rows if _coerce_bool(r.get("isPrimaryMeterRegion")) is True]
-    if primary:
-        return primary, True
-    return rows, False
+    if not primary:
+        return rows, False
+    non_primary = [r for r in rows if _coerce_bool(r.get("isPrimaryMeterRegion")) is not True]
+    return primary + non_primary, True
+
+
+def _merge_rows_for_coverage(rows: List[Dict[str, Any]], extra: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
+    """Merge 'extra' rows into 'rows' with a deterministic de-dup key."""
+    def _key(r: Dict[str, Any]) -> tuple:
+        meter_id = r.get("meterId") or r.get("meter_id") or ""
+        if meter_id:
+            return (str(meter_id),)
+        return (
+            str(r.get("serviceName") or ""),
+            str(r.get("productName") or ""),
+            str(r.get("skuName") or ""),
+            str(r.get("meterName") or ""),
+            str(r.get("unitOfMeasure") or ""),
+            str(r.get("armRegionName") or ""),
+            str(r.get("type") or r.get("Type") or ""),
+            str(r.get("currencyCode") or ""),
+        )
+    seen = set()
+    out: List[Dict[str, Any]] = []
+    for r in rows:
+        k = _key(r)
+        if k in seen:
+            continue
+        seen.add(k)
+        out.append(r)
+    for r in extra:
+        k = _key(r)
+        if k in seen:
+            continue
+        seen.add(k)
+        out.append(r)
+    return out
 
 
 def _discover_service_names_by_keyword(keyword: str, currency: str) -> List[str]:
@@ -422,7 +461,25 @@ def ensure_catalog(
             raw_rows = rows
             rows, primary_filtered = _prefer_primary_meter_region(rows)
             if primary_filtered:
-                warning = (warning + "; " if warning else "") + "primary_meter_region_only"
+                warning = (warning + "; " if warning else "") + "primary_meter_region_preferred"
+
+            # If scoped query returns very few rows, merge unscoped for coverage.
+            if rows and query_region and len(rows) < 20:
+                try:
+                    rows_extra = fetch_all_for_service(
+                        service_name=src.service_name,
+                        region="",
+                        currency=currency,
+                        trace=trace,
+                    )
+                    if rows_extra and len(rows_extra) > len(rows):
+                        merged = _merge_rows_for_coverage(rows, rows_extra)
+                        if len(merged) > len(rows):
+                            rows = merged
+                            rows, _ = _prefer_primary_meter_region(rows)
+                            warning = (warning + "; " if warning else "") + "merged_unscoped_for_coverage"
+                except Exception:
+                    pass
 
             # If everything we kept is zero-priced, try to recover deterministically.
             if rows and _all_unit_prices_zero(rows):

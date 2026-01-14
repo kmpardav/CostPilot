@@ -663,6 +663,21 @@ def score_price_item(resource: Dict[str, Any], item: Dict[str, Any], hours_prod:
     elif is_primary is False:
         score -= 40
 
+    # Identify storage/retention components (GB-month) vs counter components.
+    # Storage/retention components *must* bind to GB-month meters, and must
+    # not be rejected just because counters exist in the parent resource.
+    is_storage_component = False
+    if pricing_component_key:
+        is_storage_component = pricing_component_key.endswith("_gb_month") or pricing_component_key.endswith("_gbmonth")
+
+    def _is_storage_like_meter() -> bool:
+        return (
+            ("gb" in unit_of_measure and "month" in unit_of_measure)
+            or "retention" in text_all
+            or "stored" in text_all
+            or "storage" in text_all
+        )
+
     # Prevent counter-like components from binding to storage/retention meters.
     # Example failure: Event Hubs "messages" binding to "GB/Month" retention.
     counter_keys = {
@@ -674,18 +689,17 @@ def score_price_item(resource: Dict[str, Any], item: Dict[str, Any], hours_prod:
         "transactions",
         "queries",
     }
-    if pricing_component_key in counter_keys:
-        if (
-            ("gb" in unit_of_measure and "month" in unit_of_measure)
-            or "retention" in text_all
-            or "stored" in text_all
-            or "storage" in text_all
-        ):
-            return -999
+
+    is_counter_component = pricing_component_key in counter_keys
+
+    # Strong reject: explicit counter component binding to GB-month/retention/storage meters.
+    if is_counter_component and _is_storage_like_meter():
+        return -999
 
     # Even when pricing_component_key is missing, if the resource metrics are clearly
     # counter-like, do not allow binding to storage/retention meters.
-    # (Prevents Event Hubs: messages -> retention GB-month misbinding)
+    # Guardrail is intentionally *narrow*: it applies only when the component key is
+    # missing (unknown intent), and it never blocks explicit storage components.
     try:
         counter_metric_present = any(
             float(meters.get(k, 0.0) or 0.0) > 0.0
@@ -700,13 +714,22 @@ def score_price_item(resource: Dict[str, Any], item: Dict[str, Any], hours_prod:
     except Exception:
         counter_metric_present = False
 
-    if counter_metric_present and (
-        ("gb" in unit_of_measure and "month" in unit_of_measure)
-        or "retention" in text_all
-        or "stored" in text_all
-        or "storage" in text_all
-    ):
+    if (not is_storage_component) and (not pricing_component_key) and counter_metric_present and _is_storage_like_meter():
         return -999
+
+    # ------------------------------------------------------------------
+    # Storage/retention scoring constraint
+    # ------------------------------------------------------------------
+    # For *_gb_month components, GB-month must win deterministically.
+    if is_storage_component:
+        if ("gb" in unit_of_measure and "month" in unit_of_measure):
+            score += 250
+        else:
+            score -= 250
+
+        # Reinforce common storage language.
+        if any(tok in text_all for tok in ("retention", "data stored", "stored", "storage", "onelake")):
+            score += 60
 
     # Reject / strongly penalize suspicious 0-priced meters for paid services.
     # Zero-priced entries are often non-primary, not billable, or promotional.
@@ -733,21 +756,47 @@ def score_price_item(resource: Dict[str, Any], item: Dict[str, Any], hours_prod:
     # -------------------------------------------------------------------------
     # Treat hint groups differently: productName is often generic, whereas meter/sku contains
     # are high-signal (e.g. App Service tier like P1v2). Penalize missing high-signal groups.
+    def _expand_hint_tokens(raw: list[str]) -> list[str]:
+        """Expand planner hint phrases into multiple matchable tokens.
+
+        Example: "DNS Queries" -> ["dns queries", "dns", "queries"].
+        Keeps deterministic, order-preserving de-dup.
+        """
+        out: list[str] = []
+        for tok in raw:
+            s = _low(tok).strip()
+            if not s:
+                continue
+            out.append(s)
+            if " " in s or "-" in s or "_" in s:
+                for part in re.split(r"[\s\-_\/]+", s):
+                    part = part.strip()
+                    if len(part) >= 2:
+                        out.append(part)
+        seen: set[str] = set()
+        res: list[str] = []
+        for x in out:
+            if x in seen:
+                continue
+            seen.add(x)
+            res.append(x)
+        return res
+
     prod_tokens: list[str] = []
     sku_tokens: list[str] = []
     meter_tokens: list[str] = []
 
     v = resource.get("product_name_contains")
     if isinstance(v, list):
-        prod_tokens = [_low(str(x)) for x in v if str(x).strip()]
+        prod_tokens = _expand_hint_tokens([_low(str(x)) for x in v if str(x).strip()])
 
     v = resource.get("sku_name_contains")
     if isinstance(v, list):
-        sku_tokens = [_low(str(x)) for x in v if str(x).strip()]
+        sku_tokens = _expand_hint_tokens([_low(str(x)) for x in v if str(x).strip()])
 
     v = resource.get("meter_name_contains")
     if isinstance(v, list):
-        meter_tokens = [_low(str(x)) for x in v if str(x).strip()]
+        meter_tokens = _expand_hint_tokens([_low(str(x)) for x in v if str(x).strip()])
 
     prod_tokens = [t for t in prod_tokens if len(t) >= 2]
     sku_tokens = [t for t in sku_tokens if len(t) >= 2]
@@ -774,6 +823,23 @@ def score_price_item(resource: Dict[str, Any], item: Dict[str, Any], hours_prod:
     # Mild bonus if the requested SKU is referenced in product/meter names
     if arm_sku_name and arm_sku_name in text_all:
         score += 5
+
+    # -------------------------------------------------------------------------
+    # 0.a.i) Component-key semantic hints
+    # -------------------------------------------------------------------------
+    # Some components are extremely ambiguous in Azure Retail names; add a
+    # deterministic bias using the component key when present.
+    #
+    # - queries: must prefer meters that actually mention queries
+    # - operations: prefer meters that mention operations (Key Vault, etc.)
+    if pricing_component_key == "queries":
+        if "query" in text_all or "queries" in text_all:
+            score += 120
+        else:
+            score -= 200
+    elif pricing_component_key == "operations":
+        if "operation" in text_all or "operations" in text_all:
+            score += 100
 
     # -------------------------------------------------------------------------
     # 0) Early “hard” guards

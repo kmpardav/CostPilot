@@ -4,20 +4,35 @@ from ..config import HOURS_DEVTEST, HOURS_PROD
 
 
 _PACK_PATTERNS = [
-    # per 1,000,000 / 1M
+    # common explicit forms
     re.compile(r"(?:per\s*)?(?:1\s*m|1\s*million|1,?000,?000)\b"),
-    # per 100,000 / 100K
     re.compile(r"(?:per\s*)?(?:100\s*k|100,?000)\b"),
-    # per 10,000 / 10K
     re.compile(r"(?:per\s*)?(?:10\s*k|10,?000)\b"),
-    # per 1,000 / 1K
     re.compile(r"(?:per\s*)?(?:1\s*k|1,?000)\b"),
 ]
 
+# Generic pack token: 10M, 50M, 250K, 1.5M ...
+_PACK_TOKEN_RE = re.compile(r"(?:per\s*)?(\d+(?:\.\d+)?)\s*([km])\b")
+
+# Numeric pack token with commas: per 1,000 / 10,000 / 100,000 / 1,000,000 ...
+_PACK_NUMERIC_RE = re.compile(r"(?:per\s*)?(\d{1,3}(?:,\d{3})+)\b")
+
 
 def _parse_per_pack_divisor(uom: str, meter_text: str) -> float:
-    """Return divisor for 'per N' meters (e.g., per 10K requests)."""
+    """Return divisor for 'per N' meters (e.g., per 10K requests).
+
+    Supports:
+      - explicit forms: 1K/10K/100K/1M
+      - compact tokens: 10M, 50M, 250K, 1.5M
+      - comma numerics: 10,000 / 1,000,000
+
+    Deterministic rule: planner metrics represent *raw* counts, so units are
+    divided by the pack size when the meter is priced per-pack.
+    """
+
     blob = f"{uom} {meter_text}".lower()
+
+    # Fast path: classic explicit patterns.
     if _PACK_PATTERNS[0].search(blob):
         return 1_000_000.0
     if _PACK_PATTERNS[1].search(blob):
@@ -26,6 +41,30 @@ def _parse_per_pack_divisor(uom: str, meter_text: str) -> float:
         return 10_000.0
     if _PACK_PATTERNS[3].search(blob):
         return 1_000.0
+
+    # Generic K/M tokens (10M, 250K, ...).
+    m = _PACK_TOKEN_RE.search(blob)
+    if m:
+        try:
+            n = float(m.group(1))
+            suffix = m.group(2)
+            mul = 1_000_000.0 if suffix == "m" else 1_000.0
+            div = n * mul
+            if div > 1.0:
+                return div
+        except Exception:
+            pass
+
+    # Numeric comma packs.
+    m = _PACK_NUMERIC_RE.search(blob)
+    if m:
+        try:
+            div = float(m.group(1).replace(",", ""))
+            if div > 1.0:
+                return div
+        except Exception:
+            pass
+
     return 1.0
 
 
