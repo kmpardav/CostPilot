@@ -6,9 +6,11 @@ from ..config import HOURS_DEVTEST, HOURS_PROD
 _PACK_PATTERNS = [
     # per 1,000,000 / 1M
     re.compile(r"(?:per\s*)?(?:1\s*m|1\s*million|1,?000,?000)\b"),
+    # per 100,000 / 100K
+    re.compile(r"(?:per\s*)?(?:100\s*k|100,?000)\b"),
     # per 10,000 / 10K
     re.compile(r"(?:per\s*)?(?:10\s*k|10,?000)\b"),
-    # per 1,000
+    # per 1,000 / 1K
     re.compile(r"(?:per\s*)?(?:1\s*k|1,?000)\b"),
 ]
 
@@ -19,8 +21,10 @@ def _parse_per_pack_divisor(uom: str, meter_text: str) -> float:
     if _PACK_PATTERNS[0].search(blob):
         return 1_000_000.0
     if _PACK_PATTERNS[1].search(blob):
-        return 10_000.0
+        return 100_000.0
     if _PACK_PATTERNS[2].search(blob):
+        return 10_000.0
+    if _PACK_PATTERNS[3].search(blob):
         return 1_000.0
     return 1.0
 
@@ -79,7 +83,14 @@ def compute_units(resource: dict, unit_of_measure: str) -> float:
                 ]
             ).lower()
 
-            # per N ops/req/msg/query/txn meters
+            # per-pack meters (1K/10K/100K/1M) frequently encode only the pack size
+            # in unitOfMeasure (e.g. "1M"), without mentioning operations/requests.
+            # Deterministic assumption: planner metrics represent RAW counts.
+            divisor = _parse_per_pack_divisor(uom_low, meter_text)
+            if divisor > 1.0:
+                return max(base, 0.0) / divisor
+
+            # Heuristic: if unitOfMeasure mentions ops/req/msg/query/txn, still apply divisors.
             if any(
                 tok in uom_low
                 for tok in (
@@ -100,7 +111,6 @@ def compute_units(resource: dict, unit_of_measure: str) -> float:
                     return max(base, 0.0) / divisor
                 return max(base, 0.0)
 
-            # GB packs ("100 GB")
             if "gb" in uom_low:
                 m = re.search(r"([\d,.]+)\s*gb", uom_low)
                 if m:
@@ -317,6 +327,12 @@ def compute_units(resource: dict, unit_of_measure: str) -> float:
         if divisor > 1.0:
             return max(count, 0.0) / divisor
         return max(count, 0.0)
+
+    # ---- per-pack meters without explicit tokens in unitOfMeasure (e.g. unitOfMeasure == "1M") ----
+    divisor = _parse_per_pack_divisor(uom, meter_text)
+    if divisor > 1.0:
+        count = _monthly_count_for_meter(metrics, meter_text)
+        return max(count, 0.0) / divisor
 
     # Public IP / Private Link – default to hourly if nothing else matched
     if category.startswith("network.public_ip") or category.startswith("network.private_endpoint"):
