@@ -643,6 +643,7 @@ def main() -> None:
             category_candidates,
             service_hint_samples,
             backend=backend,
+            trace=trace_logger,
         )
 
         repair_outputs.append({"iteration": iteration + 1, "response": repair_response})
@@ -755,9 +756,9 @@ def main() -> None:
         )
 
         if backend == "responses":
-            report_md = generate_report_responses(client, arch_text, enriched_plan)
+            report_md = generate_report_responses(client, arch_text, enriched_plan, trace=trace_logger)
         else:
-            report_md = generate_report_chat(client, arch_text, enriched_plan)
+            report_md = generate_report_chat(client, arch_text, enriched_plan, trace=trace_logger)
 
         with open(md_filename, "w", encoding="utf-8") as f:
             f.write(report_md)

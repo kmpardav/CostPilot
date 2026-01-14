@@ -6,6 +6,8 @@ from openai import OpenAI
 
 from ..config import MODEL_ADJUDICATOR
 from ..prompts import PROMPT_ADJUDICATOR_SYSTEM
+from ..utils.trace import TraceLogger
+from .llm_trace import trace_llm_request, trace_llm_response
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -48,7 +50,7 @@ def adjudicate_candidates(
     resource: Dict[str, Any],
     candidates: List[Dict[str, Any]],
     model: str = MODEL_ADJUDICATOR,
-    trace=None,
+    trace: TraceLogger | None = None,
 ) -> Dict[str, Any]:
     """Ask the LLM to pick among provided candidates.
 
@@ -63,6 +65,18 @@ def adjudicate_candidates(
 
     schema = _build_schema(max_index=len(candidates) - 1 if candidates else 0)
 
+    trace_llm_request(
+        trace,
+        stage="adjudicator",
+        backend="chat",
+        model=model,
+        temperature=0.0,
+        response_format={"type": "json_schema", "json_schema": schema},
+        messages=[
+            {"role": "system", "content": PROMPT_ADJUDICATOR_SYSTEM},
+            {"role": "user", "content": json.dumps(user_payload)},
+        ],
+    )
     completion = client.chat.completions.create(
         model=model,
         temperature=0.0,
@@ -74,6 +88,7 @@ def adjudicate_candidates(
     )
 
     raw = completion.choices[0].message.content or "{}"
+    trace_llm_response(trace, stage="adjudicator", backend="chat", model=model, raw_text=raw)
     if trace:
         trace.log(
             "phase5_adjudication",

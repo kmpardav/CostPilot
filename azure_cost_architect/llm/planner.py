@@ -16,6 +16,13 @@ from ..planner.contract import PlanValidationResult, validate_pricing_contract
 from ..utils.trace import TraceLogger
 from ..utils.knowledgepack import get_taxonomy_option_paths_for_category
 from .json_repair import extract_json_object, repair_json_with_llm
+from .llm_trace import (
+    trace_llm_request,
+    trace_llm_response,
+    trace_llm_parse,
+    trace_llm_validate,
+    trace_llm_accepted,
+)
 
 _PRICING_COMPONENTS_GUIDANCE = """
 PRICING COMPONENTS (IMPORTANT):
@@ -101,7 +108,13 @@ def _repair_to_plan_shape(
     Returns dict on success, None on failure (caller can continue loop).
     """
     try:
-        repaired = repair_json_with_llm(client, repair_system_prompt, input_text)
+        repaired = repair_json_with_llm(
+            client,
+            repair_system_prompt,
+            input_text,
+            trace=trace,
+            stage=f"planner.repair_shape.attempt{attempt or 0}",
+        )
     except Exception as ex:
         if trace:
             trace.log("planner_repair_exception", {"attempt": attempt, "error": str(ex)})
@@ -130,7 +143,13 @@ def _repair_to_plan_shape(
             },
         )
     try:
-        repaired_retry = repair_json_with_llm(client, repair_system_prompt, schema_prompt)
+        repaired_retry = repair_json_with_llm(
+            client,
+            repair_system_prompt,
+            schema_prompt,
+            trace=trace,
+            stage=f"planner.repair_shape_retry.attempt{attempt or 0}",
+        )
     except Exception as ex:
         if trace:
             trace.log("planner_repair_exception_retry", {"attempt": attempt, "error": str(ex)})
@@ -227,21 +246,34 @@ def _call_planner_responses(client: OpenAI, user_prompt: str) -> tuple[str, str]
     return MODEL_PLANNER_RESPONSES, raw
 
 
-def _parse_plan_json(raw: str, client: OpenAI) -> tuple[Optional[Dict[str, Any]], Optional[str]]:
+def _parse_plan_json(
+    raw: str, client: OpenAI, *, trace: Optional[TraceLogger], attempt: int
+) -> tuple[Optional[Dict[str, Any]], Optional[str]]:
     raw_json = extract_json_object(raw)
     try:
         parsed = json.loads(raw_json)
+        trace_llm_parse(trace, stage="planner.parse", ok=True, extracted_json_chars=len(raw_json or ""))
         return parsed, None
     except json.JSONDecodeError as ex:
         repaired = _repair_to_plan_shape(
             client,
             repair_system_prompt=PROMPT_JSON_REPAIR_SYSTEM,
             input_text=raw_json,
-            trace=None,
-            attempt=None,
+            trace=trace,
+            attempt=attempt,
         )
         if repaired is None:
+            trace_llm_parse(
+                trace,
+                stage="planner.parse",
+                ok=False,
+                error=f"repair_failed: {ex}",
+                extracted_json_chars=len(raw_json or ""),
+            )
             return None, f"repair_failed: {ex}"
+        trace_llm_parse(
+            trace, stage="planner.parse", ok=False, error=str(ex), extracted_json_chars=len(raw_json or "")
+        )
         return repaired, str(ex)
 
 
@@ -261,6 +293,21 @@ def _planner_attempt(
         + _PRICING_COMPONENTS_GUIDANCE
         + _PLANNER_POLICY_INJECTION
     )
+
+    # LLM request trace (structured)
+    req_model = MODEL_PLANNER_RESPONSES if backend == "responses" else MODEL_PLANNER
+    trace_llm_request(
+        trace,
+        stage=f"planner.{mode}.attempt{attempt}",
+        backend=backend,
+        model=req_model,
+        temperature=0.0,
+        response_format={"type": "json_object"} if backend != "responses" else None,
+        messages=[
+            {"role": "system", "content": PROMPT_PLANNER_SYSTEM},
+            {"role": "user", "content": user_prompt},
+        ],
+    )
     model_used: str
     raw: str
     if planner_callable:
@@ -270,8 +317,20 @@ def _planner_attempt(
     else:
         model_used, raw = _call_planner_chat(client, user_prompt)
 
-    parsed, parse_error = _parse_plan_json(raw, client)
+    trace_llm_response(
+        trace, stage=f"planner.{mode}.attempt{attempt}", backend=backend, model=model_used, raw_text=raw
+    )
+
+    parsed, parse_error = _parse_plan_json(raw, client, trace=trace, attempt=attempt)
     validation = validate_pricing_contract(parsed or {}, trace=trace)
+
+    trace_llm_validate(
+        trace,
+        stage=f"planner.{mode}.attempt{attempt}",
+        ok=not bool(validation.errors),
+        errors=validation.errors,
+        extra={"parse_error": parse_error},
+    )
 
     _log_planner_trace(
         trace,
@@ -285,6 +344,9 @@ def _planner_attempt(
         parse_error=parse_error,
         validation=validation,
     )
+
+    if parsed is not None and not validation.errors:
+        trace_llm_accepted(trace, stage=f"planner.{mode}.attempt{attempt}", note="plan accepted")
 
     return PlannerAttempt(
         attempt=attempt,
@@ -431,6 +493,19 @@ def plan_architecture_iterative(
                 },
             )
 
+            trace_llm_request(
+                trace,
+                stage=f"planner.repair_contract.attempt{attempt_no}",
+                backend=backend,
+                model=MODEL_PLANNER,
+                temperature=0.0,
+                response_format={"type": "json_object"} if backend != "responses" else None,
+                messages=[
+                    {"role": "system", "content": PROMPT_PLAN_REPAIR_SYSTEM},
+                    {"role": "user", "content": fix_prompt},
+                ],
+            )
+
         repaired_raw: Optional[str] = None
         try:
             if repair_callable:
@@ -467,6 +542,15 @@ def plan_architecture_iterative(
                 )
             continue
 
+        if trace and repaired_raw:
+            trace_llm_response(
+                trace,
+                stage=f"planner.repair_contract.attempt{attempt_no}",
+                backend=backend,
+                model=MODEL_PLANNER,
+                raw_text=repaired_raw,
+            )
+
         repaired_validation = validate_pricing_contract(parsed or {}, trace=trace)
         _log_planner_trace(
             trace,
@@ -482,6 +566,9 @@ def plan_architecture_iterative(
         )
 
         if not repaired_validation.errors:
+            trace_llm_accepted(
+                trace, stage=f"planner.repair_contract.attempt{attempt_no}", note="repaired plan accepted"
+            )
             return repaired_validation.plan
 
     raise ValueError(
