@@ -48,6 +48,22 @@ For such resources, emit:
     }
   ]
 
+APPLICATION GATEWAY (Standard_v2 / WAF_v2) PRICING (IMPORTANT):
+Azure Application Gateway v2 SKUs (including WAF_v2) are billed as:
+  (1) a fixed "gateway-hour" cost, and
+  (2) a variable "capacity unit-hour" cost.
+They are NOT billed as "WAF requests" counters. Do NOT emit captcha/session meters.
+
+For Application Gateway v2 resources, emit pricing_components like:
+  - key: "gateway_hours" with units.kind="fixed" value=730 (prod) or HOURS_PILOT for non-prod
+  - key: "capacity_units" with units.kind="metric" metric_key="appgw_capacity_units_per_hour"
+    and provide a reasonable default assumption (e.g., 1 for cost_optimized, 1-2 for baseline, 2-5 for high_performance)
+    OR provide traffic drivers (throughput_mbps, concurrent_connections) so the pricing layer can estimate.
+
+pricing_hints:
+  - gateway_hours: meter_name_contains ["Gateway Hour", "Application Gateway Hour"]
+  - capacity_units: meter_name_contains ["Capacity Unit", "Capacity Units"]
+
 EXAMPLES:
 1) Azure DNS public zones+queries:
   resource.service_name="Azure DNS"

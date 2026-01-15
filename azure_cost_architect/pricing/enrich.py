@@ -1965,6 +1965,91 @@ def _expand_pricing_resources(resources: List[Dict[str, Any]]) -> List[Dict[str,
             )
             continue
 
+        # Application Gateway v2 / WAF_v2: Gateway Hours + Capacity Unit Hours
+        # Azure charges v2 SKUs with a fixed gateway-hour and variable capacity unit-hour.
+        # If the planner did not provide pricing_components, expand deterministically here.
+        if raw_cat.startswith("network.appgw"):
+            base_id = resource.get("id") or "appgw"
+            hours = float(resource.get("hours_per_month") or 730)
+            metrics = dict(resource.get("metrics") or {})
+            details = dict(resource.get("details") or {})
+            scenario_id = str(resource.get("_scenario_id") or "").strip().lower()
+
+            # Deterministic capacity unit estimator:
+            # - Prefer explicit capacity units if provided by planner.
+            # - Else estimate from throughput_mbps (1 CU ~= 2.22 Mbps) or concurrent connections (1 CU ~= 2500).
+            # - Else fall back to scenario defaults.
+            explicit_cu = metrics.get("appgw_capacity_units_per_hour") or metrics.get("capacity_units_per_hour")
+            cu = None
+            try:
+                if explicit_cu is not None:
+                    cu = float(explicit_cu)
+            except Exception:
+                cu = None
+
+            if cu is None:
+                tp = metrics.get("throughput_mbps") or metrics.get("bandwidth_mbps") or None
+                try:
+                    tp_f = float(tp) if tp is not None else 0.0
+                except Exception:
+                    tp_f = 0.0
+                cu_tp = (tp_f / 2.22) if tp_f > 0 else 0.0
+
+                conns = metrics.get("concurrent_connections") or metrics.get("persistent_connections") or None
+                try:
+                    conns_f = float(conns) if conns is not None else 0.0
+                except Exception:
+                    conns_f = 0.0
+                cu_conn = (conns_f / 2500.0) if conns_f > 0 else 0.0
+
+                default_cu = 1.5
+                if scenario_id == "cost_optimized":
+                    default_cu = 1.0
+                elif scenario_id == "high_performance":
+                    default_cu = 3.0
+
+                cu = max(default_cu, cu_tp, cu_conn)
+
+            # Reserved capacity units when using min instances (manual scaling): 10 CU per instance.
+            min_instances = details.get("min_instances") or metrics.get("min_instances") or None
+            try:
+                min_i = int(min_instances) if min_instances is not None else 0
+            except Exception:
+                min_i = 0
+            if min_i > 0:
+                cu = max(float(cu or 0.0), float(min_i) * 10.0)
+
+            # Attach estimator outputs for traceability.
+            metrics["appgw_capacity_units_per_hour"] = float(cu or 0.0)
+            metrics["hours_per_month"] = hours
+
+            # Expand into two pricing resources (skip parent to avoid double counting).
+            expanded.append(
+                _clone_resource(
+                    resource,
+                    new_id=f"{base_id}--pc-gateway_hours",
+                    service_name="Application Gateway",
+                    meter_name_contains="Gateway Hour",
+                    metrics=metrics,
+                    _pricing_component="gateway_hours",
+                    hours_per_month=hours,
+                )
+            )
+            expanded.append(
+                _clone_resource(
+                    resource,
+                    new_id=f"{base_id}--pc-capacity_units",
+                    service_name="Application Gateway",
+                    meter_name_contains="Capacity Unit",
+                    metrics=metrics,
+                    _pricing_component="capacity_units",
+                    # units_override is FINAL units; for CU-hour meters: CU_per_hour * hours_per_month
+                    units_override=float(metrics.get("appgw_capacity_units_per_hour") or 0.0) * hours,
+                    hours_per_month=hours,
+                )
+            )
+            continue
+
         # Event Hubs Premium: Processing Unit hours + Extended Retention storage (GB-month)
         if raw_cat.startswith("messaging.eventhubs") and (
             _contains_token(resource.get("sku_name_contains"), "Premium")
