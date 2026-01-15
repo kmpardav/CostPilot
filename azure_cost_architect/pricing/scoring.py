@@ -681,12 +681,16 @@ def score_price_item(resource: Dict[str, Any], item: Dict[str, Any], hours_prod:
 
     # Prevent counter-like components from binding to storage/retention meters.
     # Example failure: Event Hubs "messages" binding to "GB/Month" retention.
+    # Counter components represent request/event/message style quantities.
+    # They must never bind to storage (GB-month) OR time (hours) meters.
     counter_keys = {
         "messages",
         "events",
         "ingress_events",
-        "operations",
         "requests",
+        "waf_requests",
+        "operations",
+        "kv_operations",
         "transactions",
         "queries",
     }
@@ -695,6 +699,18 @@ def score_price_item(resource: Dict[str, Any], item: Dict[str, Any], hours_prod:
 
     # Strong reject: explicit counter component binding to GB-month/retention/storage meters.
     if is_counter_component and _is_storage_like_meter():
+        return -999
+
+    # Strong reject: counter components must not bind to hour-based meters.
+    # This prevents catastrophic misbindings like:
+    #   Event Hubs messages_per_month -> Premium Processing Unit (1 Hour)
+    if is_counter_component and ("hour" in unit_of_measure or "/hour" in unit_of_measure):
+        return -999
+
+    # Strong reject: counter components must not bind to capacity unit names.
+    # Some Retail entries encode counters as "per 1M operations" etc. (OK),
+    # but a pure "GB" unit is never acceptable.
+    if is_counter_component and ("gb" in unit_of_measure or "gib" in unit_of_measure) and "operation" not in unit_of_measure:
         return -999
 
     # Even when pricing_component_key is missing, if the resource metrics are clearly
@@ -833,12 +849,20 @@ def score_price_item(resource: Dict[str, Any], item: Dict[str, Any], hours_prod:
     #
     # - queries: must prefer meters that actually mention queries
     # - operations: prefer meters that mention operations (Key Vault, etc.)
+    # Helper: detect special meter families that should be excluded for counters.
+    _counter_bad_meter_tokens = (
+        "throughput unit",
+        "processing unit",
+        "capacity unit",
+        "compute unit",
+    )
+
     if pricing_component_key == "queries":
         if "query" in text_all or "queries" in text_all:
             score += 120
         else:
             score -= 200
-    elif pricing_component_key == "operations":
+    elif pricing_component_key in ("operations", "kv_operations"):
         if "operation" in text_all or "operations" in text_all:
             score += 100
         else:
@@ -846,6 +870,21 @@ def score_price_item(resource: Dict[str, Any], item: Dict[str, Any], hours_prod:
         # Operations meters are usage counters; strongly penalize hour-based meters.
         if "hour" in unit_of_measure or "/hour" in unit_of_measure:
             score -= 300
+        # For Key Vault, aggressively avoid rotation/certificate style meters for ops.
+        if category.startswith("security.keyvault"):
+            if any(tok in text_all for tok in ("rotation", "certificate", "renewal")):
+                return -999
+
+    elif pricing_component_key in ("messages", "events", "ingress_events", "requests", "waf_requests", "transactions"):
+        # Generic counter semantics: prefer counters; reject capacity/time meters.
+        if any(tok in text_all for tok in ("message", "event", "request", "transaction", "operation", "query")):
+            score += 80
+        else:
+            score -= 120
+
+        # Hard reject for known counter-incompatible meter families.
+        if any(tok in text_all for tok in _counter_bad_meter_tokens):
+            return -999
 
     elif pricing_component_key in ("firewall_deployment", "firewall_deployment_hours"):
         # Deployment is billed per firewall-hour; never bind to data processed.
@@ -885,6 +924,12 @@ def score_price_item(resource: Dict[str, Any], item: Dict[str, Any], hours_prod:
     # Blob: πέτα managed disks όταν ψάχνουμε για blob capacity
     if category.startswith("storage.blob"):
         if _looks_like_managed_disk(product_name, meter_name, sku_name):
+            return -999
+
+    # Application Gateway: never bind to "Application Gateway for Containers" meters.
+    # This misbinding appears when meter names overlap (e.g., WAF Requests).
+    if category.startswith("network.appgw"):
+        if "for containers" in product_name or "for containers" in meter_name:
             return -999
 
     # Bandwidth: πέτα "data transfer in" / China κ.λπ.

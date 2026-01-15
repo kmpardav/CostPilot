@@ -1,7 +1,5 @@
-from .format import render_report, render_category_table, render_totals_table
+"""Reporting helpers.
 
-__all__ = [
-    "render_report",
-    "render_category_table",
-    "render_totals_table",
-]
+This package contains deterministic renderers used to complement (or replace)
+LLM-generated narrative reports.
+"""
