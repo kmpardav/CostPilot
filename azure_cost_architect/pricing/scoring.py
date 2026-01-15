@@ -689,6 +689,7 @@ def score_price_item(resource: Dict[str, Any], item: Dict[str, Any], hours_prod:
         "ingress_events",
         "requests",
         "waf_requests",
+        "api_calls",
         "operations",
         "kv_operations",
         "transactions",
@@ -726,6 +727,9 @@ def score_price_item(resource: Dict[str, Any], item: Dict[str, Any], hours_prod:
                 "requests_per_month",
                 "transactions_per_month",
                 "queries_per_month",
+                # API Management and similar services
+                "api_calls_per_month",
+                "api_calls",
             )
         )
     except Exception:
@@ -857,6 +861,12 @@ def score_price_item(resource: Dict[str, Any], item: Dict[str, Any], hours_prod:
         "compute unit",
     )
 
+    # Hard exclusions for WAF request components (these are NOT request counters)
+    # Observed failure: AppGW WAF requests binding to "Captcha Sessions".
+    if pricing_component_key == "waf_requests":
+        if any(tok in text_all for tok in ("captcha", "session", "sessions")):
+            return -999
+
     if pricing_component_key == "queries":
         if "query" in text_all or "queries" in text_all:
             score += 120
@@ -875,6 +885,19 @@ def score_price_item(resource: Dict[str, Any], item: Dict[str, Any], hours_prod:
             if any(tok in text_all for tok in ("rotation", "certificate", "renewal")):
                 return -999
 
+    elif pricing_component_key == "api_calls":
+        # API calls are counters; never allow hour-based / capacity-unit families.
+        # Observed catastrophic failure: APIM api_calls -> "Premium Workspace Pack" (1/Hour).
+        if "hour" in unit_of_measure or "/hour" in unit_of_measure:
+            return -999
+        if any(tok in text_all for tok in _counter_bad_meter_tokens):
+            return -999
+        # Prefer explicit call/request/transaction language
+        if any(tok in text_all for tok in ("call", "calls", "request", "requests", "transaction", "transactions", "api call")):
+            score += 140
+        else:
+            score -= 180
+
     elif pricing_component_key in ("messages", "events", "ingress_events", "requests", "waf_requests", "transactions"):
         # Generic counter semantics: prefer counters; reject capacity/time meters.
         if any(tok in text_all for tok in ("message", "event", "request", "transaction", "operation", "query")):
@@ -885,6 +908,14 @@ def score_price_item(resource: Dict[str, Any], item: Dict[str, Any], hours_prod:
         # Hard reject for known counter-incompatible meter families.
         if any(tok in text_all for tok in _counter_bad_meter_tokens):
             return -999
+
+        # WAF requests: aggressively prefer "WAF Requests" phrasing.
+        # If the candidate doesn't look like a WAF request meter, penalize it.
+        if pricing_component_key == "waf_requests":
+            if ("waf" in text_all and "request" in text_all) or "waf requests" in text_all:
+                score += 220
+            else:
+                score -= 220
 
     elif pricing_component_key in ("firewall_deployment", "firewall_deployment_hours"):
         # Deployment is billed per firewall-hour; never bind to data processed.
