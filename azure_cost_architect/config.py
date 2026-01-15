@@ -52,8 +52,8 @@ def get_debug_enriched_file() -> str:
     return os.getenv(ENV_DEBUG_ENRICHED_FILE, DEFAULT_DEBUG_ENRICHED_FILE).strip()
 
 # LLM models (chat)
-MODEL_PLANNER = os.getenv("AZURECOST_PLANNER_MODEL", "gpt-5.2-pro")
-MODEL_REPORTER = os.getenv("AZURECOST_REPORTER_MODEL", "gpt-5.2-pro")
+MODEL_PLANNER = os.getenv("AZURECOST_PLANNER_MODEL", "gpt-5.2")
+MODEL_REPORTER = os.getenv("AZURECOST_REPORTER_MODEL", "gpt-5.2")
 MODEL_ADJUDICATOR = os.getenv("AZURECOST_ADJUDICATOR_MODEL", MODEL_PLANNER)
 
 # LLM models (responses)
