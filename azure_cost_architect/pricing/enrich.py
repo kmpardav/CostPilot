@@ -1793,12 +1793,36 @@ def _startswith_token(v: Any, token: str) -> bool:
 # ------------------------------------------------------------
 
 def _clone_resource(base: Dict[str, Any], *, new_id: str, **updates: Any) -> Dict[str, Any]:
-    resource = dict(base)
+    # NOTE: deep-copy to avoid sharing nested dicts (metrics/details/pricing_hints)
+    # across componentized resources. This keeps debug_enriched.json auditable.
+    resource = deepcopy(base)
     resource["id"] = new_id
     resource.update(updates)
     # Ensure componentized resources carry a pricing_component_key for deterministic scoring.
     if "pricing_component_key" not in resource and "_pricing_component" in resource:
         resource["pricing_component_key"] = resource.get("_pricing_component")
+    # Optional traceability: ensure AppGW CU/hour is visible even if caller
+    # only set units_override = CU/hour * hours.
+    try:
+        cat = str(resource.get("category") or "").lower()
+        pc_key = str(resource.get("pricing_component_key") or "").lower()
+        if cat.startswith("network.appgw") and pc_key == "capacity_units":
+            metrics = resource.get("metrics")
+            if not isinstance(metrics, dict):
+                metrics = {}
+                resource["metrics"] = metrics
+            if "appgw_capacity_units_per_hour" not in metrics:
+                hours = resource.get("hours_per_month") or metrics.get("hours_per_month") or 730.0
+                u = resource.get("units_override")
+                try:
+                    hours_f = float(hours)
+                    units_f = float(u) if u is not None else 0.0
+                except Exception:
+                    hours_f, units_f = 730.0, 0.0
+                metrics["hours_per_month"] = hours_f
+                metrics["appgw_capacity_units_per_hour"] = (units_f / hours_f) if hours_f else 0.0
+    except Exception:
+        pass
     return resource
 
 
