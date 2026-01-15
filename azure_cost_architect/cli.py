@@ -59,6 +59,7 @@ from .pricing.enrich import enrich_plan_with_prices
 from .pricing.catalog import ensure_catalog
 from .llm.planner import plan_architecture_chat, plan_architecture_responses, plan_architecture_iterative
 from .llm.reporter import generate_report_chat, generate_report_responses
+from .reporting.tables import render_pricing_tables
 from .utils.trace import build_trace_logger
 
 
@@ -760,6 +761,21 @@ def main() -> None:
         else:
             report_md = generate_report_chat(client, arch_text, enriched_plan, trace=trace_logger)
 
+        # -----------------------------------------------------------------
+        # Deterministic analytical tables (all scenarios)
+        # -----------------------------------------------------------------
+        # The reporter LLM may omit tables for non-baseline scenarios due to
+        # token limits or partial compliance. Append a code-generated section
+        # so the report always contains full per-scenario and rollup tables.
+        tables_md = ""
+        try:
+            tables_md = render_pricing_tables(enriched_plan)
+            if tables_md:
+                report_md = (report_md or "").rstrip() + tables_md
+            trace_logger.log("phase7_reporting_tables", {"status": "appended", "chars": len(tables_md)})
+        except Exception as ex:
+            trace_logger.log("phase7_reporting_tables", {"status": "failed", "error": str(ex)})
+
         with open(md_filename, "w", encoding="utf-8") as f:
             f.write(report_md)
 
@@ -768,7 +784,7 @@ def main() -> None:
         console.print(f"[green]Saved report to {md_filename}[/green]")
         trace_logger.log(
             "phase7_reporting",
-            {"report_path": str(md_filename)},
+            {"report_path": str(md_filename), "tables_appended": bool(tables_md)},
         )
     else:
         console.print(
