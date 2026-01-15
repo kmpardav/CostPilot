@@ -867,6 +867,29 @@ def score_price_item(resource: Dict[str, Any], item: Dict[str, Any], hours_prod:
         if any(tok in text_all for tok in ("captcha", "session", "sessions")):
             return -999
 
+    # Application Gateway v2/WAF_v2 pricing components:
+    # - gateway_hours: fixed gateway-hour meter (hour-based)
+    # - capacity_units: capacity unit-hour meter (hour-based, units = CU_per_hour * hours)
+    if pricing_component_key == "gateway_hours":
+        # Must be hour-based and explicitly about gateway hours (not capacity units).
+        if "hour" not in unit_of_measure and "/hour" not in unit_of_measure:
+            return -999
+        if "capacity" in text_all and "unit" in text_all:
+            return -999
+        if "gateway" in text_all and "hour" in text_all:
+            score += 250
+        else:
+            score -= 150
+
+    if pricing_component_key == "capacity_units":
+        # Must be hour-based and explicitly about capacity units.
+        if "hour" not in unit_of_measure and "/hour" not in unit_of_measure:
+            return -999
+        if "capacity" in text_all and "unit" in text_all:
+            score += 260
+        else:
+            score -= 220
+
     if pricing_component_key == "queries":
         if "query" in text_all or "queries" in text_all:
             score += 120
