@@ -54,6 +54,7 @@ from .utils import knowledgepack as kp
 from .utils.categories import normalize_required_categories
 from .planner import validate_plan_schema
 from .planner.repair import apply_repairs, build_category_candidates, build_repair_targets, call_repair_llm
+from .planner.metrics_blockers import collect_missing_metrics, summarize_blockers
 from .pricing.cache import load_price_cache, save_price_cache
 from .pricing.enrich import enrich_plan_with_prices
 from .pricing.catalog import ensure_catalog
@@ -668,6 +669,29 @@ def main() -> None:
         "phase2_validation",
         {"message": "final canonical plan written", "path": str(final_plan_path)},
     )
+
+    # --------------------
+    # 2a) Missing metrics blockers (charge models)
+    # --------------------
+    missing = collect_missing_metrics(plan)
+    if missing:
+        payload = summarize_blockers(missing)
+        out_path = run_dir / "missing_metrics_report.json"
+        with open(out_path, "w", encoding="utf-8") as f:
+            json.dump(payload, f, indent=2, ensure_ascii=False)
+
+        console.print("[red]Blocking issue: missing required metrics for deterministic pricing.[/red]")
+        console.print(f"Found {payload.get('total', len(missing))} resources with missing metrics.")
+        console.print(f"[yellow]Report written to: {out_path.name}[/yellow]")
+
+        by_cat = payload.get("by_category") or {}
+        if by_cat:
+            console.print("[yellow]Top categories with missing metrics:[/yellow]")
+            for k, v in list(by_cat.items())[:8]:
+                console.print(f"  - {k}: {v}")
+
+        # Hard blocker in v1: do not proceed to pricing until plan metrics are fixed.
+        raise SystemExit(2)
 
     # --------------------
     # 2) Warm local catalogs (για τις κατηγορίες του plan)
