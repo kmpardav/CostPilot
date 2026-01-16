@@ -229,46 +229,21 @@ def _discover_additional_sources(
 ) -> List[CatalogSource]:
     cat = (category or "").lower()
 
+    # IMPORTANT: service-scoped categories (service::<Retail Prices serviceName>) must be deterministic.
+    # Discovery can drift to related services ("catalog poisoning"). We therefore disable it.
+    if isinstance(category, str) and category.startswith("service::"):
+        return []
+
     # Hints drive a lightweight discovery query that can recover from
     # missing/renamed `serviceName` values (or overly strict mappings).
     hints: List[str] = []
 
-    # Important: for `service::<ServiceName>` categories we must preserve
-    # the original casing of the embedded service name when extracting hints.
-    sources_for_hints = (
-        get_catalog_sources(category)
-        if isinstance(category, str) and category.startswith("service::")
-        else get_catalog_sources(cat)
-    )
-
+    sources_for_hints = get_catalog_sources(cat)
     for src in sources_for_hints:
         if src.product_name_hint:
             hints.append(src.product_name_hint)
 
-    # If the category is service-scoped, derive keyword hints from the
-    # embedded service name itself (e.g., "Cognitive Services" -> "cognitive").
-    if isinstance(category, str) and category.startswith("service::"):
-        embedded = category.split("::", 1)[1].strip()
-        if embedded:
-            stop = {
-                "azure",
-                "microsoft",
-                "service",
-                "services",
-                "for",
-                "and",
-                "the",
-                "of",
-                "to",
-            }
-            tokens = [
-                t
-                for t in re.split(r"[^a-z0-9]+", embedded.lower())
-                if t and t not in stop and len(t) >= 4
-            ]
-            for t in tokens[:3]:
-                if t not in hints:
-                    hints.append(t)
+    # NOTE: service-scoped discovery is disabled above.
 
     if cat.startswith("network.gateway") or cat.startswith("network.frontdoor"):
         hints.append("front door")

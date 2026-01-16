@@ -1,4 +1,4 @@
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from typing import Dict, List, Optional
 
 
@@ -12,7 +12,9 @@ class CanonicalService:
     pricing_strategy: str
     preferred_meter_keywords: List[str]
     disallowed_meter_keywords: List[str]
-    fallback_strategy: str
+    preferred_meter_keywords_by_component: Dict[str, List[str]] = field(default_factory=dict)
+    disallowed_meter_keywords_by_component: Dict[str, List[str]] = field(default_factory=dict)
+    fallback_strategy: str = "estimate"
 
 
 class TaxonomyRegistry:

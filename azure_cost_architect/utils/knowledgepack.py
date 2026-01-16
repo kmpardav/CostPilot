@@ -9,7 +9,7 @@ import re
 from difflib import get_close_matches
 from functools import lru_cache
 from pathlib import Path
-from typing import Dict, List
+from typing import Any, Dict, List
 
 from azure_cost_architect.taxonomy.registry import CanonicalService, TaxonomyRegistry
 
@@ -229,6 +229,36 @@ def build_taxonomy_registry(taxonomy: dict) -> TaxonomyRegistry:
     # Build serviceName -> family name index from taxonomy tree
     # ----------------------------
     service_to_family: dict[str, str] = {}
+
+    # ------------------------------------------------------------------
+    # Minimal curated meter keyword signals for high-impact services.
+    # Expand gradually; even small seed sets reduce misbindings.
+    # ------------------------------------------------------------------
+    KEYWORDS_BY_CATEGORY: Dict[str, Dict[str, Any]] = {
+        "network.appgw": {
+            "preferred": ["gateway", "capacity"],
+            "preferred_by_component": {
+                "gateway_hours": ["gateway"],
+                "capacity_units": ["capacity"],
+            },
+            "disallowed_by_component": {
+                "gateway_hours": ["capacity"],
+                "capacity_units": ["gateway"],
+            },
+        },
+        "messaging.eventhubs": {
+            "preferred": ["event hubs", "throughput", "processing", "capture"],
+        },
+        "messaging.eventgrid": {
+            "preferred": ["event grid", "operations", "events"],
+        },
+        "function": {
+            "preferred": ["executions", "execution time", "gb-s", "memory"],
+        },
+        "ml.azureml": {
+            "preferred": ["azure machine learning", "compute", "training"],
+        },
+    }
     if isinstance(taxonomy, dict) and "families" not in taxonomy:
         # out_kp style: {"Databases": {children:{"SQL Database": {...}}}, ...}
         for family_name, family_node in taxonomy.items():
@@ -252,6 +282,8 @@ def build_taxonomy_registry(taxonomy: dict) -> TaxonomyRegistry:
         if fam:
             taxonomy_path = [fam, svc]
 
+        kw = (KEYWORDS_BY_CATEGORY.get(category, {}) or {})
+
         registry.register(
             CanonicalService(
                 canonical_key=category,
@@ -260,8 +292,10 @@ def build_taxonomy_registry(taxonomy: dict) -> TaxonomyRegistry:
                 retail_service_name=svc,
                 region_mode=region_mode,
                 pricing_strategy="catalog",
-                preferred_meter_keywords=[],
-                disallowed_meter_keywords=[],
+                preferred_meter_keywords=(kw.get("preferred") or []),
+                disallowed_meter_keywords=(kw.get("disallowed") or []),
+                preferred_meter_keywords_by_component=(kw.get("preferred_by_component") or {}),
+                disallowed_meter_keywords_by_component=(kw.get("disallowed_by_component") or {}),
                 fallback_strategy="estimate",
             )
         )
@@ -283,6 +317,8 @@ def build_taxonomy_registry(taxonomy: dict) -> TaxonomyRegistry:
                 pricing_strategy="catalog",
                 preferred_meter_keywords=[],
                 disallowed_meter_keywords=[],
+                preferred_meter_keywords_by_component={},
+                disallowed_meter_keywords_by_component={},
                 fallback_strategy="estimate",
             )
         )

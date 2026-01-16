@@ -772,6 +772,21 @@ def score_price_item(resource: Dict[str, Any], item: Dict[str, Any], hours_prod:
         if good in text_guard:
             score += 200
 
+    # ------------------------------------------------------------------
+    # Component-scoped keyword signals (for pricing_components expansion)
+    # ------------------------------------------------------------------
+    if pricing_component_key:
+        pref_by_comp = getattr(svc, "preferred_meter_keywords_by_component", {}) or {}
+        dis_by_comp = getattr(svc, "disallowed_meter_keywords_by_component", {}) or {}
+
+        for good in (pref_by_comp.get(pricing_component_key) or []):
+            if good and good in text_all:
+                score += 250
+
+        for bad in (dis_by_comp.get(pricing_component_key) or []):
+            if bad and bad in text_all:
+                score -= 400
+
     # -------------------------------------------------------------------------
     # 0.a) Planner-provided hint constraints (soft-but-strong)
     # -------------------------------------------------------------------------
