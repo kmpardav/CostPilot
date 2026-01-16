@@ -204,44 +204,39 @@ def canonicalize_service_name(
 
 
 def build_taxonomy_registry(taxonomy: dict) -> TaxonomyRegistry:
+    """Build a category-indexed registry from the current taxonomy schema.
+
+    Current out_kp/taxonomy.json schema is a tree:
+      family -> children{serviceName -> children{product -> children{sku -> children{meter}}}}
+
+    It does not natively store our canonical *category* strings.
+
+    Strategy (minimal disruption):
+    1) Use CATEGORY_CATALOG_SOURCES as the authoritative category universe.
+    2) Enrich each category's CanonicalService.taxonomy_path using the taxonomy tree
+       by matching the category's service_name (Retail serviceName) into the tree.
+    3) Also register service-scoped pseudo categories: service::<serviceName>.
+    """
+
     registry = TaxonomyRegistry()
-
-    families = None
-    if isinstance(taxonomy, dict):
-        families = taxonomy.get("families")
-    elif isinstance(taxonomy, list):
-        families = taxonomy
-
-    if families:
-        for family in families:
-            for service in family.get("services", []):
-                category = service.get("category")
-                if not category:
-                    continue
-
-                registry.register(
-                    CanonicalService(
-                        canonical_key=service["key"],
-                        taxonomy_path=[
-                            family["name"],
-                            service["name"],
-                        ],
-                        category=category,
-                        retail_service_name=service.get("retail_service_name", service["name"]),
-                        region_mode=service.get("region_mode", "regional"),
-                        pricing_strategy=service.get("pricing_strategy", "estimate_only"),
-                        preferred_meter_keywords=service.get("preferred_meter_keywords", []),
-                        disallowed_meter_keywords=service.get("disallowed_meter_keywords", []),
-                        fallback_strategy=service.get("fallback_strategy", "estimate"),
-                    )
-                )
-
-        return registry
 
     try:
         from ..pricing.catalog_sources import CATEGORY_CATALOG_SOURCES
     except Exception:
-        return registry
+        CATEGORY_CATALOG_SOURCES = {}
+
+    # ----------------------------
+    # Build serviceName -> family name index from taxonomy tree
+    # ----------------------------
+    service_to_family: dict[str, str] = {}
+    if isinstance(taxonomy, dict) and "families" not in taxonomy:
+        # out_kp style: {"Databases": {children:{"SQL Database": {...}}}, ...}
+        for family_name, family_node in taxonomy.items():
+            children = (family_node or {}).get("children") or {}
+            if isinstance(children, dict):
+                for svc_name in children.keys():
+                    if isinstance(svc_name, str) and svc_name.strip():
+                        service_to_family[svc_name.strip()] = str(family_name)
 
     for category, sources in (CATEGORY_CATALOG_SOURCES or {}).items():
         service_name = None
@@ -251,14 +246,41 @@ def build_taxonomy_registry(taxonomy: dict) -> TaxonomyRegistry:
             service_name = getattr(source, "service_name", None)
             region_mode = getattr(source, "arm_region_mode", "regional") or "regional"
 
+        svc = (service_name or category).strip()
+        fam = service_to_family.get(svc)
+        taxonomy_path = [category]
+        if fam:
+            taxonomy_path = [fam, svc]
+
         registry.register(
             CanonicalService(
                 canonical_key=category,
-                taxonomy_path=[category],
+                taxonomy_path=taxonomy_path,
                 category=category,
-                retail_service_name=service_name or category,
+                retail_service_name=svc,
                 region_mode=region_mode,
-                pricing_strategy="estimate_only",
+                pricing_strategy="catalog",
+                preferred_meter_keywords=[],
+                disallowed_meter_keywords=[],
+                fallback_strategy="estimate",
+            )
+        )
+
+    # ----------------------------
+    # Register service::<serviceName> pseudo-categories discovered in taxonomy
+    # ----------------------------
+    for svc, fam in sorted(service_to_family.items(), key=lambda kv: (kv[1], kv[0])):
+        cat = f"service::{svc}"
+        if registry.get(cat):
+            continue
+        registry.register(
+            CanonicalService(
+                canonical_key=cat,
+                taxonomy_path=[fam, svc],
+                category=cat,
+                retail_service_name=svc,
+                region_mode="regional",
+                pricing_strategy="catalog",
                 preferred_meter_keywords=[],
                 disallowed_meter_keywords=[],
                 fallback_strategy="estimate",

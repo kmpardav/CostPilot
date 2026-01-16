@@ -35,6 +35,8 @@ from .catalog import load_catalog
 from .scoring import score_price_item, select_best_candidate
 from .units import compute_units
 
+from ..charge_models import ChargeModelRegistry, build_default_registry
+
 FALLBACK_CATEGORY = "__unclassified__"
 _LOGGER = logging.getLogger(__name__)
 _taxonomy_registry = None
@@ -2227,6 +2229,7 @@ async def fetch_price_for_resource(
     debug: bool = False,
     adjudicator: Optional[Dict[str, Any]] = None,
     trace=None,
+    charge_registry: Optional[ChargeModelRegistry] = None,
 ) -> None:
     if resource.get("_skip_pricing"):
         resource.update(
@@ -2407,6 +2410,58 @@ async def fetch_price_for_resource(
         if debug:
             _LOGGER.debug("Resource %s is WebApp logical – cost is in App Service plan.", resource.get("id"))
         return
+
+    # ------------------------------------------------------------
+    # Charge model missing-metrics guard (deterministic blocker -> estimate)
+    # ------------------------------------------------------------
+    if charge_registry is None:
+        charge_registry = build_default_registry()
+
+    model = charge_registry.get(category)
+    if model is None and isinstance(category, str):
+        # Try normalized categories used elsewhere
+        model = charge_registry.get(_normalize_category_for_scoring(category))
+
+    if model is not None:
+        merged = dict(resource.get("metrics") or {})
+        # Some metrics exist at top-level in older plans
+        for k in ("hours_per_month", "quantity", "vcores", "storage_gb", "ingestion_gb_per_day", "egress_gb_per_month"):
+            if k not in merged and resource.get(k) is not None:
+                merged[k] = resource.get(k)
+        merged["_category"] = resource.get("category") or category
+
+        issues = model.validate_metrics(merged)
+        missing = sorted({i.key for i in issues if i.issue == "missing"})
+        if missing:
+            resource.setdefault("pricing_notes", [])
+            resource["pricing_notes"].append(
+                f"Pricing estimated due to missing required metrics for {model.__class__.__name__}: {', '.join(missing)}"
+            )
+            resource.update(
+                {
+                    "unit_price": None,
+                    "unit_of_measure": None,
+                    "currency_code": None,
+                    "sku_name": None,
+                    "meter_name": None,
+                    "product_name": None,
+                    "units": None,
+                    "monthly_cost": None,
+                    "yearly_cost": None,
+                    "pricing_status": "missing_metrics",
+                    "error": "Missing required metrics: " + ", ".join(missing),
+                    "missing_metrics": missing,
+                }
+            )
+            _apply_estimated_cost(resource)
+            _append_scoring_debug_unpriced(
+                scenario,
+                resource,
+                region=region,
+                currency=currency,
+                reason="Missing required metrics",
+            )
+            return
 
     # Ειδικές διαδρομές pricing
     if strategy == "control_plane_zero":
@@ -2653,6 +2708,13 @@ async def fetch_price_for_resource(
 
         # Apply planner hints (progressive, never eliminating all candidates).
         items, hints_applied = _apply_contains_hints_progressive(resource, items)
+
+        # Charge model candidate filter (never removes all candidates).
+        if model is not None:
+            try:
+                items = model.candidate_filter(items, resource)
+            except Exception:
+                pass
 
         # Storage Blob: ensure we do not accidentally price Azure Files meters
         # when catalogs are broad under the same 'Storage' service.
@@ -3217,7 +3279,21 @@ async def fetch_price_for_resource(
         monthly_cost = (float(unit_price) / float(term_months)) * units
         yearly_cost = monthly_cost * 12.0
     else:
-        units = compute_units(resource, unit_of_measure)
+        units_override = None
+        if model is not None and best_item is not None:
+            try:
+                units_override = model.compute_units(resource, best_item)
+            except Exception:
+                units_override = None
+
+        if units_override is not None:
+            units = float(units_override[0])
+            resource.setdefault("pricing_notes", [])
+            resource["pricing_notes"].append(
+                f"Units computed via {model.__class__.__name__} (override)."
+            )
+        else:
+            units = compute_units(resource, unit_of_measure)
         monthly_cost = units * float(unit_price)
         yearly_cost = monthly_cost * 12.0
 
@@ -3380,6 +3456,7 @@ async def enrich_plan_with_prices(
     adjudicate_topn: int = DEFAULT_ADJUDICATE_TOPN,
     adjudicator_client=None,
     trace=None,
+    charge_registry: Optional[ChargeModelRegistry] = None,
 ) -> Dict[str, Any]:
     metadata = plan.get("metadata") or {}
     pricing_run_present = "pricing_run" in plan
@@ -3402,6 +3479,9 @@ async def enrich_plan_with_prices(
         "top_n": adjudicate_topn,
         "client": adjudicator_client,
     }
+
+    if charge_registry is None:
+        charge_registry = build_default_registry()
 
     scenarios = plan.get("scenarios") or []
     enriched_scenarios: List[Dict[str, Any]] = []
@@ -3452,6 +3532,7 @@ async def enrich_plan_with_prices(
                         debug=debug,
                         adjudicator=adjudicator_cfg,
                         trace=trace,
+                        charge_registry=charge_registry,
                     )
                 except Exception as ex:
                     res.update(
