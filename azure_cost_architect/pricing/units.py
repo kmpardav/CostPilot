@@ -106,12 +106,18 @@ def compute_units(resource: dict, unit_of_measure: str) -> float:
     # is priced per N operations/requests/messages.
     # ------------------------------------------------------------------
     override = resource.get("units_override")
+    override_kind = resource.get("units_override_kind") or resource.get("unitsKind") or "raw_count"
+    override_kind = str(override_kind).strip().lower()
     if override is not None:
         try:
             base = float(override)
         except (TypeError, ValueError):
             base = None
         if base is not None:
+            # If override already represents billed units (post-pack / post-normalization),
+            # do NOT apply per-pack divisors. This prevents double-scaling.
+            if override_kind in ("billed_units", "billed", "final"):
+                return max(base, 0.0)
             uom_low = (unit_of_measure or "").lower().strip()
             meter_text = " ".join(
                 [

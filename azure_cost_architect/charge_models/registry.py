@@ -4,6 +4,11 @@ from dataclasses import dataclass
 from typing import Dict, Optional
 
 from .base import ChargeModel
+from .appgw import AppGatewayChargeModel
+from .eventhubs import EventHubsChargeModel
+from .eventgrid import EventGridChargeModel
+from .functions import FunctionsChargeModel
+from .azureml import AzureMLChargeModel
 from .bandwidth import BandwidthChargeModel
 from .compute_vm import VMChargeModel
 from .log_analytics import LogAnalyticsChargeModel
@@ -36,4 +41,9 @@ def build_default_registry() -> ChargeModelRegistry:
     reg.register("monitor.loganalytics", LogAnalyticsChargeModel())
     reg.register("monitoring.loganalytics", LogAnalyticsChargeModel())
     reg.register("network.bandwidth", BandwidthChargeModel())
+    reg.register("network.appgw", AppGatewayChargeModel())
+    reg.register("messaging.eventhubs", EventHubsChargeModel())
+    reg.register("messaging.eventgrid", EventGridChargeModel())
+    reg.register("function", FunctionsChargeModel())
+    reg.register("ml.azureml", AzureMLChargeModel())
     return reg

@@ -1936,6 +1936,14 @@ def _expand_pricing_resources(resources: List[Dict[str, Any]]) -> List[Dict[str,
                 if units_override is not None:
                     child["units_override"] = float(units_override)
 
+                    # If the planner provides billed units (already post-pack),
+                    # mark it so compute_units() won"t apply divisors again.
+                    uk = units.get("units_kind") if isinstance(units, dict) else None
+                    if uk is not None:
+                        child["units_override_kind"] = str(uk).strip().lower()
+                    if kind in {"fixed", "hourly", "monthly"}:
+                        child["units_override_kind"] = "billed_units"
+
                 # hours behavior
                 hours_behavior = str(comp.get("hours_behavior") or "inherit").strip().lower()
                 if hours_behavior == "ignore":
@@ -2609,6 +2617,34 @@ async def fetch_price_for_resource(
                         all_items = svc_exact
                     else:
                         all_items = []
+
+        # ------------------------------------------------------------------
+        # Fail-fast for service-scoped pseudo categories.
+        #
+        # service::<Retail Prices serviceName> is intended to be a HARD binding.
+        # If the local catalog is empty for that service, do not attempt any
+        # additional fallbacks (which can drift to a different service and
+        # silently misprice). Mark missing and stop.
+        # ------------------------------------------------------------------
+        if isinstance(raw_category, str) and raw_category.startswith("service::") and not all_items:
+            resource.setdefault("pricing_notes", []).append("service_scoped_catalog_empty_failfast")
+            resource.update(
+                {
+                    "unit_price": None,
+                    "unit_of_measure": None,
+                    "currency_code": currency,
+                    "sku_name": None,
+                    "meter_name": None,
+                    "product_name": None,
+                    "units": 0.0,
+                    "monthly_cost": None,
+                    "yearly_cost": None,
+                    "pricing_status": "missing",
+                    "pricing_error": "service_scoped_catalog_empty",
+                    "error": "service_scoped_catalog_empty",
+                }
+            )
+            return
 
         if not all_items:
             if trace:

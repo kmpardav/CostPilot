@@ -56,7 +56,12 @@ def normalize_service_name(category: str, service_name: Optional[str]) -> str:
                 return svc
             return "UNKNOWN_SERVICE"
 
-        return next(iter(allowed_from_sources))
+        # Deterministic: follow curated source order from get_catalog_sources().
+        # Avoid set iteration nondeterminism (can change across Python versions/runs).
+        for src in sources:
+            if src.service_name and src.service_name in allowed_from_sources:
+                return src.service_name
+        return sorted(allowed_from_sources)[0]
 
     return _legacy_service_name(cat, svc)
 
