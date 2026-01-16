@@ -33,8 +33,23 @@ def collect_missing_metrics(
             if model is None:
                 continue
 
+            # Merge metrics with key top-level fields that the planner may store outside metrics.
             metrics = dict(res.get("metrics") or {})
             metrics["_category"] = category
+
+            # VM: the plan often stores VM size under arm_sku_name / arm_sku_name_contains.
+            if metrics.get("vm_size") in (None, ""):
+                if res.get("arm_sku_name"):
+                    metrics["vm_size"] = res.get("arm_sku_name")
+                else:
+                    contains = res.get("arm_sku_name_contains") or []
+                    if isinstance(contains, list) and contains:
+                        metrics["vm_size"] = contains[0]
+
+            # Log Analytics: the plan already uses data_processed_gb_per_month frequently.
+            # Keep it available for model aliasing.
+            if metrics.get("data_processed_gb_per_month") is None and res.get("data_processed_gb_per_month") is not None:
+                metrics["data_processed_gb_per_month"] = res.get("data_processed_gb_per_month")
 
             issues = model.validate_metrics(metrics)
             missing = [i.key for i in issues if i.issue == "missing"]
@@ -68,14 +83,20 @@ def summarize_blockers(blockers: List[Blocker]) -> Dict[str, Any]:
 
 def _normalize_category_for_blockers(category: str) -> str:
     c = (category or "").strip().lower()
+    # IMPORTANT: service::<name> pseudo-categories must not be normalized into real charge-model categories.
+    if c.startswith("service::"):
+        return category
     if c in ("vm", "compute", "compute.virtual_machine", "compute.virtualmachine"):
         return "compute.vm"
     if c in ("sql", "db.sql_database"):
         return "db.sql"
     if "sql managed instance" in c or c.endswith("sqlmi"):
         return "db.sqlmi"
-    if "log analytics" in c or "monitor" in c:
-        return "monitor.loganalytics"
+    if "loganalytics" in c or "log analytics" in c:
+        # support both spellings used by planner/category maps
+        return "monitoring.loganalytics"
+    if "azure monitor" in c:
+        return category
     if "bandwidth" in c or "data transfer" in c:
         return "network.bandwidth"
     if "blob" in c and "storage" in c:

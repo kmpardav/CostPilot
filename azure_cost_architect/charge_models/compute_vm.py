@@ -12,18 +12,39 @@ class VMChargeModel(BaseChargeModel):
     category = "compute.vm"
 
     def required_metrics(self) -> Dict[str, MetricSpec]:
-        # Allow either vm_size OR vcpus; we treat vcpus required unless vm_size is present.
+        # Allow either VM size OR vcpus. In practice, our plans usually have VM size
+        # in arm_sku_name / arm_sku_name_contains, not under metrics.vcpus.
         return {
             "hours_per_month": MetricSpec("hours_per_month", type="float", required=False, default=730, description="Monthly hours"),
             "quantity": MetricSpec("quantity", type="float", required=False, default=1.0, description="VM count"),
             "vm_size": MetricSpec("vm_size", type="str", required=False, default=None, description="ARM VM size"),
-            "vcpus": MetricSpec("vcpus", type="float", required=True, default=None, description="vCPU count"),
+            "vcpus": MetricSpec("vcpus", type="float", required=False, default=None, description="vCPU count"),
         }
 
     def validate_metrics(self, metrics: Dict[str, Any]):
         issues = super().validate_metrics(metrics)
-        if metrics.get("vm_size"):
+
+        # Accept multiple aliases for VM size.
+        vm_size = metrics.get("vm_size") or metrics.get("arm_sku_name")
+        if not vm_size:
+            contains = metrics.get("arm_sku_name_contains")
+            if isinstance(contains, list) and contains:
+                vm_size = contains[0]
+
+        vcpus = metrics.get("vcpus") or metrics.get("vcpu") or metrics.get("cpu")
+
+        # Require at least one of (vm_size, vcpus).
+        if not vm_size and (vcpus is None or vcpus == ""):
+            # Ensure we report vcpus as the missing key for clarity
+            # (planner can satisfy this either by emitting vcpus or by providing vm_size).
+            if not any(i.key == "vcpus" and i.issue == "missing" for i in issues):
+                from .types import MetricIssue
+                issues.append(MetricIssue(key="vcpus", issue="missing", message="Missing vcpus (or vm_size) for VM pricing"))
+
+        # If vm_size exists, vcpus is not required.
+        if vm_size:
             issues = [i for i in issues if i.key != "vcpus"]
+
         return issues
 
     def candidate_filter(self, items: List[Dict[str, Any]], resource: Dict[str, Any]) -> List[Dict[str, Any]]:

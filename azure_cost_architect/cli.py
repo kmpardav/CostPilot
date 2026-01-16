@@ -124,6 +124,15 @@ def parse_args() -> argparse.Namespace:
     )
 
     parser.add_argument(
+        "--fail-on-missing-metrics",
+        action="store_true",
+        help=(
+            "If set, missing required metrics (per charge models) hard-fail the run "
+            "even if the affected categories are not in --required-categories."
+        ),
+    )
+
+    parser.add_argument(
         "--required-categories",
         type=str,
         default=",".join(DEFAULT_REQUIRED_CATEGORIES),
@@ -680,7 +689,7 @@ def main() -> None:
         with open(out_path, "w", encoding="utf-8") as f:
             json.dump(payload, f, indent=2, ensure_ascii=False)
 
-        console.print("[red]Blocking issue: missing required metrics for deterministic pricing.[/red]")
+        console.print("[yellow]Missing metrics detected for deterministic pricing.[/yellow]")
         console.print(f"Found {payload.get('total', len(missing))} resources with missing metrics.")
         console.print(f"[yellow]Report written to: {out_path.name}[/yellow]")
 
@@ -690,8 +699,41 @@ def main() -> None:
             for k, v in list(by_cat.items())[:8]:
                 console.print(f"  - {k}: {v}")
 
-        # Hard blocker in v1: do not proceed to pricing until plan metrics are fixed.
-        raise SystemExit(2)
+        # Decide whether to hard-fail:
+        # - If --fail-on-missing-metrics is set -> always fail
+        # - Else fail only if missing metrics affect --required-categories
+        required_raw = (args.required_categories or "").strip()
+        required_set = {c.strip() for c in required_raw.split(",") if c.strip()}
+
+        # Normalization: accept both monitor.loganalytics and monitoring.loganalytics in required list
+        required_set |= {"monitor.loganalytics"} if "monitoring.loganalytics" in required_set else set()
+        required_set |= {"monitoring.loganalytics"} if "monitor.loganalytics" in required_set else set()
+
+        missing_required = []
+        for b in payload.get("blockers", []):
+            cat = (b.get("category") or "").strip()
+            # Do not treat service::<name> as a charge-model category requirement
+            if cat.startswith("service::"):
+                continue
+            if cat in required_set:
+                missing_required.append(b)
+
+        if args.fail_on_missing_metrics or missing_required:
+            console.print(
+                "[red]Blocking issue:[/red] Missing required metrics affect required categories. "
+                "Fix plan metrics or remove categories from --required-categories."
+            )
+            if missing_required:
+                console.print("[red]Missing metrics in required categories:[/red]")
+                for b in missing_required[:10]:
+                    console.print(
+                        f"  - {b.get('scenario_id')} :: {b.get('resource_id')} ({b.get('category')}): {', '.join(b.get('missing') or [])}"
+                    )
+            raise SystemExit(2)
+        else:
+            console.print(
+                "[yellow]Continuing:[/yellow] Missing metrics affect non-required categories only."
+            )
 
     # --------------------
     # 2) Warm local catalogs (για τις κατηγορίες του plan)
