@@ -2428,6 +2428,19 @@ async def fetch_price_for_resource(
         for k in ("hours_per_month", "quantity", "vcores", "storage_gb", "ingestion_gb_per_day", "egress_gb_per_month"):
             if k not in merged and resource.get(k) is not None:
                 merged[k] = resource.get(k)
+
+        # VM size often lives outside metrics
+        if merged.get("vm_size") in (None, ""):
+            if resource.get("arm_sku_name"):
+                merged["vm_size"] = resource.get("arm_sku_name")
+            else:
+                contains = resource.get("arm_sku_name_contains") or []
+                if isinstance(contains, list) and contains:
+                    merged["vm_size"] = contains[0]
+
+        # Log Analytics planner often uses monthly key already
+        if merged.get("data_processed_gb_per_month") is None and (resource.get("metrics") or {}).get("data_processed_gb_per_month") is not None:
+            merged["data_processed_gb_per_month"] = (resource.get("metrics") or {}).get("data_processed_gb_per_month")
         merged["_category"] = resource.get("category") or category
 
         issues = model.validate_metrics(merged)

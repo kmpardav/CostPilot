@@ -32,6 +32,8 @@ def build_default_registry() -> ChargeModelRegistry:
     reg.register("db.sql", SqlChargeModel())
     reg.register("db.sqlmi", SqlChargeModel())
     reg.register("storage.blob", StorageBlobChargeModel())
+    # Planner currently emits "monitoring.loganalytics" in plans; keep compatibility with both keys.
     reg.register("monitor.loganalytics", LogAnalyticsChargeModel())
+    reg.register("monitoring.loganalytics", LogAnalyticsChargeModel())
     reg.register("network.bandwidth", BandwidthChargeModel())
     return reg
