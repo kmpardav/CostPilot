@@ -702,8 +702,16 @@ def main() -> None:
         # Decide whether to hard-fail:
         # - If --fail-on-missing-metrics is set -> always fail
         # - Else fail only if missing metrics affect --required-categories
-        required_raw = (args.required_categories or "").strip()
-        required_set = {c.strip() for c in required_raw.split(",") if c.strip()}
+        req = args.required_categories
+        req_parts: list[str] = []
+        if isinstance(req, (list, tuple)):
+            for it in req:
+                if it is None:
+                    continue
+                req_parts.extend(str(it).split(","))
+        else:
+            req_parts = str(req or "").split(",")
+        required_set = {c.strip() for c in req_parts if c and str(c).strip()}
 
         # Normalization: accept both monitor.loganalytics and monitoring.loganalytics in required list
         required_set |= {"monitor.loganalytics"} if "monitoring.loganalytics" in required_set else set()
