@@ -32,6 +32,15 @@ SERVICE_NAME_ALIASES: Dict[str, str] = {
     "azure cognitive services": "Cognitive Services",
     "api management": "API Management",
     "azure api management": "API Management",
+    # Azure OpenAI / Foundry naming drift
+    "azure openai": "Cognitive Services",
+    "azure openai service": "Cognitive Services",
+    "azure ai foundry": "Foundry Models",
+    "ai foundry": "Foundry Models",
+    "foundry models": "Foundry Models",
+    "foundry tools": "Foundry Tools",
+    # Kimi / model-brand products often sit under Cognitive Services in Retail
+    "azure kimi": "Cognitive Services",
 }
 
 

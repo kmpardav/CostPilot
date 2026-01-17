@@ -641,6 +641,13 @@ def score_price_item(resource: Dict[str, Any], item: Dict[str, Any], hours_prod:
         or ""
     )
 
+    # Normalize legacy / synonymous component keys.
+    # (Some planners emit simplified names like "firewall_hours".)
+    _comp_aliases = {
+        "firewall_hours": "firewall_deployment_hours",
+    }
+    pricing_component_key = _comp_aliases.get(pricing_component_key, pricing_component_key)
+
     # Prefer primary meters (Option 1): Retail API returns isPrimaryMeterRegion.
     is_primary_raw = _g(item, "isPrimaryMeterRegion", "is_primary_meter_region")
 
@@ -904,7 +911,40 @@ def score_price_item(resource: Dict[str, Any], item: Dict[str, Any], hours_prod:
             score += 260
         else:
             score -= 220
+        # Prefer non-discounted SKUs unless explicitly requested (ties resolve better)
+        if "discounted" in text_all:
+            score -= 60
 
+    # NAT Gateway pricing components (legacy/alternate keys):
+    # - nat_hours: standard gateway-hour meter (hour-based)
+    if pricing_component_key in ("nat_hours", "nat_gateway_hours", "natgw_hours"):
+        if "hour" not in unit_of_measure and "/hour" not in unit_of_measure:
+            return -999
+        if any(tok in text_all for tok in ("processed", "data processed", "gb", "gib")):
+            return -999
+        if "nat" in text_all and "gateway" in text_all:
+            score += 260
+        elif "gateway" in text_all:
+            score += 140
+        else:
+            score -= 220
+
+    # Key Vault transactions / operations: counters in packs (e.g., 10K operations). Never bind to hourly / capacity meters.
+    if (pricing_component_key in ("keyvault_transactions", "kv_transactions") or (pricing_component_key == "transactions" and category.startswith("security.keyvault"))):
+        if "hour" in unit_of_measure or "/hour" in unit_of_measure:
+            return -999
+        if any(tok in text_all for tok in _counter_bad_meter_tokens):
+            return -999
+        if category.startswith("security.keyvault"):
+            if any(tok in text_all for tok in ("operation", "operations", "transaction", "transactions")):
+                score += 220
+            else:
+                score -= 220
+            if any(tok in text_all for tok in ("10k", "10,000", "10000")):
+                score += 80
+            # Treat rotation/certificate style meters as incompatible with generic transactions.
+            if any(tok in text_all for tok in ("rotation", "certificate", "renewal")):
+                return -999
     if pricing_component_key == "queries":
         if "query" in text_all or "queries" in text_all:
             score += 120

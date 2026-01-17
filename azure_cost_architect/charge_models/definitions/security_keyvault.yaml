@@ -1,0 +1,25 @@
+id: security_keyvault_v1
+category_prefixes:
+  - security.keyvault
+description: >
+  Key Vault charge model (starter). This focuses on the common operations/transactions meter.
+
+# Mark as non-required initially to avoid blocking until planner emits the metric.
+required_metrics:
+  - key: transactions_per_month
+    kind: float
+    required: false
+    min_value: 0
+
+components:
+  - key: transactions
+    label: Key Vault transactions/operations
+    pricing_hints:
+      meter_name_contains:
+        - Operation
+        - Transaction
+    units:
+      kind: metric
+      metric_key: transactions_per_month
+      units_override_kind: raw_count
+    hours_behavior: ignore

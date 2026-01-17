@@ -19,6 +19,9 @@ from ..utils.trace import traced
 META_SUFFIX = ".meta"
 _LOGGER = logging.getLogger(__name__)
 
+# Treat 0-item catalogs as a *negative cache* for a short TTL so we don't
+# thrash the Retail Prices API within a single run (or rapid re-runs).
+NEGATIVE_CACHE_TTL_HOURS = float(os.getenv("AZURECOST_CATALOG_NEGATIVE_TTL_HOURS", "6"))
 
 def _slug(s: str) -> str:
     """
@@ -70,6 +73,25 @@ def _resolve_region(mode: str, requested_region: str) -> Tuple[str, str]:
     return region, region or "global"
 
 
+def _meta_age_hours(meta: Optional[Dict[str, Any]]) -> Optional[float]:
+    """Return age of a meta blob in hours (UTC)."""
+    if not meta:
+        return None
+    fetched = meta.get("fetched_at")
+    if not fetched:
+        return None
+    try:
+        if isinstance(fetched, str) and fetched.endswith("Z"):
+            fetched = fetched[:-1] + "+00:00"
+        dt = datetime.fromisoformat(str(fetched))
+        now = datetime.now(timezone.utc)
+        if dt.tzinfo is None:
+            dt = dt.replace(tzinfo=timezone.utc)
+        return (now - dt).total_seconds() / 3600.0
+    except Exception:
+        return None
+
+
 def _existing_item_count(jsonl_path: str) -> Optional[int]:
     meta_path = _meta_path(jsonl_path)
     if os.path.exists(meta_path):
@@ -89,6 +111,20 @@ def _existing_item_count(jsonl_path: str) -> Optional[int]:
             return sum(1 for _ in f if _.strip())
     except Exception:
         return None
+
+
+def _read_meta(jsonl_path: str) -> Optional[Dict[str, Any]]:
+    meta_path = _meta_path(jsonl_path)
+    if not os.path.exists(meta_path):
+        return None
+    try:
+        with open(meta_path, "r", encoding="utf-8") as f:
+            data = json.load(f)
+        if isinstance(data, dict):
+            return data
+    except Exception:
+        return None
+    return None
 
 
 def _coerce_bool(value: Any) -> Optional[bool]:
@@ -370,12 +406,25 @@ def ensure_catalog(
             query_region, region_label = _resolve_region(src.arm_region_mode, region)
             fp_local = _catalog_path(base_dir, src.service_name, region_label, currency)
             current_count = _existing_item_count(fp_local)
-            if current_count and current_count > 0 and not refresh:
-                chosen_fp = fp_local
-                chosen_source = src
-                chosen_region_label = region_label
-                existing_item_count = current_count
-                return True
+            if current_count is not None and not refresh:
+                if current_count > 0:
+                    chosen_fp = fp_local
+                    chosen_source = src
+                    chosen_region_label = region_label
+                    existing_item_count = current_count
+                    return True
+
+                # Negative cache (0 rows): avoid re-fetch loops for a short TTL
+                meta = _read_meta(fp_local)
+                warning0 = (meta or {}).get("warning")
+                age_h = _meta_age_hours(meta)
+                if warning0 in ("no_items_returned", "empty_catalog") and age_h is not None and age_h <= NEGATIVE_CACHE_TTL_HOURS:
+                    chosen_fp = fp_local
+                    chosen_source = src
+                    chosen_region_label = region_label
+                    existing_item_count = current_count
+                    chosen_warning = warning0
+                    return True
 
             rows: List[Dict[str, Any]] = []
             warning: Optional[str] = None
@@ -487,7 +536,9 @@ def ensure_catalog(
                 if rows and _all_unit_prices_zero(rows):
                     warning = (warning + "; " if warning else "") + "all_unit_price_zero"
 
-            attempts.append((src.service_name, query_region, len(rows)))
+            # Recompute local path because fallback may change region_label.
+            fp_local = _catalog_path(base_dir, src.service_name, region_label, currency)
+            attempts.append((src.service_name, region_label, len(rows)))
             if rows:
                 chosen_fp = fp_local
                 chosen_rows = rows
@@ -511,7 +562,7 @@ def ensure_catalog(
         chosen_source = fallback_source
         chosen_rows = chosen_rows or []
 
-    if existing_item_count and chosen_fp:
+    if existing_item_count is not None and chosen_fp:
         return chosen_fp
 
     rows_to_write = chosen_rows or []
@@ -574,6 +625,7 @@ def ensure_catalog(
             currency=currency,
             item_count=item_count,
             warning=warning,
+            attempts=attempts,
         )
         _LOGGER.info(
             "Catalog result: category='%s' -> serviceName='%s' (region_mode=%s region='%s') items=%s attempts=%s",

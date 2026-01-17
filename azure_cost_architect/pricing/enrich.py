@@ -1936,29 +1936,25 @@ def _expand_pricing_resources(resources: List[Dict[str, Any]]) -> List[Dict[str,
                 if units_override is not None:
                     child["units_override"] = float(units_override)
 
-                    # If the planner provides billed units (already post-pack),
-                    # mark it so compute_units() won"t apply divisors again.
-                    uk = units.get("units_kind") if isinstance(units, dict) else None
-                    if uk is not None:
-                        child["units_override_kind"] = str(uk).strip().lower()
-                    if kind in {"fixed", "hourly", "monthly"}:
-                        child["units_override_kind"] = "billed_units"
+                    # Preserve explicit semantics (if provided). Otherwise default to raw_count.
+                    explicit_kind = None
+                    if isinstance(units, dict):
+                        explicit_kind = units.get("units_override_kind") or units.get("units_kind")
+                    if explicit_kind is not None:
+                        child["units_override_kind"] = str(explicit_kind).strip().lower()
+                    else:
+                        child["units_override_kind"] = "raw_count"
 
                 # hours behavior
                 hours_behavior = str(comp.get("hours_behavior") or "inherit").strip().lower()
                 if hours_behavior == "ignore":
                     child.pop("hours_per_month", None)
                 elif hours_behavior == "multiply":
-                    # Multiply units_override by hours_per_month (or default)
-                    try:
-                        h = float(resource.get("hours_per_month") or HOURS_PROD)
-                    except Exception:
-                        h = float(HOURS_PROD)
-                    if "units_override" in child and child["units_override"] is not None:
-                        try:
-                            child["units_override"] = float(child["units_override"]) * h
-                        except Exception:
-                            pass
+                    # Do NOT mutate the numeric override; instead mark as per-hour quantity
+                    # so compute_units() can apply hours_per_month deterministically.
+                    if "units_override" in child:
+                        if child.get("units_override_kind") not in ("billed_units", "billed", "final"):
+                            child["units_override_kind"] = "per_hour_units"
 
                 # annotate
                 child.setdefault("pricing_notes", [])

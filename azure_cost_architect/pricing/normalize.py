@@ -27,9 +27,10 @@ def normalize_service_name(category: str, service_name: Optional[str]) -> str:
         embedded = raw_category.split("::", 1)[1].strip()
         if embedded and not svc:
             svc = embedded
-        cat = raw_category
-    else:
-        cat = raw_category.lower()
+        # Trust embedded Retail serviceName; do NOT fuzzy-canonicalize.
+        return svc or embedded or "UNKNOWN_SERVICE"
+
+    cat = raw_category.lower()
     allowed = set(get_allowed_service_names())
 
     if svc:
