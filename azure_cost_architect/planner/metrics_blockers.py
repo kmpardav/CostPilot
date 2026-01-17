@@ -51,6 +51,10 @@ def collect_missing_metrics(
             if metrics.get("data_processed_gb_per_month") is None and res.get("data_processed_gb_per_month") is not None:
                 metrics["data_processed_gb_per_month"] = res.get("data_processed_gb_per_month")
 
+            # NAT / hourly resources: planner commonly stores hours_per_month at top-level.
+            if metrics.get("hours_per_month") is None and res.get("hours_per_month") is not None:
+                metrics["hours_per_month"] = res.get("hours_per_month")
+
             issues = model.validate_metrics(metrics)
             missing = [i.key for i in issues if i.issue == "missing"]
             if missing:
