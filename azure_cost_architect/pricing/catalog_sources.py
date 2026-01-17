@@ -231,8 +231,12 @@ CATEGORY_CATALOG_SOURCES: Dict[str, List[CatalogSource]] = {
     ],
     # ML / AI
     "ai.openai": [
+        # Prefer Foundry, but include Cognitive Services fallback for services that still
+        # price under "Cognitive Services" (e.g., Azure OpenAI / token-based models).
         CatalogSource("Foundry Models", arm_region_mode="global", product_name_hint="openai"),
         CatalogSource("Foundry Tools", arm_region_mode="global", product_name_hint="openai"),
+        CatalogSource("Cognitive Services", arm_region_mode="regional", product_name_hint="openai"),
+        CatalogSource("Cognitive Services", arm_region_mode="empty", product_name_hint="openai"),
     ],
     "ml.azureml": [CatalogSource("Azure Machine Learning")],
 }

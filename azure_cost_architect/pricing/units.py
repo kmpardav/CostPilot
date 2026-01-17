@@ -167,7 +167,19 @@ def compute_units(resource: dict, unit_of_measure: str) -> float:
                         pass
                 return max(base, 0.0)
 
-            # Hour-based meters: override already “final units”
+            # Hour-based meters: interpretation depends on override_kind.
+            # - raw_count: planner already provided total hours (e.g., 730)
+            # - per_hour_units: planner provided a per-hour quantity (e.g., CU/hour)
+            #   and we must multiply by hours_per_month.
+            if "hour" in uom_low or "/hour" in uom_low:
+                if override_kind in ("per_hour_units", "per_hour", "rate_per_hour"):
+                    try:
+                        h = float(resource.get("hours_per_month") or 730.0)
+                    except Exception:
+                        h = 730.0
+                    return max(base, 0.0) * max(h, 0.0)
+                return max(base, 0.0)
+
             return max(base, 0.0)
 
     qty = float(resource.get("quantity", 1.0))
